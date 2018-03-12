@@ -5,7 +5,21 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+def keystorePropertiesFile = rootProject.file("signing.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
+    signingConfigs {
+        config {
+            // Remember to edit signing.properties to have the correct info for release build.
+            storeFile file('../keystore_production')
+            storePassword keystoreProperties['KEYSTORE_PASSWORD']
+            keyPassword keystoreProperties['KEY_PASSWORD']
+            keyAlias keystoreProperties['KEY_ALIAS']
+        }
+    }
+
     compileSdkVersion 27
     defaultConfig {
         applicationId "template.nimbl3.android"
@@ -17,8 +31,10 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 
@@ -31,6 +47,26 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    flavorDimensions "stage"
+    productFlavors {
+        production {
+            applicationId "com.nimbl3.template"
+        }
+
+        staging {
+            applicationId "com.nimbl3.template.staging"
+        }
+    }
+
+    sourceSets {
+        staging {
+            res.srcDirs = ['src/staging/res']
+        }
+        test {
+            resources.srcDirs += ['src/test/resources']
+        }
     }
 }
 
