@@ -36,12 +36,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
-    }
-
-    lintOptions {
-        disable 'InvalidPackage'
-        checkReleaseBuilds false
-        abortOnError false
+        debug {
+            // For quickly testing build with proguard, enable this
+            minifyEnabled false
+        }
     }
 
     compileOptions {
@@ -71,6 +69,12 @@ android {
 }
 
 dependencies {
+
+    kapt(
+            "android.arch.lifecycle:compiler:$arch_component_version",
+            "com.github.bumptech.glide:compiler:$glide_version"
+    )
+
     implementation(
             fileTree(dir: 'libs', include: ['*.jar']),
             "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version",
@@ -80,15 +84,13 @@ dependencies {
             "com.android.support:recyclerview-v7:$support_version",
             "com.android.support.constraint:constraint-layout:1.0.2",
 
-            "com.github.bumptech.glide:glide:$glide_version",
+            //"com.squareup.retrofit2:retrofit:$retrofit_version",
+            //"com.squareup.retrofit2:converter-gson:$retrofit_version",
+            //"com.squareup.retrofit2:adapter-rxjava2:$retrofit_version",
+            //"com.google.code.gson:gson:2.4",
 
-            "com.squareup.retrofit2:retrofit:$retrofit_version",
-            "com.squareup.retrofit2:converter-gson:$retrofit_version",
-            "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version",
-            "com.google.code.gson:gson:2.4",
-
-            "com.squareup.okhttp3:okhttp:$okhttp_version",
-            "com.squareup.okhttp3:logging-interceptor:$okhttp_version",
+            //"com.squareup.okhttp3:okhttp:$okhttp_version",
+            //"com.squareup.okhttp3:logging-interceptor:$okhttp_version",
 
             "io.reactivex.rxjava2:rxjava:$rxjava_version",
             "io.reactivex.rxjava2:rxandroid:$rxandroid_version",
@@ -100,6 +102,10 @@ dependencies {
             "com.google.dagger:dagger:$dagger_version",
             "com.android.support:multidex:1.0.1"
     )
+
+    implementation("com.github.bumptech.glide:glide:$glide_version") {
+        exclude group: "com.android.support"
+    }
 
     testImplementation(
             "junit:junit:$junit_version",
