@@ -1,4 +1,4 @@
-package template.nimbl3.android
+package template.nimbl3.ui
 
 import org.junit.Test
 
