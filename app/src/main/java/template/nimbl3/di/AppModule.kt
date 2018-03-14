@@ -28,27 +28,28 @@ class AppModule(val appContext: TemplateApplication) {
 
     @Provides
     @Singleton
-    fun provideApplication() : Application = appContext
+    fun provideApplication(): Application = appContext
 
     @Provides
     @Singleton
-    fun provideApiRetrofit(gson: Gson,okHttpClient: OkHttpClient): Retrofit =
-        createRetrofit(gson, okHttpClient)
+    fun provideApiRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
+        return createRetrofit(gson, okHttpClient)
+    }
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService =
-        retrofit.create(ApiService::class.java)
+    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
 
     @Provides
     @Singleton
-    fun provideApiClientType(apiService: ApiService, gson: Gson): ApiRepository =
-        ApiRepositoryImpl(apiService, gson)
+    fun provideApiClientType(apiService: ApiService, gson: Gson): ApiRepository {
+        return ApiRepositoryImpl(apiService, gson)
+    }
 
     @Provides
     @Singleton
     fun provideOkHttpClient(apiRequestInterceptor: AppRequestInterceptor,
-                                     httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+                            httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         val httpClient = OkHttpClient.Builder()
             .addInterceptor(apiRequestInterceptor)
 
@@ -74,11 +75,12 @@ class AppModule(val appContext: TemplateApplication) {
         return logging
     }
 
-    private fun createRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit =
-        Retrofit.Builder()
+    private fun createRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
             .baseUrl(appContext.getString(R.string.api_endpoint_example))
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClient)
             .build()
+    }
 }
