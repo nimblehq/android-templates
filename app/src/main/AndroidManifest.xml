@@ -11,6 +11,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:name="template.nimbl3.TemplateApplication"
         android:theme="@style/AppTheme">
         <activity android:name="template.nimbl3.ui.MainActivity">
             <intent-filter>

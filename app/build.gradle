@@ -72,7 +72,8 @@ dependencies {
 
     kapt(
             "android.arch.lifecycle:compiler:$arch_component_version",
-            "com.github.bumptech.glide:compiler:$glide_version"
+            "com.github.bumptech.glide:compiler:$glide_version",
+            "com.google.dagger:dagger-compiler:$dagger_version"
     )
 
     implementation(
@@ -84,13 +85,13 @@ dependencies {
             "com.android.support:recyclerview-v7:$support_version",
             "com.android.support.constraint:constraint-layout:1.0.2",
 
-            //"com.squareup.retrofit2:retrofit:$retrofit_version",
-            //"com.squareup.retrofit2:converter-gson:$retrofit_version",
-            //"com.squareup.retrofit2:adapter-rxjava2:$retrofit_version",
-            //"com.google.code.gson:gson:2.4",
+            "com.squareup.retrofit2:retrofit:$retrofit_version",
+            "com.squareup.retrofit2:converter-gson:$retrofit_version",
+            "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version",
+            "com.google.code.gson:gson:2.4",
 
-            //"com.squareup.okhttp3:okhttp:$okhttp_version",
-            //"com.squareup.okhttp3:logging-interceptor:$okhttp_version",
+            "com.squareup.okhttp3:okhttp:$okhttp_version",
+            "com.squareup.okhttp3:logging-interceptor:$okhttp_version",
 
             "io.reactivex.rxjava2:rxjava:$rxjava_version",
             "io.reactivex.rxjava2:rxandroid:$rxandroid_version",
