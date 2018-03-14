@@ -12,6 +12,3 @@ class ExampleChildrenDataResponse(
     val author: String,
     val title: String
 )
-
-
-

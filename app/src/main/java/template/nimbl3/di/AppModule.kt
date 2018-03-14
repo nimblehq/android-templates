@@ -50,9 +50,7 @@ class AppModule(val appContext: TemplateApplication) {
     @Singleton
     fun provideOkHttpClient(apiRequestInterceptor: AppRequestInterceptor,
                             httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-        val httpClient = OkHttpClient.Builder()
-            .addInterceptor(apiRequestInterceptor)
-
+        val httpClient = OkHttpClient.Builder().addInterceptor(apiRequestInterceptor)
         if (BuildConfig.DEBUG) {
             httpClient.addInterceptor(httpLoggingInterceptor)
         }
