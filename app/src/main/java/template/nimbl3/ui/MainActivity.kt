@@ -3,15 +3,41 @@ package template.nimbl3.ui
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import template.nimbl3.TemplateApplication
 import template.nimbl3.extension.setImageUrl
+import template.nimbl3.rest.repository.ApiRepository
+import template.nimbl3.rest.response.ExampleResponse
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
+
+    init {
+        TemplateApplication.appComponent.inject(this)
+    }
+
+    @Inject lateinit var appRepository: ApiRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        findViewById<ImageView>(R.id.appCompatImageView)
-            .setImageUrl("http://www.monkeyuser.com/assets/images/2018/80-the-struggle.png")
+        val textView = findViewById<TextView>(R.id.text)
+        val imageView = findViewById<ImageView>(R.id.appCompatImageView)
+
+        // Just for exampling the Retrofit implementation
+        appRepository.getExampleData()
+            .subscribe({ response: ExampleResponse ->
+                var displayText = ""
+                (0..4)
+                    .map { response.data.children.get(it).data }
+                    .forEach { displayText += "Author = ${it.author} \nTitle = ${it.title} \n\n" }
+
+                textView.setText(displayText)
+                imageView.setImageUrl("http://www.monkeyuser.com/assets/images/2018/80-the-struggle.png")
+            }, { error: Throwable ->
+                Toast.makeText(this, "Error: " + error.message, Toast.LENGTH_SHORT).show()
+            })
     }
 }
