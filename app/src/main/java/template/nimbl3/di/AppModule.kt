@@ -10,7 +10,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import template.nimbl3.TemplateApplication
 import template.nimbl3.rest.api.ApiService
 import template.nimbl3.rest.repository.ApiRepository
 import template.nimbl3.rest.repository.ApiRepositoryImpl
@@ -20,20 +19,17 @@ import template.nimbl3.ui.R
 import javax.inject.Singleton
 
 @Module
-class AppModule(val appContext: TemplateApplication) {
+class AppModule {
+
+    // Just only provide the Context because in ApplicationComponent's Builder already provide the Application.
+    @Provides
+    @Singleton
+    fun provideContext(application: Application): Context = application
 
     @Provides
     @Singleton
-    fun provideContext(): Context = appContext
-
-    @Provides
-    @Singleton
-    fun provideApplication(): Application = appContext
-
-    @Provides
-    @Singleton
-    fun provideApiRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
-        return createRetrofit(gson, okHttpClient)
+    fun provideApiRetrofit(context: Context, gson: Gson, okHttpClient: OkHttpClient): Retrofit {
+        return createRetrofit(context, gson, okHttpClient)
     }
 
     @Provides
@@ -73,9 +69,9 @@ class AppModule(val appContext: TemplateApplication) {
         return logging
     }
 
-    private fun createRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
+    private fun createRetrofit(context: Context, gson: Gson, okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(appContext.getString(R.string.api_endpoint_example))
+            .baseUrl(context.getString(R.string.api_endpoint_example))
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClient)

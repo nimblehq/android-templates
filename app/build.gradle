@@ -73,7 +73,8 @@ dependencies {
     kapt(
             "android.arch.lifecycle:compiler:$arch_component_version",
             "com.github.bumptech.glide:compiler:$glide_version",
-            "com.google.dagger:dagger-compiler:$dagger_version"
+            "com.google.dagger:dagger-compiler:$dagger_version",
+            "com.google.dagger:dagger-android-processor:$dagger_version"
     )
 
     implementation(
@@ -101,6 +102,7 @@ dependencies {
             "android.arch.lifecycle:runtime:1.0.0",
 
             "com.google.dagger:dagger:$dagger_version",
+            "com.google.dagger:dagger-android-support:$dagger_version",
             "com.android.support:multidex:1.0.1"
     )
 
