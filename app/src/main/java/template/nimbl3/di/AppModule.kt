@@ -14,7 +14,7 @@ import template.nimbl3.TemplateApplication
 import template.nimbl3.rest.api.ApiService
 import template.nimbl3.rest.repository.ApiRepository
 import template.nimbl3.rest.repository.ApiRepositoryImpl
-import template.nimbl3.rest.service.AppRequestInterceptor
+import template.nimbl3.rest.api.AppRequestInterceptor
 import template.nimbl3.ui.BuildConfig
 import template.nimbl3.ui.R
 import javax.inject.Singleton

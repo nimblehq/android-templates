@@ -30,10 +30,9 @@ class MainActivity : AppCompatActivity() {
         appRepository.getExampleData()
             .subscribe({ response: ExampleResponse ->
                 var displayText = ""
-                for (i in 0..4) {
-                    val resultData = response.data.children.get(i).data
-                    displayText += "Author = ${resultData.author} \nTitle = ${resultData.title} \n\n"
-                }
+                (0..4)
+                    .map { response.data.children.get(it).data }
+                    .forEach { displayText += "Author = ${it.author} \nTitle = ${it.title} \n\n" }
 
                 textView.setText(displayText)
                 imageView.setImageUrl("http://www.monkeyuser.com/assets/images/2018/80-the-struggle.png")

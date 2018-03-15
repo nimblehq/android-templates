@@ -1,4 +1,4 @@
-package template.nimbl3.rest.service
+package template.nimbl3.rest.api
 
 import okhttp3.Interceptor
 import okhttp3.Response
