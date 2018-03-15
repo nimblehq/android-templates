@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         appRepository.getExampleData()
             .subscribe({ response: ExampleResponse ->
                 var displayText = ""
-                (0..4)
+                (0..2)
                     .map { response.data.children.get(it).data }
                     .forEach { displayText += "Author = ${it.author} \nTitle = ${it.title} \n\n" }
 
