@@ -8,7 +8,9 @@ import template.nimbl3.TemplateApplication
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [(AndroidSupportInjectionModule::class), (AppModule::class), (ActivityBuilder::class)])
+@Component(modules = [AndroidSupportInjectionModule::class,
+                      AppModule::class,
+                      ActivityBuilder::class])
 interface ApplicationComponent {
 
     @Component.Builder
@@ -18,5 +20,4 @@ interface ApplicationComponent {
     }
 
     fun inject(application: TemplateApplication)
-
 }

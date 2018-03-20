@@ -21,7 +21,6 @@ import javax.inject.Singleton
 @Module
 class AppModule {
 
-    // Just only provide the Context because in ApplicationComponent's Builder already provide the Application.
     @Provides
     @Singleton
     fun provideContext(application: Application): Context = application

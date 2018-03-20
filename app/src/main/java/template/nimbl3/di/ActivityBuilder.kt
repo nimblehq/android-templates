@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import template.nimbl3.ui.MainActivity
 
-// Add all Activity that it need to use dependencies.
+// Add the Activities that need dependencies injection with @ContributesAndroidInjector
 @Module
 abstract class ActivityBuilder {
 
