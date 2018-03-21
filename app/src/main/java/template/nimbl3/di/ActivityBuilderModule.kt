@@ -6,7 +6,7 @@ import template.nimbl3.ui.MainActivity
 
 // Add the Activities that need dependencies injection with @ContributesAndroidInjector
 @Module
-abstract class ActivityBuilder {
+abstract class ActivityBuilderModule {
 
     @ContributesAndroidInjector
     abstract fun bindMainActivity(): MainActivity
