@@ -1,6 +1,5 @@
 package template.nimbl3.di
 
-import android.app.Application
 import android.content.Context
 import com.google.gson.Gson
 import dagger.Module
@@ -10,6 +9,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import template.nimbl3.TemplateApplication
 import template.nimbl3.rest.api.ApiService
 import template.nimbl3.rest.repository.ApiRepository
 import template.nimbl3.rest.repository.ApiRepositoryImpl
@@ -23,7 +23,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideContext(application: Application): Context = application
+    fun provideContext(application: TemplateApplication): Context = application
 
     @Provides
     @Singleton

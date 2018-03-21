@@ -1,22 +1,12 @@
 package template.nimbl3
 
-import android.app.Activity
-import android.app.Application
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
+import dagger.android.AndroidInjector
+import dagger.android.support.DaggerApplication
 import template.nimbl3.di.DaggerApplicationComponent
-import javax.inject.Inject
 
-class TemplateApplication: Application(), HasActivityInjector {
-    @Inject lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+class TemplateApplication: DaggerApplication() {
 
-    override fun onCreate() {
-        super.onCreate()
-        DaggerApplicationComponent.builder()
-                .application(this)
-                .build()
-                .inject(this)
-    }
+    override fun applicationInjector(): AndroidInjector<TemplateApplication> =
+            DaggerApplicationComponent.builder().create(this)
 
-    override fun activityInjector() = dispatchingAndroidInjector
 }
