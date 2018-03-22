@@ -28,12 +28,17 @@ class AppModule {
     @Provides
     @Singleton
     fun provideApiRetrofit(context: Context, gson: Gson, okHttpClient: OkHttpClient): Retrofit {
-        return createRetrofit(context, gson, okHttpClient)
+        return Retrofit.Builder()
+            .baseUrl(context.getString(R.string.api_endpoint_example))
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(okHttpClient)
+            .build()
     }
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+    fun provideGson(): Gson = Gson()
 
     @Provides
     @Singleton
@@ -43,6 +48,9 @@ class AppModule {
 
     @Provides
     @Singleton
+    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+
+    @Provides
     fun provideOkHttpClient(apiRequestInterceptor: AppRequestInterceptor,
                             httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         val httpClient = OkHttpClient.Builder().addInterceptor(apiRequestInterceptor)
@@ -53,27 +61,12 @@ class AppModule {
     }
 
     @Provides
-    @Singleton
-    fun provideGson(): Gson = Gson()
-
-    @Provides
-    @Singleton
     fun provideAppRequestInterceptor(): AppRequestInterceptor = AppRequestInterceptor()
 
     @Provides
-    @Singleton
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
         return logging
-    }
-
-    private fun createRetrofit(context: Context, gson: Gson, okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(context.getString(R.string.api_endpoint_example))
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .client(okHttpClient)
-            .build()
     }
 }
