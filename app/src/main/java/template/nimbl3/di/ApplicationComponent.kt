@@ -1,11 +1,17 @@
 package template.nimbl3.di
 
 import dagger.Component
-import template.nimbl3.ui.MainActivity
+import dagger.android.AndroidInjector
+import dagger.android.support.AndroidSupportInjectionModule
+import template.nimbl3.TemplateApplication
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = arrayOf(AppModule::class))
-interface ApplicationComponent {
-    fun inject(main: MainActivity)
+@Component(modules = [AndroidSupportInjectionModule::class,
+                      AppModule::class,
+                      ActivityBuilderModule::class])
+interface ApplicationComponent : AndroidInjector<TemplateApplication> {
+
+    @Component.Builder
+    abstract class Builder : AndroidInjector.Builder<TemplateApplication>()
 }

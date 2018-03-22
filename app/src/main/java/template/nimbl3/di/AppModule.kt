@@ -1,6 +1,5 @@
 package template.nimbl3.di
 
-import android.app.Application
 import android.content.Context
 import com.google.gson.Gson
 import dagger.Module
@@ -20,25 +19,26 @@ import template.nimbl3.ui.R
 import javax.inject.Singleton
 
 @Module
-class AppModule(val appContext: TemplateApplication) {
+class AppModule {
 
     @Provides
     @Singleton
-    fun provideContext(): Context = appContext
+    fun provideContext(application: TemplateApplication): Context = application
 
     @Provides
     @Singleton
-    fun provideApplication(): Application = appContext
-
-    @Provides
-    @Singleton
-    fun provideApiRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
-        return createRetrofit(gson, okHttpClient)
+    fun provideApiRetrofit(context: Context, gson: Gson, okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(context.getString(R.string.api_endpoint_example))
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(okHttpClient)
+            .build()
     }
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+    fun provideGson(): Gson = Gson()
 
     @Provides
     @Singleton
@@ -48,6 +48,9 @@ class AppModule(val appContext: TemplateApplication) {
 
     @Provides
     @Singleton
+    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+
+    @Provides
     fun provideOkHttpClient(apiRequestInterceptor: AppRequestInterceptor,
                             httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         val httpClient = OkHttpClient.Builder().addInterceptor(apiRequestInterceptor)
@@ -58,27 +61,12 @@ class AppModule(val appContext: TemplateApplication) {
     }
 
     @Provides
-    @Singleton
-    fun provideGson(): Gson = Gson()
-
-    @Provides
-    @Singleton
     fun provideAppRequestInterceptor(): AppRequestInterceptor = AppRequestInterceptor()
 
     @Provides
-    @Singleton
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
         return logging
-    }
-
-    private fun createRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(appContext.getString(R.string.api_endpoint_example))
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .client(okHttpClient)
-            .build()
     }
 }

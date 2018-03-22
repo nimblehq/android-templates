@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import template.nimbl3.TemplateApplication
+import dagger.android.AndroidInjection
 import template.nimbl3.extension.setImageUrl
 import template.nimbl3.rest.repository.ApiRepository
 import template.nimbl3.rest.response.ExampleResponse
@@ -13,13 +13,10 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-    init {
-        TemplateApplication.appComponent.inject(this)
-    }
-
     @Inject lateinit var appRepository: ApiRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this) // If we have baseActivity. we can bring it into the base class.
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

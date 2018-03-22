@@ -1,21 +1,12 @@
 package template.nimbl3
 
-import android.app.Application
-import template.nimbl3.di.AppModule
-import template.nimbl3.di.ApplicationComponent
+import dagger.android.AndroidInjector
+import dagger.android.support.DaggerApplication
 import template.nimbl3.di.DaggerApplicationComponent
 
-class TemplateApplication: Application() {
+class TemplateApplication: DaggerApplication() {
 
-    companion object {
-        lateinit var appComponent: ApplicationComponent
-    }
+    override fun applicationInjector(): AndroidInjector<TemplateApplication> =
+            DaggerApplicationComponent.builder().create(this)
 
-    override fun onCreate() {
-        super.onCreate()
-        appComponent = DaggerApplicationComponent
-            .builder()
-            .appModule(AppModule(this))
-            .build()
-    }
 }
