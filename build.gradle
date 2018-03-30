@@ -1,7 +1,35 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.2.30'
+    ext {
+        // Alphabet sorted
+        android_ktx_version         = '0.2'
+        arch_component_version      = '1.0.0'
+
+        constraint_layout_version   = '1.0.2'
+
+        dagger_version              = '2.11'
+
+        glide_version               = '4.6.1'
+        gson_version                = '2.4'
+
+        kotlin_version              = '1.2.30'
+
+        multidex_version            = '1.0.1'
+
+        okhttp_version              = '3.7.0'
+
+        retrofit_version            = '2.3.0'
+        rxandroid_version           = '2.0.1'
+        rxjava_version              = '2.1.4'
+
+        support_version             = '27.0.2'
+
+        test_junit_version          = '4.12'
+        test_mockito_version        = '0.3.1'
+        test_runner_version         = '1.0.1'
+    }
+
     repositories {
         google()
         jcenter()
@@ -22,28 +50,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-    }
-
-    ext {
-        // implementation dependencies version
-        arch_component_version = '1.0.0'
-        support_version        = '27.0.2'
-        supportTestVersion     = '0.5'
-
-        retrofit_version       = '2.3.0'
-        okhttp_version         = '3.7.0'
-
-        rxjava_version         = '2.1.4'
-        rxandroid_version      = '2.0.1'
-
-        dagger_version         = '2.11'
-        glide_version          = '4.6.1'
-
-        // test dependencies version
-        junit_version          = '4.12'
-        mockito_version        = '0.3.1'
-
-        test_runner_version    = '1.0.1'
     }
 }
 

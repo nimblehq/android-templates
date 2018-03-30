@@ -84,12 +84,12 @@ dependencies {
 
             "com.android.support:appcompat-v7:$support_version",
             "com.android.support:recyclerview-v7:$support_version",
-            "com.android.support.constraint:constraint-layout:1.0.2",
+            "com.android.support.constraint:constraint-layout:$constraint_layout_version",
 
             "com.squareup.retrofit2:retrofit:$retrofit_version",
             "com.squareup.retrofit2:converter-gson:$retrofit_version",
             "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version",
-            "com.google.code.gson:gson:2.4",
+            "com.google.code.gson:gson:$gson_version",
 
             "com.squareup.okhttp3:okhttp:$okhttp_version",
             "com.squareup.okhttp3:logging-interceptor:$okhttp_version",
@@ -99,11 +99,13 @@ dependencies {
 
             "android.arch.lifecycle:extensions:$arch_component_version",
             "android.arch.lifecycle:common-java8:$arch_component_version",
-            "android.arch.lifecycle:runtime:1.0.0",
+            "android.arch.lifecycle:runtime:$arch_component_version",
+
+            "androidx.core:core-ktx:$android_ktx_version",
 
             "com.google.dagger:dagger:$dagger_version",
             "com.google.dagger:dagger-android-support:$dagger_version",
-            "com.android.support:multidex:1.0.1"
+            "com.android.support:multidex:$multidex_version"
     )
 
     implementation("com.github.bumptech.glide:glide:$glide_version") {
@@ -111,8 +113,8 @@ dependencies {
     }
 
     testImplementation(
-            "junit:junit:$junit_version",
-            "com.nhaarman:mockito-kotlin:$mockito_version",
+            "junit:junit:$test_junit_version",
+            "com.nhaarman:mockito-kotlin:$test_mockito_version",
     )
 
     androidTestImplementation(
