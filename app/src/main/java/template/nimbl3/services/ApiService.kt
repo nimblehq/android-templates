@@ -1,8 +1,8 @@
-package template.nimbl3.rest.api
+package template.nimbl3.services
 
 import io.reactivex.Flowable
 import retrofit2.http.GET
-import template.nimbl3.rest.response.ExampleResponse
+import template.nimbl3.services.response.ExampleResponse
 
 interface ApiService {
 

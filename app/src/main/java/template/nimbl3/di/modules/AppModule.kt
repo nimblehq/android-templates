@@ -10,10 +10,10 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import template.nimbl3.TemplateApplication
-import template.nimbl3.rest.api.ApiService
-import template.nimbl3.rest.repository.ApiRepository
-import template.nimbl3.rest.repository.ApiRepositoryImpl
-import template.nimbl3.rest.api.AppRequestInterceptor
+import template.nimbl3.services.ApiService
+import template.nimbl3.services.ApiRepository
+import template.nimbl3.services.ApiRepositoryImpl
+import template.nimbl3.services.interceptor.AppRequestInterceptor
 import template.nimbl3.ui.BuildConfig
 import template.nimbl3.ui.R
 import javax.inject.Singleton

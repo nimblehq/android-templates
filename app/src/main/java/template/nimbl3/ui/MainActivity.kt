@@ -7,8 +7,8 @@ import android.widget.TextView
 import android.widget.Toast
 import dagger.android.AndroidInjection
 import template.nimbl3.extension.setImageUrl
-import template.nimbl3.rest.repository.ApiRepository
-import template.nimbl3.rest.response.ExampleResponse
+import template.nimbl3.services.ApiRepository
+import template.nimbl3.services.response.ExampleResponse
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
