@@ -7,6 +7,6 @@ import io.reactivex.disposables.Disposable
  * Provide extension functions for RxJava related components
  */
 
-inline fun CompositeDisposable.bind(disposable: Disposable) {
+fun CompositeDisposable.bind(disposable: Disposable) {
     this.add(disposable)
 }
