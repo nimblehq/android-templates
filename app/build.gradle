@@ -85,7 +85,6 @@ dependencies {
             "com.android.support:appcompat-v7:$support_version",
             "com.android.support:recyclerview-v7:$support_version",
             "com.android.support.constraint:constraint-layout:$constraint_layout_version",
-            "pub.devrel:easypermissions:$easy_permission_version",
 
             "com.squareup.retrofit2:retrofit:$retrofit_version",
             "com.squareup.retrofit2:converter-gson:$retrofit_version",

@@ -1,3 +1,5 @@
 package template.nimbl3.libs.rx.operators
 
-// TODO: rx extend operator
+object Operator {
+    // TODO: Example class
+}
