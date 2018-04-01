@@ -1,4 +1,4 @@
-package template.nimbl3.di
+package template.nimbl3.di.modules
 
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule

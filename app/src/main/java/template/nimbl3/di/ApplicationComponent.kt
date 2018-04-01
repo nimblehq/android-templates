@@ -4,6 +4,8 @@ import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import template.nimbl3.TemplateApplication
+import template.nimbl3.di.modules.ActivityBuilderModule
+import template.nimbl3.di.modules.AppModule
 import javax.inject.Singleton
 
 @Singleton
