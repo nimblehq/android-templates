@@ -1,4 +1,4 @@
-package template.nimbl3.di
+package template.nimbl3.di.modules
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
