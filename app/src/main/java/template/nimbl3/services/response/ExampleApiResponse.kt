@@ -1,4 +1,4 @@
-package template.nimbl3.rest.response
+package template.nimbl3.services.response
 
 class ExampleResponse(val data: ExampleDataResponse)
 
