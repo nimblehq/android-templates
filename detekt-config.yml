@@ -292,7 +292,7 @@ style:
     active: false
   ForbiddenComment:
     active: true
-    values: 'TODO:,FIXME:,STOPSHIP:'
+    values: 'FIXME:,STOPSHIP:'
   ForbiddenImport:
     active: false
     imports: ''
@@ -323,7 +323,7 @@ style:
   NestedClassesVisibility:
     active: false
   NewLineAtEndOfFile:
-    active: true
+    active: false
   OptionalAbstractKeyword:
     active: true
   OptionalReturnKeyword:
