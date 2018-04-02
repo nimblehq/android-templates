@@ -20,6 +20,16 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+# Crashlytics
+-keep class com.crashlytics.** { *; }
+-dontwarn com.crashlytics.**
+-keepattributes *Annotation*
+-keep public class * extends java.lang.Exception
+-keepattributes SourceFile,LineNumberTable
+
+# Dagger
+-dontwarn com.google.errorprone.annotations.**
+
 # Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep public class * extends com.bumptech.glide.module.AppGlideModule
