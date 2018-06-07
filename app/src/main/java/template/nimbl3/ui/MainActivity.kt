@@ -6,9 +6,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import dagger.android.AndroidInjection
+import io.reactivex.android.schedulers.AndroidSchedulers
 import template.nimbl3.extension.setImageUrl
-import template.nimbl3.services.ApiRepository
-import template.nimbl3.services.response.ExampleResponse
+import nimbl3.com.data.service.ApiRepository
+import nimbl3.com.data.service.response.ExampleResponse
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +25,9 @@ class MainActivity : AppCompatActivity() {
         val imageView = findViewById<ImageView>(R.id.appCompatImageView)
 
         // Just for exampling the Retrofit implementation
-        appRepository.getExampleData()
+        appRepository
+            .getExampleData()
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ response: ExampleResponse ->
                 var displayText = ""
                 (0..2)
