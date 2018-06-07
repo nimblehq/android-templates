@@ -14,15 +14,14 @@ import template.nimbl3.services.ApiService
 import template.nimbl3.services.ApiRepository
 import template.nimbl3.services.ApiRepositoryImpl
 import template.nimbl3.services.interceptor.AppRequestInterceptor
-import template.nimbl3.ui.BuildConfig
-import template.nimbl3.ui.R
+import template.nimbl3.BuildConfig
+import template.nimbl3.R
 import javax.inject.Singleton
 
 @Module
 class AppModule {
 
     @Provides
-    @Singleton
     fun provideContext(application: TemplateApplication): Context = application
 
     @Provides

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Declaring colors with their real name from the style guide we get -->
+    <color name="light_blue">#3F51B5</color>
+    <color name="light_blue_90a">#903F51B5</color>
+
+    <color name="dark_blue">#303F9F</color>
+
+    <color name="pink">#FF4081</color>
+    <color name="pink_70a">#70FF4081</color>
+
+    <color name="white">#FFFFFF</color>
+
+    <color name="black">#000000</color>
+    <color name="black_20a">#20000000</color>
+</resources>
