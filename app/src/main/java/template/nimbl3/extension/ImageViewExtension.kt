@@ -1,7 +1,10 @@
 package template.nimbl3.extension
 
+import android.graphics.drawable.ColorDrawable
+import android.support.v4.content.ContextCompat
 import android.widget.ImageView
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import template.nimbl3.R
 import template.nimbl3.di.modules.GlideApp
 
 /**
@@ -11,7 +14,8 @@ import template.nimbl3.di.modules.GlideApp
 fun ImageView.setImageUrl(url: String) {
     GlideApp.with(context)
             .load(url)
+            .placeholder(ColorDrawable(ContextCompat.getColor(context, R.color.black_20a)))
             .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .fitCenter()
+            .centerCrop()
             .into(this)
 }
