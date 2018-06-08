@@ -1,0 +1,50 @@
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.8.1"
+    reportsDir = file("$buildDir/reports/jacoco")
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: "testStagingDebugUnitTest") {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports for Debug build"
+
+    def fileGenerated = ['**/R.class',
+                         '**/R$*.class',
+                         '**/*$ViewBinder*.*',
+                         '**/*$InjectAdapter*.*',
+                         '**/*Injector*.*',
+                         '**/BuildConfig.*',
+                         '**/Manifest*.*',
+                         '**/*_ViewBinding*.*',
+                         '**/*Adapter*.*',
+                         '**/*Test*.*',
+                         'android/**/*.*']
+
+    // def packagesExcluded = [ ]
+    // def filesExcluded = [ ]
+    // def fileFilter = fileGenerated + packagesExcluded + filesExcluded
+    def fileFilter = fileGenerated
+
+    classDirectories = fileTree(
+        dir: "$buildDir/intermediates/classes/staging/debug",
+        excludes: fileFilter
+    ) + fileTree(
+        dir: "$buildDir/tmp/kotlin-classes/stagingDebug",
+        excludes: fileFilter
+    )
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+    sourceDirectories = files([
+        android.sourceSets.main.java.srcDirs
+    ])
+    executionData = files("$buildDir/jacoco/testStagingDebugUnitTest.exec")
+}
+
+tasks.withType(Test) {
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}

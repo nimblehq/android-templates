@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply from: 'codequality.gradle'
+apply from: '../config/jacoco.gradle'
 
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -36,7 +37,7 @@ android {
 
     compileSdkVersion globalConfig["android_compile_sdk_version"]
     defaultConfig {
-        applicationId "template.nimbl3.android"
+        applicationId "com.nimbl3.android"
         minSdkVersion globalConfig["android_min_sdk_version"]
         targetSdkVersion globalConfig["android_target_sdk_version"]
         versionCode globalConfig["android_version_code"]
@@ -83,15 +84,15 @@ android {
     flavorDimensions "stage"
     productFlavors {
         production {
-            applicationId "com.nimbl3.template"
+            applicationId "com.nimbl3"
         }
 
         staging {
-            applicationId "com.nimbl3.template.staging"
+            applicationId "com.nimbl3.staging"
         }
 
         staging_internal {
-            applicationId "com.nimbl3.template.staging"
+            applicationId "com.nimbl3.staging"
             versionNameSuffix ".${project.versionNameSuffix}"
         }
     }
