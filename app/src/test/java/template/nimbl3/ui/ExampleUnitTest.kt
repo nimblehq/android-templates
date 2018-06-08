@@ -1,4 +1,4 @@
-package template.nimbl3.ui
+package com.nimbl3.ui
 
 import org.junit.Test
 
