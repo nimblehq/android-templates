@@ -21,10 +21,12 @@ task jacocoTestReport(type: JacocoReport, dependsOn: "testStagingDebugUnitTest")
                          '**/*Test*.*',
                          'android/**/*.*']
 
-    // def packagesExcluded = [ ]
+    def packagesExcluded = ['com/nimbl3/di/**',
+                            'com/nimbl3/extension/**',
+                            'com/nimbl3/**/extension/**']
     // def filesExcluded = [ ]
     // def fileFilter = fileGenerated + packagesExcluded + filesExcluded
-    def fileFilter = fileGenerated
+    def fileFilter = fileGenerated + packagesExcluded
 
     classDirectories = fileTree(
         dir: "$buildDir/intermediates/classes/staging/debug",
