@@ -1,14 +1,14 @@
 package com.nimbl3.data.service.response
 
-class ExampleResponse(val data: ExampleDataResponse)
+data class ExampleResponse(val data: ExampleDataResponse)
 
-class ExampleDataResponse(
+data class ExampleDataResponse(
     val children: List<ExampleChildrenResponse>
 )
 
-class ExampleChildrenResponse(val data: ExampleChildrenDataResponse)
+data class ExampleChildrenResponse(val data: ExampleChildrenDataResponse)
 
-class ExampleChildrenDataResponse(
+data class ExampleChildrenDataResponse(
     val author: String,
     val title: String
 )
