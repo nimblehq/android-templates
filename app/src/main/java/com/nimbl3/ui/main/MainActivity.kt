@@ -1,42 +1,59 @@
 package com.nimbl3
 
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
-import dagger.android.AndroidInjection
-import io.reactivex.android.schedulers.AndroidSchedulers
-import com.nimbl3.extension.setImageUrl
-import com.nimbl3.data.service.ApiRepository
-import com.nimbl3.data.service.response.ExampleResponse
+import android.view.View.*
+import com.jakewharton.rxbinding2.view.RxView
+import com.nimbl3.data.lib.schedulers.SchedulersProvider
+import com.nimbl3.extension.loadImage
+import com.nimbl3.lib.IsLoading
 import com.nimbl3.ui.base.BaseActivity
+import com.nimbl3.ui.main.MainViewModel
+import com.nimbl3.ui.main.data.Data
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 
-    @Inject lateinit var appRepository: ApiRepository
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject lateinit var schedulers: SchedulersProvider
+
+    private val viewModel: MainViewModel by lazy {
+        ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        bindToViewModel()
+    }
 
-        val textView = findViewById<TextView>(R.id.text)
-        val imageView = findViewById<ImageView>(R.id.appCompatImageView)
+    private fun bindToViewModel() {
+        viewModel
+            .outputs
+            .loadData()
+            .observeOn(schedulers.main())
+            .subscribe(this::bindData)
 
-        // Just for exampling the Retrofit implementation
-        appRepository
-            .getExampleData()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ response: ExampleResponse ->
-                var displayText = ""
-                (0..2)
-                    .map { response.data.children.get(it).data }
-                    .forEach { displayText += "Author = ${it.author} \nTitle = ${it.title} \n\n" }
+        viewModel
+            .outputs
+            .isLoading()
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.main())
+            .subscribe(this::showLoading)
 
-                textView.setText(displayText)
-                imageView.setImageUrl("http://www.monkeyuser.com/assets/images/2018/80-the-struggle.png")
-            }, { error: Throwable ->
-                Toast.makeText(this, "Error: " + error.message, Toast.LENGTH_SHORT).show()
-            })
+        RxView.clicks(buttonRefresh)
+            .subscribe({ viewModel.inputs.refresh() })
+    }
+
+    private fun bindData(data: Data) {
+        textView.text = data.content
+        imageView.loadImage(data.imageUrl)
+    }
+
+    private fun showLoading(isLoading: IsLoading) {
+        buttonRefresh.visibility = if (isLoading) GONE else VISIBLE
+        progressBar.visibility = if (isLoading) VISIBLE else GONE
     }
 }
