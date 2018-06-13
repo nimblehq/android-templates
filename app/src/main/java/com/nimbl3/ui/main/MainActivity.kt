@@ -1,6 +1,5 @@
 package com.nimbl3
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,14 +9,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import com.nimbl3.extension.setImageUrl
 import com.nimbl3.data.service.ApiRepository
 import com.nimbl3.data.service.response.ExampleResponse
+import com.nimbl3.ui.base.BaseActivity
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     @Inject lateinit var appRepository: ApiRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this) // If we have baseActivity. we can bring it into the base class.
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
