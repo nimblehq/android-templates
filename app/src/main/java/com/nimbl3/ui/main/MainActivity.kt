@@ -11,6 +11,7 @@ import com.nimbl3.lib.IsLoading
 import com.nimbl3.ui.base.BaseActivity
 import com.nimbl3.ui.main.MainViewModel
 import com.nimbl3.ui.main.data.Data
+import com.nimbl3.ui.second.SecondActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -35,6 +36,7 @@ class MainActivity : BaseActivity() {
             .loadData()
             .observeOn(schedulers.main())
             .subscribe(this::bindData)
+            .bindForDisposable()
 
         viewModel
             .outputs
@@ -42,9 +44,23 @@ class MainActivity : BaseActivity() {
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.main())
             .subscribe(this::showLoading)
+            .bindForDisposable()
+
+        viewModel
+            .outputs
+            .gotoNextScreen()
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.main())
+            .subscribe(this::gotoNextScreen)
+            .bindForDisposable()
 
         RxView.clicks(buttonRefresh)
-            .subscribe({ viewModel.inputs.refresh() })
+            .subscribe { viewModel.inputs.refresh() }
+            .bindForDisposable()
+
+        RxView.clicks(buttonNext)
+            .subscribe { viewModel.inputs.next()}
+            .bindForDisposable()
     }
 
     private fun bindData(data: Data) {
@@ -53,7 +69,11 @@ class MainActivity : BaseActivity() {
     }
 
     private fun showLoading(isLoading: IsLoading) {
-        buttonRefresh.visibility = if (isLoading) GONE else VISIBLE
+        buttonRefresh.visibility = if (isLoading) INVISIBLE else VISIBLE
         progressBar.visibility = if (isLoading) VISIBLE else GONE
+    }
+
+    private fun gotoNextScreen(data: Data) {
+        SecondActivity.show(this, data)
     }
 }

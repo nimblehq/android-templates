@@ -1,5 +1,6 @@
 package com.nimbl3.ui.main
 
+import com.nimbl3.data.lib.rxjava.transformers.Transformers
 import com.nimbl3.data.lib.schedulers.SchedulersProvider
 import com.nimbl3.data.service.ApiRepository
 import com.nimbl3.data.service.response.ExampleResponse
@@ -16,6 +17,8 @@ class MainViewModel
                     private val schedulers: SchedulersProvider) : BaseViewModel(), Inputs, Outputs {
 
     private val refresh = PublishSubject.create<Unit>()
+    private val next = PublishSubject.create<Unit>()
+    private val gotoNext = PublishSubject.create<Data>()
 
     private val data = BehaviorSubject.create<Data>()
     private val isLoading = BehaviorSubject.create<IsLoading>()
@@ -46,6 +49,12 @@ class MainViewModel
                 TODO("Handle Error  ¯\\_(ツ)_/¯ ")
             })
             .bindForDisposable()
+
+        data
+            .compose<Data>(Transformers.takeWhen(next))
+            .subscribeOn(schedulers.io())
+            .subscribe(gotoNext::onNext)
+            .bindForDisposable()
     }
 
     private fun fetchApi(): Observable<ExampleResponse> =
@@ -64,7 +73,7 @@ class MainViewModel
             }
 
         // Image from a random place
-        var imageUrl = "http://www.monkeyuser.com/assets/images/2018/80-the-struggle.png"
+        val imageUrl = "http://www.monkeyuser.com/assets/images/2018/80-the-struggle.png"
         return Data(content, imageUrl)
     }
 
@@ -72,17 +81,27 @@ class MainViewModel
         refresh.onNext(Unit)
     }
 
+    override fun next() {
+        next.onNext(Unit)
+    }
+
     override fun loadData(): Observable<Data> = this.data
 
     override fun isLoading(): Observable<IsLoading> = this.isLoading
+
+    override fun gotoNextScreen(): Observable<Data> = this.gotoNext
 }
 
 interface Inputs {
     fun refresh()
+
+    fun next()
 }
 
 interface Outputs {
     fun loadData(): Observable<Data>
 
     fun isLoading(): Observable<IsLoading>
+
+    fun gotoNextScreen(): Observable<Data>
 }
