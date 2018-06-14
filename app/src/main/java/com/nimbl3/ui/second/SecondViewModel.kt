@@ -18,14 +18,11 @@ class SecondViewModel
     val outputs: Outputs = this
 
     init {
-        Timber.d("Trung SecondViewModel: ${this}")
         val dataFromIntent = intent()
             .subscribeOn(schedulers.io())
             .map({ it.getParcelableExtra<Data>(Const.EXTRAS_DATA) })
-            .doOnNext { Timber.d("Trung dataFromIntent onNext ") }
 
         dataFromIntent
-            .doOnNext { Timber.d("Trung onNext ") }
             .subscribe(persistData::onNext)
             .bindForDisposable()
     }
