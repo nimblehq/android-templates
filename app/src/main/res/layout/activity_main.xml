@@ -43,7 +43,7 @@
 
         <Button
             android:id="@+id/buttonRefresh"
-            android:layout_width="150dp"
+            android:layout_width="120dp"
             android:layout_height="50dp"
             android:layout_marginTop="5dp"
             android:text="Refresh"
@@ -53,12 +53,26 @@
 
         <Button
             android:id="@+id/buttonNext"
-            android:layout_width="150dp"
+            android:layout_width="120dp"
             android:layout_height="50dp"
             android:layout_marginTop="5dp"
             android:text="Next"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/buttonRefresh"
             app:layout_constraintTop_toBottomOf="@id/imageView"/>
+
+        <TextView
+            style="@style/Widget.Template.TextView.Clickable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dimen_normal_display_text"
+            android:padding="15dp"
+            android:text="Clickable text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonRefresh"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

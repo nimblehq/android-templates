@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="Widget.Template.TextView" parent="@android:style/Widget.TextView">
+        <item name="android:fontFamily">@font/circularstd_book</item>
+        <item name="android:textColor">@color/dark_blue</item>
+        <item name="android:textSize">@dimen/dimen_normal_display_text</item>
+    </style>
 
+    <style name="Widget.Template.TextView.Bold">
+        <item name="android:textColor">@color/light_blue_90a</item>
+        <item name="android:fontFamily">@font/circularstd_bold</item>
+    </style>
+
+    <style name="Widget.Template.TextView.Clickable">
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
 </resources>

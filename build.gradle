@@ -5,7 +5,7 @@ buildscript {
         android_version_code = 1
         android_version_name = "0.1.0"
         android_build_tools_version = "27.0.3"
-        android_min_sdk_version = 21
+        android_min_sdk_version = 19
         android_target_sdk_version = 27
         android_compile_sdk_version = 27
 
