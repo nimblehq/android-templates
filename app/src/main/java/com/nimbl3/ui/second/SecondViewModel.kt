@@ -20,7 +20,7 @@ class SecondViewModel
     init {
         val dataFromIntent = intent()
             .subscribeOn(schedulers.io())
-            .map({ it.getParcelableExtra<Data>(Const.EXTRAS_DATA) })
+            .map { it.getParcelableExtra<Data>(Const.EXTRAS_DATA) }
 
         dataFromIntent
             .subscribe(persistData::onNext)
