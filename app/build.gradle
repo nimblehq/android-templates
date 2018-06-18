@@ -117,6 +117,7 @@ android {
 
 dependencies {
     implementation project(':data')
+
     kapt(
         "android.arch.lifecycle:compiler:$arch_component_version",
         "com.github.bumptech.glide:compiler:$glide_version",
