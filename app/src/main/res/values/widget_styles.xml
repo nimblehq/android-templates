@@ -16,4 +16,13 @@
         <item name="android:focusable">true</item>
         <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
+
+    <style name="Widget.Template.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:fontFamily">@font/circularstd_bold</item>
+        <item name="android:textColor">@color/colorButtonText</item>
+        <item name="android:background">@drawable/rounded_corner_blue_btn_bg</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/dimen_normal_button_text</item>
+    </style>
+
 </resources>

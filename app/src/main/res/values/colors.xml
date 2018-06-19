@@ -4,4 +4,11 @@
     <color name="colorPrimary">@color/light_blue</color>
     <color name="colorPrimaryDark">@color/dark_blue</color>
     <color name="colorAccent">@color/pink</color>
+
+    <color name="colorButtonText">@color/white</color>
+    <color name="colorButtonDisable">@color/black_40a</color>
+    <color name="colorButtonEnable">@color/light_blue</color>
+    <color name="colorButtonPressed">@color/dark_blue</color>
+
+
 </resources>

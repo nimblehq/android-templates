@@ -42,24 +42,39 @@
             app:layout_constraintTop_toBottomOf="@id/imageView"/>
 
         <Button
+            style="@style/Widget.Template.Button"
             android:id="@+id/buttonRefresh"
             android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="15dp"
             android:text="Refresh"
             app:layout_constraintEnd_toStartOf="@id/buttonNext"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageView"/>
 
         <Button
+            style="@style/Widget.Template.Button"
             android:id="@+id/buttonNext"
             android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="15dp"
             android:text="Next"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/buttonRefresh"
             app:layout_constraintTop_toBottomOf="@id/imageView"/>
+
+        <Button
+            style="@style/Widget.Template.Button"
+            android:id="@+id/buttonDisabled"
+            android:layout_width="120dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="15dp"
+            android:enabled="false"
+            android:text="Disabled"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonRefresh"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
 
         <TextView
             style="@style/Widget.Template.TextView.Clickable"
@@ -70,7 +85,7 @@
             android:padding="15dp"
             android:text="Clickable text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/buttonRefresh"
+            app:layout_constraintTop_toBottomOf="@id/buttonDisabled"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
