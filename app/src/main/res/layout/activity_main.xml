@@ -63,12 +63,13 @@
 
         <TextView
             style="@style/Widget.Template.TextView.Clickable"
+            android:id="@+id/buttonShowDialog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginTop="@dimen/dimen_normal_display_text"
             android:padding="15dp"
-            android:text="Clickable text"
+            android:text="Show Dialog"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/buttonRefresh"
             app:layout_constraintEnd_toEndOf="parent"

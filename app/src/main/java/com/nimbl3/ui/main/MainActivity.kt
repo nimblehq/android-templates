@@ -3,6 +3,7 @@ package com.nimbl3
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v4.app.DialogFragment
 import android.view.View.*
 import com.jakewharton.rxbinding2.view.RxView
 import com.nimbl3.data.lib.schedulers.SchedulersProvider
@@ -12,10 +13,12 @@ import com.nimbl3.ui.base.BaseActivity
 import com.nimbl3.ui.main.MainViewModel
 import com.nimbl3.ui.main.data.Data
 import com.nimbl3.ui.second.SecondActivity
+import com.nimbl3.ui.widget.ConfirmationDialogFragment
+import com.nimbl3.ui.widget.ConfirmationDialogFragment.ConfirmationDialogListener
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), ConfirmationDialogListener{
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject lateinit var schedulers: SchedulersProvider
@@ -61,6 +64,14 @@ class MainActivity : BaseActivity() {
         RxView.clicks(buttonNext)
             .subscribe { viewModel.inputs.next()}
             .bindForDisposable()
+
+        RxView.clicks(buttonShowDialog)
+            .subscribe {
+                // TODO: Bind this to ViewModel CTA, DO NOT resolve the action directly
+                ConfirmationDialogFragment()
+                    .show(supportFragmentManager, ConfirmationDialogFragment.TAG)
+            }
+            .bindForDisposable()
     }
 
     private fun bindData(data: Data) {
@@ -75,5 +86,16 @@ class MainActivity : BaseActivity() {
 
     private fun gotoNextScreen(data: Data) {
         SecondActivity.show(this, data)
+    }
+
+    override fun onDialogPositiveClick(dialog: DialogFragment) {
+        // TODO: Bind this to ViewModel CTA, DO NOT resolve the action directly
+    }
+
+    override fun onDialogNegativeClick(dialog: DialogFragment) {
+        // TODO: Bind this to ViewModel CTA, DO NOT resolve the action directly
+        val dialog = supportFragmentManager
+            .findFragmentByTag(ConfirmationDialogFragment.TAG) as ConfirmationDialogFragment
+        dialog.dismiss()
     }
 }

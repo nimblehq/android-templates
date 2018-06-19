@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Nimbl3 Template</string>
+    <string name="general_ok">OK</string>
+    <string name="general_cancel">Cancel</string>
 </resources>
