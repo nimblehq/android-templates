@@ -1,3 +1,4 @@
+
 package com.nimbl3.data.service
 
 import io.reactivex.Flowable
@@ -6,6 +7,6 @@ import com.nimbl3.data.service.response.ExampleResponse
 
 interface ApiService {
 
-    @GET("/top.json?limit=10")
+    @GET("/top.json?limit=20")
     fun getExampleData(): Flowable<ExampleResponse>
 }

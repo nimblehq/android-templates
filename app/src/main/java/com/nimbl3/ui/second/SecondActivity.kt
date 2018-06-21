@@ -5,11 +5,14 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
+import android.widget.Toast
 import com.nimbl3.R
 import com.nimbl3.data.lib.schedulers.SchedulersProvider
 import com.nimbl3.ui.base.BaseActivity
 import com.nimbl3.ui.main.Const
 import com.nimbl3.ui.main.data.Data
+import com.nimbl3.ui.second.adapter.MyAdapter
 import kotlinx.android.synthetic.main.activity_second.*
 import javax.inject.Inject
 
@@ -25,8 +28,9 @@ class SecondActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
-        bindViewModel()
+        setupRecyclerView()
 
+        bindViewModel()
         viewModel.intent(intent)
     }
 
@@ -34,8 +38,28 @@ class SecondActivity : BaseActivity() {
         viewModel.outputs
             .setPersistedData()
             .observeOn(schedulers.main())
-            .subscribe { persistTextView.text = it.content }
+            .subscribe { bindRecyclerView(it) }
             .bindForDisposable()
+    }
+
+    private fun setupRecyclerView() {
+        val viewManager = LinearLayoutManager(this)
+        recyclerView.apply {
+            setHasFixedSize(true)
+            layoutManager = viewManager
+        }
+    }
+
+    private fun bindRecyclerView(content: List<String>) {
+        val viewAdapter = MyAdapter(
+            content.toTypedArray(),
+            object : MyAdapter.OnItemClickListener {
+                override fun onItemClick(item: String) {
+                    // TODO: bind this to ViewModel to resolve the CTA, DO NOT call to CTA directly
+                    Toast.makeText(this@SecondActivity, item, Toast.LENGTH_SHORT).show()
+                }
+            })
+        recyclerView.adapter = viewAdapter
     }
 
     companion object {

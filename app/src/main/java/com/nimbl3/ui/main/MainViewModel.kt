@@ -66,7 +66,7 @@ class MainViewModel
 
     private fun fromResponse(response: ExampleResponse): Data {
         var content = ""
-        (0..2)
+        (0..19)
             .map { response.data.children[it].data }
             .forEach {
                 content += "Author = ${it.author} \nTitle = ${it.title} \n\n"

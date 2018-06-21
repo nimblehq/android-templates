@@ -12,7 +12,7 @@ import javax.inject.Inject
 class SecondViewModel
 @Inject constructor(private val schedulers: SchedulersProvider) : BaseViewModel(), Inputs, Outputs {
 
-    private val persistData = BehaviorSubject.create<Data>()
+    private val persistData = BehaviorSubject.create<List<String>>()
 
     val inputs: Inputs = this
     val outputs: Outputs = this
@@ -23,7 +23,9 @@ class SecondViewModel
             .map { it.getParcelableExtra<Data>(Const.EXTRAS_DATA) }
 
         dataFromIntent
-            .subscribe(persistData::onNext)
+            .subscribe {
+                persistData.onNext(it.content.split("\n\n").dropLast(1))
+            }
             .bindForDisposable()
     }
 
@@ -34,5 +36,5 @@ interface Inputs {
 }
 
 interface Outputs {
-    fun setPersistedData(): Observable<Data>
+    fun setPersistedData(): Observable<List<String>>
 }
