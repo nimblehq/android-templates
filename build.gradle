@@ -35,6 +35,8 @@ buildscript {
         rxjava_version              = '2.1.4'
         rxbinding_version           = '2.1.1'
 
+        permission_dispatcher_version = '3.3.1'
+
         test_junit_version          = '4.12'
         test_kluent_version         = '1.36'
         test_mockito_version        = '0.3.1'
