@@ -1,15 +1,15 @@
-package com.nimbl3
+package com.nimbl3.ui.main
 
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.View.*
 import com.jakewharton.rxbinding2.view.RxView
+import com.nimbl3.R
 import com.nimbl3.data.lib.schedulers.SchedulersProvider
 import com.nimbl3.extension.loadImage
 import com.nimbl3.lib.IsLoading
 import com.nimbl3.ui.base.BaseActivity
-import com.nimbl3.ui.main.MainViewModel
 import com.nimbl3.ui.main.data.Data
 import com.nimbl3.ui.second.SecondActivity
 import kotlinx.android.synthetic.main.activity_main.*
