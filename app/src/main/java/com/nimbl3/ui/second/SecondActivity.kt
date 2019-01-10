@@ -1,18 +1,27 @@
 package com.nimbl3.ui.second
 
+import android.Manifest
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
+import android.widget.Toast
 import com.nimbl3.R
 import com.nimbl3.data.lib.schedulers.SchedulersProvider
 import com.nimbl3.ui.base.BaseActivity
 import com.nimbl3.ui.main.Const
 import com.nimbl3.ui.main.data.Data
 import kotlinx.android.synthetic.main.activity_second.*
+import permissions.dispatcher.NeedsPermission
+import permissions.dispatcher.OnNeverAskAgain
+import permissions.dispatcher.OnPermissionDenied
+import permissions.dispatcher.RuntimePermissions
 import javax.inject.Inject
 
+
+@RuntimePermissions
 class SecondActivity : BaseActivity() {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -28,6 +37,8 @@ class SecondActivity : BaseActivity() {
         bindViewModel()
 
         viewModel.intent(intent)
+
+        btOpenCamera.setOnClickListener { openCameraWithPermissionCheck() }
     }
 
     private fun bindViewModel() {
@@ -36,6 +47,26 @@ class SecondActivity : BaseActivity() {
             .observeOn(schedulers.main())
             .subscribe { persistTextView.text = it.content }
             .bindForDisposable()
+    }
+
+    @NeedsPermission(Manifest.permission.CAMERA)
+    fun openCamera() {
+        startActivity(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
+    }
+
+    @OnPermissionDenied(Manifest.permission.CAMERA)
+    fun showDeniedForCamera() {
+        Toast.makeText(this, "Permission camera denied", Toast.LENGTH_SHORT).show()
+    }
+
+    @OnNeverAskAgain(Manifest.permission.CAMERA)
+    fun showNeverAskForCamera() {
+        Toast.makeText(this, "Permission camera never ask", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        onRequestPermissionsResult(requestCode, grantResults)
     }
 
     companion object {
