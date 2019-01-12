@@ -11,7 +11,7 @@ buildscript {
         // Dependencies (Alphabet sorted)
         android_legacy_support_version = '1.0.0'
         android_support_version     = '1.1.0-alpha01'
-        android_ktx_version         = '0.3'
+        android_ktx_version         = '1.0.1'
         android_material            = '1.1.0-alpha02'
         arch_component_version      = '2.1.0-alpha01'
 
@@ -19,7 +19,7 @@ buildscript {
 
         dagger_version              = '2.11'
 
-        glide_version               = '4.6.1'
+        glide_version               = '4.8.0'
         gson_version                = '2.4'
 
         kotlin_version              = '1.3.11'
