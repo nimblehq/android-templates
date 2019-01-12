@@ -1,6 +1,6 @@
 package com.nimbl3.ui.main.di
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import com.nimbl3.di.ViewModelKey
 import com.nimbl3.ui.main.MainViewModel
 import dagger.Binds

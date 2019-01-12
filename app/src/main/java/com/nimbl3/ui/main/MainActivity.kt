@@ -1,9 +1,9 @@
 package com.nimbl3.ui.main
 
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.View.*
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.jakewharton.rxbinding2.view.RxView
 import com.nimbl3.R
 import com.nimbl3.data.lib.schedulers.SchedulersProvider

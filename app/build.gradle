@@ -119,7 +119,7 @@ dependencies {
     implementation project(':data')
 
     kapt(
-        "android.arch.lifecycle:compiler:$arch_component_version",
+        "androidx.lifecycle:lifecycle-compiler:$arch_component_version",
         "com.github.bumptech.glide:compiler:$glide_version",
         "com.google.dagger:dagger-compiler:$dagger_version",
         "com.google.dagger:dagger-android-processor:$dagger_version",
@@ -131,25 +131,25 @@ dependencies {
         "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
         "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
 
-        "com.android.support:support-v4:$android_support_version",
-        "com.android.support:appcompat-v7:$android_support_version",
-        "com.android.support:recyclerview-v7:$android_support_version",
-        "com.android.support:design:$android_support_version",
-        "com.android.support.constraint:constraint-layout:$constraint_layout_version",
+        "androidx.legacy:legacy-support-v4:$android_legacy_support_version",
+        "androidx.appcompat:appcompat:$android_support_version",
+        "androidx.recyclerview:recyclerview:$android_support_version",
+        "com.google.android.material:material:$android_material",
+        "androidx.constraintlayout:constraintlayout:$constraint_layout_version",
 
         "io.reactivex.rxjava2:rxjava:$rxjava_version",
         "io.reactivex.rxjava2:rxandroid:$rxandroid_version",
         "com.jakewharton.rxbinding2:rxbinding:$rxbinding_version",
 
-        "android.arch.lifecycle:extensions:$arch_component_version",
-        "android.arch.lifecycle:common-java8:$arch_component_version",
-        "android.arch.lifecycle:runtime:$arch_component_version",
+        "androidx.lifecycle:lifecycle-extensions:$arch_component_version",
+        "androidx.lifecycle:lifecycle-common-java8:$arch_component_version",
+        "androidx.lifecycle:lifecycle-runtime:$arch_component_version",
 
         "androidx.core:core-ktx:$android_ktx_version",
 
         "com.google.dagger:dagger:$dagger_version",
         "com.google.dagger:dagger-android-support:$dagger_version",
-        "com.android.support:multidex:$multidex_version",
+        "androidx.multidex:multidex:$multidex_version",
 
         "com.jakewharton.timber:timber:$timber_log_version"
     )
@@ -168,7 +168,7 @@ dependencies {
     )
 
     androidTestImplementation(
-        "com.android.support.test:runner:$test_runner_version",
-        "com.android.support.test:rules:$test_runner_version"
+        "androidx.test:runner:$test_runner_version",
+        "androidx.test:rules:$test_runner_version",
     )
 }

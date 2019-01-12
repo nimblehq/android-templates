@@ -1,7 +1,7 @@
 package com.nimbl3.ui.base
 
-import android.arch.lifecycle.ViewModel
 import android.content.Intent
+import androidx.lifecycle.ViewModel
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
