@@ -29,7 +29,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: "testStagingDebugUnitTest")
     def fileFilter = fileGenerated + packagesExcluded
 
     classDirectories = fileTree(
-        dir: "$buildDir/intermediates/classes/staging/debug",
+        dir: "$buildDir/intermediates/javac/stagingDebug/compileStagingDebugJavaWithJavac/classes",
         excludes: fileFilter
     ) + fileTree(
         dir: "$buildDir/tmp/kotlin-classes/stagingDebug",
