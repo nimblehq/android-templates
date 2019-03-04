@@ -1,10 +1,10 @@
 package com.nimbl3
 
 import android.content.Context
-import android.support.multidex.MultiDex
+import androidx.multidex.MultiDex
+import com.nimbl3.di.DaggerApplicationComponent
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
-import com.nimbl3.di.DaggerApplicationComponent
 import timber.log.Timber
 
 class TemplateApplication: DaggerApplication() {

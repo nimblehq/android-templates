@@ -1,8 +1,8 @@
 package com.nimbl3.extension
 
 import android.app.Activity
-import android.support.v4.app.Fragment
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 
 /**
  * Provide extension functions to Activity/Fragment to capable of showing Toast in a shorter call

@@ -1,8 +1,8 @@
 package com.nimbl3.extension
 
 import android.graphics.drawable.ColorDrawable
-import android.support.v4.content.ContextCompat
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.nimbl3.R
 import com.nimbl3.di.modules.GlideApp

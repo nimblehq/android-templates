@@ -1,13 +1,13 @@
 package com.nimbl3.ui.second
 
 import android.Manifest
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.nimbl3.R
 import com.nimbl3.data.lib.schedulers.SchedulersProvider
 import com.nimbl3.ui.base.BaseActivity

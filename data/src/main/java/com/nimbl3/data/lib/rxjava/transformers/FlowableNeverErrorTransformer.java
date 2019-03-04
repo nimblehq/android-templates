@@ -1,6 +1,6 @@
 package com.nimbl3.data.lib.rxjava.transformers;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import org.reactivestreams.Publisher;
 

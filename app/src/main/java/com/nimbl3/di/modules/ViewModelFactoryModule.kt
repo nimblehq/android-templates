@@ -1,6 +1,6 @@
 package com.nimbl3.di.modules
 
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider
 import com.nimbl3.lib.viewmodel.ViewModelFactory
 import dagger.Binds
 import dagger.Module
