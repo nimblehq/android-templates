@@ -29,6 +29,7 @@ task jacocoTestReport(type: JacocoReport) {
                          'android/**/*.*']
 
     def packagesExcluded = ['com/nimbl3/di/**',
+                            'com/nimbl3/ui/**/di/**',
                             'com/nimbl3/extension/**',
                             'com/nimbl3/**/extension/**']
     // def filesExcluded = [ ]
