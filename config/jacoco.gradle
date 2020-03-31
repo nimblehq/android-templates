@@ -1,13 +1,20 @@
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = "0.8.3"
+    toolVersion = "$jacoco_core_version"
     reportsDir = file("$buildDir/reports/jacoco")
 }
 
-task jacocoTestReport(type: JacocoReport, dependsOn: "testStagingDebugUnitTest") {
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+}
+
+task jacocoTestReport(type: JacocoReport) {
     group = "Reporting"
     description = "Generate Jacoco coverage reports for Debug build"
+
+    dependsOn ":app:testStagingDebugUnitTest"
+    dependsOn ":data:testStagingDebugUnitTest"
 
     def fileGenerated = ['**/R.class',
                          '**/R$*.class',
@@ -22,27 +29,39 @@ task jacocoTestReport(type: JacocoReport, dependsOn: "testStagingDebugUnitTest")
                          'android/**/*.*']
 
     def packagesExcluded = ['com/nimbl3/di/**',
+                            'com/nimbl3/ui/**/di/**',
                             'com/nimbl3/extension/**',
                             'com/nimbl3/**/extension/**']
     // def filesExcluded = [ ]
     // def fileFilter = fileGenerated + packagesExcluded + filesExcluded
     def fileFilter = fileGenerated + packagesExcluded
 
-    classDirectories = fileTree(
-        dir: "$buildDir/intermediates/javac/stagingDebug/compileStagingDebugJavaWithJavac/classes",
+    classDirectories.from = fileTree(
+        dir: "$project.rootDir/app/build/intermediates/javac/stagingDebug/compileStagingDebugJavaWithJavac/classes",
         excludes: fileFilter
     ) + fileTree(
-        dir: "$buildDir/tmp/kotlin-classes/stagingDebug",
+        dir: "$project.rootDir/data/build/intermediates/javac/stagingDebug/compileStagingDebugJavaWithJavac/classes",
+        excludes: fileFilter
+    ) + fileTree(
+        dir: "$project.rootDir/app/build/tmp/kotlin-classes/stagingDebug",
+        excludes: fileFilter
+    ) + fileTree(
+        dir: "$project.rootDir/data/build/tmp/kotlin-classes/stagingDebug",
         excludes: fileFilter
     )
+
+    sourceDirectories.from = files([
+        "$project.rootDir/app/src/main/java",
+        "$project.rootDir/data/src/main/java"])
+
+    executionData.from = fileTree(dir: project.rootDir, includes: [
+        'app/build/jacoco/testStagingDebugUnitTest.exec',
+        'data/build/jacoco/testStagingDebugUnitTest.exec'])
+
     reports {
         xml.enabled = true
         html.enabled = true
     }
-    sourceDirectories = files([
-        android.sourceSets.main.java.srcDirs
-    ])
-    executionData = files("$buildDir/jacoco/testStagingDebugUnitTest.exec")
 }
 
 tasks.withType(Test) {
