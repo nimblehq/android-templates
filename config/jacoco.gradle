@@ -1,7 +1,7 @@
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = "$jacoco_core_version"
+    toolVersion = jacoco_core_version
     reportsDir = file("$buildDir/reports/jacoco")
 }
 
@@ -32,15 +32,14 @@ task jacocoTestReport(type: JacocoReport) {
                             'com/nimbl3/ui/**/di/**',
                             'com/nimbl3/extension/**',
                             'com/nimbl3/**/extension/**']
-    // def filesExcluded = [ ]
-    // def fileFilter = fileGenerated + packagesExcluded + filesExcluded
+
     def fileFilter = fileGenerated + packagesExcluded
 
     classDirectories.from = fileTree(
-        dir: "$project.rootDir/app/build/intermediates/javac/stagingDebug/compileStagingDebugJavaWithJavac/classes",
+        dir: "$buildDir/intermediates/javac/stagingDebug/classes",
         excludes: fileFilter
     ) + fileTree(
-        dir: "$project.rootDir/data/build/intermediates/javac/stagingDebug/compileStagingDebugJavaWithJavac/classes",
+        dir: "$buildDir/intermediates/javac/stagingDebug/classes",
         excludes: fileFilter
     ) + fileTree(
         dir: "$project.rootDir/app/build/tmp/kotlin-classes/stagingDebug",
