@@ -59,7 +59,7 @@ class MainActivity : BaseActivity() {
             .bindForDisposable()
 
         RxView.clicks(buttonNext)
-            .subscribe { viewModel.inputs.next()}
+            .subscribe { viewModel.inputs.next() }
             .bindForDisposable()
     }
 

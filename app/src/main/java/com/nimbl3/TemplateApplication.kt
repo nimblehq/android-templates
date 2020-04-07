@@ -7,10 +7,10 @@ import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 import timber.log.Timber
 
-class TemplateApplication: DaggerApplication() {
+class TemplateApplication : DaggerApplication() {
 
     override fun applicationInjector(): AndroidInjector<TemplateApplication> =
-            DaggerApplicationComponent.builder().create(this)
+        DaggerApplicationComponent.builder().create(this)
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)

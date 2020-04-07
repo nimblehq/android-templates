@@ -14,12 +14,8 @@ import com.nimbl3.ui.base.BaseActivity
 import com.nimbl3.ui.main.Const
 import com.nimbl3.ui.main.data.Data
 import kotlinx.android.synthetic.main.activity_second.*
-import permissions.dispatcher.NeedsPermission
-import permissions.dispatcher.OnNeverAskAgain
-import permissions.dispatcher.OnPermissionDenied
-import permissions.dispatcher.RuntimePermissions
+import permissions.dispatcher.*
 import javax.inject.Inject
-
 
 @RuntimePermissions
 class SecondActivity : BaseActivity() {

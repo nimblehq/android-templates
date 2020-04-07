@@ -5,5 +5,5 @@ package com.nimbl3.extension
  */
 
 inline fun unless(condition: Boolean, block: () -> Unit) {
-    if(!condition) block()
+    if (!condition) block()
 }

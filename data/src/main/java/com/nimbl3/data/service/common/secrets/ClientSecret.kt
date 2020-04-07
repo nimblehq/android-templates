@@ -5,5 +5,6 @@ interface ClientSecret {
         // TODO: modify for your usage
         const val ID = "client_secret"
     }
+
     val value: String
 }

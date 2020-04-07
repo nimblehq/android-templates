@@ -8,13 +8,15 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 
 class RetrofitProvider {
     companion object {
-        fun getRetrofitBuilder(converterFactory: Converter.Factory,
-                               okHttpClient: OkHttpClient): Retrofit.Builder {
+        fun getRetrofitBuilder(
+            converterFactory: Converter.Factory,
+            okHttpClient: OkHttpClient
+        ): Retrofit.Builder {
             return Retrofit.Builder()
-                    .baseUrl(Secrets.apiEndpointUrl)
-                    .addConverterFactory(converterFactory)
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .client(okHttpClient)
+                .baseUrl(Secrets.apiEndpointUrl)
+                .addConverterFactory(converterFactory)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(okHttpClient)
         }
     }
 }

@@ -13,9 +13,9 @@ import com.nimbl3.di.modules.GlideApp
 
 fun ImageView.loadImage(url: String) {
     GlideApp.with(context)
-            .load(url)
-            .placeholder(ColorDrawable(ContextCompat.getColor(context, R.color.black_13)))
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .fitCenter()
-            .into(this)
+        .load(url)
+        .placeholder(ColorDrawable(ContextCompat.getColor(context, R.color.black_13)))
+        .diskCacheStrategy(DiskCacheStrategy.ALL)
+        .fitCenter()
+        .into(this)
 }

@@ -1,7 +1,6 @@
 package com.nimbl3.data.service
 
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.nimbl3.data.lib.schedulers.SchedulersProvider
 import com.nimbl3.data.lib.schedulers.SchedulersProviderImpl
 import com.nimbl3.data.service.providers.ApiRepositoryProvider

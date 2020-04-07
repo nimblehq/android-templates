@@ -5,5 +5,6 @@ interface ClientId {
         // TODO: modify for your usage
         const val ID = "client_id"
     }
+
     val value: String
 }
