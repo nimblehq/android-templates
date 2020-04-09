@@ -95,18 +95,10 @@ android {
         staging {
             applicationId "com.nimbl3.staging"
         }
-
-        staging_internal {
-            applicationId "com.nimbl3.staging"
-            versionNameSuffix ".${project.versionNameSuffix}"
-        }
     }
 
     sourceSets {
         staging {
-            res.srcDirs = ['src/staging/res']
-        }
-        staging_internal {
             res.srcDirs = ['src/staging/res']
         }
         test {
