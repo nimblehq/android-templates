@@ -21,6 +21,11 @@ or alternatively using `brew cask install fastlane`
 fastlane android staging
 ```
 Execute staging deployment
+### android production
+```
+fastlane android production
+```
+Execute production deployment
 
 ----
 

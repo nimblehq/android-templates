@@ -32,6 +32,12 @@ platform :android do
     @slack_message = 'Staging successfully deployed'
   end
 
+  desc 'Execute production deployment'
+  lane :production do
+    build_and_distribute(Config::TARGETS[:production_debug])
+    @slack_message = 'Production successfully deployed'
+  end
+
   after_all do
     slack(message: @slack_message)
   end

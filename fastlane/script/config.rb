@@ -7,6 +7,7 @@ module Config
 
   # Firebase tester groups
   internal_group = 'internal'
+  product_group = 'product'
   tester_group = 'testers'
 
   # Return the absolute path to the app's apk for the build variant
@@ -21,6 +22,14 @@ module Config
       flavor: 'Staging',
       build_type: 'Debug',
       apk_path: apk_path('staging', 'debug')
+    },
+
+    production_debug: {
+      app_id: '',
+      groups: [internal_group, product_group, tester_group].join(', '),
+      flavor: 'Production',
+      build_type: 'Debug',
+      apk_path: apk_path('production', 'debug')
     }
   }.freeze
 
