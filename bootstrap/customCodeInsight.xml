@@ -1,0 +1,7 @@
+<!-- Add unambiguous imports on the fly & Optimize imports on the fly for Java -->
+<application>
+    <component name="CodeInsightSettings">
+        <option name="ADD_UNAMBIGIOUS_IMPORTS_ON_THE_FLY" value="true" />
+        <option name="OPTIMIZE_IMPORTS_ON_THE_FLY" value="true" />
+    </component>
+</application>

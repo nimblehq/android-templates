@@ -1,0 +1,6 @@
+<!-- Set which template to use for code style -->
+<component name="ProjectCodeStyleConfiguration">
+    <state>
+        <option name="PREFERRED_PROJECT_CODE_STYLE" value="AndroidTemplate" />
+    </state>
+</component>

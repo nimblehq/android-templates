@@ -1,0 +1,73 @@
+#!/usr/bin/env sh
+
+say () {
+  ruby -e "print \"\033[0;32m$1\033[0m\n\""
+}
+
+saveAndroidStudioPreferencesFolderPath() {
+  ANDROID_STUDIO_PREFERENCES_PATH=$(
+    find "$HOME"/Library/Preferences -name 'AndroidStudio*' -depth 1 | sort -r | head -1
+  )
+}
+
+saveProjectPreferencesFolderPath() {
+  PROJECT_PATH=$PWD/.idea
+}
+
+saveBootstrapFolderPath() {
+  BOOTSTRAP_PATH=$PWD/bootstrap
+}
+
+checkIfDirectoryExists() {
+  if [ ! -d "$1" ]; then
+    say "Android Studio was not found in ${HOME}/Library/Preferences ❌\n"
+    exit 1
+  fi
+}
+
+createCodeStylesFolder() {
+  mkdir -p "$ANDROID_STUDIO_PREFERENCES_PATH"/codestyles
+}
+
+copyEditor() {
+  cp "$BOOTSTRAP_PATH"/customEditor.xml "$ANDROID_STUDIO_PREFERENCES_PATH"/options/editor.xml
+}
+
+copyCustomCodeStyle() {
+  cp "$BOOTSTRAP_PATH"/customCodeStyle.xml "$ANDROID_STUDIO_PREFERENCES_PATH"/codestyles/AndroidTemplateCodeStyle.xml
+}
+
+copyJavaCodeInsights() {
+  sed -i '' '/optimizeImportsOnTheFly/d' "$PROJECT_PATH"/workspace.xml
+  cp "$BOOTSTRAP_PATH"/customCodeInsight.xml "$ANDROID_STUDIO_PREFERENCES_PATH"/options/editor.codeinsight.xml
+}
+
+copyCodeStyleConfig() {
+  cp "$BOOTSTRAP_PATH"/customCodeStyleConfig.xml "$PROJECT_PATH"/codeStyles/codeStyleConfig.xml
+}
+
+copyKotlinCodeInsights() {
+  cp "$BOOTSTRAP_PATH"/customKotlinCodeInsightSettings.xml "$PROJECT_PATH"/kotlinCodeInsightSettings.xml
+}
+
+removeBootstrapFolder() {
+  rm -r "$BOOTSTRAP_PATH"
+}
+
+say "Starting Android Bootstrap... 🚀🔥\n"
+saveAndroidStudioPreferencesFolderPath
+saveProjectPreferencesFolderPath
+saveBootstrapFolderPath
+checkIfDirectoryExists "$ANDROID_STUDIO_PREFERENCES_PATH"
+
+say "Setting up IDE configurations... 🚀🔥\n"
+copyEditor
+copyCustomCodeStyle
+copyJavaCodeInsights
+
+say "Setting up project configurations... 🚀🔥\n"
+copyCodeStyleConfig
+copyKotlinCodeInsights
+
+removeBootstrapFolder
+say "Done! Please restart your Android Studio to finalize 🚀🔥\n"

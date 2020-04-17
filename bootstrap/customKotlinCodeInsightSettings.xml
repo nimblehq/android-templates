@@ -1,0 +1,7 @@
+<!-- Add unambiguous imports on the fly & Optimize imports on the fly for Kotlin -->
+<project version="4">
+    <component name="KotlinCodeInsightWorkspaceSettings">
+        <option name="addUnambiguousImportsOnTheFly" value="true" />
+        <option name="optimizeImportsOnTheFly" value="true" />
+    </component>
+</project>
