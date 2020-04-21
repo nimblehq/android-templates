@@ -6,11 +6,9 @@ import com.nimbl3.ui.main.Const
 import com.nimbl3.ui.main.data.Data
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
-import timber.log.Timber
 import javax.inject.Inject
 
-class SecondViewModel
-@Inject constructor(private val schedulers: SchedulersProvider) : BaseViewModel(), Inputs, Outputs {
+class SecondViewModel @Inject constructor(private val schedulers: SchedulersProvider) : BaseViewModel(), Inputs, Outputs {
 
     private val persistData = BehaviorSubject.create<Data>()
 

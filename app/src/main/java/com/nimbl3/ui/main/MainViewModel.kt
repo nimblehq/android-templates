@@ -13,8 +13,10 @@ import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
 class MainViewModel
-@Inject constructor(private val repository: ApiRepository,
-                    private val schedulers: SchedulersProvider) : BaseViewModel(), Inputs, Outputs {
+@Inject constructor(
+    private val repository: ApiRepository,
+    private val schedulers: SchedulersProvider
+) : BaseViewModel(), Inputs, Outputs {
 
     private val refresh = PublishSubject.create<Unit>()
     private val next = PublishSubject.create<Unit>()

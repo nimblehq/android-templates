@@ -6,8 +6,7 @@ import dagger.android.support.AndroidSupportInjection
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-
-abstract class BaseFragment: Fragment() {
+abstract class BaseFragment : Fragment() {
     private var disposables = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
