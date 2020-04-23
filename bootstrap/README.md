@@ -5,8 +5,9 @@ To ensure that our developers are aligned on the same code styling, the followin
 - Add unambiguous imports on the fly & Optimize imports on the fly (Java)
 - Add unambiguous imports on the fly & Optimize imports on the fly (Kotlin)
 - Ensure newline at end of file
+- Install helpful plugins
 
 ## Execute Android Bootstrap
 1. Navigate to the root folder of your project
-2. Execute the script: `bash bootstrap/script`
+2. Execute the script: `bash bootstrap/script 2> /dev/null`
 3. Restart Android Studio
