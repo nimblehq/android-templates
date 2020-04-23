@@ -10,6 +10,12 @@ saveAndroidStudioPreferencesFolderPath() {
   )
 }
 
+saveAndroidStudioApplicationSupportFolderPath() {
+  ANDROID_STUDIO_APPLICATION_SUPPORT_PATH=$(
+    find "$HOME"/Library/'Application Support' -name 'AndroidStudio*' -depth 1 | sort -r | head -1
+  )
+}
+
 saveProjectPreferencesFolderPath() {
   PROJECT_PATH=$PWD/.idea
 }
@@ -18,9 +24,16 @@ saveBootstrapFolderPath() {
   BOOTSTRAP_PATH=$PWD/bootstrap
 }
 
-checkIfDirectoryExists() {
-  if [ ! -d "$1" ]; then
+checkIfAndroidStudioPreferencesFolderExists() {
+  if [ ! -d "$ANDROID_STUDIO_PREFERENCES_PATH" ]; then
     say "Android Studio was not found in ${HOME}/Library/Preferences ❌\n"
+    exit 1
+  fi
+}
+
+checkIfAndroidStudioApplicationSupportFolderExists() {
+  if [ ! -d "$ANDROID_STUDIO_APPLICATION_SUPPORT_PATH" ]; then
+    say "Android Studio was not found in ${HOME}/Library/Application Support ❌\n"
     exit 1
   fi
 }
@@ -50,15 +63,23 @@ copyKotlinCodeInsights() {
   cp "$BOOTSTRAP_PATH"/customKotlinCodeInsightSettings.xml "$PROJECT_PATH"/kotlinCodeInsightSettings.xml
 }
 
+copyAndUnzipPlugin() {
+  unzip -qq -o "$BOOTSTRAP_PATH"/"$1" -d "$ANDROID_STUDIO_APPLICATION_SUPPORT_PATH"
+}
+
 removeBootstrapFolder() {
   rm -r "$BOOTSTRAP_PATH"
 }
 
 say "Starting Android Bootstrap... 🚀🔥\n"
+
+say "Setting up folders... 🚀🔥\n"
 saveAndroidStudioPreferencesFolderPath
+saveAndroidStudioApplicationSupportFolderPath
 saveProjectPreferencesFolderPath
 saveBootstrapFolderPath
-checkIfDirectoryExists "$ANDROID_STUDIO_PREFERENCES_PATH"
+checkIfAndroidStudioPreferencesFolderExists
+checkIfAndroidStudioApplicationSupportFolderExists
 
 say "Setting up IDE configurations... 🚀🔥\n"
 copyEditor
@@ -68,6 +89,10 @@ copyJavaCodeInsights
 say "Setting up project configurations... 🚀🔥\n"
 copyCodeStyleConfig
 copyKotlinCodeInsights
+
+say "Setting up plugins... 🚀🔥\n"
+copyAndUnzipPlugin plugin_adb_idea_1.5.4.zip
+copyAndUnzipPlugin plugin_android_drawable_importer_0.6.zip
 
 removeBootstrapFolder
 say "Done! Please restart your Android Studio to finalize 🚀🔥\n"
