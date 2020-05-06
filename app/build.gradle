@@ -24,8 +24,6 @@ android {
         logger.info("This could be a CI build on pre-merged branch so there is no ticket id found!")
     }
 
-    project.ext.set("versionNameSuffix", "$gitCommitHash${ticketValue}")
-
     signingConfigs {
         config {
             // Remember to edit signing.properties to have the correct info for release build.

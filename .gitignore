@@ -37,12 +37,7 @@ captures/
 
 # Intellij
 *.iml
-.idea
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/gradle.xml
-.idea/dictionaries
-.idea/libraries
+.idea/*
 
 # Keystore files
 secret/
@@ -60,6 +55,3 @@ freeline_project_description.json
 
 # Fastlane
 fastlane/report.xml
-fastlane/Preview.html
-fastlane/screenshots
-fastlane/test_output
