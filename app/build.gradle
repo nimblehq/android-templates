@@ -156,13 +156,27 @@ dependencies {
         "org.permissionsdispatcher:permissionsdispatcher:$permission_dispatcher_version"
     )
 
+    debugImplementation(
+        "androidx.test:core:$android_test_version",
+        "androidx.fragment:fragment-testing:$android_fragment_version",
+    )
+
     testImplementation(
         "junit:junit:$test_junit_version",
-        "com.nhaarman:mockito-kotlin:$test_mockito_version",
+        "org.amshove.kluent:kluent-android:$test_kluent_version",
+        "com.nhaarman.mockitokotlin2:mockito-kotlin:$test_mockito_version",
+        "org.robolectric:robolectric:$test_robolectric_version",
+
+        "androidx.test:runner:$android_test_version",
+        "androidx.test:rules:$android_test_version",
+        "androidx.test.ext:junit:$android_test_junit_version",
     )
 
     androidTestImplementation(
-        "androidx.test:runner:$test_runner_version",
-        "androidx.test:rules:$test_runner_version",
+        "androidx.test:runner:$android_test_version",
+        "androidx.test:rules:$android_test_version",
+        "androidx.test.ext:junit:$android_test_junit_version",
+        "androidx.test.espresso:espresso-core:$test_espresso_version",
+        "androidx.test.espresso:espresso-intents:$test_espresso_version",
     )
 }

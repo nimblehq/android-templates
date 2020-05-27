@@ -11,6 +11,8 @@ buildscript {
         android_compile_sdk_version = 28
 
         // Dependencies (Alphabet sorted)
+        android_core_version = '1.2.0'
+        android_fragment_version = '1.2.4'
         android_legacy_support_version = '1.0.0'
         android_support_version     = '1.1.0-alpha01'
         android_ktx_version         = '1.0.1'
@@ -39,11 +41,14 @@ buildscript {
         rxjava_version              = '2.1.4'
         rxbinding_version           = '2.1.1'
 
-        test_junit_version          = '4.12'
-        test_kluent_version         = '1.36'
-        test_mockito_version        = '0.3.1'
-        test_runner_version         = '1.1.1'
-        timber_log_version          = '3.1.0'
+        android_test_version = '1.2.0'
+        android_test_junit_version = '1.1.1'
+        test_espresso_version = "3.1.0"
+        test_junit_version = '4.13'
+        test_kluent_version = '1.60'
+        test_mockito_version = '2.1.0'
+        test_robolectric_version = '4.3.1'
+        timber_log_version = '4.7.1'
     }
 
     repositories {
