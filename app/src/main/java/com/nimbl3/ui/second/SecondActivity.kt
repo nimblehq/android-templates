@@ -8,7 +8,7 @@ import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.nimbl3.R
-import com.nimbl3.data.lib.schedulers.SchedulersProvider
+import co.nimblehq.data.lib.schedulers.SchedulersProvider
 import com.nimbl3.ui.base.BaseActivity
 import com.nimbl3.ui.main.Const
 import com.nimbl3.ui.main.data.Data

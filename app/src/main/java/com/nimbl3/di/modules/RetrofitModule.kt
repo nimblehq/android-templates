@@ -1,14 +1,14 @@
 package com.nimbl3.di.modules
 
 import com.google.gson.Gson
-import com.nimbl3.data.lib.schedulers.SchedulersProvider
-import com.nimbl3.data.service.ApiRepository
-import com.nimbl3.data.service.ApiRepositoryImpl
-import com.nimbl3.data.service.ApiService
-import com.nimbl3.data.service.interceptor.AppRequestInterceptor
-import com.nimbl3.data.service.providers.ApiServiceProvider
-import com.nimbl3.data.service.providers.ConverterFactoryProvider
-import com.nimbl3.data.service.providers.RetrofitProvider
+import co.nimblehq.data.lib.schedulers.SchedulersProvider
+import co.nimblehq.data.service.ApiRepository
+import co.nimblehq.data.service.ApiRepositoryImpl
+import co.nimblehq.data.service.ApiService
+import co.nimblehq.data.service.interceptor.AppRequestInterceptor
+import co.nimblehq.data.service.providers.ApiServiceProvider
+import co.nimblehq.data.service.providers.ConverterFactoryProvider
+import co.nimblehq.data.service.providers.RetrofitProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,7 +1,7 @@
 package com.nimbl3.di.modules
 
 import com.nimbl3.BuildConfig
-import com.nimbl3.data.service.interceptor.AppRequestInterceptor
+import co.nimblehq.data.service.interceptor.AppRequestInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

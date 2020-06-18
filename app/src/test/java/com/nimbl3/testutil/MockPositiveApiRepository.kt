@@ -1,10 +1,10 @@
 package com.nimbl3.testutil
 
-import com.nimbl3.data.service.ApiRepository
-import com.nimbl3.data.service.response.ExampleChildrenDataResponse
-import com.nimbl3.data.service.response.ExampleChildrenResponse
-import com.nimbl3.data.service.response.ExampleDataResponse
-import com.nimbl3.data.service.response.ExampleResponse
+import co.nimblehq.data.service.ApiRepository
+import co.nimblehq.data.service.response.ExampleChildrenDataResponse
+import co.nimblehq.data.service.response.ExampleChildrenResponse
+import co.nimblehq.data.service.response.ExampleDataResponse
+import co.nimblehq.data.service.response.ExampleResponse
 import io.reactivex.Flowable
 
 object MockPositiveApiRepository : ApiRepository {

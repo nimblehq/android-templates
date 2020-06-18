@@ -2,9 +2,9 @@ package com.nimbl3.ui.main
 
 import androidx.hilt.lifecycle.ViewModelInject
 import co.nimblehq.common.transformers.Transformers
-import com.nimbl3.data.lib.schedulers.SchedulersProvider
-import com.nimbl3.data.service.ApiRepository
-import com.nimbl3.data.service.response.ExampleResponse
+import co.nimblehq.data.lib.schedulers.SchedulersProvider
+import co.nimblehq.data.service.ApiRepository
+import co.nimblehq.data.service.response.ExampleResponse
 import com.nimbl3.lib.IsLoading
 import com.nimbl3.ui.base.BaseViewModel
 import com.nimbl3.ui.main.data.Data

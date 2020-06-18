@@ -1,2 +1,1 @@
-<manifest package="com.nimbl3.data"
-          xmlns:android="http://schemas.android.com/apk/res/android"/>
+<manifest package="co.nimblehq.data" />
