@@ -12,8 +12,8 @@ def fileGenerated = ['**/R.class',
                      '**/*Test*.*',
                      'android/**/*.*']
 
-def packagesExcluded = ['com/nimbl3/di/**',
-                        'com/nimbl3/ui/**/di/**',
+def packagesExcluded = ['co/nimblehq/di/**',
+                        'co/nimblehq/ui/**/di/**',
                         'com/bumptech/glide']
 
 def fileFilter = fileGenerated + packagesExcluded

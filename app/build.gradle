@@ -25,7 +25,7 @@ android {
 
     compileSdkVersion globalConfig["android_compile_sdk_version"]
     defaultConfig {
-        applicationId "com.nimbl3.android"
+        applicationId "co.nimblehq.android"
         minSdkVersion globalConfig["android_min_sdk_version"]
         targetSdkVersion globalConfig["android_target_sdk_version"]
         versionCode globalConfig["android_version_code"]
@@ -76,15 +76,15 @@ android {
     flavorDimensions "stage"
     productFlavors {
         production {
-            applicationId "com.nimbl3"
+            applicationId "co.nimblehq"
         }
 
         staging {
-            applicationId "com.nimbl3.staging"
+            applicationId "co.nimblehq.staging"
         }
 
         development {
-            applicationId "com.nimbl3.dev"
+            applicationId "co.nimblehq.dev"
         }
     }
 
