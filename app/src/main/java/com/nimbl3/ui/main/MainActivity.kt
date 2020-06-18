@@ -3,7 +3,7 @@ package com.nimbl3.ui.main
 import android.os.Bundle
 import android.view.View.*
 import androidx.activity.viewModels
-import com.jakewharton.rxbinding2.view.RxView
+import com.jakewharton.rxbinding3.view.clicks
 import com.nimbl3.R
 import com.nimbl3.data.lib.schedulers.SchedulersProvider
 import com.nimbl3.extension.loadImage
@@ -52,11 +52,11 @@ class MainActivity : BaseActivity() {
             .subscribe(this::gotoNextScreen)
             .bindForDisposable()
 
-        RxView.clicks(buttonRefresh)
+        buttonRefresh.clicks()
             .subscribe { viewModel.inputs.refresh() }
             .bindForDisposable()
 
-        RxView.clicks(buttonNext)
+        buttonNext.clicks()
             .subscribe { viewModel.inputs.next()}
             .bindForDisposable()
     }
