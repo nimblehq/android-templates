@@ -139,6 +139,10 @@ dependencies {
         "com.google.android.material:material:$android_material_version",
         "androidx.constraintlayout:constraintlayout:$constraint_layout_version",
 
+        "androidx.navigation:navigation-runtime-ktx:$navigation_version",
+        "androidx.navigation:navigation-fragment-ktx:$navigation_version",
+        "androidx.navigation:navigation-ui-ktx:$navigation_version",
+
         "com.jakewharton.rxbinding3:rxbinding:$rxbinding_version",
         "com.jakewharton.rxbinding3:rxbinding-core:$rxbinding_version",
 

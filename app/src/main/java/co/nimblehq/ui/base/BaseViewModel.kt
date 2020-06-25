@@ -1,35 +1,30 @@
 package co.nimblehq.ui.base
 
-import android.content.Intent
 import androidx.lifecycle.ViewModel
+import co.nimblehq.lib.IsLoading
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.BehaviorSubject
 
+@Suppress("PropertyName")
 abstract class BaseViewModel : ViewModel() {
 
-    private val disposables: CompositeDisposable = CompositeDisposable()
-    private val intent = BehaviorSubject.create<Intent>()
+    protected val _showLoading = BehaviorSubject.create<IsLoading>()
+    protected val _error = BehaviorSubject.create<Throwable>()
+    private val disposables by lazy { CompositeDisposable() }
 
     override fun onCleared() {
         super.onCleared()
         disposables.clear()
     }
 
-    protected fun Disposable.bindForDisposable() {
-        disposables.add(this)
-    }
+    val showLoading: Observable<IsLoading>
+        get() = _showLoading
 
-    /**
-     * The intent with its bundle taken over from the Activity
-     */
-    protected fun intent(): Observable<Intent> = this.intent
+    val error: Observable<Throwable>
+        get() = _error
 
-    /**
-     * Emitting the Intent data to the corresponding ViewModel of a View for processing
-     */
-    fun intent(intent: Intent) {
-        this.intent.onNext(intent)
-    }
+    protected fun Disposable.addToDisposables() = addTo(disposables)
 }
