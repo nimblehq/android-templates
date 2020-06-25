@@ -48,6 +48,28 @@ android {
         }
     }
 
+    flavorDimensions "stage"
+    productFlavors {
+        production {
+            applicationId "co.nimblehq"
+        }
+
+        staging {
+            applicationId "co.nimblehq.staging"
+        }
+
+        development {
+            applicationId "co.nimblehq.dev"
+            versionNameSuffix ".${project.versionNameSuffix}"
+        }
+    }
+
+    sourceSets {
+        test {
+            resources.srcDirs += ['src/test/resources']
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -73,26 +95,20 @@ android {
         exclude 'META-INF/rxjava.properties'
     }
 
-    flavorDimensions "stage"
-    productFlavors {
-        production {
-            applicationId "co.nimblehq"
+    testOptions {
+        unitTests {
+            // Robolectric resource processing/loading
+            includeAndroidResources = true
         }
-
-        staging {
-            applicationId "co.nimblehq.staging"
-        }
-
-        development {
-            applicationId "co.nimblehq.dev"
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
         }
     }
 
-    sourceSets {
-        test {
-            java.srcDirs += 'src/test/kotlin'
-            resources.srcDirs += ['src/test/resources']
-        }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
     androidExtensions {
