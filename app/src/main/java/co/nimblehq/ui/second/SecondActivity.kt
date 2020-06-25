@@ -8,42 +8,29 @@ import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.viewModels
 import co.nimblehq.R
-import co.nimblehq.data.lib.schedulers.SchedulersProvider
 import co.nimblehq.ui.base.BaseActivity
 import co.nimblehq.ui.main.Const
 import co.nimblehq.ui.main.data.Data
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_second.*
-import permissions.dispatcher.NeedsPermission
-import permissions.dispatcher.OnNeverAskAgain
-import permissions.dispatcher.OnPermissionDenied
-import permissions.dispatcher.RuntimePermissions
-import javax.inject.Inject
+import permissions.dispatcher.*
+import kotlin.reflect.KClass
 
 @AndroidEntryPoint
 @RuntimePermissions
-class SecondActivity : BaseActivity() {
+class SecondActivity : BaseActivity<SecondViewModel>() {
 
-    @Inject lateinit var schedulers: SchedulersProvider
+    override val layoutRes: Int = R.layout.activity_second
 
     private val viewModel by viewModels<SecondViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_second)
-        bindViewModel()
-
-        viewModel.intent(intent)
-
         btOpenCamera.setOnClickListener { openCameraWithPermissionCheck() }
     }
 
-    private fun bindViewModel() {
-        viewModel.outputs
-            .setPersistedData()
-            .observeOn(schedulers.main())
-            .subscribe { persistTextView.text = it.content }
-            .bindForDisposable()
+    override fun bindViewModel() {
+        viewModel.outputs.setPersistedData() bindTo ::bindPersistedData
     }
 
     @NeedsPermission(Manifest.permission.CAMERA)
@@ -61,9 +48,17 @@ class SecondActivity : BaseActivity() {
         Toast.makeText(this, "Permission camera never ask", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         onRequestPermissionsResult(requestCode, grantResults)
+    }
+
+    private fun bindPersistedData(data: Data) {
+        persistTextView.text = data.content
     }
 
     companion object {

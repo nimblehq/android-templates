@@ -1,9 +1,11 @@
 package co.nimblehq.di.modules
 
 import android.content.Context
+import co.nimblehq.TemplateApplication
+import co.nimblehq.domain.schedulers.BaseSchedulerProvider
+import co.nimblehq.domain.schedulers.SchedulerProvider
 import dagger.Module
 import dagger.Provides
-import co.nimblehq.TemplateApplication
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 
@@ -13,4 +15,12 @@ class AppModule {
 
     @Provides
     fun provideContext(application: TemplateApplication): Context = application
+
+    @Module
+    companion object {
+
+        @JvmStatic
+        @Provides
+        fun schedulerProvider(): BaseSchedulerProvider = SchedulerProvider()
+    }
 }

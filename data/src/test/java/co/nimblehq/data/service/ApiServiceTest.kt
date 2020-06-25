@@ -1,12 +1,7 @@
 package co.nimblehq.data.service
 
+import co.nimblehq.data.service.providers.*
 import com.google.gson.Gson
-import co.nimblehq.data.lib.schedulers.SchedulersProvider
-import co.nimblehq.data.lib.schedulers.SchedulersProviderImpl
-import co.nimblehq.data.service.providers.ApiRepositoryProvider
-import co.nimblehq.data.service.providers.ApiServiceProvider
-import co.nimblehq.data.service.providers.ConverterFactoryProvider
-import co.nimblehq.data.service.providers.RetrofitProvider
 import okhttp3.OkHttpClient
 import org.junit.Assert
 import org.junit.Test
@@ -30,7 +25,7 @@ class ApiServiceTest {
         val apiService: ApiService = ApiServiceProvider.getApiService(appRetrofit)
         Assert.assertNotNull("should provide ApiService", apiService)
 
-        val apiRepository: ApiRepository = ApiRepositoryProvider
+        val apiRepository: co.nimblehq.domain.repository.ApiRepository = ApiRepositoryProvider
             .getApiRepository(apiService, schedulers, gson)
         Assert.assertNotNull("should provide ApiRepository", apiRepository)
     }

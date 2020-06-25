@@ -1,6 +1,5 @@
 package co.nimblehq.testutil
 
-import co.nimblehq.data.lib.schedulers.SchedulersProvider
 import io.reactivex.schedulers.Schedulers
 
 object MockSchedulersProvider : SchedulersProvider {

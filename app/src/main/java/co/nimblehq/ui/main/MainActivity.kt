@@ -5,7 +5,6 @@ import android.view.View.*
 import androidx.activity.viewModels
 import com.jakewharton.rxbinding3.view.clicks
 import co.nimblehq.R
-import co.nimblehq.data.lib.schedulers.SchedulersProvider
 import co.nimblehq.extension.loadImage
 import co.nimblehq.lib.IsLoading
 import co.nimblehq.ui.base.BaseActivity
@@ -13,52 +12,31 @@ import co.nimblehq.ui.main.data.Data
 import co.nimblehq.ui.second.SecondActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity<MainViewModel>() {
 
-    @Inject lateinit var schedulers: SchedulersProvider
+    override val layoutRes: Int = R.layout.activity_main
 
     private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        bindToViewModel()
+
+        // TODO update in next PR
+//        buttonRefresh.clicks()
+//            .subscribe { viewModel.inputs.refresh() }
+//            .bindForDisposable()
+//
+//        buttonNext.clicks()
+//            .subscribe { viewModel.inputs.next()}
+//            .bindForDisposable()
     }
 
-    private fun bindToViewModel() {
-        viewModel
-            .outputs
-            .loadData()
-            .observeOn(schedulers.main())
-            .subscribe(this::bindData)
-            .bindForDisposable()
-
-        viewModel
-            .outputs
-            .isLoading()
-            .subscribeOn(schedulers.io())
-            .observeOn(schedulers.main())
-            .subscribe(this::showLoading)
-            .bindForDisposable()
-
-        viewModel
-            .outputs
-            .gotoNextScreen()
-            .subscribeOn(schedulers.io())
-            .observeOn(schedulers.main())
-            .subscribe(this::gotoNextScreen)
-            .bindForDisposable()
-
-        buttonRefresh.clicks()
-            .subscribe { viewModel.inputs.refresh() }
-            .bindForDisposable()
-
-        buttonNext.clicks()
-            .subscribe { viewModel.inputs.next()}
-            .bindForDisposable()
+    override fun bindViewModel() {
+        viewModel.outputs.loadData() bindTo ::bindData
+        viewModel.outputs.isLoading() bindTo ::showLoading
+        viewModel.outputs.gotoNextScreen() bindTo ::gotoNextScreen
     }
 
     private fun bindData(data: Data) {
