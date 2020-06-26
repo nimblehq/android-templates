@@ -1,4 +1,4 @@
-package co.nimblehq.ui.main
+package co.nimblehq.ui.screens
 
 import androidx.hilt.lifecycle.ViewModelInject
 import co.nimblehq.common.transformers.Transformers
@@ -7,7 +7,7 @@ import co.nimblehq.domain.repository.ApiRepository
 import co.nimblehq.domain.schedulers.BaseSchedulerProvider
 import co.nimblehq.lib.IsLoading
 import co.nimblehq.ui.base.BaseViewModel
-import co.nimblehq.ui.main.data.Data
+import co.nimblehq.ui.screens.data.Data
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject

@@ -1,4 +1,4 @@
-package co.nimblehq.ui.main
+package co.nimblehq.ui.screens
 
 import android.os.Bundle
 import android.view.View.*
@@ -8,9 +8,8 @@ import co.nimblehq.extension.loadImage
 import co.nimblehq.extension.subscribeOnClick
 import co.nimblehq.lib.IsLoading
 import co.nimblehq.ui.base.BaseActivity
-import co.nimblehq.ui.main.data.Data
-import co.nimblehq.ui.second.SecondActivity
-import com.jakewharton.rxbinding3.view.clicks
+import co.nimblehq.ui.screens.data.Data
+import co.nimblehq.ui.screens.second.SecondActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 

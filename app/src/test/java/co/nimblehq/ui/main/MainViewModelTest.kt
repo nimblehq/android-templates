@@ -2,6 +2,7 @@ package co.nimblehq.ui.main
 
 import co.nimblehq.domain.schedulers.TrampolineSchedulerProvider
 import co.nimblehq.testutil.MockPositiveApiRepository
+import co.nimblehq.ui.screens.MainViewModel
 import org.junit.Test
 
 @Suppress("IllegalIdentifier")

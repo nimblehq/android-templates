@@ -1,8 +1,8 @@
-package co.nimblehq.ui.second
+package co.nimblehq.ui.screens.second
 
 import androidx.hilt.lifecycle.ViewModelInject
 import co.nimblehq.ui.base.BaseViewModel
-import co.nimblehq.ui.main.data.Data
+import co.nimblehq.ui.screens.data.Data
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="co.nimblehq.ui.second.SecondActivity">
+    tools:context=".ui.screens.second.SecondActivity">
 
     <TextView
         style="@style/Widget.Template.TextView.Bold"
