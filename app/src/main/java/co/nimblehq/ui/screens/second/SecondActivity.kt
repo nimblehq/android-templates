@@ -11,7 +11,7 @@ import co.nimblehq.R
 import co.nimblehq.extension.subscribeOnClick
 import co.nimblehq.ui.base.BaseActivity
 import co.nimblehq.ui.screens.Const
-import co.nimblehq.ui.screens.data.Data
+import co.nimblehq.ui.screens.home.Data
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_second.*
 import permissions.dispatcher.NeedsPermission

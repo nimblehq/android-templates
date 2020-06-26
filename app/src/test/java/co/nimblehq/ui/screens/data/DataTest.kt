@@ -1,5 +1,6 @@
 package co.nimblehq.ui.screens.data
 
+import co.nimblehq.ui.screens.home.Data
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
