@@ -5,6 +5,8 @@ import co.nimblehq.data.service.response.ExampleResponse
 import co.nimblehq.domain.repository.ApiRepository
 import co.nimblehq.domain.schedulers.BaseSchedulerProvider
 import co.nimblehq.ui.base.BaseViewModel
+import co.nimblehq.ui.base.NavigationEvent
+import co.nimblehq.ui.screens.second.SecondBundle
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
@@ -15,8 +17,6 @@ abstract class HomeViewModel : BaseViewModel() {
     abstract val input: Input
 
     abstract val loadData: Observable<Data>
-
-    abstract val gotoNextScreen: Observable<Data>
 
     interface Input {
 
@@ -33,7 +33,6 @@ class HomeViewModelImpl @Inject constructor(
 
     private val _refresh = PublishSubject.create<Unit>()
     private val _next = PublishSubject.create<Unit>()
-    private val _gotoNext = PublishSubject.create<Data>()
 
     private val _data = BehaviorSubject.create<Data>()
 
@@ -64,7 +63,7 @@ class HomeViewModelImpl @Inject constructor(
         _data
             .compose<Data>(Transformers.takeWhen(_next))
             .subscribeOn(schedulers.io())
-            .subscribe(_gotoNext::onNext)
+            .subscribe { _navigator.onNext(NavigationEvent.Second(SecondBundle(it))) }
             .addToDisposables()
     }
 
@@ -73,9 +72,6 @@ class HomeViewModelImpl @Inject constructor(
 
     override val loadData: Observable<Data>
         get() = _data
-
-    override val gotoNextScreen: Observable<Data>
-        get() = _gotoNext
 
     override fun refresh() {
         _refresh.onNext(Unit)

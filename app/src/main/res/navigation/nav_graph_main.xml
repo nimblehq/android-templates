@@ -10,6 +10,25 @@
         android:name="co.nimblehq.ui.screens.home.HomeFragment"
         tools:layout="@layout/fragment_main">
 
+        <action
+            android:id="@+id/action_homeFragment_to_secondFragment"
+            app:destination="@id/secondFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/secondFragment"
+        android:name="co.nimblehq.ui.screens.second.SecondFragment"
+        tools:layout="@layout/fragment_second">
+
+        <argument
+            android:name="bundle"
+            app:argType="co.nimblehq.ui.screens.second.SecondBundle" />
+
     </fragment>
 
 </navigation>

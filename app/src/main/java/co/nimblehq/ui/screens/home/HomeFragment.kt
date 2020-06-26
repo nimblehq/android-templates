@@ -7,14 +7,18 @@ import co.nimblehq.extension.visibleOrGone
 import co.nimblehq.extension.visibleOrInvisible
 import co.nimblehq.lib.IsLoading
 import co.nimblehq.ui.base.BaseFragment
-import co.nimblehq.ui.screens.second.SecondActivity
+import co.nimblehq.ui.screens.MainNavigator
 import kotlinx.android.synthetic.main.fragment_main.*
+import javax.inject.Inject
 
 class HomeFragment : BaseFragment<HomeViewModel>() {
 
     override val viewModelClass = HomeViewModel::class
 
     override val layoutRes = R.layout.fragment_main
+
+    @Inject
+    lateinit var navigator: MainNavigator
 
     override fun setupView() {
         buttonRefresh
@@ -29,7 +33,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     override fun bindViewModel() {
         viewModel.loadData bindTo ::bindData
         viewModel.showLoading bindTo ::showLoading
-        viewModel.gotoNextScreen bindTo ::gotoNextScreen
+        viewModel.navigator bindTo navigator::navigate
     }
 
     private fun bindData(data: Data) {
@@ -40,10 +44,6 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     private fun showLoading(isLoading: IsLoading) {
         buttonRefresh.visibleOrInvisible(!isLoading)
         progressBar.visibleOrGone(isLoading)
-    }
-
-    private fun gotoNextScreen(data: Data) {
-        SecondActivity.show(requireActivity(), data)
     }
 
 }
