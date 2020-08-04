@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
 json_key_file('') # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
-package_name('com.your.package.name') # e.g. com.krausefx.app
+package_name('com.nimbl3') # your package name here
