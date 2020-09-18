@@ -2,8 +2,7 @@ package com.nimbl3.ui.main
 
 import android.os.Bundle
 import android.view.View.*
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.activity.viewModels
 import com.jakewharton.rxbinding2.view.RxView
 import com.nimbl3.R
 import com.nimbl3.data.lib.schedulers.SchedulersProvider
@@ -12,17 +11,16 @@ import com.nimbl3.lib.IsLoading
 import com.nimbl3.ui.base.BaseActivity
 import com.nimbl3.ui.main.data.Data
 import com.nimbl3.ui.second.SecondActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity() {
 
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject lateinit var schedulers: SchedulersProvider
 
-    private val viewModel: MainViewModel by lazy {
-        ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
-    }
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
