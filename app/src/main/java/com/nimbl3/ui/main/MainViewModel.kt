@@ -14,7 +14,7 @@ import io.reactivex.subjects.PublishSubject
 
 class MainViewModel
 @ViewModelInject constructor(private val repository: ApiRepository,
-                                 private val schedulers: SchedulersProvider) : BaseViewModel(), Inputs, Outputs {
+                             private val schedulers: SchedulersProvider) : BaseViewModel(), Inputs, Outputs {
 
     private val refresh = PublishSubject.create<Unit>()
     private val next = PublishSubject.create<Unit>()
