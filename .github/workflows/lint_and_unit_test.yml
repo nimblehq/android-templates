@@ -3,7 +3,7 @@ name: Android Lint & Unit Test flow
 # Choose the branch or branches you want to run this workflow
 on: push
 jobs:
-  setup:
+  lint_and_test:
     name: Setup
     runs-on: macOS-latest
     steps:
@@ -12,11 +12,6 @@ jobs:
         with:
           java-version: 1.8
 
-  linting:
-    name: Linting
-    runs-on: ubuntu-latest
-    needs: setup
-    steps:
       - uses: actions/checkout@v2.3.2
 
       - name: Load Gradle cached
@@ -43,24 +38,6 @@ jobs:
             app/build/reports/*.html
             data/build/reports/*.html
 
-  detekt:
-    name: Detekt - Static Code Analysis
-    runs-on: ubuntu-latest
-    needs: setup
-    steps:
-      - uses: actions/checkout@v2.3.2
-
-      - name: Load Gradle cached
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches/modules-*
-            ~/.gradle/caches/jars-*
-            ~/.gradle/caches/build-cache-*
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
       - name: Run Detekt
         run: ./gradlew detekt
 
@@ -69,24 +46,6 @@ jobs:
         with:
           name: detekt-report
           path: build/reports/detekt/
-
-  unitTest:
-    name: Jacoco - Unit Test & CodeCov
-    runs-on: ubuntu-latest
-    needs: setup
-    steps:
-      - uses: actions/checkout@v2.3.2
-
-      - name: Load Gradle cached
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches/modules-*
-            ~/.gradle/caches/jars-*
-            ~/.gradle/caches/build-cache-*
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
 
       - name: Run Unit Tests & Jacoco
         run: ./gradlew jacocoTestReport
