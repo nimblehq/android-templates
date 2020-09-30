@@ -61,6 +61,14 @@ buildscript {
     }
 }
 
+plugins {
+    id "io.gitlab.arturbosch.detekt" version "1.14.0"
+}
+
+repositories {
+    jcenter()
+}
+
 allprojects {
     repositories {
         google()
@@ -74,21 +82,29 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-configurations {
-    detekt
- }
+detekt {
+    toolVersion = "1.14.0"
 
-dependencies {
-    detekt "io.gitlab.arturbosch.detekt:detekt-cli:1.12.0"
-}
+    input = files("app/src/main/java", "app/src/main/kotlin", "data/src/main/kotlin", "data/src/main/java")
+    parallel = false
+    config = files("detekt-config.yml")
+    buildUponDefaultConfig = false
+    disableDefaultRuleSets = false
 
-task detekt(type: JavaExec) {
-    main = "io.gitlab.arturbosch.detekt.cli.Main"
-    classpath = configurations.detekt
-    def input = "$projectDir"
-    def config = "$project.rootDir/detekt-config.yml"
-    def exclude = ".*test.*,.*/resources/.*,.*/tmp/.*"
-    def report = "html:${project.buildDir}/reports/detekt.html"
-    def params = ['-i', input, '-c', config, '-ex', exclude, '-r', report]
-    args(params)
+    debug = false
+    ignoreFailures = false
+
+    ignoredBuildTypes = ["release"]
+    ignoredFlavors = ["production"]
+
+    reports {
+        xml {
+            enabled = true
+            destination = file("build/reports/detekt.xml")
+        }
+        html {
+            enabled = true
+            destination = file("build/reports/detekt.html")
+        }
+    }
 }
