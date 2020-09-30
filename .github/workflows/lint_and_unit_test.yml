@@ -4,7 +4,7 @@ name: Android Lint & Unit Test flow
 on: push
 jobs:
   lint_and_test:
-    name: Lint, analysis and unit test
+    name: Static code analysis and unit test
     runs-on: macOS-latest
     steps:
       - name: Set up JDK 1.8
@@ -24,19 +24,6 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-
-      # Check the code with Android linter
-      - name: Run Android Linter
-        run: ./gradlew app:lintStagingDebug data:lintStagingDebug
-
-      # Archive lint report
-      - name: Archive Lint reports
-        uses: actions/upload-artifact@v2
-        with:
-          name: lint-report
-          path: |
-            app/build/reports/*.html
-            data/build/reports/*.html
 
       - name: Run Detekt
         run: ./gradlew detekt
