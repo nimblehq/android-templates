@@ -1,5 +1,6 @@
 package com.nimbl3.ui.main
 
+import androidx.hilt.lifecycle.ViewModelInject
 import com.nimbl3.data.lib.rxjava.transformers.Transformers
 import com.nimbl3.data.lib.schedulers.SchedulersProvider
 import com.nimbl3.data.service.ApiRepository
@@ -10,11 +11,12 @@ import com.nimbl3.ui.main.data.Data
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
-import javax.inject.Inject
 
 class MainViewModel
-@Inject constructor(private val repository: ApiRepository,
-                    private val schedulers: SchedulersProvider) : BaseViewModel(), Inputs, Outputs {
+@ViewModelInject constructor(
+    private val repository: ApiRepository,
+    private val schedulers: SchedulersProvider
+) : BaseViewModel(), Inputs, Outputs {
 
     private val refresh = PublishSubject.create<Unit>()
     private val next = PublishSubject.create<Unit>()

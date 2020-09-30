@@ -11,12 +11,14 @@ import com.nimbl3.data.service.providers.ConverterFactoryProvider
 import com.nimbl3.data.service.providers.RetrofitProvider
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import okhttp3.OkHttpClient
 import retrofit2.Converter
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
-
+@InstallIn(ApplicationComponent::class)
 @Module
 class RetrofitModule {
     @Provides

@@ -1,16 +1,17 @@
 package com.nimbl3.ui.second
 
+import androidx.hilt.lifecycle.ViewModelInject
 import com.nimbl3.data.lib.schedulers.SchedulersProvider
 import com.nimbl3.ui.base.BaseViewModel
 import com.nimbl3.ui.main.Const
 import com.nimbl3.ui.main.data.Data
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
-import timber.log.Timber
-import javax.inject.Inject
 
 class SecondViewModel
-@Inject constructor(private val schedulers: SchedulersProvider) : BaseViewModel(), Inputs, Outputs {
+@ViewModelInject constructor(
+    private val schedulers: SchedulersProvider
+) : BaseViewModel(), Inputs, Outputs {
 
     private val persistData = BehaviorSubject.create<Data>()
 
@@ -30,8 +31,7 @@ class SecondViewModel
     override fun setPersistedData() = this.persistData!!
 }
 
-interface Inputs {
-}
+interface Inputs { }
 
 interface Outputs {
     fun setPersistedData(): Observable<Data>

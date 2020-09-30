@@ -4,9 +4,12 @@ import com.nimbl3.BuildConfig
 import com.nimbl3.data.service.interceptor.AppRequestInterceptor
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
+@InstallIn(ApplicationComponent::class)
 @Module
 class OkHttpClientModule {
     @Provides

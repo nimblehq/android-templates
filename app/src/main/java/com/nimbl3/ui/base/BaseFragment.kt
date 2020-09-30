@@ -1,19 +1,11 @@
 package com.nimbl3.ui.base
 
-import android.os.Bundle
 import androidx.fragment.app.Fragment
-import dagger.android.support.AndroidSupportInjection
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-
 abstract class BaseFragment: Fragment() {
     private var disposables = CompositeDisposable()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidSupportInjection.inject(this)
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onDetach() {
         super.onDetach()

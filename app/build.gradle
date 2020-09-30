@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply from: 'codequality.gradle'
 apply from: '../config/jacoco.gradle'
 
+apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
@@ -65,6 +66,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES.txt'
         exclude 'META-INF/LICENSE.txt'
@@ -119,10 +124,10 @@ dependencies {
     implementation project(':data')
 
     kapt(
+        "androidx.hilt:hilt-compiler:$hilt_androidx_version",
         "androidx.lifecycle:lifecycle-compiler:$arch_component_version",
         "com.github.bumptech.glide:compiler:$glide_version",
-        "com.google.dagger:dagger-compiler:$dagger_version",
-        "com.google.dagger:dagger-android-processor:$dagger_version",
+        "com.google.dagger:hilt-android-compiler:$hilt_version",
         "org.permissionsdispatcher:permissionsdispatcher-processor:$permission_dispatcher_version"
     )
 
@@ -141,14 +146,16 @@ dependencies {
         "io.reactivex.rxjava2:rxandroid:$rxandroid_version",
         "com.jakewharton.rxbinding2:rxbinding:$rxbinding_version",
 
+        "androidx.lifecycle:lifecycle-viewmodel-ktx:$arch_component_version",
         "androidx.lifecycle:lifecycle-extensions:$arch_component_version",
         "androidx.lifecycle:lifecycle-common-java8:$arch_component_version",
         "androidx.lifecycle:lifecycle-runtime:$arch_component_version",
 
         "androidx.core:core-ktx:$android_ktx_version",
+        "androidx.fragment:fragment-ktx:$fragment_ktx_version",
 
-        "com.google.dagger:dagger:$dagger_version",
-        "com.google.dagger:dagger-android-support:$dagger_version",
+        "com.google.dagger:hilt-android:$hilt_version",
+        "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_androidx_version",
         "androidx.multidex:multidex:$multidex_version",
 
         "com.jakewharton.timber:timber:$timber_log_version",
