@@ -63,7 +63,7 @@ class SecondActivity : BaseActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        onRequestPermissionsResult(requestCode, permissions ,grantResults)
+        onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     companion object {
