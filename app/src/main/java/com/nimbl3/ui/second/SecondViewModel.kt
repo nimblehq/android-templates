@@ -9,7 +9,9 @@ import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
 class SecondViewModel
-@ViewModelInject constructor(private val schedulers: SchedulersProvider) : BaseViewModel(), Inputs, Outputs {
+@ViewModelInject constructor(
+    private val schedulers: SchedulersProvider
+) : BaseViewModel(), Inputs, Outputs {
 
     private val persistData = BehaviorSubject.create<Data>()
 
@@ -29,8 +31,7 @@ class SecondViewModel
     override fun setPersistedData() = this.persistData!!
 }
 
-interface Inputs {
-}
+interface Inputs { }
 
 interface Outputs {
     fun setPersistedData(): Observable<Data>
