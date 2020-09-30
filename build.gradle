@@ -61,10 +61,6 @@ buildscript {
     }
 }
 
-plugins {
-    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC6-3"
-}
-
 allprojects {
     repositories {
         google()
@@ -78,13 +74,21 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-detekt {
-    profile("main") {
-        input = "$projectDir"
-        config = "$project.rootDir/detekt-config.yml"
-        filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
-        output = "${project.buildDir}/reports/detekt/"
-        parallel = true
-        disableDefaultRuleSets = false
-    }
+configurations {
+    detekt
+ }
+
+dependencies {
+    detekt "io.gitlab.arturbosch.detekt:detekt-cli:1.12.0"
+}
+
+task detekt(type: JavaExec) {
+    main = "io.gitlab.arturbosch.detekt.cli.Main"
+    classpath = configurations.detekt
+    def input = "$projectDir"
+    def config = "$project.rootDir/detekt-config.yml"
+    def exclude = ".*test.*,.*/resources/.*,.*/tmp/.*"
+    def report = "html:${project.buildDir}/reports/detekt.html"
+    def params = ['-i', input, '-c', config, '-ex', exclude, '-r', report]
+    args(params)
 }
