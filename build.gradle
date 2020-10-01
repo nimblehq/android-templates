@@ -62,7 +62,7 @@ buildscript {
 }
 
 plugins {
-    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC6-3"
+    id "io.gitlab.arturbosch.detekt" version "1.14.0"
 }
 
 allprojects {
@@ -79,12 +79,28 @@ task clean(type: Delete) {
 }
 
 detekt {
-    profile("main") {
-        input = "$projectDir"
-        config = "$project.rootDir/detekt-config.yml"
-        filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
-        output = "${project.buildDir}/reports/detekt/"
-        parallel = true
-        disableDefaultRuleSets = false
+    toolVersion = "1.14.0"
+
+    input = files("app/src/main/java", "app/src/main/kotlin", "data/src/main/kotlin", "data/src/main/java")
+    parallel = false
+    config = files("detekt-config.yml")
+    buildUponDefaultConfig = false
+    disableDefaultRuleSets = false
+
+    debug = false
+    ignoreFailures = false
+
+    ignoredBuildTypes = ["release"]
+    ignoredFlavors = ["production"]
+
+    reports {
+        xml {
+            enabled = true
+            destination = file("build/reports/detekt.xml")
+        }
+        html {
+            enabled = true
+            destination = file("build/reports/detekt.html")
+        }
     }
 }
