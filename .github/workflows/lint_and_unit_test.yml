@@ -1,4 +1,4 @@
-name: Android Lint & Unit Test flow
+name: Lint and Test
 
 # Choose the branch or branches you want to run this workflow
 on: push
