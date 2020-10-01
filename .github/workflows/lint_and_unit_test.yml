@@ -5,7 +5,7 @@ on: push
 jobs:
   lint_and_test:
     name: Static code analysis and unit test
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
