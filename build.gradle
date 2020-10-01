@@ -65,10 +65,6 @@ plugins {
     id "io.gitlab.arturbosch.detekt" version "1.14.0"
 }
 
-repositories {
-    jcenter()
-}
-
 allprojects {
     repositories {
         google()
