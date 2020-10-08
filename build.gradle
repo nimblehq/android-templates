@@ -11,6 +11,7 @@ buildscript {
         android_compile_sdk_version = 28
 
         // Dependencies (Alphabet sorted)
+        android_core_version        = '1.2.0'
         android_legacy_support_version = '1.0.0'
         android_support_version     = '1.1.0'
         android_ktx_version         = '1.0.1'
@@ -46,6 +47,7 @@ buildscript {
         test_kluent_version         = '1.36'
         test_mockito_version        = '0.3.1'
         test_runner_version         = '1.1.1'
+        test_robolectric_version    = '4.3.1'
         timber_log_version          = '3.1.0'
     }
 
