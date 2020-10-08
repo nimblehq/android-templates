@@ -1,0 +1,17 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+dependencies {
+    // noinspection DifferentStdlibGradleVersion
+    implementation(
+        "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    )
+
+    api(
+        "io.reactivex.rxjava2:rxjava:$rxjava_version",
+        "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
+    )
+}
+
+targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_1_8

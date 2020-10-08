@@ -40,6 +40,7 @@ buildscript {
         rxandroid_version           = '2.0.1'
         rxjava_version              = '2.1.4'
         rxbinding_version           = '2.1.1'
+        rxkotlin_version            = '2.2.0'
 
         test_junit_version          = '4.12'
         test_kluent_version         = '1.36'
