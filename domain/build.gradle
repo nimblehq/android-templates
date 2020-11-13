@@ -6,12 +6,12 @@ apply from: '../config/jacoco.gradle'
 
 def globalConfig = rootProject.extensions.getByName("ext")
 android {
-    compileSdkVersion globalConfig.getAt("android_compile_sdk_version")
+    compileSdkVersion globalConfig["android_compile_sdk_version"]
     defaultConfig {
-        minSdkVersion globalConfig.getAt("android_min_sdk_version")
-        targetSdkVersion globalConfig.getAt("android_target_sdk_version")
-        versionCode globalConfig.getAt("android_version_code")
-        versionName globalConfig.getAt("android_version_name")
+        minSdkVersion globalConfig["android_min_sdk_version"]
+        targetSdkVersion globalConfig["android_target_sdk_version"]
+        versionCode globalConfig["android_version_code"]
+        versionName globalConfig["android_version_name"]
     }
 
     flavorDimensions "stage"
