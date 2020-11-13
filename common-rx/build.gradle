@@ -9,7 +9,8 @@ dependencies {
 
     api(
         "io.reactivex.rxjava2:rxjava:$rxjava_version",
-        "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
+        "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version",
+        "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
     )
 }
 
