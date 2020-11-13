@@ -1,7 +1,7 @@
 package com.nimbl3.ui.main
 
 import androidx.hilt.lifecycle.ViewModelInject
-import com.nimbl3.data.lib.rxjava.transformers.Transformers
+import co.nimblehq.common.transformers.Transformers
 import com.nimbl3.data.lib.schedulers.SchedulersProvider
 import com.nimbl3.data.service.ApiRepository
 import com.nimbl3.data.service.response.ExampleResponse
