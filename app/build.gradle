@@ -13,19 +13,6 @@ def globalConfig = rootProject.extensions.getByName("ext")
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-
-    // Our common part of fetching the git hash commit then appending to versionName for internal build.
-    def gitCommitHash = "git rev-parse --short HEAD".execute().text.trim()
-    def gitCommitMessage = "git show -s --format=%B HEAD".execute().text.trim()
-    def ticketValue = ""
-    try {
-        ticketValue = "." + (gitCommitMessage =~ "\\[(.*)\\]")[0][1]
-    } catch (Exception e) {
-        logger.info("This could be a CI build on pre-merged branch so there is no ticket id found!")
-    }
-
-    project.ext.set("versionNameSuffix", "$gitCommitHash${ticketValue}")
-
     signingConfigs {
         config {
             // Remember to edit signing.properties to have the correct info for release build.
@@ -95,18 +82,10 @@ android {
         staging {
             applicationId "com.nimbl3.staging"
         }
-
-        staging_internal {
-            applicationId "com.nimbl3.staging"
-            versionNameSuffix ".${project.versionNameSuffix}"
-        }
     }
 
     sourceSets {
         staging {
-            res.srcDirs = ['src/staging/res']
-        }
-        staging_internal {
             res.srcDirs = ['src/staging/res']
         }
         test {
