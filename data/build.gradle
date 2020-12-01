@@ -43,9 +43,6 @@ android {
         test {
             java.srcDirs += 'src/test/kotlin'
         }
-        development {
-            java.srcDirs += 'src/staging'
-        }
     }
 
     compileOptions {

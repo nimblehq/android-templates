@@ -89,12 +89,6 @@ android {
     }
 
     sourceSets {
-        staging {
-            res.srcDirs = ['src/staging/res']
-        }
-        development {
-            res.srcDirs = ['src/staging/res']
-        }
         test {
             java.srcDirs += 'src/test/kotlin'
             resources.srcDirs += ['src/test/resources']
