@@ -3,7 +3,6 @@ package co.nimblehq.ui.main
 import android.os.Bundle
 import android.view.View.*
 import androidx.activity.viewModels
-import com.jakewharton.rxbinding3.view.clicks
 import co.nimblehq.R
 import co.nimblehq.extension.loadImage
 import co.nimblehq.lib.IsLoading
@@ -14,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<MainViewModel>() {
+class MainActivity : BaseActivity() {
 
     override val layoutRes: Int = R.layout.activity_main
 

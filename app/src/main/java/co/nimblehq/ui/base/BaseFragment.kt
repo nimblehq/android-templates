@@ -1,33 +1,26 @@
 package co.nimblehq.ui.base
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.CallSuper
-import androidx.lifecycle.ViewModelProvider
-import co.nimblehq.di.ActivityViewModelFactory
-import co.nimblehq.di.FragmentViewModelFactory
-import co.nimblehq.extension.*
+import androidx.fragment.app.Fragment
+import co.nimblehq.extension.hideSoftKeyboard
+import co.nimblehq.extension.subscribeOnClick
+import co.nimblehq.extension.userReadableMessage
 import co.nimblehq.ui.common.Toaster
-import dagger.android.support.DaggerFragment
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
 import javax.inject.Inject
-import kotlin.reflect.KClass
 
-abstract class BaseFragment<VM : BaseViewModel> : DaggerFragment(), BaseFragmentCallbacks {
+abstract class BaseFragment : Fragment(), BaseFragmentCallbacks {
 
-    @Inject lateinit var viewModelFactory: FragmentViewModelFactory
-
-    @Inject lateinit var activityViewModelFactory: ActivityViewModelFactory
-
-    @Inject lateinit var toaster: Toaster
-
-    protected val viewModel: VM by lazy { viewModel() }
-
-    protected abstract val viewModelClass: KClass<VM>
+    @Inject
+    lateinit var toaster: Toaster
 
     protected abstract val layoutRes: Int
 
@@ -84,9 +77,6 @@ abstract class BaseFragment<VM : BaseViewModel> : DaggerFragment(), BaseFragment
     }
 
     protected fun Disposable.addToDisposables() = addTo(disposables)
-
-    private fun viewModel(): VM =
-        ViewModelProvider(this, viewModelFactory)[viewModelClass.java]
 
     protected inline infix fun <T> Observable<T>.bindTo(crossinline action: (T) -> Unit) {
         observeOn(AndroidSchedulers.mainThread())

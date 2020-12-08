@@ -13,12 +13,14 @@ import co.nimblehq.ui.main.Const
 import co.nimblehq.ui.main.data.Data
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_second.*
-import permissions.dispatcher.*
-import kotlin.reflect.KClass
+import permissions.dispatcher.NeedsPermission
+import permissions.dispatcher.OnNeverAskAgain
+import permissions.dispatcher.OnPermissionDenied
+import permissions.dispatcher.RuntimePermissions
 
 @AndroidEntryPoint
 @RuntimePermissions
-class SecondActivity : BaseActivity<SecondViewModel>() {
+class SecondActivity : BaseActivity() {
 
     override val layoutRes: Int = R.layout.activity_second
 

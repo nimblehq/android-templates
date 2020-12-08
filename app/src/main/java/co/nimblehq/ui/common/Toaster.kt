@@ -5,10 +5,8 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.makeText
 import androidx.annotation.StringRes
-import co.nimblehq.di.ApplicationScope
 import javax.inject.Inject
 
-@ApplicationScope
 class Toaster @Inject constructor(private val context: Context) {
 
     private var toast: Toast? = null

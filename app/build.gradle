@@ -60,7 +60,6 @@ android {
 
         development {
             applicationId "co.nimblehq.dev"
-            versionNameSuffix ".${project.versionNameSuffix}"
         }
     }
 

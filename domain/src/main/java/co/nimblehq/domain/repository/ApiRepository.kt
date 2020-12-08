@@ -7,6 +7,7 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 
 interface ApiRepository {
+
     fun getExampleData(): Flowable<ExampleResponse>
 }
 
