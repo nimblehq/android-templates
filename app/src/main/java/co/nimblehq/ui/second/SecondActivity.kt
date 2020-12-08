@@ -8,6 +8,7 @@ import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.viewModels
 import co.nimblehq.R
+import co.nimblehq.extension.subscribeOnClick
 import co.nimblehq.ui.base.BaseActivity
 import co.nimblehq.ui.main.Const
 import co.nimblehq.ui.main.data.Data
@@ -28,10 +29,14 @@ class SecondActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        btOpenCamera.setOnClickListener { openCameraWithPermissionCheck() }
+        btOpenCamera
+            .subscribeOnClick { openCameraWithPermissionCheck() }
+            .addToDisposables()
     }
 
     override fun bindViewModel() {
+        viewModel.inputs.dataFromIntent(intent.getParcelableExtra(Const.EXTRAS_DATA))
+
         viewModel.outputs.setPersistedData() bindTo ::bindPersistedData
     }
 

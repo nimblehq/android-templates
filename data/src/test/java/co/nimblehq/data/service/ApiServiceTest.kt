@@ -1,6 +1,10 @@
 package co.nimblehq.data.service
 
 import co.nimblehq.data.service.providers.*
+import co.nimblehq.domain.repository.ApiRepository
+import co.nimblehq.domain.repository.ApiRepositoryImpl
+import co.nimblehq.domain.schedulers.BaseSchedulerProvider
+import co.nimblehq.domain.schedulers.SchedulerProvider
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import org.junit.Assert
@@ -19,14 +23,13 @@ class ApiServiceTest {
         val appRetrofit: Retrofit = retrofitBuilder.build()
 
 
-        val schedulers: SchedulersProvider = SchedulersProviderImpl()
+        val schedulers: BaseSchedulerProvider = SchedulerProvider()
         Assert.assertNotNull("should provide Retrofit", appRetrofit)
 
         val apiService: ApiService = ApiServiceProvider.getApiService(appRetrofit)
         Assert.assertNotNull("should provide ApiService", apiService)
 
-        val apiRepository: co.nimblehq.domain.repository.ApiRepository = ApiRepositoryProvider
-            .getApiRepository(apiService, schedulers, gson)
+        val apiRepository: ApiRepository = ApiRepositoryImpl(apiService, schedulers)
         Assert.assertNotNull("should provide ApiRepository", apiRepository)
     }
 }

@@ -5,9 +5,6 @@ import co.nimblehq.data.service.interceptor.AppRequestInterceptor
 import co.nimblehq.data.service.providers.ApiServiceProvider
 import co.nimblehq.data.service.providers.ConverterFactoryProvider
 import co.nimblehq.data.service.providers.RetrofitProvider
-import co.nimblehq.domain.repository.ApiRepository
-import co.nimblehq.domain.repository.ApiRepositoryImpl
-import co.nimblehq.domain.schedulers.SchedulerProvider
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -23,6 +20,7 @@ import javax.inject.Singleton
 class RetrofitModule {
 
     @Provides
+    @Singleton
     fun provideApiRetrofit(
         okHttpClient: OkHttpClient,
         converterFactory: Converter.Factory
@@ -37,13 +35,8 @@ class RetrofitModule {
         return ConverterFactoryProvider.getConverterFactoryProvider(gson)
     }
 
-    // FIXME move to correct module
     @Provides
     @Singleton
-    fun provideApiClientType(apiService: ApiService, scheduler: SchedulerProvider): ApiRepository =
-        ApiRepositoryImpl(apiService, scheduler)
-
-    @Provides
     fun provideApiService(retrofit: Retrofit): ApiService =
         ApiServiceProvider.getApiService(retrofit)
 

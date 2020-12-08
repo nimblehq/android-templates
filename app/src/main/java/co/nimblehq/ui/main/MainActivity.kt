@@ -5,10 +5,12 @@ import android.view.View.*
 import androidx.activity.viewModels
 import co.nimblehq.R
 import co.nimblehq.extension.loadImage
+import co.nimblehq.extension.subscribeOnClick
 import co.nimblehq.lib.IsLoading
 import co.nimblehq.ui.base.BaseActivity
 import co.nimblehq.ui.main.data.Data
 import co.nimblehq.ui.second.SecondActivity
+import com.jakewharton.rxbinding3.view.clicks
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -22,14 +24,13 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO update in next PR
-//        buttonRefresh.clicks()
-//            .subscribe { viewModel.inputs.refresh() }
-//            .bindForDisposable()
-//
-//        buttonNext.clicks()
-//            .subscribe { viewModel.inputs.next()}
-//            .bindForDisposable()
+        buttonRefresh
+            .subscribeOnClick { viewModel.inputs.refresh() }
+            .addToDisposables()
+
+        buttonNext
+            .subscribeOnClick { viewModel.inputs.next() }
+            .addToDisposables()
     }
 
     override fun bindViewModel() {

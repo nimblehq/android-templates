@@ -9,6 +9,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 
 @InstallIn(ApplicationComponent::class)
 @Module
@@ -20,7 +21,6 @@ class AppModule {
     @Provides
     fun schedulerProvider(): BaseSchedulerProvider = SchedulerProvider()
 
-    // FIXME update with hilt config
     @Provides
-    fun toaster(context: Context): Toaster = Toaster(context)
+    fun toaster(@ApplicationContext context: Context): Toaster = Toaster(context)
 }
