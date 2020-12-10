@@ -14,6 +14,8 @@ import dagger.hilt.android.components.ActivityRetainedComponent
 class RepositoryModule {
 
     @Provides
-    fun provideApiRepository(apiService: ApiService, scheduler: SchedulerProvider): ApiRepository =
-        ApiRepositoryImpl(apiService, scheduler)
+    fun provideApiRepository(
+        apiService: ApiService,
+        scheduler: SchedulerProvider
+    ): ApiRepository = ApiRepositoryImpl(apiService, scheduler)
 }

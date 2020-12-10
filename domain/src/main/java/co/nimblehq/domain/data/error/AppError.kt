@@ -3,7 +3,7 @@ package co.nimblehq.domain.data.error
 import co.nimblehq.data.service.error.JsonApiException
 
 open class AppError(
-    cause: Throwable?
+    override val cause: Throwable?
 ) : Throwable(cause) {
 
     val readableMessage: String?

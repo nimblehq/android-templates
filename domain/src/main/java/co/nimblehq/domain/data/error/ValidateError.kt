@@ -1,10 +1,10 @@
 package co.nimblehq.domain.data.error
 
 sealed class ValidateError(
-    cause: Throwable?
+    override val cause: Throwable?
 ) : AppError(cause) {
 
-    class InvalidEmailError(cause: Throwable?) : ValidateError(cause)
+    data class InvalidEmailError(override val cause: Throwable?) : ValidateError(cause)
 
-    class InvalidPasswordError(cause: Throwable?) : ValidateError(cause)
+    data class InvalidPasswordError(override val cause: Throwable?) : ValidateError(cause)
 }

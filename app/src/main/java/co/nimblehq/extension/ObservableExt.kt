@@ -1,9 +1,9 @@
 package co.nimblehq.extension
 
-import android.util.Log
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
 import io.reactivex.disposables.Disposable
+import timber.log.Timber
 import java.util.concurrent.*
 
 /**
@@ -15,21 +15,21 @@ import java.util.concurrent.*
  * @param: [scheduler] where to manage the timers that handle timeout for each event
  * @return: an [Observable] that performs the throttle operation.
  */
-fun <T> Observable<T>.debounce(scheduler: Scheduler): Observable<T> {
+fun <T> Observable<T>.throttleFirst(scheduler: Scheduler): Observable<T> {
     return this.throttleFirst(DEFAULT_DEBOUNCE_TIME, TimeUnit.MILLISECONDS, scheduler)
 }
 
 /**
  * Subscribe to the Observable<T>, with debounce timeout of 200ms.
- * When an error happens, the stream isn't stopped, it just prints out the error with [Log.e]
+ * When an error happens, the stream isn't stopped, it just prints out the error with [Timber.e]
  */
-fun <T> Observable<T>.debounceAndSubscribe(onNext: (T) -> Unit): Disposable {
+fun <T> Observable<T>.throttleAndSubscribe(onNext: (T) -> Unit): Disposable {
     return this
-        .debounce(mainThread())
+        .throttleFirst(mainThread())
         .flatMapSingle {
             Single.fromCallable { onNext(it) }
                 .onErrorReturn {
-                    Log.e("debounceAndSubscribe", it.message ?: "Unknown error")
+                    Timber.e(it.message ?: "Unknown error")
                 }
         }
         .subscribe()

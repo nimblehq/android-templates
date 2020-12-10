@@ -37,7 +37,7 @@ class SecondActivity : BaseActivity() {
     override fun bindViewModel() {
         viewModel.inputs.dataFromIntent(intent.getParcelableExtra(Const.EXTRAS_DATA))
 
-        viewModel.outputs.setPersistedData() bindTo ::bindPersistedData
+        viewModel.outputs.persistData bindTo ::bindPersistedData
     }
 
     @NeedsPermission(Manifest.permission.CAMERA)
@@ -65,6 +65,7 @@ class SecondActivity : BaseActivity() {
     }
 
     private fun bindPersistedData(data: Data) {
+        // TODO: Refactor view's naming
         persistTextView.text = data.content
     }
 

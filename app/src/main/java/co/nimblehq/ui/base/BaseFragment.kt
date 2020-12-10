@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
+import co.nimblehq.domain.schedulers.SchedulerProvider
 import co.nimblehq.extension.hideSoftKeyboard
 import co.nimblehq.extension.subscribeOnClick
 import co.nimblehq.extension.userReadableMessage
 import co.nimblehq.ui.common.Toaster
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
@@ -21,6 +21,9 @@ abstract class BaseFragment : Fragment(), BaseFragmentCallbacks {
 
     @Inject
     lateinit var toaster: Toaster
+
+    @Inject
+    lateinit var schedulerProvider: SchedulerProvider
 
     protected abstract val layoutRes: Int
 
@@ -79,7 +82,7 @@ abstract class BaseFragment : Fragment(), BaseFragmentCallbacks {
     protected fun Disposable.addToDisposables() = addTo(disposables)
 
     protected inline infix fun <T> Observable<T>.bindTo(crossinline action: (T) -> Unit) {
-        observeOn(AndroidSchedulers.mainThread())
+        observeOn(schedulerProvider.main())
             .subscribe { action(it) }
             .addToDisposables()
     }

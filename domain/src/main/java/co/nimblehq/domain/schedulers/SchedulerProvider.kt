@@ -18,7 +18,7 @@ class SchedulerProvider @Inject constructor() : BaseSchedulerProvider {
     override fun main(): Scheduler = AndroidSchedulers.mainThread()
 }
 
-class TrampolineSchedulerProvider : BaseSchedulerProvider {
+object TrampolineSchedulerProvider : BaseSchedulerProvider {
     override fun computation(): Scheduler = Schedulers.trampoline()
     override fun io(): Scheduler = Schedulers.trampoline()
     override fun main(): Scheduler = Schedulers.trampoline()

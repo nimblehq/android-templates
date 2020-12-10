@@ -8,16 +8,16 @@ import io.reactivex.subjects.BehaviorSubject
 
 class SecondViewModel @ViewModelInject constructor() : BaseViewModel(), Inputs, Outputs {
 
-    private val persistData = BehaviorSubject.create<Data>()
-
     val inputs: Inputs = this
     val outputs: Outputs = this
 
-    override fun dataFromIntent(data: Data) {
-        persistData.onNext(data)
-    }
+    private val _persistData = BehaviorSubject.create<Data>()
+    override val persistData: Observable<Data>
+        get() = _persistData
 
-    override fun setPersistedData() = this.persistData
+    override fun dataFromIntent(data: Data) {
+        _persistData.onNext(data)
+    }
 }
 
 interface Inputs {
@@ -25,5 +25,5 @@ interface Inputs {
 }
 
 interface Outputs {
-    fun setPersistedData(): Observable<Data>
+    val persistData: Observable<Data>
 }
