@@ -3,7 +3,6 @@ package co.nimblehq
 import android.app.Application
 import android.content.Context
 import androidx.multidex.MultiDex
-import co.nimblehq.BuildConfig
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
@@ -17,10 +16,10 @@ class TemplateApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
-        plantTimber()
+        setupLogging()
     }
 
-    private fun plantTimber() {
+    private fun setupLogging() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }

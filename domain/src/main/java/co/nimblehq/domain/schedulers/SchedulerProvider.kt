@@ -4,6 +4,7 @@ import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.schedulers.TestScheduler
+import javax.inject.Inject
 
 interface BaseSchedulerProvider {
     fun computation(): Scheduler
@@ -11,13 +12,13 @@ interface BaseSchedulerProvider {
     fun main(): Scheduler
 }
 
-class SchedulerProvider : BaseSchedulerProvider {
+class SchedulerProvider @Inject constructor() : BaseSchedulerProvider {
     override fun computation(): Scheduler = Schedulers.computation()
     override fun io(): Scheduler = Schedulers.io()
     override fun main(): Scheduler = AndroidSchedulers.mainThread()
 }
 
-class TrampolineSchedulerProvider : BaseSchedulerProvider {
+object TrampolineSchedulerProvider : BaseSchedulerProvider {
     override fun computation(): Scheduler = Schedulers.trampoline()
     override fun io(): Scheduler = Schedulers.trampoline()
     override fun main(): Scheduler = Schedulers.trampoline()

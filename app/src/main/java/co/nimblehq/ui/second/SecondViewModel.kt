@@ -1,38 +1,29 @@
 package co.nimblehq.ui.second
 
 import androidx.hilt.lifecycle.ViewModelInject
-import co.nimblehq.data.lib.schedulers.SchedulersProvider
 import co.nimblehq.ui.base.BaseViewModel
-import co.nimblehq.ui.main.Const
 import co.nimblehq.ui.main.data.Data
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
-class SecondViewModel
-@ViewModelInject constructor(
-    private val schedulers: SchedulersProvider
-) : BaseViewModel(), Inputs, Outputs {
-
-    private val persistData = BehaviorSubject.create<Data>()
+class SecondViewModel @ViewModelInject constructor() : BaseViewModel(), Inputs, Outputs {
 
     val inputs: Inputs = this
     val outputs: Outputs = this
 
-    init {
-        val dataFromIntent = intent()
-            .subscribeOn(schedulers.io())
-            .map { it.getParcelableExtra<Data>(Const.EXTRAS_DATA) }
+    private val _persistData = BehaviorSubject.create<Data>()
+    override val persistData: Observable<Data>
+        get() = _persistData
 
-        dataFromIntent
-            .subscribe(persistData::onNext)
-            .bindForDisposable()
+    override fun dataFromIntent(data: Data) {
+        _persistData.onNext(data)
     }
-
-    override fun setPersistedData() = this.persistData!!
 }
 
-interface Inputs { }
+interface Inputs {
+    fun dataFromIntent(data: Data)
+}
 
 interface Outputs {
-    fun setPersistedData(): Observable<Data>
+    val persistData: Observable<Data>
 }

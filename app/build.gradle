@@ -48,6 +48,23 @@ android {
         }
     }
 
+    flavorDimensions "stage"
+    productFlavors {
+        production {
+            applicationId "co.nimblehq"
+        }
+
+        staging {
+            applicationId "co.nimblehq.staging"
+        }
+    }
+
+    sourceSets {
+        test {
+            resources.srcDirs += ['src/test/resources']
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -73,26 +90,20 @@ android {
         exclude 'META-INF/rxjava.properties'
     }
 
-    flavorDimensions "stage"
-    productFlavors {
-        production {
-            applicationId "co.nimblehq"
+    testOptions {
+        unitTests {
+            // Robolectric resource processing/loading
+            includeAndroidResources = true
         }
-
-        staging {
-            applicationId "co.nimblehq.staging"
-        }
-
-        development {
-            applicationId "co.nimblehq.dev"
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
         }
     }
 
-    sourceSets {
-        test {
-            java.srcDirs += 'src/test/kotlin'
-            resources.srcDirs += ['src/test/resources']
-        }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
     androidExtensions {
@@ -122,6 +133,10 @@ dependencies {
         "androidx.recyclerview:recyclerview:$android_support_version",
         "com.google.android.material:material:$android_material_version",
         "androidx.constraintlayout:constraintlayout:$constraint_layout_version",
+
+        "androidx.navigation:navigation-runtime-ktx:$navigation_version",
+        "androidx.navigation:navigation-fragment-ktx:$navigation_version",
+        "androidx.navigation:navigation-ui-ktx:$navigation_version",
 
         "com.jakewharton.rxbinding3:rxbinding:$rxbinding_version",
         "com.jakewharton.rxbinding3:rxbinding-core:$rxbinding_version",

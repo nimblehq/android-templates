@@ -23,10 +23,6 @@ android {
         staging {
             dimension "stage"
         }
-
-        development {
-            dimension "stage"
-        }
     }
 
     buildTypes {
@@ -78,4 +74,5 @@ dependencies {
         "junit:junit:$test_junit_version",
         "com.nhaarman.mockitokotlin2:mockito-kotlin:$test_mockito_version",
     )
+    testImplementation project(path: ':domain')
 }

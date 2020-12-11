@@ -1,10 +1,7 @@
 package co.nimblehq.testutil
 
-import co.nimblehq.data.service.ApiRepository
-import co.nimblehq.data.service.response.ExampleChildrenDataResponse
-import co.nimblehq.data.service.response.ExampleChildrenResponse
-import co.nimblehq.data.service.response.ExampleDataResponse
-import co.nimblehq.data.service.response.ExampleResponse
+import co.nimblehq.data.service.response.*
+import co.nimblehq.domain.repository.ApiRepository
 import io.reactivex.Flowable
 
 object MockPositiveApiRepository : ApiRepository {
