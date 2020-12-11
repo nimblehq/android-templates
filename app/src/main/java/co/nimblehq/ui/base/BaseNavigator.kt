@@ -11,7 +11,7 @@ import timber.log.Timber
 
 interface BaseNavigator {
 
-    val navHostFragment: Int?
+    val navHostFragmentId: Int
 
     fun findNavController(): NavController?
 
@@ -26,7 +26,7 @@ abstract class BaseNavigatorImpl(protected val activity: Activity) : BaseNavigat
 
     override fun findNavController(): NavController? {
         return navController ?: try {
-            navHostFragment?.let(activity::findNavController)
+            activity.findNavController(navHostFragmentId)
         } catch (e: IllegalStateException) {
             // Log Crashlytics as non-fatal for monitoring
             Timber.e(e)
@@ -57,9 +57,11 @@ abstract class BaseNavigatorImpl(protected val activity: Activity) : BaseNavigat
             .setDestination(destinationId)
             .apply {
                 bundle?.let {
-                    this.setArguments(Bundle().apply {
-                        putParcelable("bundle", bundle)
-                    })
+                    setArguments(
+                        Bundle().apply {
+                            putParcelable("bundle", bundle)
+                        }
+                    )
                 }
             }
             .createPendingIntent()
@@ -67,7 +69,7 @@ abstract class BaseNavigatorImpl(protected val activity: Activity) : BaseNavigat
     }
 
     private fun handleError(error: Throwable) {
-        if (activity is BaseActivity<*>) {
+        if (activity is BaseActivity) {
             Timber.e(error)
             activity.displayError(error)
         } else {

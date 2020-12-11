@@ -1,6 +1,7 @@
 package co.nimblehq.ui.screens.home
 
-import co.nimblehq.data.lib.rxjava.transformers.Transformers
+import androidx.hilt.lifecycle.ViewModelInject
+import co.nimblehq.common.transformers.Transformers
 import co.nimblehq.data.service.response.ExampleResponse
 import co.nimblehq.domain.repository.ApiRepository
 import co.nimblehq.domain.schedulers.BaseSchedulerProvider
@@ -26,7 +27,7 @@ abstract class HomeViewModel : BaseViewModel() {
     }
 }
 
-class HomeViewModelImpl @Inject constructor(
+class HomeViewModelImpl @ViewModelInject constructor(
     private val repository: ApiRepository,
     private val schedulers: BaseSchedulerProvider
 ) : HomeViewModel(), HomeViewModel.Input {

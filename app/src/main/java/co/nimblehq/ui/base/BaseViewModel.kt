@@ -29,7 +29,6 @@ abstract class BaseViewModel : ViewModel() {
     val error: Observable<Throwable>
         get() = _error
 
-
     val navigator: Observable<NavigationEvent>
         get() = _navigator
 

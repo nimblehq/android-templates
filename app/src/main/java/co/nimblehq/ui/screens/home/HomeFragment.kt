@@ -1,5 +1,7 @@
 package co.nimblehq.ui.screens.home
 
+import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
 import co.nimblehq.R
 import co.nimblehq.extension.loadImage
 import co.nimblehq.extension.subscribeOnClick
@@ -8,17 +10,18 @@ import co.nimblehq.extension.visibleOrInvisible
 import co.nimblehq.lib.IsLoading
 import co.nimblehq.ui.base.BaseFragment
 import co.nimblehq.ui.screens.MainNavigator
+import co.nimblehq.ui.screens.MainViewModel
 import kotlinx.android.synthetic.main.fragment_main.*
 import javax.inject.Inject
 
-class HomeFragment : BaseFragment<HomeViewModel>() {
-
-    override val viewModelClass = HomeViewModel::class
+class HomeFragment : BaseFragment() {
 
     override val layoutRes = R.layout.fragment_main
 
     @Inject
     lateinit var navigator: MainNavigator
+
+    private val viewModel by viewModels<HomeViewModel>()
 
     override fun setupView() {
         buttonRefresh

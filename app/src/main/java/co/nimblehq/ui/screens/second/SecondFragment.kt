@@ -2,8 +2,11 @@ package co.nimblehq.ui.screens.second
 
 import android.content.Intent
 import android.provider.MediaStore
+import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
 import co.nimblehq.R
 import co.nimblehq.ui.base.BaseFragment
+import co.nimblehq.ui.screens.MainViewModel
 import co.nimblehq.ui.screens.home.Data
 import kotlinx.android.synthetic.main.fragment_second.*
 
@@ -11,11 +14,11 @@ import kotlinx.android.synthetic.main.fragment_second.*
  * TODO update with a new permission requesting
  */
 //@RuntimePermissions
-class SecondFragment : BaseFragment<SecondViewModel>() {
-
-    override val viewModelClass = SecondViewModel::class
+class SecondFragment : BaseFragment() {
 
     override val layoutRes: Int = R.layout.fragment_second
+
+    private val viewModel by viewModels<SecondViewModel>()
 
     override fun setupView() {
         btOpenCamera.setOnClickListener { openCamera() }

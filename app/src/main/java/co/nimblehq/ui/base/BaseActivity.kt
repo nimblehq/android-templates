@@ -47,7 +47,7 @@ abstract class BaseActivity : AppCompatActivity() {
             .addToDisposables()
     }
 
-    protected fun displayError(error: Throwable) {
+    fun displayError(error: Throwable) {
         val message = error.userReadableMessage(this)
         toaster.display(message)
     }

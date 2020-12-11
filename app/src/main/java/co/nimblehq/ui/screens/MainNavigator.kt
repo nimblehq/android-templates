@@ -14,7 +14,7 @@ class MainNavigatorImpl @Inject constructor(
     activity: MainActivity
 ) : BaseNavigatorImpl(activity), MainNavigator {
 
-    override val navHostFragment = R.id.navHostFragment
+    override val navHostFragmentId = R.id.navHostFragment
 
     override fun navigate(event: NavigationEvent) {
         when (event) {
@@ -31,5 +31,4 @@ class MainNavigatorImpl @Inject constructor(
             else -> unsupportedNavigation()
         }
     }
-
 }
