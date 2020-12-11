@@ -1,11 +1,11 @@
 package co.nimblehq.ui.base
 
-import android.app.Activity
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.annotation.IdRes
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import co.nimblehq.extension.getResourceName
 import timber.log.Timber
 
@@ -20,13 +20,13 @@ interface BaseNavigator {
     fun navigateUp()
 }
 
-abstract class BaseNavigatorImpl(protected val activity: Activity) : BaseNavigator {
+abstract class BaseNavigatorImpl(protected val fragment: Fragment) : BaseNavigator {
 
     private var navController: NavController? = null
 
     override fun findNavController(): NavController? {
         return navController ?: try {
-            activity.findNavController(navHostFragmentId)
+            fragment.findNavController()
         } catch (e: IllegalStateException) {
             // Log Crashlytics as non-fatal for monitoring
             Timber.e(e)
@@ -44,8 +44,8 @@ abstract class BaseNavigatorImpl(protected val activity: Activity) : BaseNavigat
 
     protected fun unsupportedNavigation() {
         val navController = findNavController()
-        val currentGraph = activity.getResourceName(navController?.graph?.id)
-        val currentDestination = activity.getResourceName(navController?.currentDestination?.id)
+        val currentGraph = fragment.requireActivity().getResourceName(navController?.graph?.id)
+        val currentDestination = fragment.requireActivity().getResourceName(navController?.currentDestination?.id)
         handleError(NavigationError.UnsupportedNavigationError(currentGraph, currentDestination))
     }
 
@@ -69,9 +69,9 @@ abstract class BaseNavigatorImpl(protected val activity: Activity) : BaseNavigat
     }
 
     private fun handleError(error: Throwable) {
-        if (activity is BaseActivity) {
+        if (fragment is BaseFragment) {
             Timber.e(error)
-            activity.displayError(error)
+            fragment.displayError(error)
         } else {
             throw error
         }

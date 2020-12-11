@@ -1,8 +1,6 @@
 package co.nimblehq.ui.screens
 
+import androidx.hilt.lifecycle.ViewModelInject
 import co.nimblehq.ui.base.BaseViewModel
-import javax.inject.Inject
 
-abstract class MainViewModel : BaseViewModel()
-
-class MainViewModelImpl @Inject constructor() : MainViewModel()
+class MainViewModel @ViewModelInject constructor() : BaseViewModel()

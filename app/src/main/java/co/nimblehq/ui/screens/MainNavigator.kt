@@ -1,5 +1,6 @@
 package co.nimblehq.ui.screens
 
+import androidx.fragment.app.Fragment
 import co.nimblehq.R
 import co.nimblehq.ui.base.BaseNavigator
 import co.nimblehq.ui.base.BaseNavigatorImpl
@@ -11,8 +12,8 @@ import javax.inject.Inject
 interface MainNavigator : BaseNavigator
 
 class MainNavigatorImpl @Inject constructor(
-    activity: MainActivity
-) : BaseNavigatorImpl(activity), MainNavigator {
+    fragment: Fragment
+) : BaseNavigatorImpl(fragment), MainNavigator {
 
     override val navHostFragmentId = R.id.navHostFragment
 

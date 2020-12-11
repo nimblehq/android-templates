@@ -1,37 +1,43 @@
 package co.nimblehq.ui.screens.second
 
-import android.content.Intent
-import android.provider.MediaStore
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import co.nimblehq.R
+import co.nimblehq.extension.subscribeOnClick
 import co.nimblehq.ui.base.BaseFragment
-import co.nimblehq.ui.screens.MainViewModel
 import co.nimblehq.ui.screens.home.Data
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_second.*
 
 /**
  * TODO update with a new permission requesting
  */
 //@RuntimePermissions
+@AndroidEntryPoint
 class SecondFragment : BaseFragment() {
 
     override val layoutRes: Int = R.layout.fragment_second
 
     private val viewModel by viewModels<SecondViewModel>()
 
+    private val args: SecondFragmentArgs by navArgs()
+
     override fun setupView() {
-        btOpenCamera.setOnClickListener { openCamera() }
+        btOpenCamera
+            .subscribeOnClick { toaster.display("Not yet implemented") }
+            .addToDisposables()
     }
 
     override fun bindViewModel() {
-        viewModel.setPersistedData() bindTo ::bindPersistedData
+        viewModel.input.dataFromIntent(args.bundle.data)
+
+        viewModel.output.persistData bindTo ::bindPersistedData
     }
 
-    //    @NeedsPermission(Manifest.permission.CAMERA)
-    fun openCamera() {
-        startActivity(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
-    }
+//    @NeedsPermission(Manifest.permission.CAMERA)
+//    fun openCamera() {
+//        startActivity(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
+//    }
 //
 //    @OnPermissionDenied(Manifest.permission.CAMERA)
 //    fun showDeniedForCamera() {
@@ -49,11 +55,11 @@ class SecondFragment : BaseFragment() {
 //        grantResults: IntArray
 //    ) {
 //        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        onRequestPermissionsResult(requestCode, grantResults)
+//        onRequestPermissionsResult(requestCode, permissions, grantResults)
 //    }
 
     private fun bindPersistedData(data: Data) {
+        // TODO: Refactor view's naming
         persistTextView.text = data.content
     }
-
 }

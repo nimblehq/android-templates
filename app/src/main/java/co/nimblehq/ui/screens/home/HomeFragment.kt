@@ -1,6 +1,5 @@
 package co.nimblehq.ui.screens.home
 
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import co.nimblehq.R
 import co.nimblehq.extension.loadImage
@@ -10,10 +9,11 @@ import co.nimblehq.extension.visibleOrInvisible
 import co.nimblehq.lib.IsLoading
 import co.nimblehq.ui.base.BaseFragment
 import co.nimblehq.ui.screens.MainNavigator
-import co.nimblehq.ui.screens.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_main.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class HomeFragment : BaseFragment() {
 
     override val layoutRes = R.layout.fragment_main

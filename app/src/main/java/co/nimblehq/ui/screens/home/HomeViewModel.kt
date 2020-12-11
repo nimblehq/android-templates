@@ -11,26 +11,18 @@ import co.nimblehq.ui.screens.second.SecondBundle
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
-import javax.inject.Inject
 
-abstract class HomeViewModel : BaseViewModel() {
+interface Input {
 
-    abstract val input: Input
+    fun refresh()
 
-    abstract val loadData: Observable<Data>
-
-    interface Input {
-
-        fun refresh()
-
-        fun next()
-    }
+    fun next()
 }
 
-class HomeViewModelImpl @ViewModelInject constructor(
+class HomeViewModel @ViewModelInject constructor(
     private val repository: ApiRepository,
     private val schedulers: BaseSchedulerProvider
-) : HomeViewModel(), HomeViewModel.Input {
+) : BaseViewModel(), Input {
 
     private val _refresh = PublishSubject.create<Unit>()
     private val _next = PublishSubject.create<Unit>()
@@ -68,10 +60,9 @@ class HomeViewModelImpl @ViewModelInject constructor(
             .addToDisposables()
     }
 
-    override val input: Input
-        get() = this
+    val input = this
 
-    override val loadData: Observable<Data>
+    val loadData: Observable<Data>
         get() = _data
 
     override fun refresh() {
