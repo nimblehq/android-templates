@@ -57,10 +57,6 @@ android {
         staging {
             applicationId "co.nimblehq.staging"
         }
-
-        development {
-            applicationId "co.nimblehq.dev"
-        }
     }
 
     sourceSets {
