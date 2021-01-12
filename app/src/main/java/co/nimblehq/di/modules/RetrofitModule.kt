@@ -5,7 +5,7 @@ import co.nimblehq.data.service.interceptor.AppRequestInterceptor
 import co.nimblehq.data.service.providers.ApiServiceProvider
 import co.nimblehq.data.service.providers.ConverterFactoryProvider
 import co.nimblehq.data.service.providers.RetrofitProvider
-import com.google.gson.Gson
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,9 +31,7 @@ class RetrofitModule {
     }
 
     @Provides
-    fun provideConverterFactory(gson: Gson): Converter.Factory {
-        return ConverterFactoryProvider.getConverterFactoryProvider(gson)
-    }
+    fun provideMoshiConverterFactory(moshi: Moshi): Converter.Factory = ConverterFactoryProvider.getMoshiConverterFactory(moshi)
 
     @Provides
     @Singleton

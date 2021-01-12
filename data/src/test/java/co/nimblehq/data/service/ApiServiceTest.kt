@@ -5,7 +5,6 @@ import co.nimblehq.domain.repository.ApiRepository
 import co.nimblehq.domain.repository.ApiRepositoryImpl
 import co.nimblehq.domain.schedulers.BaseSchedulerProvider
 import co.nimblehq.domain.schedulers.SchedulerProvider
-import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import org.junit.Assert
 import org.junit.Test
@@ -17,8 +16,8 @@ class ApiServiceTest {
     @Test
     fun `API Service components should be initialize-able independently`() {
         val httpClient = OkHttpClient.Builder().build()
-        val gson = Gson()
-        val converterFactory = ConverterFactoryProvider.getConverterFactoryProvider(gson)
+        val moshi = MoshiBuilderProvider.moshiBuilder.build()
+        val converterFactory = ConverterFactoryProvider.getMoshiConverterFactory(moshi)
         val retrofitBuilder = RetrofitProvider.getRetrofitBuilder(converterFactory, httpClient)
         val appRetrofit: Retrofit = retrofitBuilder.build()
 
