@@ -3,8 +3,9 @@ package co.nimblehq.domain
 import co.nimblehq.data.service.error.JsonApiException
 import co.nimblehq.data.service.error.NoConnectivityException
 import co.nimblehq.data.service.error.UnknownException
+import co.nimblehq.data.service.providers.MoshiBuilderProvider
 import co.nimblehq.data.service.response.ErrorResponse
-import com.google.gson.Gson
+import com.squareup.moshi.JsonAdapter
 import io.reactivex.Single
 import retrofit2.Response
 import java.io.InterruptedIOException
@@ -37,8 +38,9 @@ private fun <T> mapError(response: Response<T>?): Exception {
 
 fun parseErrorResponse(source: String?): ErrorResponse? {
     return try {
-        val gson = Gson()
-        gson.fromJson(source, ErrorResponse::class.java)
+        val moshi = MoshiBuilderProvider.moshiBuilder.build()
+        val adapter: JsonAdapter<ErrorResponse> = moshi.adapter(ErrorResponse::class.java)
+        adapter.fromJson(source.orEmpty())
     } catch (e: Exception) {
         null
     }

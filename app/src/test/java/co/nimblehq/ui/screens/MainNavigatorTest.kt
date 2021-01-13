@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import co.nimblehq.R
-import co.nimblehq.domain.data.Data
+import co.nimblehq.domain.test.MockUtil
 import co.nimblehq.ui.base.NavigationEvent
 import co.nimblehq.ui.screens.home.HomeFragmentDirections
 import co.nimblehq.ui.screens.second.SecondBundle
@@ -35,10 +35,8 @@ class MainNavigatorTest {
     @Test
     fun `Should navigate to Second screen from Home correctly`() {
         When calling mockDestination.id itReturns R.id.homeFragment
-        val bundle = SecondBundle(Data(
-            "content",
-            "url"
-        ))
+
+        val bundle = SecondBundle(MockUtil.data)
         navigator.navigate(
             NavigationEvent.Second(bundle)
         )

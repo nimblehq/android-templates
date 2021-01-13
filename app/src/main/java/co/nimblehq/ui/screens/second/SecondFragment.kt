@@ -35,8 +35,7 @@ class SecondFragment : BaseFragment() {
 
     override fun bindViewModel() {
         viewModel.input.dataFromIntent(args.bundle.data)
-
-        viewModel.output.persistData bindTo ::bindPersistedData
+        viewModel.data bindTo ::bindData
     }
 
     private fun requestCamera() {
@@ -62,7 +61,7 @@ class SecondFragment : BaseFragment() {
         }
     }
 
-    private fun bindPersistedData(data: Data) {
+    private fun bindData(data: Data) {
         // TODO: Refactor view's naming
         persistTextView.text = data.content
     }

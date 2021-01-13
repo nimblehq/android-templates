@@ -64,7 +64,7 @@ class HomeViewModel @ViewModelInject constructor(
 
     val input = this
 
-    val loadData: Observable<Data>
+    val data: Observable<Data>
         get() = _data
 
     override fun refresh() {

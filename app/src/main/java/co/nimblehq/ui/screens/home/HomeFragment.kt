@@ -37,7 +37,7 @@ class HomeFragment : BaseFragment() {
     override fun bindViewModel() {
         viewModel.showLoading bindTo ::showLoading
         viewModel.error bindTo ::displayError
-        viewModel.loadData bindTo ::bindData
+        viewModel.data bindTo ::bindData
         viewModel.navigator bindTo navigator::navigate
     }
 

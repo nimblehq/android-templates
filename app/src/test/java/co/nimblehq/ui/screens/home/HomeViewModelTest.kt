@@ -1,25 +1,40 @@
 package co.nimblehq.ui.screens.home
 
-import co.nimblehq.domain.schedulers.TrampolineSchedulerProvider
-import co.nimblehq.testutil.MockPositiveApiRepository
+import co.nimblehq.domain.test.MockUtil
+import co.nimblehq.domain.usecase.GetExampleDataUseCase
+import com.nhaarman.mockitokotlin2.any
+import io.reactivex.Single
+import org.amshove.kluent.When
+import org.amshove.kluent.calling
+import org.amshove.kluent.itReturns
+import org.amshove.kluent.mock
+import org.junit.Before
 import org.junit.Test
 
 class HomeViewModelTest {
 
-    @Test
-    fun `At init state, it should emit first load data `() {
-        val viewModel = HomeViewModel(MockPositiveApiRepository, TrampolineSchedulerProvider)
+    private lateinit var viewModel: HomeViewModel
+    private val mockGetExampleDataUseCase = mock<GetExampleDataUseCase>()
 
-        val dataLoaded = viewModel.loadData.test()
+    @Before
+    fun setup() {
+        When calling mockGetExampleDataUseCase.execute(any()) itReturns Single.just(MockUtil.data)
+        viewModel = HomeViewModel(
+            mockGetExampleDataUseCase
+        )
+    }
+
+    @Test
+    fun `When initializing, it should emit first load data`() {
+        val dataLoaded = viewModel.data.test()
         dataLoaded
             .assertValueCount(1)
             .assertValue { it.content.contains("author1") }
     }
 
     @Test
-    fun `When refresh data, it should emit show then hide loading, and emit data`() {
-        val viewModel = HomeViewModel(MockPositiveApiRepository, TrampolineSchedulerProvider)
-        val dataLoaded = viewModel.loadData.test()
+    fun `When refreshing data, it should emit show then hide loading, and emit data`() {
+        val dataLoaded = viewModel.data.test()
 
         viewModel.input.refresh()
         dataLoaded.assertValueCount(2)

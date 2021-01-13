@@ -7,7 +7,7 @@ import org.junit.Test
 
 class DataTest {
 
-    val testData = Data("content", "url")
+    private val testData = Data("content", "url")
 
     @Test
     fun getContentTest() {
