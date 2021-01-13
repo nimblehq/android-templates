@@ -8,9 +8,7 @@ import java.util.*
 object MoshiBuilderProvider {
 
     val moshiBuilder: Moshi.Builder
-        get() {
-            return Moshi.Builder()
-                .add(Date::class.java, Rfc3339DateJsonAdapter())
-                .add(KotlinJsonAdapterFactory())
-        }
+        get() = Moshi.Builder()
+            .add(Date::class.java, Rfc3339DateJsonAdapter())
+            .add(KotlinJsonAdapterFactory())
 }

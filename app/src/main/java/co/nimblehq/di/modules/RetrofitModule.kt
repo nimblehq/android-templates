@@ -31,7 +31,8 @@ class RetrofitModule {
     }
 
     @Provides
-    fun provideMoshiConverterFactory(moshi: Moshi): Converter.Factory = ConverterFactoryProvider.getMoshiConverterFactory(moshi)
+    fun provideMoshiConverterFactory(moshi: Moshi): Converter.Factory =
+        ConverterFactoryProvider.getMoshiConverterFactory(moshi)
 
     @Provides
     @Singleton
