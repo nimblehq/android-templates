@@ -1,13 +1,12 @@
 package co.nimblehq.data.service.providers
 
-import com.google.gson.Gson
+import com.squareup.moshi.Moshi
 import retrofit2.Converter
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 
-class ConverterFactoryProvider {
-    companion object {
-        fun getConverterFactoryProvider(gson: Gson): Converter.Factory {
-            return GsonConverterFactory.create(gson)
-        }
+object ConverterFactoryProvider {
+
+    fun getMoshiConverterFactory(moshi: Moshi): Converter.Factory {
+        return MoshiConverterFactory.create(moshi)
     }
 }
