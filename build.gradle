@@ -47,6 +47,7 @@ buildscript {
         rxbinding_version = "3.1.0"
         rxjava_version = '2.1.4'
         rxkotlin_version = '2.2.0'
+        rxpermission_version = "0.10.2"
 
         timber_log_version = '4.7.1'
 
