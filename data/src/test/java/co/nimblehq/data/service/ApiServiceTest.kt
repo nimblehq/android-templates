@@ -1,6 +1,8 @@
 package co.nimblehq.data.service
 
-import co.nimblehq.data.service.providers.*
+import co.nimblehq.data.service.providers.ApiServiceProvider
+import co.nimblehq.data.service.providers.ConverterFactoryProvider
+import co.nimblehq.data.service.providers.RetrofitProvider
 import co.nimblehq.domain.repository.ApiRepository
 import co.nimblehq.domain.repository.ApiRepositoryImpl
 import co.nimblehq.domain.schedulers.BaseSchedulerProvider
@@ -11,7 +13,6 @@ import org.junit.Assert
 import org.junit.Test
 import retrofit2.Retrofit
 
-@Suppress("IllegalIdentifier")
 class ApiServiceTest {
 
     @Test

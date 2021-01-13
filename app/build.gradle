@@ -1,11 +1,12 @@
 apply plugin: 'com.android.application'
-apply from: 'codequality.gradle'
-apply from: '../config/jacoco.gradle'
-
-apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+
+apply from: 'codequality.gradle'
+apply from: '../config/jacoco.gradle'
 
 def keystorePropertiesFile = rootProject.file("signing.properties")
 def keystoreProperties = new Properties()
@@ -160,7 +161,9 @@ dependencies {
 
     testImplementation(
         "junit:junit:$test_junit_version",
+        "org.amshove.kluent:kluent-android:$test_kluent_version",
         "com.nhaarman.mockitokotlin2:mockito-kotlin:$test_mockito_version",
+        "org.robolectric:shadowapi:$test_robolectric_version"
     )
 
     androidTestImplementation(

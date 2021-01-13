@@ -74,7 +74,7 @@ abstract class BaseFragment : Fragment(), BaseFragmentCallbacks {
         disposables.dispose()
     }
 
-    protected open fun displayError(error: Throwable) {
+    open fun displayError(error: Throwable) {
         val message = error.userReadableMessage(requireContext())
         toaster.display(message)
     }

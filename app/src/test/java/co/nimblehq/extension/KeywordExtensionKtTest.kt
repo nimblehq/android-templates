@@ -1,10 +1,8 @@
 package co.nimblehq.extension
 
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
-import org.junit.Assert.*
-
-@Suppress("IllegalIdentifier")
 class KeywordExtensionKtTest {
 
     @Test

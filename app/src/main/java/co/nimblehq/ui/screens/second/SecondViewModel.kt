@@ -1,15 +1,15 @@
-package co.nimblehq.ui.second
+package co.nimblehq.ui.screens.second
 
 import androidx.hilt.lifecycle.ViewModelInject
 import co.nimblehq.ui.base.BaseViewModel
-import co.nimblehq.ui.main.data.Data
+import co.nimblehq.ui.screens.home.Data
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
-class SecondViewModel @ViewModelInject constructor() : BaseViewModel(), Inputs, Outputs {
+class SecondViewModel @ViewModelInject constructor() : BaseViewModel(), Input, Output {
 
-    val inputs: Inputs = this
-    val outputs: Outputs = this
+    val input = this
+    val output = this
 
     private val _persistData = BehaviorSubject.create<Data>()
     override val persistData: Observable<Data>
@@ -20,10 +20,10 @@ class SecondViewModel @ViewModelInject constructor() : BaseViewModel(), Inputs, 
     }
 }
 
-interface Inputs {
+interface Input {
     fun dataFromIntent(data: Data)
 }
 
-interface Outputs {
+interface Output {
     val persistData: Observable<Data>
 }
