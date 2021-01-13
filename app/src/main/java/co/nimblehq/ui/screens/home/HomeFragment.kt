@@ -2,6 +2,7 @@ package co.nimblehq.ui.screens.home
 
 import androidx.fragment.app.viewModels
 import co.nimblehq.R
+import co.nimblehq.domain.data.Data
 import co.nimblehq.extension.loadImage
 import co.nimblehq.extension.subscribeOnClick
 import co.nimblehq.extension.visibleOrGone

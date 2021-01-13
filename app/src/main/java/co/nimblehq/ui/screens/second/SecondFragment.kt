@@ -6,9 +6,9 @@ import android.provider.MediaStore
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import co.nimblehq.R
+import co.nimblehq.domain.data.Data
 import co.nimblehq.extension.subscribeOnClick
 import co.nimblehq.ui.base.BaseFragment
-import co.nimblehq.ui.screens.home.Data
 import com.tbruyelle.rxpermissions2.Permission
 import com.tbruyelle.rxpermissions2.RxPermissions
 import dagger.hilt.android.AndroidEntryPoint

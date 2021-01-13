@@ -4,8 +4,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import co.nimblehq.R
+import co.nimblehq.domain.data.Data
 import co.nimblehq.ui.base.NavigationEvent
-import co.nimblehq.ui.screens.home.Data
 import co.nimblehq.ui.screens.home.HomeFragmentDirections
 import co.nimblehq.ui.screens.second.SecondBundle
 import com.nhaarman.mockitokotlin2.verify

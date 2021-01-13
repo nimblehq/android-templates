@@ -2,9 +2,8 @@ package co.nimblehq.ui.screens.home
 
 import androidx.hilt.lifecycle.ViewModelInject
 import co.nimblehq.common.transformers.Transformers
-import co.nimblehq.data.service.response.ExampleResponse
-import co.nimblehq.domain.repository.ApiRepository
-import co.nimblehq.domain.schedulers.BaseSchedulerProvider
+import co.nimblehq.domain.data.Data
+import co.nimblehq.domain.usecase.GetExampleDataUseCase
 import co.nimblehq.ui.base.BaseViewModel
 import co.nimblehq.ui.base.NavigationEvent
 import co.nimblehq.ui.screens.second.SecondBundle
@@ -21,8 +20,7 @@ interface Input {
 }
 
 class HomeViewModel @ViewModelInject constructor(
-    private val repository: ApiRepository,
-    private val schedulers: BaseSchedulerProvider
+    private val getExampleDataUseCase: GetExampleDataUseCase
 ) : BaseViewModel(), Input {
 
     private val _refresh = PublishSubject.create<Unit>()
@@ -32,8 +30,6 @@ class HomeViewModel @ViewModelInject constructor(
 
     init {
         fetchApi()
-            .map { fromResponse(it) }
-            .observeOn(schedulers.main())
             .subscribeBy(
                 onNext = {
                     _data.onNext(it)
@@ -45,8 +41,6 @@ class HomeViewModel @ViewModelInject constructor(
 
         _refresh
             .flatMap { fetchApi() }
-            .map { fromResponse(it) }
-            .observeOn(schedulers.main())
             .subscribeBy(
                 onNext = {
                     _data.onNext(it)
@@ -58,7 +52,6 @@ class HomeViewModel @ViewModelInject constructor(
 
         _data
             .compose(Transformers.takeWhen(_next))
-            .subscribeOn(schedulers.io())
             .map {
                 NavigationEvent.Second(SecondBundle(it))
             }
@@ -82,23 +75,9 @@ class HomeViewModel @ViewModelInject constructor(
         _next.onNext(Unit)
     }
 
-    private fun fetchApi(): Observable<ExampleResponse> =
-        repository
-            .getExampleData()
-            .subscribeOn(schedulers.io())
+    private fun fetchApi(): Observable<Data> =
+        getExampleDataUseCase
+            .execute(Unit)
             .doOnSubscribe { _showLoading.onNext(true) }
             .toObservable()
-
-    private fun fromResponse(response: ExampleResponse): Data {
-        var content = ""
-        (0..2)
-            .map { response.data.children[it].data }
-            .forEach {
-                content += "Author = ${it.author} \nTitle = ${it.title} \n\n"
-            }
-
-        // Image from a random place
-        val imageUrl = "http://www.monkeyuser.com/assets/images/2018/80-the-struggle.png"
-        return Data(content, imageUrl)
-    }
 }
