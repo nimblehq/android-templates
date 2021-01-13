@@ -1,5 +1,6 @@
 package co.nimblehq.ui.screens.home
 
+import co.nimblehq.domain.data.error.DataError
 import co.nimblehq.domain.test.MockUtil
 import co.nimblehq.domain.usecase.GetExampleDataUseCase
 import com.nhaarman.mockitokotlin2.any
@@ -25,19 +26,45 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `When initializing, it should emit first load data`() {
+    fun `When initializing, it should emit first data loading`() {
         val dataObserver = viewModel.data.test()
+        val loadingObserver = viewModel.showLoading.test()
 
         dataObserver
             .assertValueCount(1)
-            .assertValue { it.content.contains("author1") }
+            .assertValue(MockUtil.data)
+
+        loadingObserver
+            .assertNoErrors()
+            .assertValues(false)
     }
 
     @Test
-    fun `When refreshing data, it should emit show then hide loading, and emit data`() {
+    fun `When refreshing again, it should emit second data loading`() {
         val dataObserver = viewModel.data.test()
+        val loadingObserver = viewModel.showLoading.test()
 
         viewModel.input.refresh()
-        dataObserver.assertValueCount(2)
+
+        dataObserver
+            .assertValueCount(2)
+            .assertValues(MockUtil.data, MockUtil.data)
+
+        loadingObserver
+            .assertNoErrors()
+            .assertValues(false, true, false)
+    }
+
+    @Test
+    fun `Should emit error event if get data error`() {
+        When calling mockGetExampleDataUseCase.execute(any()) itReturns
+            Single.error(DataError.GetDataError(null))
+        val testObserver = viewModel.error.test()
+
+        viewModel.input.refresh()
+
+        testObserver
+            .assertNoErrors()
+            .assertValue { it is DataError.GetDataError }
     }
 }

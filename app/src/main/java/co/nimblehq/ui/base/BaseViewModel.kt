@@ -37,7 +37,7 @@ abstract class BaseViewModel : ViewModel() {
         get() = _navigator
 
     /**
-     * To show loading manually
+     * To show loading manually, should call `hideLoading` after
      */
     protected fun showLoading() {
         if (loadingCount == 0) {
@@ -47,7 +47,7 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     /**
-     * To hide loading manually
+     * To hide loading manually, should be called after `showLoading`
      */
     protected fun hideLoading() {
         loadingCount--

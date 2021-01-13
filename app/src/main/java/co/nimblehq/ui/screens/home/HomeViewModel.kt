@@ -27,7 +27,7 @@ class HomeViewModel @ViewModelInject constructor(
         fetchApi()
     }
 
-    val input = this
+    val input: Input = this
 
     val data: Observable<Data>
         get() = _data
