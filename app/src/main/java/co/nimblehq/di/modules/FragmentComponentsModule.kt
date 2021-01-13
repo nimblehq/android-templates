@@ -23,5 +23,5 @@ abstract class NavigatorModule {
 class RxPermissionsModule {
 
     @Provides
-    fun rxPermission(fragment: Fragment): RxPermissions = RxPermissions(fragment)
+    fun rxPermissions(fragment: Fragment): RxPermissions = RxPermissions(fragment)
 }

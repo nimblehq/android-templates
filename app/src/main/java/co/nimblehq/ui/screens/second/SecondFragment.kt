@@ -19,7 +19,7 @@ import javax.inject.Inject
 class SecondFragment : BaseFragment() {
 
     @Inject
-    lateinit var rxPermission: RxPermissions
+    lateinit var rxPermissions: RxPermissions
 
     override val layoutRes: Int = R.layout.fragment_second
 
@@ -40,7 +40,7 @@ class SecondFragment : BaseFragment() {
     }
 
     private fun requestCamera() {
-        rxPermission
+        rxPermissions
             .requestEach(Manifest.permission.CAMERA)
             .subscribe(::handleCameraPermission)
             .addToDisposables()
@@ -57,7 +57,7 @@ class SecondFragment : BaseFragment() {
             }
             else -> {
                 // Deny and never ask again
-                toaster.display("Permission camera never ask")
+                toaster.display("Permission camera never ask again")
             }
         }
     }
