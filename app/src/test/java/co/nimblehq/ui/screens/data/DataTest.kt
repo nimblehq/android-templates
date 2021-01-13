@@ -5,7 +5,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-@Suppress("IllegalIdentifier")
 class DataTest {
 
     val testData = Data("content", "url")

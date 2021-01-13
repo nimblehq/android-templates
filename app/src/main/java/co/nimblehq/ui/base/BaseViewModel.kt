@@ -9,7 +9,7 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 
-@Suppress("PropertyName")
+@Suppress("VariableNaming")
 abstract class BaseViewModel : ViewModel() {
 
     protected val _showLoading = BehaviorSubject.create<IsLoading>()

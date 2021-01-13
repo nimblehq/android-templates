@@ -20,13 +20,17 @@ interface BaseNavigator {
     fun navigateUp()
 }
 
-abstract class BaseNavigatorImpl(protected val fragment: Fragment) : BaseNavigator {
+abstract class BaseNavigatorImpl(
+    protected val fragment: Fragment
+) : BaseNavigator {
 
     private var navController: NavController? = null
 
     override fun findNavController(): NavController? {
         return navController ?: try {
-            fragment.findNavController()
+            fragment.findNavController().apply {
+                navController = this
+            }
         } catch (e: IllegalStateException) {
             // Log Crashlytics as non-fatal for monitoring
             Timber.e(e)

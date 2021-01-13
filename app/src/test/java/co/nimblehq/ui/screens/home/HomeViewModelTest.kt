@@ -4,7 +4,6 @@ import co.nimblehq.domain.schedulers.TrampolineSchedulerProvider
 import co.nimblehq.testutil.MockPositiveApiRepository
 import org.junit.Test
 
-@Suppress("IllegalIdentifier")
 class HomeViewModelTest {
 
     @Test

@@ -9,6 +9,7 @@ import co.nimblehq.ui.base.BaseViewModel
 import co.nimblehq.ui.base.NavigationEvent
 import co.nimblehq.ui.screens.second.SecondBundle
 import io.reactivex.Observable
+import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 
@@ -33,30 +34,38 @@ class HomeViewModel @ViewModelInject constructor(
         fetchApi()
             .map { fromResponse(it) }
             .observeOn(schedulers.main())
-            .subscribe({
-                _data.onNext(it)
-                _showLoading.onNext(false)
-            }, {
-                TODO("Handle Error  ¯\\_(ツ)_/¯ ")
-            })
+            .subscribeBy(
+                onNext = {
+                    _data.onNext(it)
+                    _showLoading.onNext(false)
+                },
+                onError = _error::onNext
+            )
             .addToDisposables()
 
         _refresh
-            .flatMap<ExampleResponse> { fetchApi() }
+            .flatMap { fetchApi() }
             .map { fromResponse(it) }
             .observeOn(schedulers.main())
-            .subscribe({
-                _data.onNext(it)
-                _showLoading.onNext(false)
-            }, {
-                TODO("Handle Error  ¯\\_(ツ)_/¯ ")
-            })
+            .subscribeBy(
+                onNext = {
+                    _data.onNext(it)
+                    _showLoading.onNext(false)
+                },
+                onError = _error::onNext
+            )
             .addToDisposables()
 
         _data
-            .compose<Data>(Transformers.takeWhen(_next))
+            .compose(Transformers.takeWhen(_next))
             .subscribeOn(schedulers.io())
-            .subscribe { _navigator.onNext(NavigationEvent.Second(SecondBundle(it))) }
+            .map {
+                NavigationEvent.Second(SecondBundle(it))
+            }
+            .subscribeBy(
+                onNext = _navigator::onNext,
+                onError = _error::onNext
+            )
             .addToDisposables()
     }
 
