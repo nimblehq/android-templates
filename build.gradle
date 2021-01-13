@@ -39,7 +39,6 @@ buildscript {
 
         okhttp_version = '3.7.0'
 
-        permission_dispatcher_version = '4.3.0'
         play_service_version = '12.0.1'
 
         retrofit_version = '2.9.0'
