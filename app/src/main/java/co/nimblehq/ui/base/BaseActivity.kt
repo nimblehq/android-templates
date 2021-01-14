@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import co.nimblehq.domain.schedulers.SchedulerProvider
-import co.nimblehq.extension.userReadableMessage
 import co.nimblehq.ui.common.Toaster
+import co.nimblehq.ui.userReadableMessage
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import co.nimblehq.domain.schedulers.SchedulerProvider
 import co.nimblehq.extension.hideSoftKeyboard
 import co.nimblehq.extension.subscribeOnClick
-import co.nimblehq.extension.userReadableMessage
 import co.nimblehq.ui.common.Toaster
+import co.nimblehq.ui.userReadableMessage
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
