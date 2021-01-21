@@ -2,6 +2,7 @@ package co.nimblehq.data.service
 
 import co.nimblehq.data.service.providers.ApiServiceProvider
 import co.nimblehq.data.service.providers.ConverterFactoryProvider
+import co.nimblehq.data.service.providers.MoshiBuilderProvider
 import co.nimblehq.data.service.providers.RetrofitProvider
 import co.nimblehq.domain.repository.ApiRepository
 import co.nimblehq.domain.repository.ApiRepositoryImpl
