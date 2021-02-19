@@ -5,7 +5,6 @@ import co.nimblehq.data.service.error.NoConnectivityException
 import co.nimblehq.data.service.error.UnknownException
 import co.nimblehq.data.service.providers.MoshiBuilderProvider
 import co.nimblehq.data.service.response.ErrorResponse
-import com.squareup.moshi.JsonAdapter
 import io.reactivex.Single
 import retrofit2.Response
 import java.io.InterruptedIOException
@@ -36,10 +35,10 @@ private fun <T> mapError(response: Response<T>?): Exception {
     else UnknownException
 }
 
-fun parseErrorResponse(source: String?): ErrorResponse? {
+private fun parseErrorResponse(source: String?): ErrorResponse? {
     return try {
         val moshi = MoshiBuilderProvider.moshiBuilder.build()
-        val adapter: JsonAdapter<ErrorResponse> = moshi.adapter(ErrorResponse::class.java)
+        val adapter = moshi.adapter(ErrorResponse::class.java)
         adapter.fromJson(source.orEmpty())
     } catch (e: Exception) {
         null

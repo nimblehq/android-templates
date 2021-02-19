@@ -15,11 +15,11 @@ class SecondViewModelTest {
 
     @Test
     fun `When initializing, it binds data correctly`() {
-        val dataLoaded = viewModel.data.test()
+        val dataObserver = viewModel.data.test()
 
         viewModel.dataFromIntent(MockUtil.data)
 
-        dataLoaded
+        dataObserver
             .assertValueCount(1)
             .assertValue(MockUtil.data)
     }

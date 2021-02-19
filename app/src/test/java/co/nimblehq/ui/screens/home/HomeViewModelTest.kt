@@ -26,17 +26,18 @@ class HomeViewModelTest {
 
     @Test
     fun `When initializing, it should emit first load data`() {
-        val dataLoaded = viewModel.data.test()
-        dataLoaded
+        val dataObserver = viewModel.data.test()
+
+        dataObserver
             .assertValueCount(1)
             .assertValue { it.content.contains("author1") }
     }
 
     @Test
     fun `When refreshing data, it should emit show then hide loading, and emit data`() {
-        val dataLoaded = viewModel.data.test()
+        val dataObserver = viewModel.data.test()
 
         viewModel.input.refresh()
-        dataLoaded.assertValueCount(2)
+        dataObserver.assertValueCount(2)
     }
 }
