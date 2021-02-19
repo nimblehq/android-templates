@@ -62,7 +62,6 @@ class SecondFragment : BaseFragment() {
     }
 
     private fun bindData(data: Data) {
-        // TODO: Refactor view's naming
-        persistTextView.text = data.content
+        tvContent.text = data.content
     }
 }

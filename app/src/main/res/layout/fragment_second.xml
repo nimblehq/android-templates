@@ -7,7 +7,7 @@
 
     <TextView
         style="@style/Widget.Template.TextView.Bold"
-        android:id="@+id/persistTextView"
+        android:id="@+id/tvContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -26,6 +26,6 @@
         android:text="Open Camera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/persistTextView" />
+        app:layout_constraintTop_toBottomOf="@id/tvContent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

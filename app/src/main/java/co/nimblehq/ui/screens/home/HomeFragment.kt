@@ -25,11 +25,11 @@ class HomeFragment : BaseFragment() {
     private val viewModel by viewModels<HomeViewModel>()
 
     override fun setupView() {
-        buttonRefresh
+        btRefresh
             .subscribeOnClick { viewModel.input.refresh() }
             .addToDisposables()
 
-        buttonNext
+        btNext
             .subscribeOnClick { viewModel.input.next() }
             .addToDisposables()
     }
@@ -42,13 +42,13 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun bindData(data: Data) {
-        textView.text = data.content
-        imageView.loadImage(data.imageUrl)
+        tvContent.text = data.content
+        ivPreview.loadImage(data.imageUrl)
     }
 
     private fun showLoading(isLoading: IsLoading) {
-        buttonRefresh.visibleOrInvisible(!isLoading)
-        progressBar.visibleOrGone(isLoading)
+        btRefresh.visibleOrInvisible(!isLoading)
+        pbLoading.visibleOrGone(isLoading)
     }
 
 }
