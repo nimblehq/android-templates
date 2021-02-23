@@ -1,7 +1,7 @@
 package co.nimblehq.ui.screens.second
 
 import android.os.Parcelable
-import co.nimblehq.ui.screens.home.Data
+import co.nimblehq.domain.data.Data
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

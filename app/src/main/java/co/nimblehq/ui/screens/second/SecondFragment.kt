@@ -6,9 +6,9 @@ import android.provider.MediaStore
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import co.nimblehq.R
+import co.nimblehq.domain.data.Data
 import co.nimblehq.extension.subscribeOnClick
 import co.nimblehq.ui.base.BaseFragment
-import co.nimblehq.ui.screens.home.Data
 import com.tbruyelle.rxpermissions2.Permission
 import com.tbruyelle.rxpermissions2.RxPermissions
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,8 +35,7 @@ class SecondFragment : BaseFragment() {
 
     override fun bindViewModel() {
         viewModel.input.dataFromIntent(args.bundle.data)
-
-        viewModel.output.persistData bindTo ::bindPersistedData
+        viewModel.data bindTo ::bindData
     }
 
     private fun requestCamera() {
@@ -62,8 +61,7 @@ class SecondFragment : BaseFragment() {
         }
     }
 
-    private fun bindPersistedData(data: Data) {
-        // TODO: Refactor view's naming
-        persistTextView.text = data.content
+    private fun bindData(data: Data) {
+        tvContent.text = data.content
     }
 }

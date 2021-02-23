@@ -2,6 +2,7 @@ package co.nimblehq.ui.screens.home
 
 import androidx.fragment.app.viewModels
 import co.nimblehq.R
+import co.nimblehq.domain.data.Data
 import co.nimblehq.extension.loadImage
 import co.nimblehq.extension.subscribeOnClick
 import co.nimblehq.extension.visibleOrGone
@@ -24,11 +25,11 @@ class HomeFragment : BaseFragment() {
     private val viewModel by viewModels<HomeViewModel>()
 
     override fun setupView() {
-        buttonRefresh
+        btRefresh
             .subscribeOnClick { viewModel.input.refresh() }
             .addToDisposables()
 
-        buttonNext
+        btNext
             .subscribeOnClick { viewModel.input.next() }
             .addToDisposables()
     }
@@ -36,18 +37,18 @@ class HomeFragment : BaseFragment() {
     override fun bindViewModel() {
         viewModel.showLoading bindTo ::showLoading
         viewModel.error bindTo ::displayError
-        viewModel.loadData bindTo ::bindData
+        viewModel.data bindTo ::bindData
         viewModel.navigator bindTo navigator::navigate
     }
 
     private fun bindData(data: Data) {
-        textView.text = data.content
-        imageView.loadImage(data.imageUrl)
+        tvContent.text = data.content
+        ivPreview.loadImage(data.imageUrl)
     }
 
     private fun showLoading(isLoading: IsLoading) {
-        buttonRefresh.visibleOrInvisible(!isLoading)
-        progressBar.visibleOrGone(isLoading)
+        btRefresh.visibleOrInvisible(!isLoading)
+        pbLoading.visibleOrGone(isLoading)
     }
 
 }

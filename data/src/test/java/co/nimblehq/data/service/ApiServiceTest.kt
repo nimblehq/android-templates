@@ -4,10 +4,6 @@ import co.nimblehq.data.service.providers.ApiServiceProvider
 import co.nimblehq.data.service.providers.ConverterFactoryProvider
 import co.nimblehq.data.service.providers.MoshiBuilderProvider
 import co.nimblehq.data.service.providers.RetrofitProvider
-import co.nimblehq.domain.repository.ApiRepository
-import co.nimblehq.domain.repository.ApiRepositoryImpl
-import co.nimblehq.domain.schedulers.BaseSchedulerProvider
-import co.nimblehq.domain.schedulers.SchedulerProvider
 import okhttp3.OkHttpClient
 import org.junit.Assert
 import org.junit.Test
@@ -24,13 +20,9 @@ class ApiServiceTest {
         val appRetrofit: Retrofit = retrofitBuilder.build()
 
 
-        val schedulers: BaseSchedulerProvider = SchedulerProvider()
         Assert.assertNotNull("should provide Retrofit", appRetrofit)
 
         val apiService: ApiService = ApiServiceProvider.getApiService(appRetrofit)
         Assert.assertNotNull("should provide ApiService", apiService)
-
-        val apiRepository: ApiRepository = ApiRepositoryImpl(apiService, schedulers)
-        Assert.assertNotNull("should provide ApiRepository", apiRepository)
     }
 }
