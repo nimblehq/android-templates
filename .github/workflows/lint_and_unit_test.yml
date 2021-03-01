@@ -26,7 +26,7 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Run Detekt
-        run: ./gradlew detekt
+        run: cd RxJavaTemplate && ./gradlew detekt
 
       - name: Archive Detekt report
         uses: actions/upload-artifact@v2
@@ -35,7 +35,7 @@ jobs:
           path: build/reports/detekt/
 
       - name: Run Unit Tests & Jacoco
-        run: ./gradlew jacocoTestReport
+        run: cd RxJavaTemplate && ./gradlew jacocoTestReport
 
       # Archive Unit test & code coverage report
       - name: Archive Code coverage report
