@@ -27,7 +27,7 @@ class HomeViewModel @ViewModelInject constructor(
         fetchApi()
     }
 
-    val input = this
+    val input: Input = this
 
     val data: Observable<Data>
         get() = _data
@@ -51,12 +51,9 @@ class HomeViewModel @ViewModelInject constructor(
     private fun fetchApi() {
         getExampleDataUseCase
             .execute(Unit)
-            .doOnSubscribe { _showLoading.onNext(true) }
+            .doShowLoading()
             .subscribeBy(
-                onSuccess = {
-                    _data.onNext(it)
-                    _showLoading.onNext(false)
-                },
+                onSuccess = _data::onNext,
                 onError = _error::onNext
             )
             .addToDisposables()
