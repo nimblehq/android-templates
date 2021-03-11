@@ -25,23 +25,32 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Run Detekt
+      - name: Run Detekt (CoroutineTemplate)
+        run: cd CoroutineTemplate && ./gradlew detekt
+
+      - name: Run Detekt (RxJavaTemplate)
         run: cd RxJavaTemplate && ./gradlew detekt
 
-      - name: Archive Detekt report
+      - name: Archive Detekt report (CoroutineTemplate)
         uses: actions/upload-artifact@v2
         with:
-          name: detekt-report
-          path: build/reports/detekt/
+          name: detekt-report-coroutine
+          path: CoroutineTemplate/build/reports/detekt/
+
+      - name: Archive Detekt report (RxJavaTemplate)
+        uses: actions/upload-artifact@v2
+        with:
+          name: detekt-report-rxjava
+          path: RxJavaTemplate/build/reports/detekt/
 
       - name: Run Unit Tests & Jacoco
         run: cd RxJavaTemplate && ./gradlew jacocoTestReport
 
       # Archive Unit test & code coverage report
-      - name: Archive Code coverage report
+      - name: Archive Code coverage report (RxJavaTemplate)
         uses: actions/upload-artifact@v2
         with:
-          name: code-coverage-report
+          name: code-coverage-report-rxjava
           path: |
-            app/build/reports/jacoco/jacocoTestReport/
-            data/build/reports/jacoco/jacocoTestReport/
+            RxJavaTemplate/app/build/reports/jacoco/jacocoTestReport/
+            RxJavaTemplate/data/build/reports/jacoco/jacocoTestReport/
