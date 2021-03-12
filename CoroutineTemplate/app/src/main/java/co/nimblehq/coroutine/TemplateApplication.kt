@@ -1,4 +1,4 @@
-package co.nimblehq
+package co.nimblehq.coroutine
 
 import android.app.Application
 

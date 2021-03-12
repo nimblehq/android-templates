@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="co.nimblehq">
+    package="co.nimblehq.coroutine">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="co.nimblehq.MainActivity">
+        <activity android:name="co.nimblehq.coroutine.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
