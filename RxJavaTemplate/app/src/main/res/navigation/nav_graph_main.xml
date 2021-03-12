@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="co.nimblehq.ui.screens.home.HomeFragment"
+        android:name="co.nimblehq.rxjava.ui.screens.home.HomeFragment"
         tools:layout="@layout/fragment_main">
 
         <action
@@ -22,12 +22,12 @@
 
     <fragment
         android:id="@+id/secondFragment"
-        android:name="co.nimblehq.ui.screens.second.SecondFragment"
+        android:name="co.nimblehq.rxjava.ui.screens.second.SecondFragment"
         tools:layout="@layout/fragment_second">
 
         <argument
             android:name="bundle"
-            app:argType="co.nimblehq.ui.screens.second.SecondBundle" />
+            app:argType="co.nimblehq.rxjava.ui.screens.second.SecondBundle" />
 
     </fragment>
 
