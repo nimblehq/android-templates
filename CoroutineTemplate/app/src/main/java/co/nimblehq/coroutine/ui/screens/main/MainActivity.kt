@@ -9,11 +9,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
 
-    override val layoutResource: Int = R.layout.activity_main
+    override val layoutRes = R.layout.activity_main
 
-    override val viewModel: MainViewModel by viewModels()
-
-    override fun initView() {
-        tvTitle.text = viewModel.title
-    }
+    override val viewModel by viewModels<MainViewModel>()
 }
