@@ -51,10 +51,7 @@ android {
 
     flavorDimensions "stage"
     productFlavors {
-        production {
-            applicationIdSuffix ".production"
-        }
-
+        production
         staging {
             applicationIdSuffix ".staging"
         }
