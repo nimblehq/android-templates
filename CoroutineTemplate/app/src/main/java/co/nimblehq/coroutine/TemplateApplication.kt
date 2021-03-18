@@ -1,10 +1,7 @@
 package co.nimblehq.coroutine
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 
-class TemplateApplication: Application() {
-
-    override fun onCreate() {
-        super.onCreate()
-    }
-}
+@HiltAndroidApp
+class TemplateApplication : Application()
