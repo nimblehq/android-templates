@@ -92,7 +92,7 @@ task clean(type: Delete) {
 detekt {
     toolVersion = "1.14.0"
 
-    input = files("app/src/main/java", "app/src/main/kotlin", "data/src/main/kotlin", "data/src/main/java")
+    input = files("app/src/main/java", "data/src/main/java")
     parallel = false
     config = files("detekt-config.yml")
     buildUponDefaultConfig = false

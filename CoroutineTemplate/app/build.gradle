@@ -82,7 +82,7 @@ dependencies {
     )
 
     androidTestImplementation(
-        "androidx.test.ext:junit:$android_test_junit_version",
+        "androidx.test.ext:junit:$test_android_junit_version",
         "androidx.test.espresso:espresso-core:$test_espresso_version"
     )
 }

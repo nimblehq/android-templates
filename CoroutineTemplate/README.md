@@ -1,5 +1,5 @@
-# Android Templates: Kotlin
-- Our optimized Android templates used in our kotlin android projects
+# Android Templates: Coroutine
+- Our optimized Android templates used in our android projects
 
 ### Setup
 - Clone the project
