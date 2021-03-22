@@ -3,16 +3,13 @@ package co.nimblehq.rxjava.ui.screens
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import co.nimblehq.rxjava.domain.test.MockUtil
 import co.nimblehq.rxjava.R
+import co.nimblehq.rxjava.domain.test.MockUtil
 import co.nimblehq.rxjava.ui.base.NavigationEvent
 import co.nimblehq.rxjava.ui.screens.home.HomeFragmentDirections
 import co.nimblehq.rxjava.ui.screens.second.SecondBundle
 import com.nhaarman.mockitokotlin2.verify
-import org.amshove.kluent.When
-import org.amshove.kluent.calling
-import org.amshove.kluent.itReturns
-import org.amshove.kluent.mock
+import org.amshove.kluent.*
 import org.junit.Before
 import org.junit.Test
 import org.robolectric.util.ReflectionHelpers
@@ -36,7 +33,7 @@ class MainNavigatorTest {
     fun `Should navigate to Second screen from Home correctly`() {
         When calling mockDestination.id itReturns R.id.homeFragment
 
-        val bundle = SecondBundle(MockUtil.data)
+        val bundle = SecondBundle(MockUtil.dataList[0])
         navigator.navigate(
             NavigationEvent.Second(bundle)
         )

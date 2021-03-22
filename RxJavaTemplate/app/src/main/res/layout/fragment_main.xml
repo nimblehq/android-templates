@@ -1,79 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMainData"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/tvClickableText"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_data" />
 
-        <TextView
-            android:id="@+id/tvContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Hello World!" />
+    <TextView
+        style="@style/Widget.Template.TextView.Clickable"
+        android:id="@+id/tvClickableText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_normal_display_text"
+        android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="Clickable text"
+        app:layout_constraintBottom_toTopOf="@id/btRefresh"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivPreview"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvContent" />
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <ProgressBar
-            android:id="@+id/pbLoading"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toStartOf="@id/btNext"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivPreview" />
+    <Button
+        android:id="@+id/btRefresh"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:text="Refresh"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/btRefresh"
-            android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="5dp"
-            android:text="Refresh"
-            app:layout_constraintEnd_toStartOf="@id/btNext"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivPreview" />
-
-        <Button
-            android:id="@+id/btNext"
-            android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="5dp"
-            android:text="Next"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btRefresh"
-            app:layout_constraintTop_toBottomOf="@id/ivPreview" />
-
-        <TextView
-            style="@style/Widget.Template.TextView.Clickable"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_normal_display_text"
-            android:gravity="center"
-            android:padding="15dp"
-            android:text="Clickable text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btRefresh" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,12 +1,10 @@
 package co.nimblehq.rxjava.ui.screens.home
 
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.*
 import co.nimblehq.rxjava.R
 import co.nimblehq.rxjava.domain.data.Data
-import co.nimblehq.rxjava.extension.loadImage
-import co.nimblehq.rxjava.extension.subscribeOnClick
-import co.nimblehq.rxjava.extension.visibleOrGone
-import co.nimblehq.rxjava.extension.visibleOrInvisible
+import co.nimblehq.rxjava.extension.*
 import co.nimblehq.rxjava.lib.IsLoading
 import co.nimblehq.rxjava.ui.base.BaseFragment
 import co.nimblehq.rxjava.ui.screens.MainNavigator
@@ -23,14 +21,26 @@ class HomeFragment : BaseFragment() {
     lateinit var navigator: MainNavigator
 
     private val viewModel by viewModels<HomeViewModel>()
+    private lateinit var dataAdapter: DataAdapter
 
     override fun setupView() {
+        setupDataList()
+
         btRefresh
             .subscribeOnClick { viewModel.input.refresh() }
             .addToDisposables()
+    }
 
-        btNext
-            .subscribeOnClick { viewModel.input.next() }
+    override fun bindViewEvents() {
+        super.bindViewEvents()
+        dataAdapter
+            .itemClick
+            .subscribeOnItemClick {
+                when (it) {
+                    is DataAdapter.OnItemClick.Item ->
+                        viewModel.input.navigateToDetail(it.data)
+                }
+            }
             .addToDisposables()
     }
 
@@ -41,9 +51,23 @@ class HomeFragment : BaseFragment() {
         viewModel.navigator bindTo navigator::navigate
     }
 
-    private fun bindData(data: Data) {
-        tvContent.text = data.content
-        ivPreview.loadImage(data.imageUrl)
+    private fun setupDataList() {
+        with(rvMainData) {
+            adapter = DataAdapter().also {
+                dataAdapter = it
+            }
+            layoutManager = LinearLayoutManager(requireContext())
+            addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    RecyclerView.VERTICAL
+                )
+            )
+        }
+    }
+
+    private fun bindData(data: List<Data>) {
+        dataAdapter.items = data
     }
 
     private fun showLoading(isLoading: IsLoading) {

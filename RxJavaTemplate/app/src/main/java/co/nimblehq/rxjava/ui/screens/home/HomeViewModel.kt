@@ -14,14 +14,14 @@ interface Input {
 
     fun refresh()
 
-    fun next()
+    fun navigateToDetail(data: Data)
 }
 
 class HomeViewModel @ViewModelInject constructor(
     private val getExampleDataUseCase: GetExampleDataUseCase
 ) : BaseViewModel(), Input {
 
-    private val _data = BehaviorSubject.create<Data>()
+    private val _data = BehaviorSubject.create<List<Data>>()
 
     init {
         fetchApi()
@@ -29,23 +29,17 @@ class HomeViewModel @ViewModelInject constructor(
 
     val input: Input = this
 
-    val data: Observable<Data>
+    val data: Observable<List<Data>>
         get() = _data
 
     override fun refresh() {
         fetchApi()
     }
 
-    override fun next() {
-        _data
-            .map {
-                NavigationEvent.Second(SecondBundle(it))
-            }
-            .subscribeBy(
-                onNext = _navigator::onNext,
-                onError = _error::onNext
-            )
-            .addToDisposables()
+    override fun navigateToDetail(data: Data) {
+        _navigator.onNext(
+            NavigationEvent.Second(SecondBundle(data))
+        )
     }
 
     private fun fetchApi() {

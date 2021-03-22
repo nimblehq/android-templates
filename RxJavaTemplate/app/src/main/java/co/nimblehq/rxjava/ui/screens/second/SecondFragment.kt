@@ -62,6 +62,6 @@ class SecondFragment : BaseFragment() {
     }
 
     private fun bindData(data: Data) {
-        tvContent.text = data.content
+        tvContent.text = data.author
     }
 }

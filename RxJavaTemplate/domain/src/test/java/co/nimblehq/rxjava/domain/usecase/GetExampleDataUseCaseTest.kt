@@ -5,10 +5,7 @@ import co.nimblehq.rxjava.domain.repository.ApiRepository
 import co.nimblehq.rxjava.domain.schedulers.TrampolineSchedulerProvider
 import co.nimblehq.rxjava.domain.test.MockUtil
 import io.reactivex.Single
-import org.amshove.kluent.When
-import org.amshove.kluent.calling
-import org.amshove.kluent.itReturns
-import org.amshove.kluent.mock
+import org.amshove.kluent.*
 import org.junit.Before
 import org.junit.Test
 
@@ -27,7 +24,7 @@ class GetExampleDataUseCaseTest {
 
     @Test
     fun `When execute usecase request successfully, it returns positive result`() {
-        val data = MockUtil.data
+        val data = MockUtil.dataList
         When calling mockRepository.exampleData() itReturns Single.just(data)
 
         val testSubscriber = useCase.execute(Unit).test()
