@@ -11,5 +11,6 @@ data class ExampleChildrenResponse(val data: ExampleChildrenDataResponse)
 data class ExampleChildrenDataResponse(
     val title: String,
     val author: String,
-    val thumbnail: String
+    val thumbnail: String,
+    val url: String
 )

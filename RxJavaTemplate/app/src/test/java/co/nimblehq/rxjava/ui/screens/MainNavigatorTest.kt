@@ -8,6 +8,8 @@ import co.nimblehq.rxjava.domain.test.MockUtil
 import co.nimblehq.rxjava.ui.base.NavigationEvent
 import co.nimblehq.rxjava.ui.screens.home.HomeFragmentDirections
 import co.nimblehq.rxjava.ui.screens.second.SecondBundle
+import co.nimblehq.rxjava.ui.screens.second.SecondFragmentDirections
+import co.nimblehq.rxjava.ui.screens.webview.WebViewBundle
 import com.nhaarman.mockitokotlin2.verify
 import org.amshove.kluent.*
 import org.junit.Before
@@ -40,6 +42,20 @@ class MainNavigatorTest {
 
         verify(mockNavController).navigate(
             HomeFragmentDirections.actionHomeFragmentToSecondFragment(bundle)
+        )
+    }
+
+    @Test
+    fun `Should navigate to WebView screen from Second correctly`() {
+        When calling mockDestination.id itReturns R.id.secondFragment
+
+        val bundle = WebViewBundle("url")
+        navigator.navigate(
+            NavigationEvent.WebView(bundle)
+        )
+
+        verify(mockNavController).navigate(
+            SecondFragmentDirections.actionSecondFragmentToWebViewFragment(bundle)
         )
     }
 }

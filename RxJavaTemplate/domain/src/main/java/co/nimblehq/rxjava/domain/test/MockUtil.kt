@@ -14,21 +14,24 @@ object MockUtil {
                         ExampleChildrenDataResponse(
                             author = "author1",
                             title = "title1",
-                            thumbnail = "thumbnail"
+                            thumbnail = "thumbnail",
+                            url = "url"
                         )
                     ),
                     ExampleChildrenResponse(
                         ExampleChildrenDataResponse(
                             author = "author2",
                             title = "title2",
-                            thumbnail = "thumbnail"
+                            thumbnail = "thumbnail",
+                            url = "url"
                         )
                     ),
                     ExampleChildrenResponse(
                         ExampleChildrenDataResponse(
                             author = "author3",
                             title = "title3",
-                            thumbnail = "thumbnail"
+                            thumbnail = "thumbnail",
+                            url = "url"
                         )
                     )
                 )

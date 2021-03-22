@@ -29,6 +29,25 @@
             android:name="bundle"
             app:argType="co.nimblehq.rxjava.ui.screens.second.SecondBundle" />
 
+        <action
+            android:id="@+id/action_secondFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="co.nimblehq.rxjava.ui.screens.webview.WebViewFragment"
+        tools:layout="@layout/fragment_webview">
+
+        <argument
+            android:name="bundle"
+            app:argType="co.nimblehq.rxjava.ui.screens.webview.WebViewBundle" />
+
     </fragment>
 
 </navigation>

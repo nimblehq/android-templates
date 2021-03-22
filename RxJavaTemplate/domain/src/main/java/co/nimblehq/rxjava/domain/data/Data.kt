@@ -8,7 +8,8 @@ import kotlinx.android.parcel.Parcelize
 data class Data(
     val title: String,
     val author: String,
-    val thumbnail: String
+    val thumbnail: String,
+    val url: String
 ) : Parcelable
 
 fun ExampleResponse.toDataList() =
@@ -16,6 +17,7 @@ fun ExampleResponse.toDataList() =
         Data(
             it.data.title,
             it.data.author,
-            it.data.thumbnail
+            it.data.thumbnail,
+            it.data.url
         )
     }
