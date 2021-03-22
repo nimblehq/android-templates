@@ -18,24 +18,24 @@
         tools:src="@mipmap/ic_launcher" />
 
     <TextView
+        style="Widget.Template.TextView.Bold"
         android:id="@+id/tvDataTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ivDataThumbnail"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="title" />
 
     <TextView
+        style="Widget.Template.TextView"
         android:id="@+id/tvDataAuthor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/tvDataTitle"
         app:layout_constraintStart_toStartOf="@id/tvDataTitle"

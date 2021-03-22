@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import co.nimblehq.rxjava.R
 import co.nimblehq.rxjava.domain.data.Data
+import co.nimblehq.rxjava.extension.loadImage
 import co.nimblehq.rxjava.extension.subscribeOnClick
 import co.nimblehq.rxjava.ui.base.BaseFragment
 import co.nimblehq.rxjava.ui.screens.MainNavigator
@@ -72,6 +73,10 @@ class SecondFragment : BaseFragment() {
     }
 
     private fun bindData(data: Data) {
-        tvContent.text = data.author
+        with(data) {
+            tvSecondTitle.text = title
+            tvSecondAuthor.text = author
+            ivSecondThumbnail.loadImage(thumbnail)
+        }
     }
 }
