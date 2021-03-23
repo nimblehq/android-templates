@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'dagger.hilt.android.plugin'
 
 def keystorePropertiesFile = rootProject.file("signing.properties")
 def keystoreProperties = new Properties()
@@ -69,12 +70,19 @@ dependencies {
     implementation(
         fileTree(dir: 'libs', include: ['*.jar']),
 
-        "androidx.appcompat:appcompat:$android_support_version",
+        "androidx.activity:activity-ktx:$androidx_activity_ktx_version",
+        "androidx.appcompat:appcompat:$androidx_support_version",
         "androidx.constraintlayout:constraintlayout:$constraint_layout_version",
         "androidx.core:core-ktx:$androidx_core_ktx_version",
 
+        "com.google.dagger:hilt-android:$hilt_version",
+
         "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
         "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_version"
+    )
+
+    kapt(
+        "com.google.dagger:hilt-compiler:$hilt_version"
     )
 
     testImplementation(
