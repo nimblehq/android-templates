@@ -9,42 +9,20 @@
         android:id="@+id/rvMainData"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/tvClickableText"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_data" />
-
-    <TextView
-        style="@style/Widget.Template.TextView.Clickable"
-        android:id="@+id/tvClickableText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_normal_display_text"
-        android:layout_marginBottom="5dp"
-        android:gravity="center"
-        android:padding="15dp"
-        android:text="Clickable text"
-        app:layout_constraintBottom_toTopOf="@id/btRefresh"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/pbLoading"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="20dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btRefresh"
         android:layout_width="120dp"
         android:layout_height="50dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:text="Refresh"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <include layout="@layout/view_loading" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

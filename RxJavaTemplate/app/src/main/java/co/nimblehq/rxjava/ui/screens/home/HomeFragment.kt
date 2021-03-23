@@ -10,6 +10,7 @@ import co.nimblehq.rxjava.ui.base.BaseFragment
 import co.nimblehq.rxjava.ui.screens.MainNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.view_loading.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -71,7 +72,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun showLoading(isLoading: IsLoading) {
-        btRefresh.visibleOrInvisible(!isLoading)
+        btRefresh.isEnabled = !isLoading
         pbLoading.visibleOrGone(isLoading)
     }
 

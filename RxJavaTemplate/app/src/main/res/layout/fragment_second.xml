@@ -47,6 +47,20 @@
         app:layout_constraintWidth_default="wrap"
         tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." />
 
+    <TextView
+        style="@style/Widget.Template.TextView.Clickable"
+        android:id="@+id/tvClickableText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_normal_display_text"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="Clickable text"
+        app:layout_constraintBottom_toTopOf="@id/btOpenCamera"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/btOpenCamera"
         android:layout_width="wrap_content"
