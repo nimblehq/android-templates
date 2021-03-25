@@ -38,12 +38,7 @@ abstract class BaseFragment : Fragment(), BaseFragmentCallbacks {
     protected open val systemUiVisibility = when {
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.P -> {
             fullScreenSystemUiVisibility or
-                SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or
                 SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-        }
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> {
-            SYSTEM_UI_FLAG_VISIBLE or
-                SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
         else -> {
             SYSTEM_UI_FLAG_VISIBLE

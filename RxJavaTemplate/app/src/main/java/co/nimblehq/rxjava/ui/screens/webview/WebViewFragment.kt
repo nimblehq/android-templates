@@ -25,7 +25,7 @@ class WebViewFragment : BaseFragment() {
     override fun setupView() {}
 
     override fun handleVisualOverlaps() {
-        webView.handleVisualOverlaps(marginInsteadOfPadding = false)
+        webView.handleVisualOverlaps()
     }
 
     override fun bindViewModel() {
