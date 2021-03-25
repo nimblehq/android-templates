@@ -1,5 +1,6 @@
 package co.nimblehq.rxjava.ui.base
 
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.view.View.*
@@ -29,14 +30,25 @@ abstract class BaseFragment : Fragment(), BaseFragmentCallbacks {
     /**
      * https://developer.android.com/training/system-ui/immersive#EnableFullscreen
      */
-    private val fullScreenSystemUiVisibility = SYSTEM_UI_FLAG_IMMERSIVE or
+    protected val fullScreenSystemUiVisibility = SYSTEM_UI_FLAG_IMMERSIVE or
         SYSTEM_UI_FLAG_LAYOUT_STABLE or
         SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
         SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 
-    protected open val systemUiVisibility = fullScreenSystemUiVisibility or
-        SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or
-        SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+    protected open val systemUiVisibility = when {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.P -> {
+            fullScreenSystemUiVisibility or
+                SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or
+                SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+        }
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> {
+            SYSTEM_UI_FLAG_VISIBLE or
+                SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
+        else -> {
+            SYSTEM_UI_FLAG_VISIBLE
+        }
+    }
 
     private val disposables = CompositeDisposable()
 
