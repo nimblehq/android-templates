@@ -71,6 +71,7 @@ abstract class BaseFragment : Fragment(), BaseFragmentCallbacks {
         (this as? BaseFragmentCallbacks)?.let {
             setWindowStyle()
             setupView()
+            handleVisualOverlaps()
             bindViewEvents()
             bindViewModel()
         }

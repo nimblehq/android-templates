@@ -10,6 +10,7 @@ import co.nimblehq.rxjava.domain.data.Data
 import co.nimblehq.rxjava.extension.loadImage
 import co.nimblehq.rxjava.extension.subscribeOnClick
 import co.nimblehq.rxjava.ui.base.BaseFragment
+import co.nimblehq.rxjava.ui.helpers.handleVisualOverlaps
 import co.nimblehq.rxjava.ui.screens.MainNavigator
 import com.tbruyelle.rxpermissions2.Permission
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -40,6 +41,11 @@ class SecondFragment : BaseFragment() {
         btOpenPost
             .subscribeOnClick(viewModel::openPost)
             .addToDisposables()
+    }
+
+    override fun handleVisualOverlaps() {
+        btOpenCamera.handleVisualOverlaps()
+        btOpenPost.handleVisualOverlaps()
     }
 
     override fun bindViewModel() {

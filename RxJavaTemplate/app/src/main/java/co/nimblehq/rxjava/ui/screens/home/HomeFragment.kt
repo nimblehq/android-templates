@@ -7,6 +7,7 @@ import co.nimblehq.rxjava.domain.data.Data
 import co.nimblehq.rxjava.extension.*
 import co.nimblehq.rxjava.lib.IsLoading
 import co.nimblehq.rxjava.ui.base.BaseFragment
+import co.nimblehq.rxjava.ui.helpers.handleVisualOverlaps
 import co.nimblehq.rxjava.ui.screens.MainNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -27,9 +28,14 @@ class HomeFragment : BaseFragment() {
     override fun setupView() {
         setupDataList()
 
-        btRefresh
+        btMainRefresh
             .subscribeOnClick { viewModel.input.refresh() }
             .addToDisposables()
+    }
+
+    override fun handleVisualOverlaps() {
+        rvMainData.handleVisualOverlaps(marginInsteadOfPadding = false)
+        btMainRefresh.handleVisualOverlaps()
     }
 
     override fun bindViewEvents() {
@@ -72,7 +78,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun showLoading(isLoading: IsLoading) {
-        btRefresh.isEnabled = !isLoading
+        btMainRefresh.isEnabled = !isLoading
         pbLoading.visibleOrGone(isLoading)
     }
 
