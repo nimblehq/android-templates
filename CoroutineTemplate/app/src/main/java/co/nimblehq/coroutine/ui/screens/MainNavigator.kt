@@ -1,6 +1,6 @@
 package co.nimblehq.coroutine.ui.screens
 
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import co.nimblehq.coroutine.R
 import co.nimblehq.coroutine.ui.base.*
 import co.nimblehq.coroutine.ui.screens.home.HomeFragmentDirections.Companion.actionHomeFragmentToSecondFragment
@@ -10,8 +10,8 @@ import javax.inject.Inject
 interface MainNavigator : BaseNavigator
 
 class MainNavigatorImpl @Inject constructor(
-    fragment: Fragment
-) : BaseNavigatorImpl(fragment), MainNavigator {
+    activity: FragmentActivity
+) : BaseNavigatorImpl(activity), MainNavigator {
 
     override val navHostFragmentId = R.id.navHostFragment
 

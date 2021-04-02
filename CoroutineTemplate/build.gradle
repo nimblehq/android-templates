@@ -25,9 +25,11 @@ buildscript {
         navigation_version = '2.2.0-rc04'
 
         test_android_junit_version = '1.1.1'
-        test_espresso_version = "3.1.0"
+        test_espresso_version = '3.1.0'
         test_junit_version = '4.13'
-
+        test_kluent_version = '1.60'
+        test_mockito_version = '2.1.0'
+        test_robolectric_version = '4.3.1'
         timber_log_version = '4.7.1'
     }
 

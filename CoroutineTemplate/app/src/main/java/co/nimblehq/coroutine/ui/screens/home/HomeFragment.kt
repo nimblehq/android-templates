@@ -7,13 +7,13 @@ import co.nimblehq.coroutine.ui.base.NavigationEvent
 import co.nimblehq.coroutine.ui.screens.MainNavigator
 import co.nimblehq.coroutine.ui.screens.second.SecondBundle
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment() {
 
-    override val layoutRes = R.layout.fragment_main
+    override val layoutRes = R.layout.fragment_home
 
     @Inject lateinit var navigator: MainNavigator
 
