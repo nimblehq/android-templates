@@ -3,9 +3,9 @@ package co.nimblehq.coroutine.ui.base
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.annotation.IdRes
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import co.nimblehq.coroutine.extension.getResourceName
 import timber.log.Timber
 
@@ -21,14 +21,14 @@ interface BaseNavigator {
 }
 
 abstract class BaseNavigatorImpl(
-    private val activity: FragmentActivity
+    protected val fragment: Fragment
 ) : BaseNavigator {
 
     private var navController: NavController? = null
 
     override fun findNavController(): NavController? {
         return navController ?: try {
-            activity.findNavController(navHostFragmentId).apply {
+            fragment.findNavController().apply {
                 navController = this
             }
         } catch (e: IllegalStateException) {
@@ -48,8 +48,9 @@ abstract class BaseNavigatorImpl(
 
     protected fun unsupportedNavigation() {
         val navController = findNavController()
-        val currentGraph = activity.getResourceName(navController?.graph?.id)
-        val currentDestination = activity.getResourceName(navController?.currentDestination?.id)
+        val currentGraph = fragment.requireActivity().getResourceName(navController?.graph?.id)
+        val currentDestination =
+            fragment.requireActivity().getResourceName(navController?.currentDestination?.id)
         handleError(NavigationError.UnsupportedNavigationError(currentGraph, currentDestination))
     }
 
@@ -73,9 +74,9 @@ abstract class BaseNavigatorImpl(
     }
 
     private fun handleError(error: Throwable) {
-        if (activity is BaseActivity) {
+        if (fragment is BaseFragment) {
             Timber.e(error)
-            activity.displayError(error)
+            fragment.displayError(error)
         } else {
             throw error
         }

@@ -67,8 +67,6 @@ android {
 }
 
 dependencies {
-    implementation project(':domain')
-
     implementation(
         fileTree(dir: 'libs', include: ['*.jar']),
 
@@ -77,9 +75,9 @@ dependencies {
         "androidx.constraintlayout:constraintlayout:$constraint_layout_version",
         "androidx.core:core-ktx:$androidx_core_ktx_version",
 
-        "androidx.navigation:navigation-fragment-ktx:$navigation_version",
-        "androidx.navigation:navigation-runtime-ktx:$navigation_version",
-        "androidx.navigation:navigation-ui-ktx:$navigation_version",
+        "androidx.navigation:navigation-fragment-ktx:$androidx_navigation_version",
+        "androidx.navigation:navigation-runtime-ktx:$androidx_navigation_version",
+        "androidx.navigation:navigation-ui-ktx:$androidx_navigation_version",
 
         "com.google.dagger:hilt-android:$hilt_version",
 
@@ -94,10 +92,7 @@ dependencies {
     )
 
     testImplementation(
-        "junit:junit:$test_junit_version",
-        "org.amshove.kluent:kluent-android:$test_kluent_version",
-        "com.nhaarman.mockitokotlin2:mockito-kotlin:$test_mockito_version",
-        "org.robolectric:robolectric:$test_robolectric_version"
+        "junit:junit:$test_junit_version"
     )
 
     androidTestImplementation(

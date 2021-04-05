@@ -6,6 +6,7 @@ import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import co.nimblehq.coroutine.extension.hideSoftKeyboard
 import co.nimblehq.coroutine.ui.common.Toaster
+import co.nimblehq.coroutine.ui.userReadableMessage
 import javax.inject.Inject
 
 abstract class BaseFragment : Fragment(), BaseFragmentCallbacks {
@@ -46,5 +47,10 @@ abstract class BaseFragment : Fragment(), BaseFragmentCallbacks {
             bindViewEvents()
             bindViewModel()
         }
+    }
+
+    open fun displayError(error: Throwable) {
+        val message = error.userReadableMessage(requireContext())
+        toaster.display(message)
     }
 }

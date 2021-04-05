@@ -1,10 +1,8 @@
 package co.nimblehq.coroutine.ui.base
 
-import co.nimblehq.coroutine.domain.data.error.AppError
-
 sealed class NavigationError(
     cause: Throwable?
-) : AppError(cause) {
+) : Throwable(cause) {
 
     class UnsupportedNavigationError(
         currentGraph: String?,
