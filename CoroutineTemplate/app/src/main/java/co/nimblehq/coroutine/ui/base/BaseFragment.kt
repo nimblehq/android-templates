@@ -24,13 +24,6 @@ abstract class BaseFragment : Fragment(), BaseFragmentCallbacks {
 
     override fun initViewModel() {}
 
-    @CallSuper
-    override fun bindViewEvents() {
-        requireNotNull(view).setOnClickListener {
-            requireActivity().hideSoftKeyboard()
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,6 +39,13 @@ abstract class BaseFragment : Fragment(), BaseFragmentCallbacks {
             setupView()
             bindViewEvents()
             bindViewModel()
+        }
+    }
+
+    @CallSuper
+    override fun bindViewEvents() {
+        requireNotNull(view).setOnClickListener {
+            requireActivity().hideSoftKeyboard()
         }
     }
 
