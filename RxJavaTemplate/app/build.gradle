@@ -104,8 +104,8 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
-    androidExtensions {
-        experimental = true
+    buildFeatures {
+        viewBinding true
     }
 }
 

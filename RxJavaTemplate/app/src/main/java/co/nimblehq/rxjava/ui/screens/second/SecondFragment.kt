@@ -3,9 +3,11 @@ package co.nimblehq.rxjava.ui.screens.second
 import android.Manifest
 import android.content.Intent
 import android.provider.MediaStore
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import co.nimblehq.rxjava.R
+import co.nimblehq.rxjava.databinding.FragmentSecondBinding
 import co.nimblehq.rxjava.domain.data.Data
 import co.nimblehq.rxjava.extension.loadImage
 import co.nimblehq.rxjava.extension.subscribeOnClick
@@ -15,36 +17,38 @@ import co.nimblehq.rxjava.ui.screens.MainNavigator
 import com.tbruyelle.rxpermissions2.Permission
 import com.tbruyelle.rxpermissions2.RxPermissions
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_second.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SecondFragment : BaseFragment() {
+class SecondFragment : BaseFragment<FragmentSecondBinding>() {
 
     @Inject
     lateinit var navigator: MainNavigator
-
+    
     @Inject
     lateinit var rxPermissions: RxPermissions
 
     private val viewModel by viewModels<SecondViewModel>()
     private val args: SecondFragmentArgs by navArgs()
-
-    override val layoutRes: Int = R.layout.fragment_second
+    
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSecondBinding
+        get() = { inflater, container, attachToParent ->
+            FragmentSecondBinding.inflate(inflater, container, attachToParent)
+        }
 
     override fun setupView() {
-        btOpenCamera
+        binding.btOpenCamera
             .subscribeOnClick(::requestCamera)
             .addToDisposables()
 
-        btOpenPost
+        binding.btOpenPost
             .subscribeOnClick(viewModel::openPost)
             .addToDisposables()
     }
 
     override fun handleVisualOverlaps() {
-        btOpenCamera.handleVisualOverlaps()
-        btOpenPost.handleVisualOverlaps()
+        binding.btOpenCamera.handleVisualOverlaps()
+        binding.btOpenPost.handleVisualOverlaps()
     }
 
     override fun bindViewModel() {
