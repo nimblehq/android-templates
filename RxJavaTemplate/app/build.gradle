@@ -155,6 +155,9 @@ dependencies {
         "com.github.tbruyelle:rxpermissions:$rxpermission_version"
     )
 
+    debugImplementation "com.github.chuckerteam.chucker:library:$chucker_interceptor_version"
+    releaseImplementation "com.github.chuckerteam.chucker:library-no-op:$chucker_interceptor_version"
+
     testImplementation(
         "junit:junit:$test_junit_version",
         "org.amshove.kluent:kluent-android:$test_kluent_version",
