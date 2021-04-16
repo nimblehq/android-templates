@@ -51,7 +51,7 @@ abstract class BaseNavigatorImpl(
         val currentGraph = fragment.requireActivity().getResourceName(navController?.graph?.id)
         val currentDestination =
             fragment.requireActivity().getResourceName(navController?.currentDestination?.id)
-        handleError(NavigationError.UnsupportedNavigationError(currentGraph, currentDestination))
+        handleError(NavigationException.UnsupportedNavigationException(currentGraph, currentDestination))
     }
 
     protected fun NavController.navigateToDestinationByDeepLink(
