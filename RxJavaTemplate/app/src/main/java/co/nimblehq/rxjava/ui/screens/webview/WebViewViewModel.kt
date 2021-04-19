@@ -23,8 +23,10 @@ class WebViewViewModel @Inject constructor() : BaseViewModel(), Input {
     }
 
     fun progress(webViewProgress: WebViewProgress) {
-        if (webViewProgress is WebViewProgress.Show) {
-            if (_showLoading.value == false) showLoading()
-        } else hideLoading()
+        when (webViewProgress) {
+            is WebViewProgress.Show -> showLoading()
+            is WebViewProgress.Hide -> hideLoading()
+            else -> Unit // we don't show percent progress yet
+        }
     }
 }

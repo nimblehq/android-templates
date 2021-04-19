@@ -1,6 +1,5 @@
 package co.nimblehq.rxjava.ui.screens.webview
 
-import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Before
 import org.junit.Test
 
@@ -28,15 +27,13 @@ class WebViewViewModelTest {
     fun `Should emit Loading event to react on loading progress submitted`() {
         val loadingObserver = viewModel.showLoading.test()
 
-        val progress = WebViewProgress.Show(0)
-        progress.progress shouldBeEqualTo 0 // cover missing coverage
-        viewModel.progress(progress)
+        viewModel.progress(WebViewProgress.Show)
 
         loadingObserver
             .assertNoErrors()
             .assertValues(false, true)
 
-        viewModel.progress(WebViewProgress.Show(50))
+        viewModel.progress(WebViewProgress.Progress(50))
 
         loadingObserver
             .assertNoErrors()

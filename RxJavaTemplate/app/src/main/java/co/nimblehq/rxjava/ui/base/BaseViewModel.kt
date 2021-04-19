@@ -12,7 +12,7 @@ import io.reactivex.subjects.PublishSubject
 @Suppress("PropertyName")
 abstract class BaseViewModel : ViewModel() {
 
-    protected val _showLoading = BehaviorSubject.createDefault(false)
+    private val _showLoading = BehaviorSubject.createDefault(false)
     protected val _error = BehaviorSubject.create<Throwable>()
     protected val _navigator = PublishSubject.create<NavigationEvent>()
 
