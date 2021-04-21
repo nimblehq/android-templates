@@ -3,6 +3,7 @@ package co.nimblehq.coroutine.ui.base
 import android.os.Bundle
 import android.view.*
 import androidx.annotation.CallSuper
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import co.nimblehq.coroutine.extension.hideSoftKeyboard
 import co.nimblehq.coroutine.ui.common.Toaster
@@ -14,6 +15,7 @@ abstract class BaseFragment : Fragment(), BaseFragmentCallbacks {
     @Inject
     lateinit var toaster: Toaster
 
+    @get:LayoutRes
     protected abstract val layoutRes: Int
 
     @CallSuper

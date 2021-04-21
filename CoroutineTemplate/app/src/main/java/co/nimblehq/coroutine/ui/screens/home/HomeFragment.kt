@@ -22,11 +22,7 @@ class HomeFragment : BaseFragment() {
     override fun setupView() {
         btNext.setOnClickListener {
             // TODO navigate through _navigator flow declared inside ViewModel instead
-            navigator.navigate(
-                NavigationEvent.Second(
-                    SecondBundle(message = "From home")
-                )
-            )
+            navigator.navigate(NavigationEvent.Second(SecondBundle("From home")))
         }
     }
 

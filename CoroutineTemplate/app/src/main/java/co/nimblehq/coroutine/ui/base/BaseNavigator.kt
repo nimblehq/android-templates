@@ -51,7 +51,12 @@ abstract class BaseNavigatorImpl(
         val currentGraph = fragment.requireActivity().getResourceName(navController?.graph?.id)
         val currentDestination =
             fragment.requireActivity().getResourceName(navController?.currentDestination?.id)
-        handleError(NavigationException.UnsupportedNavigationException(currentGraph, currentDestination))
+        handleError(
+            NavigationException.UnsupportedNavigationException(
+                currentGraph,
+                currentDestination
+            )
+        )
     }
 
     protected fun NavController.navigateToDestinationByDeepLink(
@@ -59,14 +64,11 @@ abstract class BaseNavigatorImpl(
         bundle: Parcelable? = null
     ) {
         createDeepLink()
-            .setDestination(destinationId)
-            .apply {
+            .setDestination(destinationId).apply {
                 bundle?.let {
-                    setArguments(
-                        Bundle().apply {
-                            putParcelable("bundle", bundle)
-                        }
-                    )
+                    setArguments(Bundle().apply {
+                        putParcelable("bundle", bundle)
+                    })
                 }
             }
             .createPendingIntent()
