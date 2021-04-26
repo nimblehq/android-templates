@@ -16,10 +16,9 @@ interface Input {
 
 class SecondViewModel @ViewModelInject constructor() : BaseViewModel(), Input {
 
-    private val _data = BehaviorSubject.create<Data>()
-
     val input: Input = this
 
+    private val _data = BehaviorSubject.create<Data>()
     val data: Observable<Data>
         get() = _data
 

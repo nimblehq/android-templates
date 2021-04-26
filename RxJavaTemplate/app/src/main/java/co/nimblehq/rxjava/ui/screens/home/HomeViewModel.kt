@@ -21,14 +21,13 @@ class HomeViewModel @ViewModelInject constructor(
     private val getExampleDataUseCase: GetExampleDataUseCase
 ) : BaseViewModel(), Input {
 
-    private val _data = BehaviorSubject.create<List<Data>>()
+    val input: Input = this
 
     init {
         fetchApi()
     }
 
-    val input: Input = this
-
+    private val _data = BehaviorSubject.create<List<Data>>()
     val data: Observable<List<Data>>
         get() = _data
 

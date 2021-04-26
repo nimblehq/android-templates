@@ -11,8 +11,8 @@ interface ItemClickable<T : Any> {
 }
 
 class ItemClickableImpl<T : Any> : ItemClickable<T> {
-    private val _itemClick = PublishSubject.create<T>()
 
+    private val _itemClick = PublishSubject.create<T>()
     override val itemClick: Observable<T>
         get() = _itemClick
 

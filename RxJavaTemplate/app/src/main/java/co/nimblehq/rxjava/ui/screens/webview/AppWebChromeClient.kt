@@ -16,6 +16,10 @@ class AppWebChromeClient(private val onProgress: (WebViewProgress) -> Unit) : We
     }
 }
 
+/**
+ * We separate the WebViewProgress to 3 states to keep the way to handle progress
+ * showing/hiding or progress updating simple and easy.
+ */
 sealed class WebViewProgress {
     object Show : WebViewProgress()
     data class Progress(val progress: Int) : WebViewProgress()

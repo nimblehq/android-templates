@@ -11,10 +11,9 @@ interface Input {
 
 class WebViewViewModel @Inject constructor() : BaseViewModel(), Input {
 
-    private val _startUrl = BehaviorSubject.create<String>()
-
     val input: Input = this
 
+    private val _startUrl = BehaviorSubject.create<String>()
     val startUrl: Observable<String>
         get() = _startUrl
 

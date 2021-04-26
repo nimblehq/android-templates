@@ -15,11 +15,11 @@ import kotlinx.android.synthetic.main.view_loading.*
 @AndroidEntryPoint
 class WebViewFragment : BaseFragment() {
 
-    override val layoutRes = R.layout.fragment_webview
-
     private val viewModel by viewModels<WebViewViewModel>()
     private val args: WebViewFragmentArgs by navArgs()
     private val bundle: WebViewBundle by lazy { args.bundle }
+
+    override val layoutRes = R.layout.fragment_webview
 
     override fun setupView() {}
 
