@@ -32,7 +32,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `When initializing HomeViewModel, it doesn't emit to show any loading indicator as the value is false`() {
+    fun `When initializing HomeViewModel, it doesn't emit to show any loading indicator, defaulting to false`() {
         val loadingObserver = viewModel.showLoading.test()
 
         loadingObserver
