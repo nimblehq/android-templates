@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 def keystorePropertiesFile = rootProject.file("signing.properties")
 def keystoreProperties = new Properties()
@@ -66,7 +67,6 @@ android {
 }
 
 dependencies {
-
     implementation(
         fileTree(dir: 'libs', include: ['*.jar']),
 
@@ -75,7 +75,13 @@ dependencies {
         "androidx.constraintlayout:constraintlayout:$constraint_layout_version",
         "androidx.core:core-ktx:$androidx_core_ktx_version",
 
+        "androidx.navigation:navigation-fragment-ktx:$androidx_navigation_version",
+        "androidx.navigation:navigation-runtime-ktx:$androidx_navigation_version",
+        "androidx.navigation:navigation-ui-ktx:$androidx_navigation_version",
+
         "com.google.dagger:hilt-android:$hilt_version",
+
+        "com.jakewharton.timber:timber:$timber_log_version",
 
         "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
         "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_version"
@@ -86,7 +92,7 @@ dependencies {
     )
 
     testImplementation(
-        "junit:junit:$test_junit_version",
+        "junit:junit:$test_junit_version"
     )
 
     androidTestImplementation(

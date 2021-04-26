@@ -1,4 +1,4 @@
-package co.nimblehq.coroutine.ui.screens.main
+package co.nimblehq.coroutine.ui.screens
 
 import co.nimblehq.coroutine.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
