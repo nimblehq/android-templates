@@ -16,7 +16,7 @@ class SecondViewModelTest {
     }
 
     @Test
-    fun `When initializing, it binds data correctly`() {
+    fun `When calling dataFromIntent responds positive result, it emits success data correspondingly`() {
         val dataObserver = viewModel.data.test()
 
         viewModel.dataFromIntent(MockUtil.dataList[0])

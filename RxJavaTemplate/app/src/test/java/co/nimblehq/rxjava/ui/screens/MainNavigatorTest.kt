@@ -32,7 +32,7 @@ class MainNavigatorTest {
     }
 
     @Test
-    fun `Should navigate to Second screen from Home correctly`() {
+    fun `When calling navigate responds successfully with destination as HomeFragment, it should navigate to Second Screen from Home Screen correctly`() {
         When calling mockDestination.id itReturns R.id.homeFragment
 
         val bundle = SecondBundle(MockUtil.dataList[0])
