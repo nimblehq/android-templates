@@ -27,11 +27,10 @@ class SecondFragment : BaseFragment() {
     @Inject
     lateinit var rxPermissions: RxPermissions
 
-    override val layoutRes: Int = R.layout.fragment_second
-
     private val viewModel by viewModels<SecondViewModel>()
-
     private val args: SecondFragmentArgs by navArgs()
+
+    override val layoutRes: Int = R.layout.fragment_second
 
     override fun setupView() {
         btOpenCamera
