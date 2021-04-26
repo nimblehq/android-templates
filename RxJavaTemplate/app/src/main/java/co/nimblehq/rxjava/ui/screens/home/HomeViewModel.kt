@@ -23,13 +23,13 @@ class HomeViewModel @ViewModelInject constructor(
 
     val input: Input = this
 
-    init {
-        fetchApi()
-    }
-
     private val _data = BehaviorSubject.create<List<Data>>()
     val data: Observable<List<Data>>
         get() = _data
+
+    init {
+        fetchApi()
+    }
 
     override fun refresh() {
         fetchApi()
