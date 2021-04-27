@@ -7,8 +7,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import co.nimblehq.rxjava.R
 import co.nimblehq.rxjava.domain.data.Data
+import co.nimblehq.rxjava.extension.loadImage
 import co.nimblehq.rxjava.extension.subscribeOnClick
 import co.nimblehq.rxjava.ui.base.BaseFragment
+import co.nimblehq.rxjava.ui.screens.MainNavigator
 import com.tbruyelle.rxpermissions2.Permission
 import com.tbruyelle.rxpermissions2.RxPermissions
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,6 +19,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class SecondFragment : BaseFragment() {
+
+    @Inject
+    lateinit var navigator: MainNavigator
 
     @Inject
     lateinit var rxPermissions: RxPermissions
@@ -31,11 +36,17 @@ class SecondFragment : BaseFragment() {
         btOpenCamera
             .subscribeOnClick(::requestCamera)
             .addToDisposables()
+
+        btOpenPost
+            .subscribeOnClick(viewModel::openPost)
+            .addToDisposables()
     }
 
     override fun bindViewModel() {
-        viewModel.input.dataFromIntent(args.bundle.data)
+        viewModel.navigator bindTo navigator::navigate
         viewModel.data bindTo ::bindData
+
+        viewModel.input.dataFromIntent(args.bundle.data)
     }
 
     private fun requestCamera() {
@@ -62,6 +73,10 @@ class SecondFragment : BaseFragment() {
     }
 
     private fun bindData(data: Data) {
-        tvContent.text = data.content
+        with(data) {
+            tvSecondTitle.text = title
+            tvSecondAuthor.text = author
+            ivSecondThumbnail.loadImage(thumbnail)
+        }
     }
 }

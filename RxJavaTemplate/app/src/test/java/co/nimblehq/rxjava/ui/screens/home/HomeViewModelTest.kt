@@ -3,12 +3,11 @@ package co.nimblehq.rxjava.ui.screens.home
 import co.nimblehq.rxjava.domain.data.error.DataError
 import co.nimblehq.rxjava.domain.test.MockUtil
 import co.nimblehq.rxjava.domain.usecase.GetExampleDataUseCase
+import co.nimblehq.rxjava.ui.base.NavigationEvent
+import co.nimblehq.rxjava.ui.screens.second.SecondBundle
 import com.nhaarman.mockitokotlin2.any
 import io.reactivex.Single
-import org.amshove.kluent.When
-import org.amshove.kluent.calling
-import org.amshove.kluent.itReturns
-import org.amshove.kluent.mock
+import org.amshove.kluent.*
 import org.junit.Before
 import org.junit.Test
 
@@ -19,7 +18,7 @@ class HomeViewModelTest {
 
     @Before
     fun setup() {
-        When calling mockGetExampleDataUseCase.execute(any()) itReturns Single.just(MockUtil.data)
+        When calling mockGetExampleDataUseCase.execute(any()) itReturns Single.just(MockUtil.dataList)
         viewModel = HomeViewModel(
             mockGetExampleDataUseCase
         )
@@ -32,7 +31,7 @@ class HomeViewModelTest {
 
         dataObserver
             .assertValueCount(1)
-            .assertValue(MockUtil.data)
+            .assertValue(MockUtil.dataList)
 
         loadingObserver
             .assertNoErrors()
@@ -48,7 +47,7 @@ class HomeViewModelTest {
 
         dataObserver
             .assertValueCount(2)
-            .assertValues(MockUtil.data, MockUtil.data)
+            .assertValues(MockUtil.dataList, MockUtil.dataList)
 
         loadingObserver
             .assertNoErrors()
@@ -66,5 +65,20 @@ class HomeViewModelTest {
         testObserver
             .assertNoErrors()
             .assertValue { it is DataError.GetDataError }
+    }
+
+    @Test
+    fun `When click on an item, it navigates to Second screen correctly`() {
+        val navigatorObserver = viewModel.navigator.test()
+
+        viewModel.navigateToDetail(MockUtil.dataList[0])
+
+        navigatorObserver
+            .assertValueCount(1)
+            .assertValue(
+                NavigationEvent.Second(
+                    SecondBundle(MockUtil.dataList[0])
+                )
+            )
     }
 }

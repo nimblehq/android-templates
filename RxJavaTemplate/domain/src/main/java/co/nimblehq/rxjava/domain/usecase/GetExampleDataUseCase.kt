@@ -11,13 +11,13 @@ import javax.inject.Inject
 class GetExampleDataUseCase @Inject constructor(
     schedulerProvider: BaseSchedulerProvider,
     private val repository: ApiRepository
-) : SingleUseCase<Unit, Data>(
+) : SingleUseCase<Unit, List<Data>>(
     schedulerProvider.io(),
     schedulerProvider.main(),
     ::GetDataError
 ) {
 
-    override fun create(input: Unit): Single<Data> {
+    override fun create(input: Unit): Single<List<Data>> {
         return repository.exampleData()
     }
 }

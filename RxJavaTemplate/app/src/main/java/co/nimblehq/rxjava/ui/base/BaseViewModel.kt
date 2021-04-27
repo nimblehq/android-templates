@@ -2,10 +2,7 @@ package co.nimblehq.rxjava.ui.base
 
 import androidx.lifecycle.ViewModel
 import co.nimblehq.rxjava.lib.IsLoading
-import io.reactivex.Completable
-import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.*
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
@@ -15,26 +12,25 @@ import io.reactivex.subjects.PublishSubject
 @Suppress("PropertyName")
 abstract class BaseViewModel : ViewModel() {
 
-    private val _showLoading = BehaviorSubject.createDefault(false)
-    protected val _error = BehaviorSubject.create<Throwable>()
-    protected val _navigator = PublishSubject.create<NavigationEvent>()
-
     private val disposables by lazy { CompositeDisposable() }
     private var loadingCount: Int = 0
+
+    private val _showLoading = BehaviorSubject.createDefault(false)
+    val showLoading: Observable<IsLoading>
+        get() = _showLoading
+
+    protected val _error = BehaviorSubject.create<Throwable>()
+    val error: Observable<Throwable>
+        get() = _error
+
+    protected val _navigator = PublishSubject.create<NavigationEvent>()
+    val navigator: Observable<NavigationEvent>
+        get() = _navigator
 
     override fun onCleared() {
         super.onCleared()
         disposables.clear()
     }
-
-    val showLoading: Observable<IsLoading>
-        get() = _showLoading
-
-    val error: Observable<Throwable>
-        get() = _error
-
-    val navigator: Observable<NavigationEvent>
-        get() = _navigator
 
     /**
      * To show loading manually, should call `hideLoading` after

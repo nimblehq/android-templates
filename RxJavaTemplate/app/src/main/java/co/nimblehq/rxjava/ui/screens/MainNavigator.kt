@@ -2,11 +2,11 @@ package co.nimblehq.rxjava.ui.screens
 
 import androidx.fragment.app.Fragment
 import co.nimblehq.rxjava.R
-import co.nimblehq.rxjava.ui.base.BaseNavigator
-import co.nimblehq.rxjava.ui.base.BaseNavigatorImpl
-import co.nimblehq.rxjava.ui.base.NavigationEvent
+import co.nimblehq.rxjava.ui.base.*
 import co.nimblehq.rxjava.ui.screens.home.HomeFragmentDirections.Companion.actionHomeFragmentToSecondFragment
 import co.nimblehq.rxjava.ui.screens.second.SecondBundle
+import co.nimblehq.rxjava.ui.screens.second.SecondFragmentDirections.Companion.actionSecondFragmentToWebViewFragment
+import co.nimblehq.rxjava.ui.screens.webview.WebViewBundle
 import javax.inject.Inject
 
 interface MainNavigator : BaseNavigator
@@ -20,6 +20,7 @@ class MainNavigatorImpl @Inject constructor(
     override fun navigate(event: NavigationEvent) {
         when (event) {
             is NavigationEvent.Second -> navigateToSecond(event.bundle)
+            is NavigationEvent.WebView -> navigateToWebView(event.bundle)
         }
     }
 
@@ -28,6 +29,16 @@ class MainNavigatorImpl @Inject constructor(
         when (navController?.currentDestination?.id) {
             R.id.homeFragment -> navController.navigate(
                 actionHomeFragmentToSecondFragment(bundle)
+            )
+            else -> unsupportedNavigation()
+        }
+    }
+
+    private fun navigateToWebView(bundle: WebViewBundle) {
+        val navController = findNavController()
+        when (navController?.currentDestination?.id) {
+            R.id.secondFragment -> navController.navigate(
+                actionSecondFragmentToWebViewFragment(bundle)
             )
             else -> unsupportedNavigation()
         }

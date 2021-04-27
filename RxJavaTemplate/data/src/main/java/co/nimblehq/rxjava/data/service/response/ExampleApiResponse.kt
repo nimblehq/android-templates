@@ -9,6 +9,8 @@ data class ExampleDataResponse(
 data class ExampleChildrenResponse(val data: ExampleChildrenDataResponse)
 
 data class ExampleChildrenDataResponse(
+    val title: String,
     val author: String,
-    val title: String
+    val thumbnail: String,
+    val url: String
 )

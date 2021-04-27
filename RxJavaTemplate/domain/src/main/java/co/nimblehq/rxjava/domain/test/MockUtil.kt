@@ -1,11 +1,8 @@
 package co.nimblehq.rxjava.domain.test
 
-import co.nimblehq.rxjava.data.service.response.ExampleChildrenDataResponse
-import co.nimblehq.rxjava.data.service.response.ExampleChildrenResponse
-import co.nimblehq.rxjava.data.service.response.ExampleDataResponse
-import co.nimblehq.rxjava.data.service.response.ExampleResponse
+import co.nimblehq.rxjava.data.service.response.*
 import co.nimblehq.rxjava.domain.data.Data
-import co.nimblehq.rxjava.domain.data.toData
+import co.nimblehq.rxjava.domain.data.toDataList
 
 object MockUtil {
 
@@ -13,12 +10,33 @@ object MockUtil {
         get() = ExampleResponse(
             ExampleDataResponse(
                 listOf(
-                    ExampleChildrenResponse(ExampleChildrenDataResponse("author1", "title1")),
-                    ExampleChildrenResponse(ExampleChildrenDataResponse("author2", "title2")),
-                    ExampleChildrenResponse(ExampleChildrenDataResponse("author3", "title3"))
+                    ExampleChildrenResponse(
+                        ExampleChildrenDataResponse(
+                            author = "author1",
+                            title = "title1",
+                            thumbnail = "thumbnail",
+                            url = "url"
+                        )
+                    ),
+                    ExampleChildrenResponse(
+                        ExampleChildrenDataResponse(
+                            author = "author2",
+                            title = "title2",
+                            thumbnail = "thumbnail",
+                            url = "url"
+                        )
+                    ),
+                    ExampleChildrenResponse(
+                        ExampleChildrenDataResponse(
+                            author = "author3",
+                            title = "title3",
+                            thumbnail = "thumbnail",
+                            url = "url"
+                        )
+                    )
                 )
             )
         )
 
-    val data: Data = exampleData.toData()
+    val dataList: List<Data> = exampleData.toDataList()
 }
