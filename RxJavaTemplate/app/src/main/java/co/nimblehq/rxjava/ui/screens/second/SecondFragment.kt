@@ -24,31 +24,35 @@ class SecondFragment : BaseFragment<FragmentSecondBinding>() {
 
     @Inject
     lateinit var navigator: MainNavigator
-    
+
     @Inject
     lateinit var rxPermissions: RxPermissions
 
     private val viewModel by viewModels<SecondViewModel>()
     private val args: SecondFragmentArgs by navArgs()
-    
+
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSecondBinding
         get() = { inflater, container, attachToParent ->
             FragmentSecondBinding.inflate(inflater, container, attachToParent)
         }
 
     override fun setupView() {
-        binding.btOpenCamera
-            .subscribeOnClick(::requestCamera)
-            .addToDisposables()
+        with(binding) {
+            btOpenCamera
+                .subscribeOnClick(::requestCamera)
+                .addToDisposables()
 
-        binding.btOpenPost
-            .subscribeOnClick(viewModel::openPost)
-            .addToDisposables()
+            btOpenPost
+                .subscribeOnClick(viewModel::openPost)
+                .addToDisposables()
+        }
     }
 
     override fun handleVisualOverlaps() {
-        binding.btOpenCamera.handleVisualOverlaps()
-        binding.btOpenPost.handleVisualOverlaps()
+        with(binding) {
+            btOpenCamera.handleVisualOverlaps()
+            btOpenPost.handleVisualOverlaps()
+        }
     }
 
     override fun bindViewModel() {
@@ -83,9 +87,11 @@ class SecondFragment : BaseFragment<FragmentSecondBinding>() {
 
     private fun bindData(data: Data) {
         with(data) {
-            tvSecondTitle.text = title
-            tvSecondAuthor.text = author
-            ivSecondThumbnail.loadImage(thumbnail)
+            with(binding) {
+                tvSecondTitle.text = title
+                tvSecondAuthor.text = author
+                ivSecondThumbnail.loadImage(thumbnail)
+            }
         }
     }
 }

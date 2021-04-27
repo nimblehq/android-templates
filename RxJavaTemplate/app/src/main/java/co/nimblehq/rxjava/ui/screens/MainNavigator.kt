@@ -3,9 +3,9 @@ package co.nimblehq.rxjava.ui.screens
 import androidx.fragment.app.Fragment
 import co.nimblehq.rxjava.R
 import co.nimblehq.rxjava.ui.base.*
-import co.nimblehq.rxjava.ui.screens.home.HomeFragmentDirections.Companion.actionHomeFragmentToSecondFragment
+import co.nimblehq.rxjava.ui.screens.home.HomeFragmentDirections
 import co.nimblehq.rxjava.ui.screens.second.SecondBundle
-import co.nimblehq.rxjava.ui.screens.second.SecondFragmentDirections.Companion.actionSecondFragmentToWebViewFragment
+import co.nimblehq.rxjava.ui.screens.second.SecondFragmentDirections
 import co.nimblehq.rxjava.ui.screens.webview.WebViewBundle
 import javax.inject.Inject
 
@@ -28,7 +28,7 @@ class MainNavigatorImpl @Inject constructor(
         val navController = findNavController()
         when (navController?.currentDestination?.id) {
             R.id.homeFragment -> navController.navigate(
-                actionHomeFragmentToSecondFragment(bundle)
+                HomeFragmentDirections.actionHomeFragmentToSecondFragment(bundle)
             )
             else -> unsupportedNavigation()
         }
@@ -38,7 +38,7 @@ class MainNavigatorImpl @Inject constructor(
         val navController = findNavController()
         when (navController?.currentDestination?.id) {
             R.id.secondFragment -> navController.navigate(
-                actionSecondFragmentToWebViewFragment(bundle)
+                SecondFragmentDirections.actionSecondFragmentToWebViewFragment(bundle)
             )
             else -> unsupportedNavigation()
         }

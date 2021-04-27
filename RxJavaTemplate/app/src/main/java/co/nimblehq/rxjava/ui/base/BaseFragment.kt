@@ -18,6 +18,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
 import javax.inject.Inject
 
+@SuppressWarnings("TooManyFunctions")
 abstract class BaseFragment<VB : ViewBinding> : Fragment(), BaseFragmentCallbacks {
 
     @Inject

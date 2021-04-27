@@ -8,6 +8,7 @@ import androidx.core.view.*
 /**
  * https://medium.com/androiddevelopers/gesture-navigation-handling-visual-overlaps-4aed565c134c
  */
+@SuppressWarnings("LongMethod")
 fun View.handleVisualOverlaps(
     marginInsteadOfPadding: Boolean = true,
     gravity: Int = Gravity.BOTTOM,

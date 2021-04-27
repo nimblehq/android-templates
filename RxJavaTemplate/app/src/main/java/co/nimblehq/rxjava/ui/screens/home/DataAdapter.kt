@@ -2,13 +2,12 @@ package co.nimblehq.rxjava.ui.screens.home
 
 import android.view.*
 import androidx.recyclerview.widget.RecyclerView
-import co.nimblehq.rxjava.R
+import co.nimblehq.rxjava.databinding.ItemDataBinding
 import co.nimblehq.rxjava.domain.data.Data
 import co.nimblehq.rxjava.extension.loadImage
 import co.nimblehq.rxjava.ui.common.ItemClickable
 import co.nimblehq.rxjava.ui.common.ItemClickableImpl
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_data.*
 
 internal class DataAdapter :
     RecyclerView.Adapter<DataAdapter.ViewHolder>(),
@@ -23,9 +22,8 @@ internal class DataAdapter :
     override fun getItemCount() = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_data, parent, false)
-        return ViewHolder(view)
+        val binding = ItemDataBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -33,8 +31,8 @@ internal class DataAdapter :
     }
 
     internal inner class ViewHolder(
-        itemView: View
-    ) : RecyclerView.ViewHolder(itemView), LayoutContainer {
+        private val binding: ItemDataBinding
+    ) : RecyclerView.ViewHolder(binding.root), LayoutContainer {
 
         override val containerView: View
             get() = itemView
@@ -47,9 +45,11 @@ internal class DataAdapter :
 
         fun bind(model: Data) {
             with(model) {
-                tvDataTitle.text = title
-                tvDataAuthor.text = author
-                ivDataThumbnail.loadImage(thumbnail)
+                with(binding) {
+                    tvDataTitle.text = title
+                    tvDataAuthor.text = author
+                    ivDataThumbnail.loadImage(thumbnail)
+                }
             }
         }
     }
