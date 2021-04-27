@@ -25,29 +25,33 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Run Detekt (CoroutineTemplate)
-        run: cd CoroutineTemplate && ./gradlew detekt
+      # Run Detekt and Archive Detekt reports
+      - name: Run Detekt on CoroutineTemplate
+        working-directory: ./CoroutineTemplate
+        run: ./gradlew detekt
 
-      - name: Run Detekt (RxJavaTemplate)
-        run: cd RxJavaTemplate && ./gradlew detekt
+      - name: Run Detekt on RxJavaTemplate
+        working-directory: ./RxJavaTemplate      
+        run: ./gradlew detekt
 
-      - name: Archive Detekt report (CoroutineTemplate)
+      - name: Archive Detekt report on CoroutineTemplate
         uses: actions/upload-artifact@v2
         with:
           name: detekt-report-coroutine
           path: CoroutineTemplate/build/reports/detekt/
 
-      - name: Archive Detekt report (RxJavaTemplate)
+      - name: Archive Detekt report on RxJavaTemplate
         uses: actions/upload-artifact@v2
         with:
           name: detekt-report-rxjava
           path: RxJavaTemplate/build/reports/detekt/
 
-      - name: Run Unit Tests & Jacoco
-        run: cd RxJavaTemplate && ./gradlew jacocoTestReport
+      # Run Unit Test & Jacoco for code coverage & Archive reports
+      - name: Run Unit Tests & Jacoco on RxJavaTemplate
+        working-directory: ./RxJavaTemplate
+        run: ./gradlew jacocoTestReport
 
-      # Archive Unit test & code coverage report
-      - name: Archive Code coverage report (RxJavaTemplate)
+      - name: Archive Code coverage report on RxJavaTemplate
         uses: actions/upload-artifact@v2
         with:
           name: code-coverage-report-rxjava
