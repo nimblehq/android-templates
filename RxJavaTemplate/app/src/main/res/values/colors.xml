@@ -4,4 +4,7 @@
     <color name="colorPrimary">@color/blue_free_speech</color>
     <color name="colorPrimaryDark">@color/blue_tory</color>
     <color name="colorAccent">@color/red_violet</color>
+
+    <color name="colorStatusBar">@null</color>
+    <color name="colorNavigationBar">@null</color>
 </resources>

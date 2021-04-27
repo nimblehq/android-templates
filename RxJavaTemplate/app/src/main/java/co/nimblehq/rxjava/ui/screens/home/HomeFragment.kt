@@ -7,16 +7,15 @@ import co.nimblehq.rxjava.domain.data.Data
 import co.nimblehq.rxjava.extension.*
 import co.nimblehq.rxjava.lib.IsLoading
 import co.nimblehq.rxjava.ui.base.BaseFragment
+import co.nimblehq.rxjava.ui.helpers.handleVisualOverlaps
 import co.nimblehq.rxjava.ui.screens.MainNavigator
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.view_loading.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment() {
-
-    override val layoutRes = R.layout.fragment_main
 
     @Inject
     lateinit var navigator: MainNavigator
@@ -24,12 +23,19 @@ class HomeFragment : BaseFragment() {
     private val viewModel by viewModels<HomeViewModel>()
     private lateinit var dataAdapter: DataAdapter
 
+    override val layoutRes = R.layout.fragment_home
+
     override fun setupView() {
         setupDataList()
 
-        btRefresh
+        btHomeRefresh
             .subscribeOnClick { viewModel.input.refresh() }
             .addToDisposables()
+    }
+
+    override fun handleVisualOverlaps() {
+        rvHomeData.handleVisualOverlaps(marginInsteadOfPadding = false)
+        btHomeRefresh.handleVisualOverlaps()
     }
 
     override fun bindViewEvents() {
@@ -53,7 +59,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setupDataList() {
-        with(rvMainData) {
+        with(rvHomeData) {
             adapter = DataAdapter().also {
                 dataAdapter = it
             }
@@ -72,7 +78,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun showLoading(isLoading: IsLoading) {
-        btRefresh.isEnabled = !isLoading
+        btHomeRefresh.isEnabled = !isLoading
         pbLoading.visibleOrGone(isLoading)
     }
 

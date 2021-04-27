@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR has been supported from API 26-->
+    <color name="colorStatusBar">@android:color/transparent</color>
+    <color name="colorNavigationBar">@android:color/transparent</color>
+</resources>

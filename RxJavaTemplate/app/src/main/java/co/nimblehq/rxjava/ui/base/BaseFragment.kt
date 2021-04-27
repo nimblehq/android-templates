@@ -1,9 +1,9 @@
 package co.nimblehq.rxjava.ui.base
 
+import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.View.*
 import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import co.nimblehq.rxjava.domain.schedulers.SchedulerProvider
@@ -26,6 +26,24 @@ abstract class BaseFragment : Fragment(), BaseFragmentCallbacks {
     lateinit var schedulerProvider: SchedulerProvider
 
     protected abstract val layoutRes: Int
+
+    /**
+     * https://developer.android.com/training/system-ui/immersive#EnableFullscreen
+     */
+    protected val fullScreenSystemUiVisibility = SYSTEM_UI_FLAG_IMMERSIVE or
+        SYSTEM_UI_FLAG_LAYOUT_STABLE or
+        SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+        SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+
+    protected open val systemUiVisibility = when {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.P -> {
+            fullScreenSystemUiVisibility or
+                SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+        }
+        else -> {
+            SYSTEM_UI_FLAG_VISIBLE
+        }
+    }
 
     private val disposables = CompositeDisposable()
 
@@ -58,7 +76,9 @@ abstract class BaseFragment : Fragment(), BaseFragmentCallbacks {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (this as? BaseFragmentCallbacks)?.let {
+            setWindowStyle()
             setupView()
+            handleVisualOverlaps()
             bindViewEvents()
             bindViewModel()
         }
@@ -87,4 +107,9 @@ abstract class BaseFragment : Fragment(), BaseFragmentCallbacks {
             .addToDisposables()
     }
 
+    private fun setWindowStyle() {
+        requireActivity().window.decorView.run {
+            systemUiVisibility = this@BaseFragment.systemUiVisibility
+        }
+    }
 }

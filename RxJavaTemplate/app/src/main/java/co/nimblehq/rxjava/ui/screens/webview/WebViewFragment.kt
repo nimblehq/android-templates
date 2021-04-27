@@ -8,6 +8,7 @@ import co.nimblehq.rxjava.extension.initialSetup
 import co.nimblehq.rxjava.extension.visibleOrGone
 import co.nimblehq.rxjava.lib.IsLoading
 import co.nimblehq.rxjava.ui.base.BaseFragment
+import co.nimblehq.rxjava.ui.helpers.handleVisualOverlaps
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_webview.*
 import kotlinx.android.synthetic.main.view_loading.*
@@ -22,6 +23,10 @@ class WebViewFragment : BaseFragment() {
     override val layoutRes = R.layout.fragment_webview
 
     override fun setupView() {}
+
+    override fun handleVisualOverlaps() {
+        webView.handleVisualOverlaps()
+    }
 
     override fun bindViewModel() {
         viewModel.showLoading bindTo ::bindLoading

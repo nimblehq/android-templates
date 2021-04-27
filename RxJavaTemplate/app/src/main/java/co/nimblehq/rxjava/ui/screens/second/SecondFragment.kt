@@ -10,6 +10,7 @@ import co.nimblehq.rxjava.domain.data.Data
 import co.nimblehq.rxjava.extension.loadImage
 import co.nimblehq.rxjava.extension.subscribeOnClick
 import co.nimblehq.rxjava.ui.base.BaseFragment
+import co.nimblehq.rxjava.ui.helpers.handleVisualOverlaps
 import co.nimblehq.rxjava.ui.screens.MainNavigator
 import com.tbruyelle.rxpermissions2.Permission
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -26,11 +27,10 @@ class SecondFragment : BaseFragment() {
     @Inject
     lateinit var rxPermissions: RxPermissions
 
-    override val layoutRes: Int = R.layout.fragment_second
-
     private val viewModel by viewModels<SecondViewModel>()
-
     private val args: SecondFragmentArgs by navArgs()
+
+    override val layoutRes: Int = R.layout.fragment_second
 
     override fun setupView() {
         btOpenCamera
@@ -40,6 +40,11 @@ class SecondFragment : BaseFragment() {
         btOpenPost
             .subscribeOnClick(viewModel::openPost)
             .addToDisposables()
+    }
+
+    override fun handleVisualOverlaps() {
+        btOpenCamera.handleVisualOverlaps()
+        btOpenPost.handleVisualOverlaps()
     }
 
     override fun bindViewModel() {
