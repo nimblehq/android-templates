@@ -23,7 +23,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `When initializing HomeViewModel, it emits the first data correspondingly`() {
+    fun `When initializing the view model, it emits the first data correspondingly`() {
         val dataObserver = viewModel.data.test()
 
         dataObserver
@@ -32,7 +32,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `When initializing HomeViewModel, it doesn't emit to show any loading indicator, defaulting to false`() {
+    fun `When initializing the view model, it doesn't emit to show any loading indicator, defaulting to false`() {
         val loadingObserver = viewModel.showLoading.test()
 
         loadingObserver
@@ -76,7 +76,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `When click on an item, it navigates to Second screen correctly`() {
+    fun `When navigating to Detail screen responds positive result, it emits the corresponding navigation event`() {
         val navigatorObserver = viewModel.navigator.test()
 
         viewModel.navigateToDetail(MockUtil.dataList[0])

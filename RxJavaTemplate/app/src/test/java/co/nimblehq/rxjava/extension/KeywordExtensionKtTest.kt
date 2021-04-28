@@ -6,7 +6,7 @@ import org.junit.Test
 class KeywordExtensionKtTest {
 
     @Test
-    fun `using unless should not execute if the condition match`() {
+    fun `using unless doesn't execute if the condition is satisfied`() {
         var result = 3
         val condition: Int = -1
 
