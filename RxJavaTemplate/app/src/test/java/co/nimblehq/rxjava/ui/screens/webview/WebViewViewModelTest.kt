@@ -13,7 +13,7 @@ class WebViewViewModelTest {
     }
 
     @Test
-    fun `Should emit url with start with explicit Url`() {
+    fun `When loading url responds positive result, it emits the success value accordingly`() {
         val testObserver = viewModel.startUrl.test()
 
         viewModel.loadUrl("url")
@@ -24,7 +24,7 @@ class WebViewViewModelTest {
     }
 
     @Test
-    fun `Should emit Loading event to react on loading progress submitted`() {
+    fun `When different progresses are updated as Show, 50 percent and Hide sequentially, it emits showLoading events accordingly to the published progresses`() {
         val loadingObserver = viewModel.showLoading.test()
 
         viewModel.progress(WebViewProgress.Show)

@@ -6,14 +6,14 @@ import org.junit.Test
 class KeywordExtensionKtTest {
 
     @Test
-    fun `using unless should not execute if the condition match`() {
+    fun `using unless doesn't execute if the condition is satisfied`() {
         var result = 3
         val condition: Int = -1
 
-        unless(condition > -1, { result = 4})
+        unless(condition > -1) { result = 4 }
         assertEquals("block should exec", 4, result)
 
-        unless(condition == -1, { result = 5})
+        unless(condition == -1) { result = 5 }
         assertEquals("block should NOT exec", 4, result)
     }
 }

@@ -15,7 +15,8 @@ class HomeFragment : BaseFragment() {
 
     override val layoutRes = R.layout.fragment_home
 
-    @Inject lateinit var navigator: MainNavigator
+    @Inject
+    lateinit var navigator: MainNavigator
 
     private val viewModel by viewModels<HomeViewModel>()
 

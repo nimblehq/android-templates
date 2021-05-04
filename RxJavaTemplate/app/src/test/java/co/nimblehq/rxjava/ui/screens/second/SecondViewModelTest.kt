@@ -16,7 +16,7 @@ class SecondViewModelTest {
     }
 
     @Test
-    fun `When initializing, it binds data correctly`() {
+    fun `When calling dataFromIntent responds positive result, it emits success data correspondingly`() {
         val dataObserver = viewModel.data.test()
 
         viewModel.dataFromIntent(MockUtil.dataList[0])
@@ -27,7 +27,7 @@ class SecondViewModelTest {
     }
 
     @Test
-    fun `When open a post, it navigates to WebView screen correctly`() {
+    fun `When opening a post, it navigates to WebView screen correctly`() {
         val navigatorObserver = viewModel.navigator.test()
 
         viewModel.dataFromIntent(MockUtil.dataList[0])
@@ -36,9 +36,7 @@ class SecondViewModelTest {
         navigatorObserver
             .assertValueCount(1)
             .assertValue(
-                NavigationEvent.WebView(
-                    WebViewBundle("url")
-                )
+                NavigationEvent.WebView(WebViewBundle("url"))
             )
     }
 }
