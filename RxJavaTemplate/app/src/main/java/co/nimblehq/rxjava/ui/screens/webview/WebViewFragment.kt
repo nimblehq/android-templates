@@ -20,14 +20,17 @@ class WebViewFragment : BaseFragment<FragmentWebviewBinding>() {
     private val viewModel by viewModels<WebViewViewModel>()
     private val args: WebViewFragmentArgs by navArgs()
     private val bundle: WebViewBundle by lazy { args.bundle }
-    private val viewLoadingBinding by lazy { ViewLoadingBinding.bind(binding.root) }
+
+    private lateinit var viewLoadingBinding: ViewLoadingBinding
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentWebviewBinding
         get() = { inflater, container, attachToParent ->
             FragmentWebviewBinding.inflate(inflater, container, attachToParent)
         }
 
-    override fun setupView() {}
+    override fun setupView() {
+        viewLoadingBinding = ViewLoadingBinding.bind(binding.root)
+    }
 
     override fun handleVisualOverlaps() {
         binding.webView.handleVisualOverlaps()
@@ -49,8 +52,9 @@ class WebViewFragment : BaseFragment<FragmentWebviewBinding>() {
         val webChromeClient = AppWebChromeClient {
             viewModel.progress(it)
         }
-        binding.webView.initialSetup(WebViewClient(), webChromeClient)
-
-        binding.webView.loadUrl(startUrl)
+        with(binding.webView) {
+            initialSetup(WebViewClient(), webChromeClient)
+            loadUrl(startUrl)
+        }
     }
 }

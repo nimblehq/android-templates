@@ -2,8 +2,6 @@ package co.nimblehq.rxjava.ui.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import co.nimblehq.rxjava.domain.schedulers.SchedulerProvider
@@ -35,8 +33,9 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = bindingInflater.invoke(layoutInflater)
-        setContentView(requireNotNull(_binding).root)
+        setContentView(bindingInflater.invoke(layoutInflater).apply {
+            _binding = this
+        }.root)
 
         bindViewModel()
     }

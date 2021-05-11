@@ -77,8 +77,9 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment(), BaseFragmentCallback
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = bindingInflater.invoke(inflater, container, false)
-        return requireNotNull(_binding).root
+        return bindingInflater.invoke(inflater, container, false).apply {
+            _binding = this
+        }.root
     }
 
     @CallSuper

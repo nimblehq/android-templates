@@ -13,7 +13,6 @@ import co.nimblehq.rxjava.ui.base.BaseFragment
 import co.nimblehq.rxjava.ui.helpers.handleVisualOverlaps
 import co.nimblehq.rxjava.ui.screens.MainNavigator
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.view_loading.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -23,9 +22,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     lateinit var navigator: MainNavigator
 
     private val viewModel by viewModels<HomeViewModel>()
-    private lateinit var dataAdapter: DataAdapter
 
-    private val viewLoadingBinding by lazy { ViewLoadingBinding.bind(binding.root) }
+    private lateinit var dataAdapter: DataAdapter
+    private lateinit var viewLoadingBinding: ViewLoadingBinding
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeBinding
         get() = { inflater, container, attachToParent ->
@@ -33,6 +32,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
 
     override fun setupView() {
+        viewLoadingBinding = ViewLoadingBinding.bind(binding.root)
         setupDataList()
 
         binding.btHomeRefresh
