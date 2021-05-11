@@ -1,0 +1,214 @@
+---
+format_version: '8'
+default_step_lib_source: 'https://github.com/bitrise-io/bitrise-steplib.git'
+project_type: android
+trigger_map:
+  - push_branch: develop
+    workflow: develop
+
+  - push_branch: release/*
+    workflow: release
+
+  - push_branch: master
+    workflow: master
+
+  - push_branch: '*'
+    workflow: primary
+
+  - pull_request_source_branch: '*'
+    workflow: primary
+
+# Work-flows definition
+workflows:
+  # Workflow on * branch
+  primary:
+    steps:
+      - activate-ssh-key@4:
+          run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+
+      - git-clone@4: {}
+
+      - cache-pull@2: {}
+
+      - install-missing-android-tools@2:
+          inputs:
+            - gradlew_path: "$PROJECT_LOCATION/gradlew"
+
+      # Execute Lint check
+      - android-lint@0:
+          inputs:
+            - project_location: "$PROJECT_LOCATION"
+
+      # Execute Detekt
+      - gradle-runner@1:
+          inputs:
+            - gradlew_path: "$PROJECT_LOCATION/gradlew"
+            - gradle_task: detekt
+          title: Detekt
+
+      # Execute UnitTest
+      - android-unit-test@1:
+          inputs:
+            - arguments: jacocoTestReport
+            - variant: "$VARIANT"
+            - module: "$MODULE"
+            - report_path_pattern: '*build/reports'
+            - project_location: "$PROJECT_LOCATION"
+
+      # Upload jacocoTestReport to Apps & Artifacts for later downloading
+      - deploy-to-bitrise-io@1:
+          inputs:
+            - deploy_path: "$PROJECT_LOCATION/$MODULE/build/reports/jacoco/jacocoTestReport/html"
+            - is_enable_public_page: 'false'
+            - is_compress: 'true'
+            - notify_user_groups: none
+
+  # Workflow on develop branch
+  develop:
+    steps:
+      - activate-ssh-key@4:
+          run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+
+      - git-clone@4: {}
+
+      - cache-pull@2: {}
+
+      # Download Keystore file
+      - file-downloader@1:
+          inputs:
+            - destination: "$KEYSTORE_FILE"
+            - source: "$BITRISEIO_ANDROID_KEYSTORE_URL"
+
+      - install-missing-android-tools@2:
+          inputs:
+            - gradlew_path: "$PROJECT_LOCATION/gradlew"
+
+      # Execute Lint check
+      - android-lint@0:
+          inputs:
+            - project_location: "$PROJECT_LOCATION"
+
+      # Execute UnitTest
+      - android-unit-test@1:
+          inputs:
+            - module: "$MODULE"
+            - variant: "$VARIANT"
+            - project_location: "$PROJECT_LOCATION"
+
+      # Execute build on $VARIANT
+      - android-build@0:
+          inputs:
+            - module: "$MODULE"
+            - variant: "$VARIANT"
+            - project_location: "$PROJECT_LOCATION"
+
+      # Upload app-debug.apk to Apps & Artifacts for later downloading
+      - deploy-to-bitrise-io@1:
+          inputs:
+            - zip_name: ''
+            - deploy_path: /bitrise/deploy/app-debug.apk
+            - notify_email_list: ''
+          is_always_run: false
+
+      - cache-push@2: {}
+
+  # Workflow on release/* branch
+  release:
+    steps:
+      - activate-ssh-key@4:
+          run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+
+      - git-clone@4: {}
+
+      - cache-pull@2: {}
+
+      - file-downloader@1:
+          inputs:
+            - destination: "$KEYSTORE_FILE"
+            - source: "$BITRISEIO_ANDROID_KEYSTORE_URL"
+
+      - install-missing-android-tools@2:
+          inputs:
+            - gradlew_path: "$PROJECT_LOCATION/gradlew"
+
+      - android-lint@0:
+          inputs:
+            - project_location: "$PROJECT_LOCATION"
+
+      - android-unit-test@1:
+          inputs:
+            - project_location: "$PROJECT_LOCATION"
+            - module: "$MODULE"
+            - variant: release
+
+      - android-build@0:
+          inputs:
+            - module: "$MODULE"
+            - project_location: "$PROJECT_LOCATION"
+            - variant: release
+
+      # Upload app-release.apk to Apps & Artifacts for downloading later
+      - deploy-to-bitrise-io@1:
+          inputs:
+            - zip_name: ''
+            - deploy_path: /bitrise/deploy/app-release.apk
+            - notify_email_list: ''
+          is_always_run: false
+
+      - cache-push@2: {}
+
+  # Workflow on master branch
+  master:
+    steps:
+
+      - activate-ssh-key@4:
+          run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+
+      - git-clone@4: {}
+
+      - cache-pull@2: {}
+
+      - install-missing-android-tools@2:
+          inputs:
+            - gradlew_path: "$PROJECT_LOCATION/gradlew"
+
+      - android-lint@0:
+          inputs:
+            - project_location: "$PROJECT_LOCATION"
+            - module: "$MODULE"
+            - variant: "$VARIANT"
+
+      - android-unit-test@1:
+          inputs:
+            - project_location: "$PROJECT_LOCATION"
+            - module: "$MODULE"
+            - variant: "$VARIANT"
+
+      # Build aab release bundle
+      - android-build@0:
+          inputs:
+            - variant: release
+            - build_type: aab
+            - module: "$MODULE"
+
+      # Upload to Google Play Store
+      - google-play-deploy@3:
+          inputs:
+            - package_name: "$PACKAGE_NAME"
+            - service_account_json_key_path: "$BITRISEIO_SERVICE_ACCOUNT_JSON_KEY_URL"
+
+      - cache-push@2: {}
+
+# Application Environment Variables
+app:
+  envs:
+    - opts:
+        is_expand: false
+      PROJECT_LOCATION: .
+    - opts:
+        is_expand: false
+      MODULE: chat
+    - opts:
+        is_expand: false
+      VARIANT: debug
+    - TZ: Asia/Bangkok
