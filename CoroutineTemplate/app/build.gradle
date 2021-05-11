@@ -37,10 +37,12 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
+            buildConfigField("String", "BASE_URL", "\"https://jsonplaceholder.typicode.com/\"")
         }
         debug {
             // For quickly testing build with proguard, enable this
             minifyEnabled false
+            buildConfigField("String", "BASE_URL", "\"https://jsonplaceholder.typicode.com/\"")
         }
     }
 
@@ -67,6 +69,9 @@ android {
 }
 
 dependencies {
+    implementation project(':data')
+    implementation project(':domain')
+
     implementation(
         fileTree(dir: 'libs', include: ['*.jar']),
 
@@ -80,6 +85,7 @@ dependencies {
         "androidx.navigation:navigation-ui-ktx:$androidx_navigation_version",
 
         "com.google.dagger:hilt-android:$hilt_version",
+        "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_androidx_version",
 
         "com.jakewharton.timber:timber:$timber_log_version",
 
@@ -88,7 +94,8 @@ dependencies {
     )
 
     kapt(
-        "com.google.dagger:hilt-compiler:$hilt_version"
+        "com.google.dagger:hilt-compiler:$hilt_version",
+        "androidx.hilt:hilt-compiler:$hilt_androidx_version"
     )
 
     testImplementation(
