@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-parcelize'
 apply from: '../config/jacoco.gradle'
 
 def globalConfig = rootProject.extensions.getByName("ext")
@@ -44,10 +44,6 @@ android {
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
-    }
-
-    androidExtensions {
-        experimental = true
     }
 }
 

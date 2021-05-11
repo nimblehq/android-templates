@@ -1,8 +1,11 @@
 package co.nimblehq.rxjava.ui.screens.home
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.*
-import co.nimblehq.rxjava.R
+import co.nimblehq.rxjava.databinding.FragmentHomeBinding
+import co.nimblehq.rxjava.databinding.ViewLoadingBinding
 import co.nimblehq.rxjava.domain.data.Data
 import co.nimblehq.rxjava.extension.*
 import co.nimblehq.rxjava.lib.IsLoading
@@ -10,32 +13,38 @@ import co.nimblehq.rxjava.ui.base.BaseFragment
 import co.nimblehq.rxjava.ui.helpers.handleVisualOverlaps
 import co.nimblehq.rxjava.ui.screens.MainNavigator
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.view_loading.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     @Inject
     lateinit var navigator: MainNavigator
 
     private val viewModel by viewModels<HomeViewModel>()
-    private lateinit var dataAdapter: DataAdapter
 
-    override val layoutRes = R.layout.fragment_home
+    private lateinit var dataAdapter: DataAdapter
+    private lateinit var viewLoadingBinding: ViewLoadingBinding
+
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeBinding
+        get() = { inflater, container, attachToParent ->
+            FragmentHomeBinding.inflate(inflater, container, attachToParent)
+        }
 
     override fun setupView() {
+        viewLoadingBinding = ViewLoadingBinding.bind(binding.root)
         setupDataList()
 
-        btHomeRefresh
+        binding.btHomeRefresh
             .subscribeOnClick { viewModel.input.refresh() }
             .addToDisposables()
     }
 
     override fun handleVisualOverlaps() {
-        rvHomeData.handleVisualOverlaps(marginInsteadOfPadding = false)
-        btHomeRefresh.handleVisualOverlaps()
+        with(binding) {
+            rvHomeData.handleVisualOverlaps(marginInsteadOfPadding = false)
+            btHomeRefresh.handleVisualOverlaps()
+        }
     }
 
     override fun bindViewEvents() {
@@ -59,7 +68,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setupDataList() {
-        with(rvHomeData) {
+        with(binding.rvHomeData) {
             adapter = DataAdapter().also {
                 dataAdapter = it
             }
@@ -78,8 +87,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun showLoading(isLoading: IsLoading) {
-        btHomeRefresh.isEnabled = !isLoading
-        pbLoading.visibleOrGone(isLoading)
+        binding.btHomeRefresh.isEnabled = !isLoading
+        viewLoadingBinding.pbLoading.visibleOrGone(isLoading)
     }
-
 }

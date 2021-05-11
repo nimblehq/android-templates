@@ -1,31 +1,39 @@
 package co.nimblehq.rxjava.ui.screens.webview
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.webkit.WebViewClient
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import co.nimblehq.rxjava.R
+import co.nimblehq.rxjava.databinding.FragmentWebviewBinding
+import co.nimblehq.rxjava.databinding.ViewLoadingBinding
 import co.nimblehq.rxjava.extension.initialSetup
 import co.nimblehq.rxjava.extension.visibleOrGone
 import co.nimblehq.rxjava.lib.IsLoading
 import co.nimblehq.rxjava.ui.base.BaseFragment
 import co.nimblehq.rxjava.ui.helpers.handleVisualOverlaps
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_webview.*
-import kotlinx.android.synthetic.main.view_loading.*
 
 @AndroidEntryPoint
-class WebViewFragment : BaseFragment() {
+class WebViewFragment : BaseFragment<FragmentWebviewBinding>() {
 
     private val viewModel by viewModels<WebViewViewModel>()
     private val args: WebViewFragmentArgs by navArgs()
     private val bundle: WebViewBundle by lazy { args.bundle }
 
-    override val layoutRes = R.layout.fragment_webview
+    private lateinit var viewLoadingBinding: ViewLoadingBinding
 
-    override fun setupView() {}
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentWebviewBinding
+        get() = { inflater, container, attachToParent ->
+            FragmentWebviewBinding.inflate(inflater, container, attachToParent)
+        }
+
+    override fun setupView() {
+        viewLoadingBinding = ViewLoadingBinding.bind(binding.root)
+    }
 
     override fun handleVisualOverlaps() {
-        webView.handleVisualOverlaps()
+        binding.webView.handleVisualOverlaps()
     }
 
     override fun bindViewModel() {
@@ -37,15 +45,16 @@ class WebViewFragment : BaseFragment() {
     }
 
     private fun bindLoading(isLoading: IsLoading) {
-        pbLoading.visibleOrGone(isLoading)
+        viewLoadingBinding.pbLoading.visibleOrGone(isLoading)
     }
 
     private fun loadUrl(startUrl: String) {
         val webChromeClient = AppWebChromeClient {
             viewModel.progress(it)
         }
-        webView.initialSetup(WebViewClient(), webChromeClient)
-
-        webView.loadUrl(startUrl)
+        with(binding.webView) {
+            initialSetup(WebViewClient(), webChromeClient)
+            loadUrl(startUrl)
+        }
     }
 }

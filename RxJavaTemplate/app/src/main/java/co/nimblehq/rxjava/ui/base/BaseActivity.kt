@@ -1,8 +1,9 @@
 package co.nimblehq.rxjava.ui.base
 
 import android.os.Bundle
-import androidx.annotation.LayoutRes
+import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewbinding.ViewBinding
 import co.nimblehq.rxjava.domain.schedulers.SchedulerProvider
 import co.nimblehq.rxjava.ui.common.Toaster
 import co.nimblehq.rxjava.ui.userReadableMessage
@@ -12,7 +13,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
 import javax.inject.Inject
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     @Inject
     lateinit var toaster: Toaster
@@ -20,14 +21,21 @@ abstract class BaseActivity : AppCompatActivity() {
     @Inject
     lateinit var schedulerProvider: SchedulerProvider
 
-    @get:LayoutRes
-    protected abstract val layoutRes: Int
+    protected abstract val bindingInflater: (LayoutInflater) -> VB
+
+    private var _binding: ViewBinding? = null
+
+    @Suppress("UNCHECKED_CAST")
+    protected val binding: VB
+        get() = _binding as VB
 
     private val disposables = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layoutRes)
+        setContentView(bindingInflater.invoke(layoutInflater).apply {
+            _binding = this
+        }.root)
 
         bindViewModel()
     }
@@ -35,6 +43,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         disposables.dispose()
+        _binding = null
     }
 
     abstract fun bindViewModel()

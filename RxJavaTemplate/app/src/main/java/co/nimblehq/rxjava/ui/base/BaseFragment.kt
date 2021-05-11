@@ -6,6 +6,7 @@ import android.view.*
 import android.view.View.*
 import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import co.nimblehq.rxjava.domain.schedulers.SchedulerProvider
 import co.nimblehq.rxjava.extension.hideSoftKeyboard
 import co.nimblehq.rxjava.extension.subscribeOnClick
@@ -17,7 +18,8 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
 import javax.inject.Inject
 
-abstract class BaseFragment : Fragment(), BaseFragmentCallbacks {
+@SuppressWarnings("TooManyFunctions")
+abstract class BaseFragment<VB : ViewBinding> : Fragment(), BaseFragmentCallbacks {
 
     @Inject
     lateinit var toaster: Toaster
@@ -25,7 +27,13 @@ abstract class BaseFragment : Fragment(), BaseFragmentCallbacks {
     @Inject
     lateinit var schedulerProvider: SchedulerProvider
 
-    protected abstract val layoutRes: Int
+    private var _binding: ViewBinding? = null
+
+    @Suppress("UNCHECKED_CAST")
+    protected val binding: VB
+        get() = _binding as VB
+
+    abstract val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> VB
 
     /**
      * https://developer.android.com/training/system-ui/immersive#EnableFullscreen
@@ -69,7 +77,9 @@ abstract class BaseFragment : Fragment(), BaseFragmentCallbacks {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(layoutRes, container, false)
+        return bindingInflater.invoke(inflater, container, false).apply {
+            _binding = this
+        }.root
     }
 
     @CallSuper
@@ -87,6 +97,7 @@ abstract class BaseFragment : Fragment(), BaseFragmentCallbacks {
     override fun onDestroyView() {
         super.onDestroyView()
         disposables.clear()
+        _binding = null
     }
 
     override fun onDestroy() {

@@ -1,15 +1,15 @@
 package co.nimblehq.rxjava.ui.screens.webview
 
+import androidx.hilt.lifecycle.ViewModelInject
 import co.nimblehq.rxjava.ui.base.BaseViewModel
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
-import javax.inject.Inject
 
 interface Input {
     fun loadUrl(url: String)
 }
 
-class WebViewViewModel @Inject constructor() : BaseViewModel(), Input {
+class WebViewViewModel @ViewModelInject constructor() : BaseViewModel(), Input {
 
     val input: Input = this
 

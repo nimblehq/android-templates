@@ -2,7 +2,7 @@ package co.nimblehq.rxjava.domain.data
 
 import android.os.Parcelable
 import co.nimblehq.rxjava.data.service.response.ExampleResponse
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Data(
