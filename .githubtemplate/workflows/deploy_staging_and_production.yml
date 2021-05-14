@@ -16,6 +16,11 @@ jobs:
         with:
           java-version: 1.8
 
+      - name: Setup timezone
+        uses: zcong1993/setup-timezone@master
+        with:
+          timezone: Asia/Bangkok
+
       - uses: actions/checkout@v2.3.2
 
       - name: Load Gradle cached
@@ -37,11 +42,6 @@ jobs:
         with:
           name: detekt-report
           path: build/reports/detekt/
-
-      - name: Setup timezone
-        uses: zcong1993/setup-timezone@master
-        with:
-          timezone: Asia/Bangkok
 
       - name: Run Unit Tests & Jacoco
         run: ./gradlew jacocoTestReport
