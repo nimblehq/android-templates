@@ -25,35 +25,35 @@ data class UserEntity(
     }
 }
 
-fun List<UserResponse>.toUsersEntity(): List<UserEntity> {
-    return this.map { it.toUser() }
+fun List<UserResponse>.toUserEntities(): List<UserEntity> {
+    return this.map { it.toEntity() }
 }
 
-fun UserResponse.toUser(): UserEntity {
+private fun UserResponse.toEntity(): UserEntity {
     return UserEntity(
-        id = id,
-        name = name.orEmpty(),
-        username = username.orEmpty(),
-        email = email.orEmpty(),
-        address = address?.toUserAddress(),
-        phone = phone.orEmpty(),
-        website = website.orEmpty()
+        id = this.id,
+        name = this.name.orEmpty(),
+        username = this.username.orEmpty(),
+        email = this.email.orEmpty(),
+        address = this.address?.toEntity(),
+        phone = this.phone.orEmpty(),
+        website = this.website.orEmpty()
     )
 }
 
-fun UserResponse.Address.toUserAddress(): UserEntity.Address {
+private fun UserResponse.Address.toEntity(): UserEntity.Address {
     return UserEntity.Address(
-        street = street.orEmpty(),
-        suite = suite.orEmpty(),
-        city = city.orEmpty(),
-        zipCode = zipCode.orEmpty(),
-        geo = geo?.toUserAddressGeo()
+        street = this.street.orEmpty(),
+        suite = this.suite.orEmpty(),
+        city = this.city.orEmpty(),
+        zipCode = this.zipCode.orEmpty(),
+        geo = this.geo?.toEntity()
     )
 }
 
-fun UserResponse.Address.Geo.toUserAddressGeo(): UserEntity.Address.Geo {
+private fun UserResponse.Address.Geo.toEntity(): UserEntity.Address.Geo {
     return UserEntity.Address.Geo(
-        latitude = latitude.orEmpty(),
-        longitude = longitude.orEmpty()
+        latitude = this.latitude.orEmpty(),
+        longitude = this.longitude.orEmpty()
     )
 }

@@ -34,11 +34,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun bindViewModel() {
         with(viewModel) {
-            users().observe(viewLifecycleOwner) { users ->
+            users.observe(viewLifecycleOwner) { users ->
                 Timber.d("Result : $users")
             }
 
-            showError().observe(viewLifecycleOwner) {
+            showError.observe(viewLifecycleOwner) {
                 it.proceedIfNotHandled()?.let { message ->
                     toaster.display(message = message)
                 }

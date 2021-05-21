@@ -7,17 +7,17 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class GetUserUseCase @Inject constructor(
+class GetUsersUseCase @Inject constructor(
     private val userRepository: UserRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
-    suspend fun execute(): ChatUseCaseResult<List<UserEntity>> {
+    suspend fun execute(): UseCaseResult<List<UserEntity>> {
         return withContext(ioDispatcher) {
             try {
                 val result = userRepository.getUsers()
-                ChatUseCaseResult.Success(result)
+                UseCaseResult.Success(result)
             } catch (exception: Exception) {
-                ChatUseCaseResult.Error(exception)
+                UseCaseResult.Error(exception)
             }
         }
     }

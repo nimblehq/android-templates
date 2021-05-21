@@ -1,5 +1,6 @@
 package co.nimblehq.coroutine.di.modules
 
+import co.nimblehq.coroutine.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,9 +13,11 @@ import okhttp3.logging.HttpLoggingInterceptor
 class OkHttpClientModule {
 
     @Provides
-    fun provideOkHttpClient() = OkHttpClient.Builder()
-        .addInterceptor(HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        })
-        .build()
+    fun provideOkHttpClient() = OkHttpClient.Builder().apply {
+        if (BuildConfig.DEBUG) {
+            addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
+        }
+    }.build()
 }

@@ -5,6 +5,7 @@ import co.nimblehq.coroutine.data.service.ApiService
 import co.nimblehq.coroutine.data.service.providers.ApiServiceProvider
 import co.nimblehq.coroutine.data.service.providers.ConverterFactoryProvider
 import co.nimblehq.coroutine.data.service.providers.RetrofitProvider
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,11 +19,11 @@ import retrofit2.Retrofit
 class RetrofitModule {
 
     @Provides
-    fun provideBaseUrl() = BuildConfig.BASE_URL
+    fun provideBaseApiUrl() = BuildConfig.BASE_API_URL
 
     @Provides
-    fun provideGsonConverterFactory(): Converter.Factory =
-        ConverterFactoryProvider.getGsonConverterFactory()
+    fun provideMoshiConverterFactory(moshi: Moshi): Converter.Factory =
+        ConverterFactoryProvider.getMoshiConverterFactory(moshi)
 
     @Provides
     fun provideRetrofit(
@@ -34,5 +35,5 @@ class RetrofitModule {
         .build()
 
     @Provides
-    fun provideApi(retrofit: Retrofit): ApiService = ApiServiceProvider.getApiService(retrofit)
+    fun provideApiService(retrofit: Retrofit): ApiService = ApiServiceProvider.getApiService(retrofit)
 }

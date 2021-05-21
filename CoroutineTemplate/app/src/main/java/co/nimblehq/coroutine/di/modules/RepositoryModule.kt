@@ -6,12 +6,12 @@ import co.nimblehq.coroutine.domain.repository.UserRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityRetainedComponent
+import dagger.hilt.android.components.ViewModelComponent
 
-@InstallIn(ActivityRetainedComponent::class)
 @Module
+@InstallIn(ViewModelComponent::class)
 class RepositoryModule {
 
     @Provides
-    fun provideRepository(apiService: ApiService): UserRepository = UserRepositoryImpl(apiService)
+    fun provideUserRepository(apiService: ApiService): UserRepository = UserRepositoryImpl(apiService)
 }

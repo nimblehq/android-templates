@@ -1,33 +1,37 @@
 package co.nimblehq.coroutine.ui.screens.home
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import co.nimblehq.coroutine.domain.data.entity.UserEntity
-import co.nimblehq.coroutine.domain.usecase.ChatUseCaseResult
-import co.nimblehq.coroutine.domain.usecase.GetUserUseCase
+import co.nimblehq.coroutine.domain.usecase.UseCaseResult
+import co.nimblehq.coroutine.domain.usecase.GetUsersUseCase
 import co.nimblehq.coroutine.lib.Event
 import co.nimblehq.coroutine.ui.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-interface Input {
+interface Output {
 
-    fun users(): LiveData<List<UserEntity>>
+    val users: LiveData<List<UserEntity>>
 
-    fun showError(): LiveData<Event<String>>
+    val showError: LiveData<Event<String>>
 }
 
-class HomeViewModel @ViewModelInject constructor(
-    private val getUserUseCase: GetUserUseCase
-) : BaseViewModel(), Input {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val getUsersUseCase: GetUsersUseCase
+) : BaseViewModel(), Output {
 
+    // TODO: Re-factor LiveData to Flow and remove Event
     private val _users = MutableLiveData<List<UserEntity>>()
+    override val users: LiveData<List<UserEntity>>
+        get() = _users
+
     private val _showError = MutableLiveData<Event<String>>()
-
-    override fun users(): LiveData<List<UserEntity>> = _users
-
-    override fun showError(): LiveData<Event<String>> = _showError
+    override val showError: LiveData<Event<String>>
+        get() = _showError
 
     init {
         fetchUsers()
@@ -35,9 +39,9 @@ class HomeViewModel @ViewModelInject constructor(
 
     private fun fetchUsers() {
         viewModelScope.launch {
-            when (val result = getUserUseCase.execute()) {
-                is ChatUseCaseResult.Success -> _users.value = result.data
-                is ChatUseCaseResult.Error -> _showError.value = Event(result.exception.message ?: "")
+            when (val result = getUsersUseCase.execute()) {
+                is UseCaseResult.Success -> _users.value = result.data
+                is UseCaseResult.Error -> _showError.value = Event(result.exception.message.orEmpty())
             }
         }
     }

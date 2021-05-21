@@ -2,7 +2,7 @@ package co.nimblehq.coroutine.domain.repository
 
 import co.nimblehq.coroutine.data.service.ApiService
 import co.nimblehq.coroutine.domain.data.entity.UserEntity
-import co.nimblehq.coroutine.domain.data.entity.toUsersEntity
+import co.nimblehq.coroutine.domain.data.entity.toUserEntities
 import javax.inject.Inject
 
 interface UserRepository {
@@ -16,6 +16,6 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun getUsers(): List<UserEntity> {
         val response = apiService.getUsers()
-        return response.toUsersEntity()
+        return response.toUserEntities()
     }
 }

@@ -7,7 +7,6 @@ apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 def keystorePropertiesFile = rootProject.file("signing.properties")
 def keystoreProperties = new Properties()
-def globalConfig = rootProject.extensions.getByName("ext")
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
@@ -21,13 +20,13 @@ android {
         }
     }
 
-    compileSdkVersion globalConfig["android_compile_sdk_version"]
+    compileSdkVersion android_compile_sdk_version
     defaultConfig {
         applicationId "co.nimblehq.coroutine"
-        minSdkVersion globalConfig["android_min_sdk_version"]
-        targetSdkVersion globalConfig["android_target_sdk_version"]
-        versionCode globalConfig["android_version_code"]
-        versionName globalConfig["android_version_name"]
+        minSdkVersion android_min_sdk_version
+        targetSdkVersion android_target_sdk_version
+        versionCode android_version_code
+        versionName android_version_name
     }
 
     buildTypes {
@@ -37,12 +36,12 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
-            buildConfigField("String", "BASE_URL", "\"https://jsonplaceholder.typicode.com/\"")
+            buildConfigField("String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\"")
         }
         debug {
             // For quickly testing build with proguard, enable this
             minifyEnabled false
-            buildConfigField("String", "BASE_URL", "\"https://jsonplaceholder.typicode.com/\"")
+            buildConfigField("String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\"")
         }
     }
 
@@ -69,10 +68,10 @@ android {
 }
 
 dependencies {
-    implementation project(':data')
-    implementation project(':domain')
-
     implementation(
+        project(':data'),
+        project(':domain'),
+
         fileTree(dir: 'libs', include: ['*.jar']),
 
         "androidx.activity:activity-ktx:$androidx_activity_ktx_version",
@@ -85,7 +84,6 @@ dependencies {
         "androidx.navigation:navigation-ui-ktx:$androidx_navigation_version",
 
         "com.google.dagger:hilt-android:$hilt_version",
-        "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_androidx_version",
 
         "com.jakewharton.timber:timber:$timber_log_version",
 
@@ -94,8 +92,7 @@ dependencies {
     )
 
     kapt(
-        "com.google.dagger:hilt-compiler:$hilt_version",
-        "androidx.hilt:hilt-compiler:$hilt_androidx_version"
+        "com.google.dagger:hilt-compiler:$hilt_version"
     )
 
     testImplementation(

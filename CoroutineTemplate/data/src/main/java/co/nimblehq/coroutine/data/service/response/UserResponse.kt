@@ -1,26 +1,26 @@
 package co.nimblehq.coroutine.data.service.response
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 
 data class UserResponse(
-    @SerializedName("id") val id: Int?,
-    @SerializedName("name") val name: String?,
-    @SerializedName("username") val username: String?,
-    @SerializedName("email") val email: String?,
-    @SerializedName("address") val address: Address?,
-    @SerializedName("phone") val phone: String?,
-    @SerializedName("website") val website: String?
+    @Json(name = "id") val id: Int?,
+    @Json(name = "name") val name: String?,
+    @Json(name = "username") val username: String?,
+    @Json(name = "email") val email: String?,
+    @Json(name = "address") val address: Address?,
+    @Json(name = "phone") val phone: String?,
+    @Json(name = "website") val website: String?
 ) {
     data class Address(
-        @SerializedName("street") val street: String?,
-        @SerializedName("suite") val suite: String?,
-        @SerializedName("city") val city: String?,
-        @SerializedName("zipcode") val zipCode: String?,
-        @SerializedName("geo") val geo: Geo?
+        @Json(name = "street") val street: String?,
+        @Json(name = "suite") val suite: String?,
+        @Json(name = "city") val city: String?,
+        @Json(name = "zipcode") val zipCode: String?,
+        @Json(name = "geo") val geo: Geo?
     ) {
         data class Geo(
-            @SerializedName("lat") val latitude: String?,
-            @SerializedName("lng") val longitude: String?
+            @Json(name = "lat") val latitude: String?,
+            @Json(name = "lng") val longitude: String?
         )
     }
 }
