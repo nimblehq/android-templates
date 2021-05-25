@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-parcelize'
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
@@ -61,8 +61,8 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
-    androidExtensions {
-        experimental = true
+    buildFeatures {
+        viewBinding true
     }
 }
 
