@@ -2,7 +2,9 @@ package co.nimblehq.rxjava.ui.screens
 
 import androidx.fragment.app.Fragment
 import co.nimblehq.rxjava.R
-import co.nimblehq.rxjava.ui.base.*
+import co.nimblehq.rxjava.ui.base.BaseNavigator
+import co.nimblehq.rxjava.ui.base.BaseNavigatorImpl
+import co.nimblehq.rxjava.ui.base.NavigationEvent
 import co.nimblehq.rxjava.ui.screens.home.HomeFragmentDirections
 import co.nimblehq.rxjava.ui.screens.second.SecondBundle
 import co.nimblehq.rxjava.ui.screens.second.SecondFragmentDirections

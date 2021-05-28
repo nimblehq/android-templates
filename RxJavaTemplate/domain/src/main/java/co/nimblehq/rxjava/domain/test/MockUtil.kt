@@ -1,6 +1,9 @@
 package co.nimblehq.rxjava.domain.test
 
-import co.nimblehq.rxjava.data.service.response.*
+import co.nimblehq.rxjava.data.service.response.ExampleChildrenDataResponse
+import co.nimblehq.rxjava.data.service.response.ExampleChildrenResponse
+import co.nimblehq.rxjava.data.service.response.ExampleDataResponse
+import co.nimblehq.rxjava.data.service.response.ExampleResponse
 import co.nimblehq.rxjava.domain.data.Data
 import co.nimblehq.rxjava.domain.data.toDataList
 
@@ -12,26 +15,26 @@ object MockUtil {
                 listOf(
                     ExampleChildrenResponse(
                         ExampleChildrenDataResponse(
-                            author = "author1",
                             title = "title1",
+                            author = "author1",
                             thumbnail = "thumbnail",
-                            url = "url"
+                            url = "https://www.google.com"
                         )
                     ),
                     ExampleChildrenResponse(
                         ExampleChildrenDataResponse(
-                            author = "author2",
                             title = "title2",
+                            author = "author2",
                             thumbnail = "thumbnail",
-                            url = "url"
+                            url = "https://www.google.com"
                         )
                     ),
                     ExampleChildrenResponse(
                         ExampleChildrenDataResponse(
-                            author = "author3",
                             title = "title3",
+                            author = "author3",
                             thumbnail = "thumbnail",
-                            url = "url"
+                            url = "https://www.google.com"
                         )
                     )
                 )

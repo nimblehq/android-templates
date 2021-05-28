@@ -33,6 +33,7 @@ android {
         versionName globalConfig["android_version_name"]
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner = "co.nimblehq.rxjava.TestRunner"
     }
 
     buildTypes {
@@ -92,6 +93,7 @@ android {
         unitTests {
             // Robolectric resource processing/loading
             includeAndroidResources = true
+            returnDefaultValues = true
         }
         unitTests.all {
             jacoco {
@@ -152,10 +154,16 @@ dependencies {
 
         "com.jakewharton.timber:timber:$timber_log_version",
         "com.github.bumptech.glide:glide:$glide_version",
-        "com.github.tbruyelle:rxpermissions:$rxpermission_version"
+        "com.github.tbruyelle:rxpermissions:$rxpermission_version",
+
+        "androidx.test.espresso:espresso-idling-resource:$test_espresso_version"
     )
 
-    debugImplementation "com.github.chuckerteam.chucker:library:$chucker_interceptor_version"
+    debugImplementation(
+        "androidx.fragment:fragment-testing:$android_fragment_version",
+        "com.github.chuckerteam.chucker:library:$chucker_interceptor_version"
+    )
+
     releaseImplementation "com.github.chuckerteam.chucker:library-no-op:$chucker_interceptor_version"
 
     testImplementation(
@@ -166,7 +174,16 @@ dependencies {
     )
 
     androidTestImplementation(
+        "junit:junit:$test_junit_version",
         "androidx.test:runner:$android_test_version",
         "androidx.test:rules:$android_test_version",
+        "androidx.test.espresso:espresso-core:$test_espresso_version",
+        "androidx.test.espresso:espresso-intents:$test_espresso_version",
+        "androidx.test.espresso:espresso-contrib:$test_espresso_version",
+        "androidx.test.espresso:espresso-web:$test_espresso_version",
+        "com.google.dagger:hilt-android-testing:$test_hilt_version",
+        "com.linkedin.dexmaker:dexmaker-mockito-inline:$test_dexmaker_mockito_version"
     )
+
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$test_hilt_version"
 }

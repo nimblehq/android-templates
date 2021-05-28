@@ -5,6 +5,7 @@ import co.nimblehq.rxjava.domain.data.Data
 import co.nimblehq.rxjava.domain.usecase.GetExampleDataUseCase
 import co.nimblehq.rxjava.ui.base.BaseViewModel
 import co.nimblehq.rxjava.ui.base.NavigationEvent
+import co.nimblehq.rxjava.ui.common.IdlingResource
 import co.nimblehq.rxjava.ui.screens.second.SecondBundle
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.subscribeBy
@@ -42,11 +43,15 @@ class HomeViewModel @ViewModelInject constructor(
     }
 
     private fun fetchApi() {
+        IdlingResource.increment()
         getExampleDataUseCase
             .execute(Unit)
             .doShowLoading()
             .subscribeBy(
-                onSuccess = _data::onNext,
+                onSuccess = {
+                    _data.onNext(it)
+                    IdlingResource.decrement()
+                },
                 onError = _error::onNext
             )
             .addToDisposables()
