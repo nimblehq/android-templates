@@ -32,7 +32,7 @@ You can follow this [article](https://medium.com/@arekk/bitrise-firebase-app-dis
 ### Deploying app to Google Play Store
 
 1. Navigate to `Env Vars` tab on Bitrise
-2. Upload `api-xxx-xxx.json` file and enter `SERVICE_ACCOUNT_JSON_KEY` to the `File Storage ID` text box.
+2. Upload the google service account credential file `api-xxx-xxx.json` file and enter `SERVICE_ACCOUNT_JSON_KEY` to the `File Storage ID` text box.
 3. By default, the release bundle will be uploaded to `alpha` test track.
 
 > Steps how to get Google API access json file from [Bitrise](https://devcenter.bitrise.io/deploy/android-deploy/deploying-android-apps/)
