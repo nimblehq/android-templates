@@ -51,102 +51,96 @@ class HomeFragmentTest {
         onView(withId(R.id.rvHomeData)).check(matches(isDisplayed()))
         onView(withId(R.id.pbLoading)).check(matches(isDisplayed()))
         onView(withId(R.id.btHomeRefresh)).check(matches(not(isEnabled())))
-
-        registerIdlingResource()
-
-        onView(withId(R.id.pbLoading)).check(matches(not(isDisplayed())))
-        onView(withId(R.id.btHomeRefresh)).check(matches(isEnabled()))
-        onView(allOf(withId(R.id.tvDataTitle), withText("title1"))).check(matches(isDisplayed()))
-        onView(allOf(withId(R.id.tvDataAuthor), withText("author1"))).check(matches(isDisplayed()))
-        onView(allOf(withId(R.id.tvDataTitle), withText("title2"))).check(matches(isDisplayed()))
-        onView(allOf(withId(R.id.tvDataAuthor), withText("author2"))).check(matches(isDisplayed()))
-        onView(allOf(withId(R.id.tvDataTitle), withText("title3"))).check(matches(isDisplayed()))
-        onView(allOf(withId(R.id.tvDataAuthor), withText("author3"))).check(matches(isDisplayed()))
-
-        unregisterIdlingResource()
+        setIdlingResource {
+            onView(withId(R.id.pbLoading)).check(matches(not(isDisplayed())))
+            onView(withId(R.id.btHomeRefresh)).check(matches(isEnabled()))
+            onView(allOf(withId(R.id.tvDataTitle), withText("title1")))
+                .check(matches(isDisplayed()))
+            onView(allOf(withId(R.id.tvDataAuthor), withText("author1")))
+                .check(matches(isDisplayed()))
+            onView(allOf(withId(R.id.tvDataTitle), withText("title2")))
+                .check(matches(isDisplayed()))
+            onView(allOf(withId(R.id.tvDataAuthor), withText("author2")))
+                .check(matches(isDisplayed()))
+            onView(allOf(withId(R.id.tvDataTitle), withText("title3")))
+                .check(matches(isDisplayed()))
+            onView(allOf(withId(R.id.tvDataAuthor), withText("author3")))
+                .check(matches(isDisplayed()))
+        }
     }
 
     @Test
     fun when_clicking_on_refresh_button_should_refresh_data() {
-        registerIdlingResource()
-
-        unregisterIdlingResource()
-
+        setIdlingResource {}
         onView(withId(R.id.btHomeRefresh)).perform(click())
 
         onView(withId(R.id.pbLoading)).check(matches(isDisplayed()))
         onView(withId(R.id.btHomeRefresh)).check(matches(not(isEnabled())))
-
-        registerIdlingResource()
-
-        onView(withId(R.id.pbLoading)).check(matches(not(isDisplayed())))
-        onView(withId(R.id.btHomeRefresh)).check(matches(isEnabled()))
-
-        unregisterIdlingResource()
+        setIdlingResource {
+            onView(withId(R.id.pbLoading)).check(matches(not(isDisplayed())))
+            onView(withId(R.id.btHomeRefresh)).check(matches(isEnabled()))
+        }
     }
 
     @Test
     fun when_clicking_on_item_should_navigate_to_Second_screen() {
-        registerIdlingResource()
+        setIdlingResource {
+            onView(withId(R.id.rvHomeData))
+                .perform(actionOnItemAtPosition<DataAdapter.ViewHolder>(0, click()))
 
-        onView(withId(R.id.rvHomeData))
-            .perform(actionOnItemAtPosition<DataAdapter.ViewHolder>(0, click()))
+            onView(withId(R.id.tvSecondTitle)).check(matches(withText("title1")))
+            onView(withId(R.id.tvSecondAuthor)).check(matches(withText("author1")))
 
-        onView(withId(R.id.tvSecondTitle)).check(matches(withText("title1")))
-        onView(withId(R.id.tvSecondAuthor)).check(matches(withText("author1")))
+            pressBack()
+            onView(withId(R.id.rvHomeData))
+                .perform(actionOnItemAtPosition<DataAdapter.ViewHolder>(1, scrollTo()))
+                .perform(actionOnItemAtPosition<DataAdapter.ViewHolder>(1, click()))
 
-        pressBack()
+            onView(withId(R.id.tvSecondTitle)).check(matches(withText("title2")))
+            onView(withId(R.id.tvSecondAuthor)).check(matches(withText("author2")))
 
-        onView(withId(R.id.rvHomeData))
-            .perform(actionOnItemAtPosition<DataAdapter.ViewHolder>(1, scrollTo()))
-            .perform(actionOnItemAtPosition<DataAdapter.ViewHolder>(1, click()))
+            pressBack()
+            onView(withId(R.id.rvHomeData))
+                .perform(actionOnItemAtPosition<DataAdapter.ViewHolder>(2, scrollTo()))
+                .perform(actionOnItemAtPosition<DataAdapter.ViewHolder>(2, click()))
 
-        onView(withId(R.id.tvSecondTitle)).check(matches(withText("title2")))
-        onView(withId(R.id.tvSecondAuthor)).check(matches(withText("author2")))
+            onView(withId(R.id.tvSecondTitle)).check(matches(withText("title3")))
+            onView(withId(R.id.tvSecondAuthor)).check(matches(withText("author3")))
 
-        pressBack()
+            pressBack()
 
-        onView(withId(R.id.rvHomeData))
-            .perform(actionOnItemAtPosition<DataAdapter.ViewHolder>(2, scrollTo()))
-            .perform(actionOnItemAtPosition<DataAdapter.ViewHolder>(2, click()))
-
-        onView(withId(R.id.tvSecondTitle)).check(matches(withText("title3")))
-        onView(withId(R.id.tvSecondAuthor)).check(matches(withText("author3")))
-
-        pressBack()
-
-        onView(withId(R.id.rvHomeData)).check(matches(isDisplayed()))
-
-        unregisterIdlingResource()
+            onView(withId(R.id.rvHomeData)).check(matches(isDisplayed()))
+        }
     }
 
     @Test
     fun when_clicking_on_open_post_button_should_navigate_to_WebView_screen() {
-        registerIdlingResource()
+        setIdlingResource {
+            onView(withId(R.id.rvHomeData))
+                .perform(actionOnItemAtPosition<DataAdapter.ViewHolder>(0, click()))
+            onView(withId(R.id.btOpenPost)).perform(click())
 
-        onView(withId(R.id.rvHomeData))
-            .perform(actionOnItemAtPosition<DataAdapter.ViewHolder>(0, click()))
-        onView(withId(R.id.btOpenPost)).perform(click())
+            onWebView()
+                .withNoTimeout()
+                .check(webMatches(getCurrentUrl(), containsString("google.com")))
 
-        onWebView()
-            .withNoTimeout()
-            .check(webMatches(getCurrentUrl(), containsString("google.com")))
+            pressBack()
 
-        pressBack()
+            onView(withId(R.id.ivSecondThumbnail)).check(matches(isDisplayed()))
 
-        onView(withId(R.id.ivSecondThumbnail)).check(matches(isDisplayed()))
+            pressBack()
 
-        pressBack()
-
-        onView(withId(R.id.rvHomeData)).check(matches(isDisplayed()))
+            onView(withId(R.id.rvHomeData)).check(matches(isDisplayed()))
+        }
     }
 
-    private fun registerIdlingResource() {
-        IdlingRegistry.getInstance().register(IdlingResource.countingIdlingResource)
-    }
+    private fun setIdlingResource(onIdling: () -> Unit) {
+        val idlingRegistry = IdlingRegistry.getInstance()
+        val countingIdlingResource = IdlingResource.countingIdlingResource
 
-    private fun unregisterIdlingResource() {
-        IdlingRegistry.getInstance().unregister(IdlingResource.countingIdlingResource)
+        idlingRegistry.register(countingIdlingResource)
+        onIdling.invoke()
+        idlingRegistry.unregister(countingIdlingResource)
     }
 
     private fun launchActivity(): ActivityScenario<MainActivity>? {
