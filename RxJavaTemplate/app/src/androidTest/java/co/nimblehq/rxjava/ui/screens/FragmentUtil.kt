@@ -4,10 +4,8 @@ import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.util.Preconditions
-import androidx.fragment.app.testing.FragmentScenario
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
-import co.nimblehq.rxjava.EmptyHiltActivity
 import co.nimblehq.rxjava.R
 import co.nimblehq.rxjava.ui.base.BaseFragment
 
@@ -22,10 +20,7 @@ inline fun <reified F : BaseFragment<*>> launchFragment(
             ApplicationProvider.getApplicationContext(),
             EmptyHiltActivity::class.java
         )
-    ).putExtra(
-        FragmentScenario.EmptyFragmentActivity.THEME_EXTRAS_BUNDLE_KEY,
-        R.style.AppTheme
-    )
+    ).putExtra(THEME_EXTRAS_BUNDLE_KEY, R.style.AppTheme)
 
     ActivityScenario.launch<EmptyHiltActivity>(startActivityIntent).onActivity { activity ->
         activity.supportFragmentManager.fragmentFactory.instantiate(
@@ -41,3 +36,6 @@ inline fun <reified F : BaseFragment<*>> launchFragment(
         }
     }
 }
+
+const val THEME_EXTRAS_BUNDLE_KEY =
+    "androidx.fragment.app.testing.FragmentScenario.EmptyFragmentActivity.THEME_EXTRAS_BUNDLE_KEY"

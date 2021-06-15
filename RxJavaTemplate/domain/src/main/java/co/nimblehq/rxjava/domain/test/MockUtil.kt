@@ -18,7 +18,7 @@ object MockUtil {
                             title = "title1",
                             author = "author1",
                             thumbnail = "thumbnail",
-                            url = "https://www.google.com"
+                            url = "https://www.google.com/"
                         )
                     ),
                     ExampleChildrenResponse(
@@ -26,7 +26,7 @@ object MockUtil {
                             title = "title2",
                             author = "author2",
                             thumbnail = "thumbnail",
-                            url = "https://www.google.com"
+                            url = "https://www.google.com/"
                         )
                     ),
                     ExampleChildrenResponse(
@@ -34,7 +34,7 @@ object MockUtil {
                             title = "title3",
                             author = "author3",
                             thumbnail = "thumbnail",
-                            url = "https://www.google.com"
+                            url = "https://www.google.com/"
                         )
                     )
                 )

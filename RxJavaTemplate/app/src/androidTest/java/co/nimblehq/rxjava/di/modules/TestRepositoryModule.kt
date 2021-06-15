@@ -4,11 +4,14 @@ import co.nimblehq.rxjava.domain.repository.ApiRepository
 import co.nimblehq.rxjava.repository.TestApiRepositoryImpl
 import dagger.Binds
 import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
+import dagger.hilt.testing.TestInstallIn
 import javax.inject.Singleton
 
-@InstallIn(ApplicationComponent::class)
+@TestInstallIn(
+    components = [SingletonComponent::class],
+    replaces = [RepositoryModule::class]
+)
 @Module
 abstract class TestRepositoryModule {
 

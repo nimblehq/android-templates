@@ -1,4 +1,4 @@
-package co.nimblehq.rxjava
+package co.nimblehq.rxjava.ui.screens
 
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint

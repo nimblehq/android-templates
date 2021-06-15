@@ -16,12 +16,10 @@ import androidx.test.espresso.web.model.Atoms.getCurrentUrl
 import androidx.test.espresso.web.sugar.Web.onWebView
 import co.nimblehq.rxjava.IdlingResource
 import co.nimblehq.rxjava.R
-import co.nimblehq.rxjava.di.modules.RepositoryModule
 import co.nimblehq.rxjava.domain.repository.ApiRepository
 import co.nimblehq.rxjava.ui.screens.MainActivity
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.UninstallModules
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.Matchers.not
@@ -30,7 +28,6 @@ import org.junit.Rule
 import org.junit.Test
 import javax.inject.Inject
 
-@UninstallModules(RepositoryModule::class)
 @HiltAndroidTest
 class HomeFragmentTest {
 

@@ -14,30 +14,22 @@ import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.Intents.intending
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
 import co.nimblehq.rxjava.R
-import co.nimblehq.rxjava.di.modules.RepositoryModule
 import co.nimblehq.rxjava.domain.test.MockUtil
-import co.nimblehq.rxjava.ui.screens.MainActivity
 import co.nimblehq.rxjava.ui.screens.launchFragment
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.UninstallModules
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-@UninstallModules(RepositoryModule::class)
 @HiltAndroidTest
 class SecondFragmentTest {
 
-    @get:Rule(order = 0)
+    @get:Rule
     var hiltRule = HiltAndroidRule(this)
-
-    @get:Rule(order = 1)
-    var activityRule = ActivityTestRule(MainActivity::class.java)
 
     @get:Rule
     var cameraPermissionRule: GrantPermissionRule =
