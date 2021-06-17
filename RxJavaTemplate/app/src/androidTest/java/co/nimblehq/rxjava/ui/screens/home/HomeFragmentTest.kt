@@ -14,9 +14,9 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.espresso.web.assertion.WebViewAssertions.webMatches
 import androidx.test.espresso.web.model.Atoms.getCurrentUrl
 import androidx.test.espresso.web.sugar.Web.onWebView
-import co.nimblehq.rxjava.IdlingResource
 import co.nimblehq.rxjava.R
 import co.nimblehq.rxjava.domain.repository.ApiRepository
+import co.nimblehq.rxjava.lib.IdlingResource
 import co.nimblehq.rxjava.ui.screens.MainActivity
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest

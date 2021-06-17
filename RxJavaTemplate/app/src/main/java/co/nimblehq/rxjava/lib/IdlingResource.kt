@@ -1,4 +1,4 @@
-package co.nimblehq.rxjava
+package co.nimblehq.rxjava.lib
 
 import androidx.test.espresso.idling.CountingIdlingResource
 

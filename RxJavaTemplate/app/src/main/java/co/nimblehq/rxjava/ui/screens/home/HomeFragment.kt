@@ -3,12 +3,16 @@ package co.nimblehq.rxjava.ui.screens.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.*
-import co.nimblehq.rxjava.IdlingResource
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import co.nimblehq.rxjava.databinding.FragmentHomeBinding
 import co.nimblehq.rxjava.databinding.ViewLoadingBinding
 import co.nimblehq.rxjava.domain.data.Data
-import co.nimblehq.rxjava.extension.*
+import co.nimblehq.rxjava.extension.subscribeOnClick
+import co.nimblehq.rxjava.extension.subscribeOnItemClick
+import co.nimblehq.rxjava.extension.visibleOrGone
+import co.nimblehq.rxjava.lib.IdlingResource
 import co.nimblehq.rxjava.lib.IsLoading
 import co.nimblehq.rxjava.ui.base.BaseFragment
 import co.nimblehq.rxjava.ui.helpers.handleVisualOverlaps
@@ -91,6 +95,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.btHomeRefresh.isEnabled = !isLoading
         viewLoadingBinding.pbLoading.visibleOrGone(isLoading)
 
+        // TODO Find a way to remove IdlingResource logic from production
         IdlingResource.increaseOrDecrease(isLoading)
     }
 }
