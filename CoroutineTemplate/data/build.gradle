@@ -1,0 +1,42 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion android_compile_sdk_version
+    defaultConfig {
+        minSdkVersion android_min_sdk_version
+        targetSdkVersion android_target_sdk_version
+        versionCode android_version_code
+        versionName android_version_name
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    api(
+        "com.squareup.retrofit2:converter-moshi:$retrofit_version",
+        "com.squareup.retrofit2:retrofit:$retrofit_version",
+
+        "com.squareup.moshi:moshi-adapters:$moshi_version",
+        "com.squareup.moshi:moshi-kotlin:$moshi_version",
+
+        "com.squareup.okhttp3:okhttp:$okhttp_version",
+        "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    )
+}

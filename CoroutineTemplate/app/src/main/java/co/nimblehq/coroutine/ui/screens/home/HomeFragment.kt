@@ -9,6 +9,7 @@ import co.nimblehq.coroutine.ui.base.NavigationEvent
 import co.nimblehq.coroutine.ui.screens.MainNavigator
 import co.nimblehq.coroutine.ui.screens.second.SecondBundle
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -17,7 +18,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     @Inject
     lateinit var navigator: MainNavigator
 
-    private val viewModel by viewModels<HomeViewModel>()
+    private val viewModel: HomeViewModel by viewModels()
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeBinding
         get() = { inflater, container, attachToParent ->
@@ -31,5 +32,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-    override fun bindViewModel() {}
+    override fun bindViewModel() {
+        with(viewModel) {
+            users.observe(viewLifecycleOwner) { users ->
+                Timber.d("Result : $users")
+            }
+
+            showError.observe(viewLifecycleOwner) {
+                it.proceedIfNotHandled()?.let { message ->
+                    toaster.display(message = message)
+                }
+            }
+        }
+    }
 }
