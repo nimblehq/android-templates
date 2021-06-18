@@ -1,8 +1,10 @@
 package co.nimblehq.rxjava.di.modules
 
 import android.content.Context
-import co.nimblehq.rxjava.storage.BaseSecuredStorage
-import co.nimblehq.rxjava.storage.BaseSecuredStorageImpl
+import co.nimblehq.rxjava.storage.BaseEncryptedSharedPreferences
+import co.nimblehq.rxjava.storage.BaseEncryptedSharedPreferencesImpl
+import co.nimblehq.rxjava.storage.BaseSharedPreferences
+import co.nimblehq.rxjava.storage.BaseSharedPreferencesImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +20,12 @@ abstract class StorageModule {
 
         @Provides
         @Singleton
-        fun provideBaseSecuredStorage(@ApplicationContext context: Context): BaseSecuredStorage =
-            BaseSecuredStorageImpl(context)
+        fun provideBaseSecuredLocalStorage(@ApplicationContext context: Context): BaseEncryptedSharedPreferences =
+            BaseEncryptedSharedPreferencesImpl(context)
+
+        @Provides
+        @Singleton
+        fun provideBaseLocalStorage(@ApplicationContext context: Context): BaseSharedPreferences =
+            BaseSharedPreferencesImpl(context)
     }
 }

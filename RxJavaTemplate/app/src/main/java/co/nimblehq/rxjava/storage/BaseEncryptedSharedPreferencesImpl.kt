@@ -4,12 +4,15 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import co.nimblehq.rxjava.extension.execute
+import co.nimblehq.rxjava.extension.put
 import javax.inject.Inject
 
 // TODO: For demo purpose only, replace with actual value that needs to be stored securely
 private const val PREF_TEST_ID = "PREF_TEST_ID"
 
-class BaseSecuredStorageImpl @Inject constructor(applicationContext: Context) : BaseSecuredStorage {
+class BaseEncryptedSharedPreferencesImpl @Inject constructor(applicationContext: Context) :
+    BaseEncryptedSharedPreferences {
 
     private var encryptedSharedPreferences: SharedPreferences
 
@@ -25,22 +28,13 @@ class BaseSecuredStorageImpl @Inject constructor(applicationContext: Context) : 
     }
 
     // TODO: For demo purpose only, replace with actual value that needs to be stored securely
-    override fun getTestId(): String? {
-        return encryptedSharedPreferences.getString(PREF_TEST_ID, null)
-    }
-
-    // TODO: For demo purpose only, replace with actual value that needs to be stored securely
-    override fun saveTestId(testId: String) {
-        with(encryptedSharedPreferences.edit()) {
-            putString(PREF_TEST_ID, testId)
-            apply()
+    override var testId: String?
+        get() = encryptedSharedPreferences.getString(PREF_TEST_ID, null)
+        set(value) {
+            encryptedSharedPreferences.execute { it.put(PREF_TEST_ID to value) }
         }
-    }
 
-    override fun clearAllData() {
-        with(encryptedSharedPreferences.edit()) {
-            clear()
-            apply()
-        }
+    override fun clearAll() {
+        encryptedSharedPreferences.execute { it.clear() }
     }
 }
