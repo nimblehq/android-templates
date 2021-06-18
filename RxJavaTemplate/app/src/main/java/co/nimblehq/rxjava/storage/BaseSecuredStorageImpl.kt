@@ -31,12 +31,16 @@ class BaseSecuredStorageImpl @Inject constructor(applicationContext: Context) : 
 
     // TODO: For demo purpose only, replace with actual value that needs to be stored securely
     override fun saveTestId(testId: String) {
-        encryptedSharedPreferences.edit()
-            .putString(PREF_TEST_ID, testId)
-            .apply()
+        with(encryptedSharedPreferences.edit()) {
+            putString(PREF_TEST_ID, testId)
+            apply()
+        }
     }
 
     override fun clearAllData() {
-        encryptedSharedPreferences.edit().clear().apply()
+        with(encryptedSharedPreferences.edit()) {
+            clear()
+            apply()
+        }
     }
 }
