@@ -18,7 +18,7 @@ usage() {
 
     cat << EOF
 Usage: $PROGNAME --template [TEMPLATE] --package-name [PACKAGE_NAME] --name [APP_NAME]
-Rename an Android app and package.
+Set up an Android app and package name.
 Options:
 -h, --help                         display this usage message and exit
 -t, --template [TEMPLATE]          Select template: "rx" - RxJavaTemplate or "crt" - CoroutineTemplate (i.e. rx)
@@ -91,7 +91,7 @@ if [ -z "$packagename" ] ; then
 fi
 
 if [ -z "$appname" ] ; then
-    usage "No folder name provided"
+    usage "No new app name provided"
 fi
 
 # Enforce package name
