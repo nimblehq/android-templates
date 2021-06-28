@@ -1,9 +1,30 @@
 package co.nimblehq.rxjava.storage
 
-interface BaseSharedPreferences {
+import android.content.SharedPreferences
+import co.nimblehq.rxjava.extension.execute
+import co.nimblehq.rxjava.extension.put
 
-    // TODO: For demo purpose only, replace with actual value that needs to be stored securely
-    var testId: String?
+abstract class BaseSharedPreferences {
 
-    fun clearAll()
+    protected lateinit var sharedPreferences: SharedPreferences
+
+    protected fun put(key: String, value: Any?) {
+        sharedPreferences.execute { it.put(key to value) }
+    }
+
+    protected fun getString(key: String): String? {
+        return sharedPreferences.getString(key, null)
+    }
+
+    protected fun getInt(key: String): Int {
+        return sharedPreferences.getInt(key, 0)
+    }
+
+    protected fun getBoolean(key: String): Boolean {
+        return sharedPreferences.getBoolean(key, false)
+    }
+
+    protected fun clearAll() {
+        sharedPreferences.execute { it.clear() }
+    }
 }
