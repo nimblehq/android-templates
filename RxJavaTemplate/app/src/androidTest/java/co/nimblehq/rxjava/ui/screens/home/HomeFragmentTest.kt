@@ -5,7 +5,6 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
-import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -16,7 +15,7 @@ import androidx.test.espresso.web.model.Atoms.getCurrentUrl
 import androidx.test.espresso.web.sugar.Web.onWebView
 import co.nimblehq.rxjava.R
 import co.nimblehq.rxjava.domain.repository.ApiRepository
-import co.nimblehq.rxjava.lib.IdlingResource
+import co.nimblehq.rxjava.repository.TEST_API_DELAY
 import co.nimblehq.rxjava.ui.screens.MainActivity
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -44,11 +43,11 @@ class HomeFragmentTest {
     }
 
     @Test
-    fun when_initialize_should_shows_ui_correctly() {
+    fun when_initializing_it_should_show_the_UI_correctly() {
         onView(withId(R.id.rvHomeData)).check(matches(isDisplayed()))
         onView(withId(R.id.pbLoading)).check(matches(isDisplayed()))
         onView(withId(R.id.btHomeRefresh)).check(matches(not(isEnabled())))
-        setIdlingResource {
+        waitForApi {
             onView(withId(R.id.pbLoading)).check(matches(not(isDisplayed())))
             onView(withId(R.id.btHomeRefresh)).check(matches(isEnabled()))
             onView(allOf(withId(R.id.tvDataTitle), withText("title1")))
@@ -67,21 +66,21 @@ class HomeFragmentTest {
     }
 
     @Test
-    fun when_clicking_on_refresh_button_should_refresh_data() {
-        setIdlingResource {}
+    fun when_clicking_on_the_refresh_button_it_should_refresh_the_data() {
+        waitForApi {}
         onView(withId(R.id.btHomeRefresh)).perform(click())
 
         onView(withId(R.id.pbLoading)).check(matches(isDisplayed()))
         onView(withId(R.id.btHomeRefresh)).check(matches(not(isEnabled())))
-        setIdlingResource {
+        waitForApi {
             onView(withId(R.id.pbLoading)).check(matches(not(isDisplayed())))
             onView(withId(R.id.btHomeRefresh)).check(matches(isEnabled()))
         }
     }
 
     @Test
-    fun when_clicking_on_item_should_navigate_to_Second_screen() {
-        setIdlingResource {
+    fun when_clicking_on_an_item_it_should_navigate_to_the_Second_screen() {
+        waitForApi {
             onView(withId(R.id.rvHomeData))
                 .perform(actionOnItemAtPosition<DataAdapter.ViewHolder>(0, click()))
 
@@ -111,8 +110,8 @@ class HomeFragmentTest {
     }
 
     @Test
-    fun when_clicking_on_open_post_button_should_navigate_to_WebView_screen() {
-        setIdlingResource {
+    fun when_clicking_on_the_open_post_button_it_should_navigate_to_the_WebView_screen() {
+        waitForApi {
             onView(withId(R.id.rvHomeData))
                 .perform(actionOnItemAtPosition<DataAdapter.ViewHolder>(0, click()))
             onView(withId(R.id.btOpenPost)).perform(click())
@@ -131,13 +130,9 @@ class HomeFragmentTest {
         }
     }
 
-    private fun setIdlingResource(onIdling: () -> Unit) {
-        val idlingRegistry = IdlingRegistry.getInstance()
-        val countingIdlingResource = IdlingResource.countingIdlingResource
-
-        idlingRegistry.register(countingIdlingResource)
-        onIdling.invoke()
-        idlingRegistry.unregister(countingIdlingResource)
+    private fun waitForApi(action: () -> Unit) {
+        Thread.sleep(TEST_API_DELAY)
+        action.invoke()
     }
 
     private fun launchActivity(): ActivityScenario<MainActivity>? {

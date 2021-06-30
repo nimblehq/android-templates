@@ -10,6 +10,8 @@ import javax.inject.Inject
 class TestApiRepositoryImpl @Inject constructor() : ApiRepository {
 
     override fun exampleData(): Single<List<Data>> {
-        return Single.just(MockUtil.dataList).delay(500, MILLISECONDS)
+        return Single.just(MockUtil.dataList).delay(TEST_API_DELAY, MILLISECONDS)
     }
 }
+
+internal const val TEST_API_DELAY = 300L

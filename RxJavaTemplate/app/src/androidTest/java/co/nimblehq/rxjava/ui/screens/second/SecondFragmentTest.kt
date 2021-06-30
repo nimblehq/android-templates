@@ -42,13 +42,8 @@ class SecondFragmentTest {
         launchFragment()
     }
 
-    @After
-    fun teardown() {
-        Intents.release()
-    }
-
     @Test
-    fun when_initialize_should_shows_ui_correctly() {
+    fun when_initializing_it_should_show_the_UI_correctly() {
         onView(withId(R.id.ivSecondThumbnail)).check(matches(isDisplayed()))
         onView(withId(R.id.tvSecondTitle)).check(matches(withText("title1")))
         onView(withId(R.id.tvSecondAuthor)).check(matches(withText("author1")))
@@ -62,7 +57,7 @@ class SecondFragmentTest {
     }
 
     @Test
-    fun when_clicking_on_open_camera_button_should_open_camera() {
+    fun when_clicking_on_the_open_camera_button_it_should_launch_the_devices_camera_app() {
         val activityResult = Instrumentation.ActivityResult(Activity.RESULT_OK, Intent())
         val expectedIntent = hasAction(MediaStore.ACTION_IMAGE_CAPTURE)
         intending(expectedIntent).respondWith(activityResult)
@@ -70,6 +65,11 @@ class SecondFragmentTest {
         onView(withId(R.id.btOpenCamera)).perform(click())
 
         intended(expectedIntent)
+    }
+
+    @After
+    fun teardown() {
+        Intents.release()
     }
 
     private fun launchFragment(bundle: SecondBundle = SecondBundle(MockUtil.dataList[0])) {

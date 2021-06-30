@@ -12,7 +12,6 @@ import co.nimblehq.rxjava.domain.data.Data
 import co.nimblehq.rxjava.extension.subscribeOnClick
 import co.nimblehq.rxjava.extension.subscribeOnItemClick
 import co.nimblehq.rxjava.extension.visibleOrGone
-import co.nimblehq.rxjava.lib.IdlingResource
 import co.nimblehq.rxjava.lib.IsLoading
 import co.nimblehq.rxjava.ui.base.BaseFragment
 import co.nimblehq.rxjava.ui.helpers.handleVisualOverlaps
@@ -94,8 +93,5 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun showLoading(isLoading: IsLoading) {
         binding.btHomeRefresh.isEnabled = !isLoading
         viewLoadingBinding.pbLoading.visibleOrGone(isLoading)
-
-        // TODO Find a way to remove IdlingResource logic from production
-        IdlingResource.increaseOrDecrease(isLoading)
     }
 }

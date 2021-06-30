@@ -26,7 +26,7 @@ class WebViewFragmentTest {
     }
 
     @Test
-    fun when_initialize_should_shows_ui_correctly() {
+    fun when_initializing_it_should_show_the_UI_correctly() {
         onWebView()
             .withNoTimeout()
             .check(webMatches(getCurrentUrl(), equalTo("https://www.google.com/")))
