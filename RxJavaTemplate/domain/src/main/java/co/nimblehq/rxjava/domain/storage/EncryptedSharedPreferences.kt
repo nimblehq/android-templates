@@ -1,4 +1,4 @@
-package co.nimblehq.rxjava.storage
+package co.nimblehq.rxjava.domain.storage
 
 import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences

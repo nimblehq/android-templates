@@ -1,4 +1,4 @@
-package co.nimblehq.rxjava.extension
+package co.nimblehq.rxjava.domain.extension
 
 import android.content.SharedPreferences
 

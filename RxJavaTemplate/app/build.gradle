@@ -142,7 +142,6 @@ dependencies {
         "androidx.lifecycle:lifecycle-extensions:$android_lifecycle_version",
         "androidx.lifecycle:lifecycle-common-java8:$android_lifecycle_version",
         "androidx.lifecycle:lifecycle-runtime:$android_lifecycle_version",
-        "androidx.security:security-crypto:$android_crypto_version",
 
         "androidx.core:core-ktx:$android_core_version",
         "androidx.fragment:fragment-ktx:$android_fragment_version",
