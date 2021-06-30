@@ -58,7 +58,9 @@ dependencies {
         "io.reactivex.rxjava2:rxandroid:$rxandroid_version",
 
         "androidx.core:core-ktx:$android_core_version",
-        "com.google.dagger:hilt-android:$hilt_version"
+        "com.google.dagger:hilt-android:$hilt_version",
+
+        "androidx.security:security-crypto:$android_crypto_version"
     )
 
     testImplementation(
