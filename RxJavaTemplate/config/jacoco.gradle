@@ -1,0 +1,58 @@
+apply plugin: 'jacoco'
+
+def fileGenerated = ['**/R.class',
+                     '**/R$*.class',
+                     '**/*$ViewBinder*.*',
+                     '**/*$InjectAdapter*.*',
+                     '**/*Injector*.*',
+                     '**/BuildConfig.*',
+                     '**/Manifest*.*',
+                     '**/*_ViewBinding*.*',
+                     '**/*Adapter*.*',
+                     '**/*Test*.*',
+                     'android/**/*.*']
+
+def packagesExcluded = ['co/nimblehq/di/**',
+                        'co/nimblehq/ui/**/di/**',
+                        'com/bumptech/glide']
+
+def fileFilter = fileGenerated + packagesExcluded
+
+task jacocoTestReport(type: JacocoReport) {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports for Debug build"
+
+    dependsOn ":app:testStagingDebugUnitTest"
+    dependsOn ":data:testStagingDebugUnitTest"
+
+    classDirectories.from = fileTree(
+        dir: "$project.rootDir/app/build/intermediates/javac/stagingDebug/classes",
+        excludes: fileFilter
+    ) + fileTree(
+        dir: "$project.rootDir/data/build/intermediates/javac/stagingDebug/classes",
+        excludes: fileFilter
+    ) + fileTree(
+        dir: "$project.rootDir/app/build/tmp/kotlin-classes/stagingDebug",
+        excludes: fileFilter
+    ) + fileTree(
+        dir: "$project.rootDir/data/build/tmp/kotlin-classes/stagingDebug",
+        excludes: fileFilter
+    )
+
+    sourceDirectories.from = files([
+        "$project.rootDir/app/src/main/java",
+        "$project.rootDir/data/src/main/java"
+    ])
+
+    executionData.from = fileTree(dir: project.rootDir, includes: [
+        "app/build/jacoco/testStagingDebugUnitTest.exec",
+        "data/build/jacoco/testStagingDebugUnitTest.exec"
+    ])
+
+}
+
+tasks.withType(Test) {
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}

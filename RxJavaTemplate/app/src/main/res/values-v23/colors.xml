@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--SYSTEM_UI_FLAG_LIGHT_STATUS_BAR has been supported from API 23-->
+    <color name="colorStatusBar">@color/colorPrimary</color>
+</resources>

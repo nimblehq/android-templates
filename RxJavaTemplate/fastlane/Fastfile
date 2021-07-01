@@ -1,0 +1,44 @@
+# frozen_string_literal: true
+
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+require './script/build.rb'
+require './script/config.rb'
+
+default_platform(:android)
+
+platform :android do
+  before_all do
+    ENV['SLACK_URL'] = Config::SLACK_URL
+    Config.sanity_check
+  end
+
+  desc 'Execute staging deployment'
+  lane :staging do
+    build_and_distribute(Config::TARGETS[:staging_debug])
+    @slack_message = 'Staging successfully deployed'
+  end
+
+  desc 'Execute production deployment'
+  lane :production do
+    build_and_distribute(Config::TARGETS[:production_debug])
+    @slack_message = 'Production successfully deployed'
+  end
+
+  after_all do
+    slack(message: @slack_message)
+  end
+end

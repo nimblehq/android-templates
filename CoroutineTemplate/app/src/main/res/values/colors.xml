@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Declaring colors for using in themes/UI component attributes with a meaningful name -->
+    <color name="colorPrimary">@color/blue_free_speech</color>
+    <color name="colorPrimaryDark">@color/blue_tory</color>
+    <color name="colorAccent">@color/red_violet</color>
+</resources>
