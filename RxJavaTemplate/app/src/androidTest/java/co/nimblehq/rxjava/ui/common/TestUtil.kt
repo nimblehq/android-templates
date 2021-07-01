@@ -1,4 +1,4 @@
-package co.nimblehq.rxjava.ui.screens
+package co.nimblehq.rxjava.ui.common
 
 import android.content.ComponentName
 import android.content.Intent
@@ -6,7 +6,9 @@ import android.os.Bundle
 import androidx.core.util.Preconditions
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
+import co.nimblehq.rxjava.EmptyHiltActivity
 import co.nimblehq.rxjava.R
+import co.nimblehq.rxjava.repository.TEST_API_DELAY
 import co.nimblehq.rxjava.ui.base.BaseFragment
 
 /**
@@ -35,6 +37,11 @@ inline fun <reified F : BaseFragment<*>> launchFragment(
                 .commitNow()
         }
     }
+}
+
+inline fun waitForApiThen(action: () -> Unit) {
+    Thread.sleep(TEST_API_DELAY)
+    action.invoke()
 }
 
 const val THEME_EXTRAS_BUNDLE_KEY =

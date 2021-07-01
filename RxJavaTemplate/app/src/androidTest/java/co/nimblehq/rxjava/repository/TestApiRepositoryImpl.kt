@@ -14,4 +14,4 @@ class TestApiRepositoryImpl @Inject constructor() : ApiRepository {
     }
 }
 
-internal const val TEST_API_DELAY = 300L
+const val TEST_API_DELAY = 300L

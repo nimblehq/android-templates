@@ -1,18 +1,16 @@
 package co.nimblehq.rxjava.ui.screens.webview
 
 import android.os.Bundle
-import androidx.test.espresso.web.assertion.WebViewAssertions.webMatches
-import androidx.test.espresso.web.model.Atoms.getCurrentUrl
-import androidx.test.espresso.web.sugar.Web.onWebView
+import androidx.test.filters.LargeTest
 import co.nimblehq.rxjava.domain.test.MockUtil
-import co.nimblehq.rxjava.ui.screens.launchFragment
+import co.nimblehq.rxjava.ui.common.launchFragment
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+@LargeTest
 @HiltAndroidTest
 class WebViewFragmentTest {
 
@@ -26,10 +24,8 @@ class WebViewFragmentTest {
     }
 
     @Test
-    fun when_initializing_it_should_show_the_UI_correctly() {
-        onWebView()
-            .withNoTimeout()
-            .check(webMatches(getCurrentUrl(), equalTo("https://www.google.com/")))
+    fun showUiCorrectly() {
+        WebView.verifyScreen()
     }
 
     private fun launchFragment(bundle: WebViewBundle = WebViewBundle(MockUtil.dataList[0].url)) {

@@ -4,7 +4,7 @@
 
     <application>
         <activity
-            android:name=".ui.screens.EmptyHiltActivity"
+            android:name=".EmptyHiltActivity"
             android:exported="false" />
     </application>
 
