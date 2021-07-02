@@ -25,7 +25,7 @@ class HomeViewModel @Inject constructor(
     private val getUsersUseCase: GetUsersUseCase
 ) : BaseViewModel(), Output {
 
-    private val _users = MutableStateFlow<List<UserEntity>>(listOf())
+    private val _users = MutableStateFlow<List<UserEntity>>(emptyList())
     override val users: StateFlow<List<UserEntity>>
         get() = _users
 
