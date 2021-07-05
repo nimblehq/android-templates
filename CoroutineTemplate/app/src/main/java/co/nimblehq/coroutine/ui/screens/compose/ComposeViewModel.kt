@@ -1,12 +1,12 @@
-package co.nimblehq.coroutine.ui.screens.home
+package co.nimblehq.coroutine.ui.screens.compose
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import co.nimblehq.coroutine.domain.data.entity.UserEntity
 import co.nimblehq.coroutine.domain.usecase.GetUsersUseCase
 import co.nimblehq.coroutine.domain.usecase.UseCaseResult
 import co.nimblehq.coroutine.ui.base.BaseViewModel
-import co.nimblehq.coroutine.ui.base.NavigationEvent
-import co.nimblehq.coroutine.ui.screens.second.SecondBundle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,13 +17,13 @@ interface Output {
 
     val users: StateFlow<List<UserEntity>>
 
-    fun navigateToSecond(bundle: SecondBundle)
+    val textFieldValue: State<String>
 
-    fun navigateToCompose()
+    fun updateTextFieldValue(value: String)
 }
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class ComposeViewModel @Inject constructor(
     private val getUsersUseCase: GetUsersUseCase
 ) : BaseViewModel(), Output {
 
@@ -31,20 +31,16 @@ class HomeViewModel @Inject constructor(
     override val users: StateFlow<List<UserEntity>>
         get() = _users
 
+    private val _textFieldValue = mutableStateOf("")
+    override val textFieldValue: State<String>
+        get() = _textFieldValue
+
     init {
         fetchUsers()
     }
 
-    override fun navigateToSecond(bundle: SecondBundle) {
-        viewModelScope.launch {
-            _navigator.emit(NavigationEvent.Second(bundle))
-        }
-    }
-
-    override fun navigateToCompose() {
-        viewModelScope.launch {
-            _navigator.emit(NavigationEvent.Compose)
-        }
+    override fun updateTextFieldValue(value: String) {
+        _textFieldValue.value = value
     }
 
     private fun fetchUsers() {

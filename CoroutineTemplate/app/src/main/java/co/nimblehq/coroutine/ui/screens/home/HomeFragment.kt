@@ -43,7 +43,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
 
             btCompose.setOnClickListener {
-                // TODO: Navigate to Jetpack Compose screen
+                viewModel.navigateToCompose()
             }
         }
     }

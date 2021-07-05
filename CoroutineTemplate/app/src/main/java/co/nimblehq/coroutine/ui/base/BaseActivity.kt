@@ -2,16 +2,15 @@ package co.nimblehq.coroutine.ui.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     protected abstract val viewModel: BaseViewModel
-    
-    protected  abstract val bindingInflater: (LayoutInflater) -> VB
-    
+
+    protected abstract val bindingInflater: (LayoutInflater) -> VB
+
     private var _binding: ViewBinding? = null
 
     @Suppress("UNCHECKED_CAST")
@@ -20,7 +19,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(bindingInflater.invoke(layoutInflater).apply { 
+        setContentView(bindingInflater.invoke(layoutInflater).apply {
             _binding = this
         }.root)
     }
