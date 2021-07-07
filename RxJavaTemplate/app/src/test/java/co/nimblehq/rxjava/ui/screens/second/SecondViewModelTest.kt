@@ -36,7 +36,7 @@ class SecondViewModelTest {
         navigatorObserver
             .assertValueCount(1)
             .assertValue(
-                NavigationEvent.WebView(WebViewBundle("url"))
+                NavigationEvent.WebView(WebViewBundle("https://www.google.com/"))
             )
     }
 }

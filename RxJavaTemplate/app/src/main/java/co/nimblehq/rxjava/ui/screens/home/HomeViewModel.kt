@@ -1,14 +1,15 @@
 package co.nimblehq.rxjava.ui.screens.home
 
-import androidx.hilt.lifecycle.ViewModelInject
 import co.nimblehq.rxjava.domain.data.Data
 import co.nimblehq.rxjava.domain.usecase.GetExampleDataUseCase
 import co.nimblehq.rxjava.ui.base.BaseViewModel
 import co.nimblehq.rxjava.ui.base.NavigationEvent
 import co.nimblehq.rxjava.ui.screens.second.SecondBundle
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.subjects.BehaviorSubject
+import javax.inject.Inject
 
 interface Input {
 
@@ -17,7 +18,8 @@ interface Input {
     fun navigateToDetail(data: Data)
 }
 
-class HomeViewModel @ViewModelInject constructor(
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val getExampleDataUseCase: GetExampleDataUseCase
 ) : BaseViewModel(), Input {
 

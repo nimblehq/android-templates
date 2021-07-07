@@ -9,18 +9,18 @@ import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Converter
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 @Module
 class RetrofitModule {
 
-    @Provides
     @Singleton
+    @Provides
     fun provideApiRetrofit(
         okHttpClient: OkHttpClient,
         converterFactory: Converter.Factory
@@ -34,8 +34,8 @@ class RetrofitModule {
     fun provideMoshiConverterFactory(moshi: Moshi): Converter.Factory =
         ConverterFactoryProvider.getMoshiConverterFactory(moshi)
 
-    @Provides
     @Singleton
+    @Provides
     fun provideApiService(retrofit: Retrofit): ApiService =
         ApiServiceProvider.getApiService(retrofit)
 
