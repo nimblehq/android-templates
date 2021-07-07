@@ -39,7 +39,7 @@ class SecondFragmentTest {
     }
 
     @Test
-    fun showUiCorrectly() {
+    fun prefillData_showUiCorrectly() {
         Second.verifyScreen("title1", "author1")
     }
 

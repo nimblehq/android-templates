@@ -28,7 +28,7 @@ class HomeFragmentTest {
     }
 
     @Test
-    fun showUiCorrectly() {
+    fun initData_showUiCorrectly() {
         with(Home) {
             verifyScreenWhileLoading()
             waitForApiThen { verifyScreenAfterLoading() }

@@ -24,7 +24,7 @@ class WebViewFragmentTest {
     }
 
     @Test
-    fun showUiCorrectly() {
+    fun openWebView_showUiCorrectly() {
         WebView.verifyScreen()
     }
 
