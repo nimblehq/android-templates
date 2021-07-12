@@ -32,9 +32,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun setupView() {
         viewLoadingBinding = ViewLoadingBinding.bind(binding.root)
+    }
 
-        binding.btNext.setOnClickListener {
-            viewModel.navigateToSecond(SecondBundle("From home"))
+    override fun bindViewEvents() {
+        super.bindViewEvents()
+
+        with(binding) {
+            btNext.setOnClickListener {
+                viewModel.navigateToSecond(SecondBundle("From home"))
+            }
+
+            btCompose.setOnClickListener {
+                // TODO: Navigate to Jetpack Compose screen
+            }
         }
     }
 
