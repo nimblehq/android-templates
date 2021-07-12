@@ -78,6 +78,7 @@ dependencies {
         "androidx.appcompat:appcompat:$androidx_support_version",
         "androidx.constraintlayout:constraintlayout:$constraint_layout_version",
         "androidx.core:core-ktx:$androidx_core_ktx_version",
+        "androidx.lifecycle:lifecycle-runtime-ktx:$androidx_lifecycle_version",
 
         "androidx.navigation:navigation-fragment-ktx:$androidx_navigation_version",
         "androidx.navigation:navigation-runtime-ktx:$androidx_navigation_version",
