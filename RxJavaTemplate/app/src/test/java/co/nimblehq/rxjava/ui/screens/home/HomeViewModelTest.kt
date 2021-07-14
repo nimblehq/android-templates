@@ -5,7 +5,6 @@ import co.nimblehq.rxjava.domain.test.MockUtil
 import co.nimblehq.rxjava.domain.usecase.GetExampleDataUseCase
 import co.nimblehq.rxjava.ui.base.NavigationEvent
 import co.nimblehq.rxjava.ui.screens.second.SecondBundle
-import com.nhaarman.mockitokotlin2.any
 import io.reactivex.Single
 import org.amshove.kluent.*
 import org.junit.Before

@@ -10,10 +10,10 @@ import co.nimblehq.rxjava.ui.screens.home.HomeFragmentDirections
 import co.nimblehq.rxjava.ui.screens.second.SecondBundle
 import co.nimblehq.rxjava.ui.screens.second.SecondFragmentDirections
 import co.nimblehq.rxjava.ui.screens.webview.WebViewBundle
-import com.nhaarman.mockitokotlin2.verify
 import org.amshove.kluent.*
 import org.junit.Before
 import org.junit.Test
+import org.mockito.Mockito.verify
 import org.robolectric.util.ReflectionHelpers
 
 class MainNavigatorTest {

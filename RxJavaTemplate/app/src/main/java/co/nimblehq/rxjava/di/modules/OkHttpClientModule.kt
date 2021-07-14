@@ -3,18 +3,21 @@ package co.nimblehq.rxjava.di.modules
 import android.content.Context
 import co.nimblehq.rxjava.BuildConfig
 import co.nimblehq.rxjava.data.service.interceptor.AppRequestInterceptor
-import com.chuckerteam.chucker.api.*
+import com.chuckerteam.chucker.api.ChuckerCollector
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.chuckerteam.chucker.api.RetentionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 @Module
 class OkHttpClientModule {
+
     @Provides
     fun provideOkHttpClient(
         apiRequestInterceptor: AppRequestInterceptor,
