@@ -2,10 +2,10 @@
 
 buildscript {
     ext {
-        build_gradle_version = '4.1.1'
+        build_gradle_version = '4.2.2'
 
         android_version_code = 9
-        android_version_name = '0.7.0'
+        android_version_name = "3.1.0"
         android_min_sdk_version = 23
         android_target_sdk_version = 28
         android_compile_sdk_version = 28
