@@ -1,7 +1,7 @@
-package co.nimblehq.rxjava.domain.storage
+package co.nimblehq.coroutine.domain.storage
 
 import android.content.SharedPreferences
-import co.nimblehq.rxjava.domain.extension.execute
+import co.nimblehq.coroutine.domain.extension.execute
 
 abstract class BaseSharedPreferences {
 
