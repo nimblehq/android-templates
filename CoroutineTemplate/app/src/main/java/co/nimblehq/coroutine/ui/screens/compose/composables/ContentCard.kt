@@ -5,21 +5,20 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import co.nimblehq.coroutine.ui.screens.compose.theme.Dimen
 
-@Suppress("MagicNumber")
 @Composable
 fun ContentCard(
     content: @Composable () -> Unit
 ) {
     Card(
         shape = RoundedCornerShape(
-            topStart = 24.dp,
-            topEnd = 24.dp,
-            bottomStart = 0.dp,
-            bottomEnd = 0.dp
+            topStart = Dimen.Dp24,
+            topEnd = Dimen.Dp24,
+            bottomStart = Dimen.Dp0,
+            bottomEnd = Dimen.Dp0
         ),
-        elevation = 0.dp,
+        elevation = Dimen.Dp0,
         modifier = Modifier.fillMaxSize()
     ) {
         content.invoke()

@@ -14,9 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
+import co.nimblehq.coroutine.ui.screens.compose.theme.Dimen
 
-@Suppress("LongMethod", "MagicNumber")
+@Suppress("LongMethod")
 @ExperimentalComposeUiApi
 @Composable
 fun TitleBar(
@@ -27,7 +27,7 @@ fun TitleBar(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(24.dp)
+            .padding(Dimen.Dp24)
     ) {
         val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -48,7 +48,7 @@ fun TitleBar(
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp)
+                .padding(top = Dimen.Dp16)
         )
     }
 }

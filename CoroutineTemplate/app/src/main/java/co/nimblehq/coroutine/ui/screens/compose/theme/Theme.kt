@@ -1,5 +1,3 @@
-@file:Suppress("TopLevelPropertyNaming")
-
 package co.nimblehq.coroutine.ui.screens.compose.theme
 
 import androidx.compose.material.MaterialTheme
