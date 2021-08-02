@@ -8,28 +8,28 @@ import co.nimblehq.rxjava.domain.storage.NormalSharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 @Module
 abstract class StorageModule {
 
     companion object {
 
-        @Provides
         @Singleton
+        @Provides
         fun provideDefaultSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(context)
 
-        @Provides
         @Singleton
+        @Provides
         fun provideSecuredLocalStorage(@ApplicationContext context: Context) =
             EncryptedSharedPreferences(context)
 
-        @Provides
         @Singleton
+        @Provides
         fun provideNormalLocalStorage(
             @ApplicationContext context: Context,
             defaultSharedPreferences: SharedPreferences

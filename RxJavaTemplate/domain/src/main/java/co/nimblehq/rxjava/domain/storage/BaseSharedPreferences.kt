@@ -7,19 +7,6 @@ abstract class BaseSharedPreferences {
 
     protected lateinit var sharedPreferences: SharedPreferences
 
-    protected fun <T> set(key: String, value: T?) {
-        sharedPreferences.execute {
-            when (value) {
-                null -> it.remove(key)
-                is Boolean -> it.putBoolean(key, value)
-                is String -> it.putString(key, value)
-                is Float -> it.putFloat(key, value)
-                is Long -> it.putLong(key, value)
-                is Int -> it.putInt(key, value)
-            }
-        }
-    }
-
     protected inline fun <reified T> get(key: String): T? =
         if (sharedPreferences.contains(key)) {
             when (T::class) {
@@ -33,6 +20,22 @@ abstract class BaseSharedPreferences {
         } else {
             null
         }
+
+    protected fun <T> set(key: String, value: T) {
+        sharedPreferences.execute {
+            when (value) {
+                is Boolean -> it.putBoolean(key, value)
+                is String -> it.putString(key, value)
+                is Float -> it.putFloat(key, value)
+                is Long -> it.putLong(key, value)
+                is Int -> it.putInt(key, value)
+            }
+        }
+    }
+
+    protected fun remove(key: String) {
+        sharedPreferences.execute { it.remove(key) }
+    }
 
     protected fun clearAll() {
         sharedPreferences.execute { it.clear() }

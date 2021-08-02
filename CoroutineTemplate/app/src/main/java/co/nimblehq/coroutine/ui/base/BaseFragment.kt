@@ -1,13 +1,21 @@
 package co.nimblehq.coroutine.ui.base
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewbinding.ViewBinding
 import co.nimblehq.coroutine.extension.hideSoftKeyboard
 import co.nimblehq.coroutine.ui.common.Toaster
 import co.nimblehq.coroutine.ui.userReadableMessage
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 abstract class BaseFragment<VB : ViewBinding> : Fragment(), BaseFragmentCallbacks {
@@ -66,5 +74,15 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment(), BaseFragmentCallback
     open fun displayError(error: Throwable) {
         val message = error.userReadableMessage(requireContext())
         toaster.display(message)
+    }
+
+    protected inline infix fun <T> Flow<T>.bindTo(crossinline action: (T) -> Unit) {
+        with(viewLifecycleOwner) {
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    collect { action(it) }
+                }
+            }
+        }
     }
 }

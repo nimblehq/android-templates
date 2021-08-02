@@ -59,11 +59,17 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    composeOptions {
+        kotlinCompilerVersion kotlin_version
+        kotlinCompilerExtensionVersion compose_version
     }
 
     buildFeatures {
         viewBinding true
+        compose true
     }
 }
 
@@ -78,6 +84,12 @@ dependencies {
         "androidx.appcompat:appcompat:$androidx_support_version",
         "androidx.constraintlayout:constraintlayout:$constraint_layout_version",
         "androidx.core:core-ktx:$androidx_core_ktx_version",
+        "androidx.lifecycle:lifecycle-runtime-ktx:$androidx_lifecycle_version",
+
+        "androidx.compose.ui:ui:$compose_version",
+        "androidx.compose.ui:ui-tooling:$compose_version",
+        "androidx.compose.foundation:foundation:$compose_version",
+        "androidx.compose.material:material:$compose_version",
 
         "androidx.navigation:navigation-fragment-ktx:$androidx_navigation_version",
         "androidx.navigation:navigation-runtime-ktx:$androidx_navigation_version",

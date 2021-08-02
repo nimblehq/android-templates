@@ -4,8 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import co.nimblehq.coroutine.databinding.FragmentHomeBinding
+import co.nimblehq.coroutine.databinding.ViewLoadingBinding
+import co.nimblehq.coroutine.domain.data.entity.UserEntity
+import co.nimblehq.coroutine.extension.visibleOrGone
+import co.nimblehq.coroutine.lib.IsLoading
 import co.nimblehq.coroutine.ui.base.BaseFragment
-import co.nimblehq.coroutine.ui.base.NavigationEvent
 import co.nimblehq.coroutine.ui.screens.MainNavigator
 import co.nimblehq.coroutine.ui.screens.second.SecondBundle
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,29 +23,43 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private val viewModel: HomeViewModel by viewModels()
 
+    private lateinit var viewLoadingBinding: ViewLoadingBinding
+
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeBinding
         get() = { inflater, container, attachToParent ->
             FragmentHomeBinding.inflate(inflater, container, attachToParent)
         }
 
     override fun setupView() {
-        binding.btNext.setOnClickListener {
-            // TODO navigate through _navigator flow declared inside ViewModel instead
-            navigator.navigate(NavigationEvent.Second(SecondBundle("From home")))
+        viewLoadingBinding = ViewLoadingBinding.bind(binding.root)
+    }
+
+    override fun bindViewEvents() {
+        super.bindViewEvents()
+
+        with(binding) {
+            btNext.setOnClickListener {
+                viewModel.navigateToSecond(SecondBundle("From home"))
+            }
+
+            btCompose.setOnClickListener {
+                viewModel.navigateToCompose()
+            }
         }
     }
 
     override fun bindViewModel() {
-        with(viewModel) {
-            users.observe(viewLifecycleOwner) { users ->
-                Timber.d("Result : $users")
-            }
+        viewModel.users bindTo ::displayUsers
+        viewModel.showLoading bindTo ::bindLoading
+        viewModel.error bindTo toaster::display
+        viewModel.navigator bindTo navigator::navigate
+    }
 
-            showError.observe(viewLifecycleOwner) {
-                it.proceedIfNotHandled()?.let { message ->
-                    toaster.display(message = message)
-                }
-            }
-        }
+    private fun displayUsers(users: List<UserEntity>) {
+        Timber.d("Result : $users")
+    }
+
+    private fun bindLoading(isLoading: IsLoading) {
+        viewLoadingBinding.pbLoading.visibleOrGone(isLoading)
     }
 }

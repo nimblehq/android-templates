@@ -1,12 +1,13 @@
 package co.nimblehq.rxjava.ui.screens.second
 
-import androidx.hilt.lifecycle.ViewModelInject
 import co.nimblehq.rxjava.domain.data.Data
 import co.nimblehq.rxjava.ui.base.BaseViewModel
 import co.nimblehq.rxjava.ui.base.NavigationEvent
 import co.nimblehq.rxjava.ui.screens.webview.WebViewBundle
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
+import javax.inject.Inject
 
 interface Input {
     fun dataFromIntent(data: Data)
@@ -14,7 +15,8 @@ interface Input {
     fun openPost()
 }
 
-class SecondViewModel @ViewModelInject constructor() : BaseViewModel(), Input {
+@HiltViewModel
+class SecondViewModel @Inject constructor() : BaseViewModel(), Input {
 
     val input: Input = this
 
