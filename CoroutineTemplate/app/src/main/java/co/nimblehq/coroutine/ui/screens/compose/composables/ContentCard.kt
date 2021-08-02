@@ -5,7 +5,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import co.nimblehq.coroutine.ui.screens.compose.theme.Dimen
+import co.nimblehq.coroutine.ui.screens.compose.theme.Dimension
 
 @Composable
 fun ContentCard(
@@ -13,12 +13,12 @@ fun ContentCard(
 ) {
     Card(
         shape = RoundedCornerShape(
-            topStart = Dimen.Dp24,
-            topEnd = Dimen.Dp24,
-            bottomStart = Dimen.Dp0,
-            bottomEnd = Dimen.Dp0
+            topStart = Dimension.Dp24,
+            topEnd = Dimension.Dp24,
+            bottomStart = Dimension.Dp0,
+            bottomEnd = Dimension.Dp0
         ),
-        elevation = Dimen.Dp0,
+        elevation = Dimension.Dp0,
         modifier = Modifier.fillMaxSize()
     ) {
         content.invoke()

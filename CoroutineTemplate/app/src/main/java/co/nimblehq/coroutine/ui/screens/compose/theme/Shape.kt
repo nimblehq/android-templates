@@ -5,6 +5,6 @@ import androidx.compose.material.Shapes
 
 object Shape {
     val ComposeShapes = Shapes(
-        medium = RoundedCornerShape(Dimen.Dp8)
+        medium = RoundedCornerShape(Dimension.Dp8)
     )
 }
