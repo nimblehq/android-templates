@@ -45,6 +45,9 @@ class SecondFragment : BaseFragment<FragmentSecondBinding>() {
             btOpenPost
                 .subscribeOnClick(viewModel::openPost)
                 .addToDisposables()
+
+            slSecondThumbnail.applySkeleton()
+            showOrHideSkeletonLoading(slSecondThumbnail, isLoading = true)
         }
     }
 
@@ -90,7 +93,15 @@ class SecondFragment : BaseFragment<FragmentSecondBinding>() {
             with(binding) {
                 tvSecondTitle.text = title
                 tvSecondAuthor.text = author
-                ivSecondThumbnail.loadImage(thumbnail)
+                ivSecondThumbnail.loadImage(
+                    thumbnail,
+                    onSuccess = {
+                        showOrHideSkeletonLoading(slSecondThumbnail, isLoading = false)
+                    },
+                    onError = {
+                        showOrHideSkeletonLoading(slSecondThumbnail, isLoading = false)
+                    }
+                )
             }
         }
     }

@@ -5,17 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivSecondThumbnail"
+    <com.faltenreich.skeletonlayout.SkeletonLayout
+        android:id="@+id/slSecondThumbnail"
         android:layout_width="200dp"
         android:layout_height="0dp"
         android:layout_marginTop="50dp"
-        android:scaleType="centerCrop"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@mipmap/ic_launcher" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivSecondThumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/ic_launcher" />
+
+    </com.faltenreich.skeletonlayout.SkeletonLayout>
 
     <TextView
         style="Widget.Template.TextView.Bold"
@@ -27,7 +34,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivSecondThumbnail"
+        app:layout_constraintTop_toBottomOf="@id/slSecondThumbnail"
         tools:text="title" />
 
     <TextView
