@@ -10,6 +10,7 @@
         android:id="@+id/ivDataThumbnail"
         android:layout_width="100dp"
         android:layout_height="0dp"
+        android:layout_margin="10dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_min="100dp"

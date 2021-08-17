@@ -9,7 +9,6 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import co.nimblehq.rxjava.R
 import co.nimblehq.rxjava.domain.schedulers.SchedulerProvider
 import co.nimblehq.rxjava.extension.hideSoftKeyboard
 import co.nimblehq.rxjava.extension.subscribeOnClick
@@ -21,8 +20,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
 import javax.inject.Inject
-
-private const val SKELETON_ITEM_COUNT_DEFAULT = 2
 
 @SuppressWarnings("TooManyFunctions")
 abstract class BaseFragment<VB : ViewBinding> : Fragment(), BaseFragmentCallbacks {
@@ -94,11 +91,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment(), BaseFragmentCallback
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        skeletonConfig = SkeletonConfig.default(requireContext()).apply {
-            maskCornerRadius =
-                resources.getDimensionPixelSize(R.dimen.skeleton_mask_corner_radius_circle)
-                    .toFloat()
-        }
+        skeletonConfig = SkeletonConfig.default(requireContext())
 
         (this as? BaseFragmentCallbacks)?.let {
             setWindowStyle()
@@ -144,7 +137,6 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment(), BaseFragmentCallback
     protected fun RecyclerView.applySkeleton(@LayoutRes listItemLayoutResId: Int) {
         skeletons[id] = applySkeleton(
             listItemLayoutResId = listItemLayoutResId,
-            itemCount = SKELETON_ITEM_COUNT_DEFAULT,
             config = skeletonConfig
         )
     }

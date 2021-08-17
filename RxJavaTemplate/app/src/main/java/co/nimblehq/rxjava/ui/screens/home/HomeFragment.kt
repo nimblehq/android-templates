@@ -6,12 +6,11 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import co.nimblehq.rxjava.R
 import co.nimblehq.rxjava.databinding.FragmentHomeBinding
-import co.nimblehq.rxjava.databinding.ViewLoadingBinding
 import co.nimblehq.rxjava.domain.data.Data
 import co.nimblehq.rxjava.extension.subscribeOnClick
 import co.nimblehq.rxjava.extension.subscribeOnItemClick
-import co.nimblehq.rxjava.extension.visibleOrGone
 import co.nimblehq.rxjava.lib.IsLoading
 import co.nimblehq.rxjava.ui.base.BaseFragment
 import co.nimblehq.rxjava.ui.helpers.handleVisualOverlaps
@@ -28,7 +27,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val viewModel by viewModels<HomeViewModel>()
 
     private lateinit var dataAdapter: DataAdapter
-    private lateinit var viewLoadingBinding: ViewLoadingBinding
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeBinding
         get() = { inflater, container, attachToParent ->
@@ -36,7 +34,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
 
     override fun setupView() {
-        viewLoadingBinding = ViewLoadingBinding.bind(binding.root)
         setupDataList()
 
         binding.btHomeRefresh
@@ -83,6 +80,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     RecyclerView.VERTICAL
                 )
             )
+            applySkeleton(R.layout.item_data)
         }
     }
 
@@ -91,7 +89,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun showLoading(isLoading: IsLoading) {
-        binding.btHomeRefresh.isEnabled = !isLoading
-        viewLoadingBinding.pbLoading.visibleOrGone(isLoading)
+        with(binding) {
+            btHomeRefresh.isEnabled = !isLoading
+            showOrHideSkeletonLoading(rvHomeData, isLoading)
+        }
     }
 }

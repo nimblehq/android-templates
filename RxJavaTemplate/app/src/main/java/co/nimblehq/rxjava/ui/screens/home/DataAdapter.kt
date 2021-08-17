@@ -39,7 +39,7 @@ internal class DataAdapter :
 
         init {
             itemView.setOnClickListener {
-                notifyItemClick(OnItemClick.Item(items[adapterPosition]))
+                notifyItemClick(OnItemClick.Item(items[bindingAdapterPosition]))
             }
         }
 
