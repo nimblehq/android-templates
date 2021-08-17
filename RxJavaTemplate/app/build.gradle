@@ -151,7 +151,8 @@ dependencies {
 
         "com.jakewharton.timber:timber:$timber_log_version",
         "com.github.bumptech.glide:glide:$glide_version",
-        "com.github.tbruyelle:rxpermissions:$rxpermission_version"
+        "com.github.tbruyelle:rxpermissions:$rxpermission_version",
+        "com.faltenreich:skeletonlayout:$skeleton_layout_version"
     )
 
     debugImplementation(

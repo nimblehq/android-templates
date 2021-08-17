@@ -49,6 +49,8 @@ buildscript {
         rxkotlin_version = '2.2.0'
         rxpermission_version = '0.10.2'
 
+        skeleton_layout_version = '4.0.0'
+
         timber_log_version = '4.7.1'
 
         // testing libraries
