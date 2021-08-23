@@ -141,11 +141,9 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment(), BaseFragmentCallback
         )
     }
 
-    protected fun showOrHideSkeletonLoading(view: View, isLoading: Boolean) {
-        if (isLoading) {
-            skeletons[view.id]?.showSkeleton()
-        } else {
-            skeletons[view.id]?.showOriginal()
+    protected fun View.showOrHideSkeletonLoading(isLoading: Boolean) {
+        skeletons[id]?.run {
+            if (isLoading) showSkeleton() else showOriginal()
         }
     }
 

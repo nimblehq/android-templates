@@ -47,7 +47,7 @@ class SecondFragment : BaseFragment<FragmentSecondBinding>() {
                 .addToDisposables()
 
             slSecondThumbnail.applySkeleton()
-            showOrHideSkeletonLoading(slSecondThumbnail, isLoading = true)
+            slSecondThumbnail.showOrHideSkeletonLoading(true)
         }
     }
 
@@ -96,10 +96,10 @@ class SecondFragment : BaseFragment<FragmentSecondBinding>() {
                 ivSecondThumbnail.loadImage(
                     thumbnail,
                     onSuccess = {
-                        showOrHideSkeletonLoading(slSecondThumbnail, isLoading = false)
+                        slSecondThumbnail.showOrHideSkeletonLoading(false)
                     },
                     onError = {
-                        showOrHideSkeletonLoading(slSecondThumbnail, isLoading = false)
+                        slSecondThumbnail.showOrHideSkeletonLoading(false)
                     }
                 )
             }

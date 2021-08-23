@@ -3,9 +3,7 @@ package co.nimblehq.rxjava.ui.screens.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import co.nimblehq.rxjava.R
 import co.nimblehq.rxjava.databinding.FragmentHomeBinding
 import co.nimblehq.rxjava.domain.data.Data
@@ -91,7 +89,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun showLoading(isLoading: IsLoading) {
         with(binding) {
             btHomeRefresh.isEnabled = !isLoading
-            showOrHideSkeletonLoading(rvHomeData, isLoading)
+            rvHomeData.showOrHideSkeletonLoading(isLoading)
         }
     }
 }
