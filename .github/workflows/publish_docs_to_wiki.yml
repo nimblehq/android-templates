@@ -1,0 +1,36 @@
+name: Publish docs to Wiki
+
+on:
+  push:
+    paths:
+      - docs/**
+    branches:
+      - main
+      
+env:
+  USER_TOKEN: ${{ secrets.USER_TOKEN }}
+  USER_NAME: team-nimblehq
+  USER_EMAIL: dev@nimblehq.co
+  OWNER: ${{ github.event.repository.owner.name }}
+  REPOSITORY_NAME: ${{ github.event.repository.name }}
+
+jobs:
+  Publish-Docs-To-Wiki:
+    runs-on: ubuntu-latest
+    steps:  
+    - uses: actions/checkout@v2
+    - name: Prepare
+      run: |
+         mkdir tmp_wiki
+         cd tmp_wiki
+         git init
+         git config user.name $USER_NAME
+         git config user.email $USER_EMAIL
+         git pull https://$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git
+    - name: Push
+      run: |
+        rsync -av --delete docs/ tmp_wiki/ --exclude .git
+        cd tmp_wiki
+        git add .
+        git commit -m "Update Wiki content"
+        git push -f --set-upstream https://$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git master
