@@ -37,3 +37,5 @@ Example:
 ![Nimble](https://assets.nimblehq.co/logo/dark/logo-dark-text-160.png)
 
 This project is maintained and funded by Nimble.
+
+Learn more about our Android templates on the [Wiki](https://github.com/nimblehq/android-templates/wiki).
