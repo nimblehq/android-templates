@@ -1,18 +1,14 @@
 <network-security-config>
     <debug-overrides>
         <trust-anchors>
+            <!-- Only trust user added CAs while app is debuggable -->
             <certificates src="user" />
             <certificates src="system" />
         </trust-anchors>
     </debug-overrides>
 
-    <base-config cleartextTrafficPermitted="true">
-        <trust-anchors>
-            <certificates src="system" />
-        </trust-anchors>
-    </base-config>
-
     <domain-config>
+        <!-- Enter your base URL here -->
         <domain includeSubdomains="true">www.jsonplaceholder.typicode.com</domain>
         <trust-anchors>
             <certificates src="user" />
