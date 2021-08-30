@@ -8,18 +8,19 @@ on:
       - main
       
 env:
-  USER_TOKEN: ${{ secrets.USER_TOKEN }}
+  USER_TOKEN: ${{ secrets.WIKI_ACTION_TOKEN }}
   USER_NAME: team-nimblehq
   USER_EMAIL: dev@nimblehq.co
   OWNER: ${{ github.event.repository.owner.name }}
   REPOSITORY_NAME: ${{ github.event.repository.name }}
 
 jobs:
-  Publish-Docs-To-Wiki:
+  publish_docs_to_wiki:
     runs-on: ubuntu-latest
     steps:  
     - uses: actions/checkout@v2
-    - name: Prepare
+
+    - name: Pull wiki
       run: |
          mkdir tmp_wiki
          cd tmp_wiki
@@ -27,7 +28,8 @@ jobs:
          git config user.name $USER_NAME
          git config user.email $USER_EMAIL
          git pull https://$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git
-    - name: Push
+
+    - name: Push wiki
       run: |
         rsync -av --delete docs/ tmp_wiki/ --exclude .git
         cd tmp_wiki
