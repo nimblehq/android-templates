@@ -1,0 +1,3 @@
+Welcome to the android-templates wiki! 
+
+More coming soon...
