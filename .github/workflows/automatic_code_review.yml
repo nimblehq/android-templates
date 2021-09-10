@@ -6,7 +6,7 @@ on:
 
 jobs:
   review_code:
-    name: Run Danger for automatic code review
+    name: Run Danger 
     runs-on: ubuntu-latest
     steps:
       - name: Set up JDK 1.8
@@ -14,7 +14,7 @@ jobs:
         with:
           java-version: 1.8
 
-      - name: Checkout the source code
+      - name: Checkout source code
         uses: actions/checkout@v2.3.2
 
       - name: Load Gradle cached
@@ -28,7 +28,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Run Danger
+      - name: Danger
         uses: danger/kotlin@1.0.0-beta.3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
