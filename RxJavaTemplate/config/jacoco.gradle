@@ -19,6 +19,7 @@ def packagesExcluded = ['co/nimblehq/di/**',
 def fileFilter = fileGenerated + packagesExcluded
 
 task jacocoTestReport(type: JacocoReport) {
+
     group = "Reporting"
     description = "Generate Jacoco coverage reports for Debug build"
 
