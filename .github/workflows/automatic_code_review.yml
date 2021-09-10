@@ -1,4 +1,4 @@
-name: Automatically review code
+name: Automatic code review
 
 on:
   pull_request:
@@ -27,6 +27,31 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+
+      # Run Detekt and Archive Detekt reports
+      - name: Run Detekt on CoroutineTemplate
+        working-directory: ./CoroutineTemplate
+        run: ./gradlew detekt
+
+      - name: Run Detekt on RxJavaTemplate
+        working-directory: ./RxJavaTemplate      
+        run: ./gradlew detekt
+
+      - name: Archive Detekt report on CoroutineTemplate
+        uses: actions/upload-artifact@v2
+        with:
+          name: detekt-report-coroutine
+          path: CoroutineTemplate/build/reports/detekt/
+
+      - name: Archive Detekt report on RxJavaTemplate
+        uses: actions/upload-artifact@v2
+        with:
+          name: detekt-report-rxjava
+          path: RxJavaTemplate/build/reports/detekt/
+
+      - name: Run Android Lint on RxJavaTemplate
+        working-directory: ./RxJavaTemplate      
+        run: ./gradlew lint
 
       - name: Danger
         uses: danger/kotlin@1.0.0-beta.3

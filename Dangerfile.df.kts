@@ -1,10 +1,18 @@
 @file:DependsOn("io.github.ackeecz:danger-kotlin-commit-lint:0.1.0")
+@file:DependsOn("io.github.ackeecz:danger-kotlin-detekt:0.1.4")
 
 import systems.danger.kotlin.*
 
 import io.github.ackeecz.danger.commitlint.*
+import io.github.ackeecz.danger.detekt.DetektPlugin
+
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.util.function.BiPredicate
+import java.util.stream.Collectors
 
 register plugin CommitLintPlugin
+register plugin DetektPlugin
 
 danger(args) {
 
@@ -36,4 +44,11 @@ danger(args) {
     CommitLintPlugin.check(commits = git.commits.map { gitCommit ->
         Commit(CommitMessage.fromRawMessage(gitCommit.message), gitCommit.sha ?: "")
     })
+
+    // Detekt output check
+    val detektReports = Files.find(Paths.get(""), 10, BiPredicate { path, _ ->
+        val fileName = path.toFile().name
+        fileName.endsWith("detekt.xml")
+    }).map { it.toFile() }.collect(Collectors.toList())
+    DetektPlugin.parseAndReport(*detektReports.toTypedArray())
 }
