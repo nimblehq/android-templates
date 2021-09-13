@@ -1,6 +1,6 @@
 ---
-format_version: '8'
-default_step_lib_source: 'https://github.com/bitrise-io/bitrise-steplib.git'
+format_version: '11'
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: android
 trigger_map:
   - push_branch: develop
@@ -26,7 +26,7 @@ workflows:
       - activate-ssh-key@4:
           run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
 
-      - git-clone@4: {}
+      - git-clone@6: {}
 
       - cache-pull@2: {}
 
@@ -65,6 +65,11 @@ workflows:
             - is_enable_public_page: 'false'
             - is_compress: 'true'
             - notify_user_groups: none
+      
+      # Run Danger for automatically doing pull request review
+      - danger@2:
+        inputs:
+        - github_api_token: "$DANGER_GITHUB_API_TOKEN"
 
   # Workflow on develop branch
   develop:
@@ -72,7 +77,7 @@ workflows:
       - activate-ssh-key@4:
           run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
 
-      - git-clone@4: {}
+      - git-clone@6: {}
 
       - cache-pull@2: {}
 
@@ -124,7 +129,7 @@ workflows:
       - activate-ssh-key@4:
           run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
 
-      - git-clone@4: {}
+      - git-clone@6: {}
 
       - cache-pull@2: {}
 
@@ -172,7 +177,7 @@ workflows:
       - activate-ssh-key@4:
           run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
 
-      - git-clone@4: {}
+      - git-clone@6: {}
 
       - cache-pull@2: {}
 
