@@ -53,7 +53,45 @@ jobs:
         working-directory: ./RxJavaTemplate      
         run: ./gradlew lint
 
+        # Run Unit Test & Jacoco for code coverage & Archive reports
+      - name: Run Unit Tests & Jacoco on RxJavaTemplate
+        working-directory: ./RxJavaTemplate
+        run: ./gradlew jacocoTestReport
+
+      - name: Archive Code coverage report on RxJavaTemplate
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report-rxjava
+          path: |
+            RxJavaTemplate/app/build/reports/jacoco/jacocoTestReport/
+            RxJavaTemplate/data/build/reports/jacoco/jacocoTestReport/
+
+      # Setup Ruby gems and Bundle for executing danger-ruby
+      - name: Setup Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.7'
+
+      - name: Cache Gems
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
+      - name: Bundle Install
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+      - name: Check Versions
+        run: |
+          ruby --version
+          gem --version
+          bundler --version
+
       - name: Danger
-        uses: danger/kotlin@1.0.0-beta.3
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bundle exec danger

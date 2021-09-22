@@ -109,6 +109,13 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    android {
+        lintOptions {
+            xmlReport true
+            xmlOutput file("$reportsDir/lint/lint-result.xml")
+        }
+    }
 }
 
 dependencies {
