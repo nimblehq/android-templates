@@ -32,7 +32,7 @@ buildscript {
         okhttp_version = '4.9.1'
         retrofit_version = '2.9.0'
 
-        mockito_version = '3.3.1'
+        mockito_version = '3.12.4'
         test_android_junit_version = '1.1.1'
         test_espresso_version = '3.1.0'
         test_junit_version = '4.13.2'
@@ -42,6 +42,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+
     }
     dependencies {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$androidx_navigation_version"
@@ -52,13 +53,14 @@ buildscript {
 }
 
 plugins {
-    id "io.gitlab.arturbosch.detekt" version "1.14.0"
+    id "io.gitlab.arturbosch.detekt" version "1.18.1"
 }
 
 allprojects {
     repositories {
         google()
         maven { url 'https://jitpack.io' }
+        maven { url "https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven/org/jetbrains/kotlinx/kotlinx-html-jvm/0.7.2/kotlinx-html-jvm-0.7.2.pom" }
         mavenCentral()
     }
 }
@@ -68,9 +70,8 @@ task clean(type: Delete) {
 }
 
 detekt {
-    toolVersion = "1.14.0"
+    toolVersion = "1.18.1"
 
-    input = files("app/src/main/java")
     parallel = false
     config = files("detekt-config.yml")
     buildUponDefaultConfig = false
