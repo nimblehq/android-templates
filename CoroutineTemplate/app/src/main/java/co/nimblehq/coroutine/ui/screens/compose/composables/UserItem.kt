@@ -11,8 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import co.nimblehq.coroutine.R
-import co.nimblehq.coroutine.domain.data.entity.UserEntity
 import co.nimblehq.coroutine.ui.screens.compose.theme.Dimension
+import co.nimblehq.domain.entity.UserEntity
 
 @Suppress("LongMethod")
 @Composable

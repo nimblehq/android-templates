@@ -1,4 +1,4 @@
-package co.nimblehq.coroutine.domain.usecase
+package co.nimblehq.domain.usecase
 
 sealed class UseCaseResult<out T : Any?> {
     class Success<out T : Any>(val data: T) : UseCaseResult<T>()

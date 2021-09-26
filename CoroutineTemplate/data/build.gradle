@@ -29,6 +29,13 @@ android {
 }
 
 dependencies {
+    implementation(
+        project(':domain'),
+        "androidx.core:core-ktx:$androidx_core_ktx_version",
+        "androidx.security:security-crypto:$android_crypto_version",
+        "com.google.dagger:hilt-android:$hilt_version",
+    )
+
     api(
         "com.squareup.retrofit2:converter-moshi:$retrofit_version",
         "com.squareup.retrofit2:retrofit:$retrofit_version",

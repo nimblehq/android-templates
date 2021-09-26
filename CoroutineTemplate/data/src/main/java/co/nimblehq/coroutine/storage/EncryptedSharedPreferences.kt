@@ -1,4 +1,4 @@
-package co.nimblehq.coroutine.domain.storage
+package co.nimblehq.coroutine.storage
 
 import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences

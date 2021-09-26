@@ -1,8 +1,8 @@
 package co.nimblehq.coroutine.di.modules
 
 import co.nimblehq.coroutine.data.service.ApiService
-import co.nimblehq.coroutine.domain.repository.UserRepository
-import co.nimblehq.coroutine.domain.repository.UserRepositoryImpl
+import co.nimblehq.coroutine.repositoryimpl.UserRepositoryImpl
+import co.nimblehq.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

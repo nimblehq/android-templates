@@ -1,5 +1,6 @@
 package co.nimblehq.coroutine.data.service.response
 
+import co.nimblehq.domain.entity.UserEntity
 import com.squareup.moshi.Json
 
 data class UserResponse(
@@ -23,4 +24,37 @@ data class UserResponse(
             @Json(name = "lng") val longitude: String?
         )
     }
+}
+
+fun List<UserResponse>.toUserEntities(): List<UserEntity> {
+    return this.map { it.toEntity() }
+}
+
+private fun UserResponse.toEntity(): UserEntity {
+    return UserEntity(
+        id = this.id,
+        name = this.name.orEmpty(),
+        username = this.username.orEmpty(),
+        email = this.email.orEmpty(),
+        address = this.address?.toEntity(),
+        phone = this.phone.orEmpty(),
+        website = this.website.orEmpty()
+    )
+}
+
+private fun UserResponse.Address.toEntity(): UserEntity.Address {
+    return UserEntity.Address(
+        street = this.street.orEmpty(),
+        suite = this.suite.orEmpty(),
+        city = this.city.orEmpty(),
+        zipCode = this.zipCode.orEmpty(),
+        geo = this.geo?.toEntity()
+    )
+}
+
+private fun UserResponse.Address.Geo.toEntity(): UserEntity.Address.Geo {
+    return UserEntity.Address.Geo(
+        latitude = this.latitude.orEmpty(),
+        longitude = this.longitude.orEmpty()
+    )
 }

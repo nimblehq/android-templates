@@ -1,9 +1,11 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-parcelize'
-apply plugin: 'dagger.hilt.android.plugin'
-apply plugin: 'androidx.navigation.safeargs.kotlin'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+    id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
+}
 
 def keystorePropertiesFile = rootProject.file("signing.properties")
 def keystoreProperties = new Properties()
@@ -104,7 +106,7 @@ dependencies {
     )
 
     kapt(
-        "com.google.dagger:hilt-compiler:$hilt_version"
+        "com.google.dagger:hilt-compiler:$hilt_version",
     )
 
     testImplementation(

@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import co.nimblehq.coroutine.databinding.FragmentHomeBinding
 import co.nimblehq.coroutine.databinding.ViewLoadingBinding
-import co.nimblehq.coroutine.domain.data.entity.UserEntity
 import co.nimblehq.coroutine.extension.visibleOrGone
 import co.nimblehq.coroutine.lib.IsLoading
 import co.nimblehq.coroutine.ui.base.BaseFragment
 import co.nimblehq.coroutine.ui.screens.MainNavigator
 import co.nimblehq.coroutine.ui.screens.second.SecondBundle
+import co.nimblehq.domain.entity.UserEntity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject

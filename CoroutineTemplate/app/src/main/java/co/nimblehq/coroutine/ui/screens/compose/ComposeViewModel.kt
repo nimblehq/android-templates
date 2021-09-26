@@ -3,10 +3,10 @@ package co.nimblehq.coroutine.ui.screens.compose
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import co.nimblehq.coroutine.domain.data.entity.UserEntity
-import co.nimblehq.coroutine.domain.usecase.GetUsersUseCase
-import co.nimblehq.coroutine.domain.usecase.UseCaseResult
+import co.nimblehq.coroutine.dispatcher.DispatchersProvider
+import co.nimblehq.domain.usecase.UseCaseResult
 import co.nimblehq.coroutine.ui.base.BaseViewModel
+import co.nimblehq.domain.entity.UserEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,8 +24,9 @@ interface Output {
 
 @HiltViewModel
 class ComposeViewModel @Inject constructor(
-    private val getUsersUseCase: GetUsersUseCase
-) : BaseViewModel(), Output {
+    private val getUsersUseCase: co.nimblehq.domain.usecase.GetUsersUseCase,
+    dispatchers: DispatchersProvider
+) : BaseViewModel(dispatchers), Output {
 
     private val _users = MutableStateFlow<List<UserEntity>>(emptyList())
     override val users: StateFlow<List<UserEntity>>
@@ -45,8 +46,8 @@ class ComposeViewModel @Inject constructor(
 
     private fun fetchUsers() {
         showLoading()
-        viewModelScope.launch {
-            when (val result = getUsersUseCase.execute()) {
+        execute {
+            when (val result = getUsersUseCase.execute(page = 1, size = 10)) {
                 is UseCaseResult.Success -> _users.value = result.data
                 is UseCaseResult.Error -> _error.emit(result.exception.message.orEmpty())
             }
