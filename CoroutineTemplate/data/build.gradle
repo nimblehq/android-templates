@@ -33,7 +33,7 @@ dependencies {
         project(':domain'),
         "androidx.core:core-ktx:$androidx_core_ktx_version",
         "androidx.security:security-crypto:$android_crypto_version",
-        "com.google.dagger:hilt-android:$hilt_version",
+        "com.google.dagger:hilt-android:$hilt_version"
     )
 
     api(
