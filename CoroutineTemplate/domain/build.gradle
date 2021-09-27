@@ -16,11 +16,4 @@ dependencies {
         "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
         "javax.inject:javax.inject:1"
     )
-
-    testImplementation(
-        "junit:junit:$test_junit_version",
-        "org.mockito:mockito-core:$mockito_version",
-        "org.mockito:mockito-inline:$mockito_version"
-    )
-
 }

@@ -7,6 +7,7 @@ import co.nimblehq.coroutine.ui.base.NavigationEvent
 import co.nimblehq.coroutine.ui.screens.second.SecondBundle
 import co.nimblehq.domain.entity.UserEntity
 import co.nimblehq.domain.usecase.GetUsersUseCase
+import co.nimblehq.domain.usecase.UseCaseResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -52,8 +53,8 @@ class HomeViewModel @Inject constructor(
         showLoading()
         execute {
             when (val result = getUsersUseCase.execute(page = 1, size = 10)) {
-                is co.nimblehq.domain.usecase.UseCaseResult.Success -> _users.value = result.data
-                is co.nimblehq.domain.usecase.UseCaseResult.Error -> _error.emit(result.exception.message.orEmpty())
+                is UseCaseResult.Success -> _users.value = result.data
+                is UseCaseResult.Error -> _error.emit(result.exception.message.orEmpty())
             }
             hideLoading()
         }
