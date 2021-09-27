@@ -23,6 +23,3 @@ Dir.chdir("RxJavaTemplate") do
   # junit.report
 
 end
-
-
-
