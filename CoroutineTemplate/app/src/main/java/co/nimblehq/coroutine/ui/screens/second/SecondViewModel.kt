@@ -6,4 +6,5 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SecondViewModel @Inject constructor(dispatchers: DispatchersProvider) : BaseViewModel(dispatchers)
+class SecondViewModel @Inject constructor(dispatchers: DispatchersProvider) :
+    BaseViewModel(dispatchers)

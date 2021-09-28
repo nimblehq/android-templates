@@ -35,5 +35,6 @@ class RetrofitModule {
         .build()
 
     @Provides
-    fun provideApiService(retrofit: Retrofit): ApiService = ApiServiceProvider.getApiService(retrofit)
+    fun provideApiService(retrofit: Retrofit): ApiService =
+        ApiServiceProvider.getApiService(retrofit)
 }

@@ -2,15 +2,13 @@ package co.nimblehq.coroutine.ui.screens.compose
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.viewModelScope
 import co.nimblehq.coroutine.dispatcher.DispatchersProvider
-import co.nimblehq.domain.usecase.UseCaseResult
 import co.nimblehq.coroutine.ui.base.BaseViewModel
 import co.nimblehq.domain.entity.UserEntity
+import co.nimblehq.domain.usecase.UseCaseResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 interface Output {

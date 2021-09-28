@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @Suppress("PropertyName")
-abstract class BaseViewModel(private val dispatchers: DispatchersProvider) : ViewModel(){
+abstract class BaseViewModel(private val dispatchers: DispatchersProvider) : ViewModel() {
 
     private var loadingCount: Int = 0
 

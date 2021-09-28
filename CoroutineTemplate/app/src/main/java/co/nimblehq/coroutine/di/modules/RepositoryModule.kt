@@ -13,5 +13,6 @@ import dagger.hilt.android.components.ViewModelComponent
 class RepositoryModule {
 
     @Provides
-    fun provideUserRepository(apiService: ApiService): UserRepository = UserRepositoryImpl(apiService)
+    fun provideUserRepository(apiService: ApiService): UserRepository =
+        UserRepositoryImpl(apiService)
 }

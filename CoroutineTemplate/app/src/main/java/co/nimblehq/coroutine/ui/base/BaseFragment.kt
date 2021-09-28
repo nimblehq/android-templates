@@ -13,7 +13,6 @@ import androidx.viewbinding.ViewBinding
 import co.nimblehq.coroutine.extension.hideSoftKeyboard
 import co.nimblehq.coroutine.ui.common.Toaster
 import co.nimblehq.coroutine.ui.userReadableMessage
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
