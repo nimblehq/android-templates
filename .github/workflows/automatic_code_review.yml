@@ -37,18 +37,6 @@ jobs:
         working-directory: ./RxJavaTemplate
         run: ./gradlew detekt
 
-      - name: Archive Detekt report on CoroutineTemplate
-        uses: actions/upload-artifact@v2
-        with:
-          name: detekt-report-coroutine
-          path: CoroutineTemplate/build/reports/detekt/
-
-      - name: Archive Detekt report on RxJavaTemplate
-        uses: actions/upload-artifact@v2
-        with:
-          name: detekt-report-rxjava
-          path: RxJavaTemplate/build/reports/detekt/
-
       - name: Run Android Lint on RxJavaTemplate
         working-directory: ./RxJavaTemplate      
         run: ./gradlew lint
@@ -57,14 +45,6 @@ jobs:
       - name: Run Unit Tests & Jacoco on RxJavaTemplate
         working-directory: ./RxJavaTemplate
         run: ./gradlew jacocoTestReport
-
-      - name: Archive Code coverage report on RxJavaTemplate
-        uses: actions/upload-artifact@v2
-        with:
-          name: code-coverage-report-rxjava
-          path: |
-            RxJavaTemplate/app/build/reports/jacoco/jacocoTestReport/
-            RxJavaTemplate/data/build/reports/jacoco/jacocoTestReport/
 
       # Setup Ruby gems and Bundle for executing danger-ruby
       - name: Setup Ruby
@@ -91,7 +71,7 @@ jobs:
           gem --version
           bundler --version
 
-      - name: Danger
+      - name: Run Danger
         env:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: bundle exec danger
