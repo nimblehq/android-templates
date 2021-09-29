@@ -8,7 +8,7 @@ import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import co.nimblehq.coroutine.ui.screens.compose.theme.Dimension
-import co.nimblehq.domain.entity.UserEntity
+import co.nimblehq.coroutine.entity.UserEntity
 
 @Composable
 fun UserList(

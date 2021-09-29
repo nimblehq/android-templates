@@ -1,7 +1,7 @@
-package co.nimblehq.domain.repository
+package co.nimblehq.coroutine.repository
 
-import co.nimblehq.domain.entity.UserEntity
-import co.nimblehq.domain.usecase.UseCaseResult
+import co.nimblehq.coroutine.entity.UserEntity
+import co.nimblehq.coroutine.usecase.UseCaseResult
 
 interface UserRepository {
 

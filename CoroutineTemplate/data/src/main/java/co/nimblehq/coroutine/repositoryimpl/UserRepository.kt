@@ -2,9 +2,9 @@ package co.nimblehq.coroutine.repositoryimpl
 
 import co.nimblehq.coroutine.data.service.ApiService
 import co.nimblehq.coroutine.data.service.response.toUserEntities
-import co.nimblehq.domain.entity.UserEntity
-import co.nimblehq.domain.repository.UserRepository
-import co.nimblehq.domain.usecase.UseCaseResult
+import co.nimblehq.coroutine.entity.UserEntity
+import co.nimblehq.coroutine.repository.UserRepository
+import co.nimblehq.coroutine.usecase.UseCaseResult
 
 class UserRepositoryImpl constructor(
     private val apiService: ApiService,

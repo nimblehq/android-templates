@@ -4,8 +4,9 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import co.nimblehq.coroutine.dispatcher.DispatchersProvider
 import co.nimblehq.coroutine.ui.base.BaseViewModel
-import co.nimblehq.domain.entity.UserEntity
-import co.nimblehq.domain.usecase.UseCaseResult
+import co.nimblehq.coroutine.usecase.GetUsersUseCase
+import co.nimblehq.coroutine.entity.UserEntity
+import co.nimblehq.coroutine.usecase.UseCaseResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,7 +23,7 @@ interface Output {
 
 @HiltViewModel
 class ComposeViewModel @Inject constructor(
-    private val getUsersUseCase: co.nimblehq.domain.usecase.GetUsersUseCase,
+    private val getUsersUseCase: GetUsersUseCase,
     dispatchers: DispatchersProvider
 ) : BaseViewModel(dispatchers), Output {
 

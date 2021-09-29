@@ -1,4 +1,4 @@
-package co.nimblehq.domain.entity
+package co.nimblehq.coroutine.entity
 
 data class UserEntity(
     val id: Int?,
@@ -9,7 +9,6 @@ data class UserEntity(
     val phone: String,
     val website: String
 ) {
-
     data class Address(
         val street: String,
         val suite: String,
@@ -17,7 +16,6 @@ data class UserEntity(
         val zipCode: String,
         val geo: Geo?
     ) {
-
         data class Geo(
             val latitude: String,
             val longitude: String

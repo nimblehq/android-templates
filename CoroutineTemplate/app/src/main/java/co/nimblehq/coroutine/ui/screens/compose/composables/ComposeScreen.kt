@@ -8,7 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import co.nimblehq.coroutine.ui.screens.compose.theme.ComposeTheme
-import co.nimblehq.domain.entity.UserEntity
+import co.nimblehq.coroutine.entity.UserEntity
 
 @Suppress("LongMethod", "LongParameterList")
 @ExperimentalComposeUiApi

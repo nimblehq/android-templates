@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import co.nimblehq.coroutine.R
 import co.nimblehq.coroutine.ui.screens.compose.theme.Dimension
-import co.nimblehq.domain.entity.UserEntity
+import co.nimblehq.coroutine.entity.UserEntity
 
 @Suppress("LongMethod")
 @Composable

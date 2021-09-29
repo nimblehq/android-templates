@@ -1,6 +1,6 @@
 package co.nimblehq.coroutine.data.service.response
 
-import co.nimblehq.domain.entity.UserEntity
+import co.nimblehq.coroutine.entity.UserEntity
 import com.squareup.moshi.Json
 
 data class UserResponse(

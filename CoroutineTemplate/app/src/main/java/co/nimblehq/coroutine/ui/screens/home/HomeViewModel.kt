@@ -5,9 +5,9 @@ import co.nimblehq.coroutine.dispatcher.DispatchersProvider
 import co.nimblehq.coroutine.ui.base.BaseViewModel
 import co.nimblehq.coroutine.ui.base.NavigationEvent
 import co.nimblehq.coroutine.ui.screens.second.SecondBundle
-import co.nimblehq.domain.entity.UserEntity
-import co.nimblehq.domain.usecase.GetUsersUseCase
-import co.nimblehq.domain.usecase.UseCaseResult
+import co.nimblehq.coroutine.entity.UserEntity
+import co.nimblehq.coroutine.usecase.GetUsersUseCase
+import co.nimblehq.coroutine.usecase.UseCaseResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
