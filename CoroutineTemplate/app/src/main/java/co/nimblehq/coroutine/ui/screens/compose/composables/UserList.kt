@@ -7,8 +7,8 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import co.nimblehq.coroutine.ui.screens.compose.theme.Dimension
 import co.nimblehq.coroutine.entity.UserEntity
+import co.nimblehq.coroutine.ui.screens.compose.theme.Dimension
 
 @Composable
 fun UserList(

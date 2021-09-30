@@ -1,7 +1,6 @@
 package co.nimblehq.coroutine.ui.screens.home
 
 import androidx.lifecycle.viewModelScope
-import co.nimblehq.coroutine.dispatcher.DispatchersProvider
 import co.nimblehq.coroutine.entity.UserEntity
 import co.nimblehq.coroutine.ui.base.BaseViewModel
 import co.nimblehq.coroutine.ui.base.NavigationEvent
@@ -26,8 +25,7 @@ interface Output {
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getUsersUseCase: GetUsersUseCase,
-    dispatchers: DispatchersProvider
-) : BaseViewModel(dispatchers), Output {
+) : BaseViewModel(), Output {
 
     private val _users = MutableStateFlow<List<UserEntity>>(emptyList())
     override val users: StateFlow<List<UserEntity>>
@@ -51,12 +49,14 @@ class HomeViewModel @Inject constructor(
 
     private fun fetchUsers() {
         showLoading()
-        execute {
-            when (val result = getUsersUseCase.execute()) {
-                is UseCaseResult.Success -> _users.value = result.data
-                is UseCaseResult.Error -> _error.emit(result.exception.message.orEmpty())
+        execute(kotlin.run {
+            {
+                when (val result = getUsersUseCase.execute()) {
+                    is UseCaseResult.Success -> _users.value = result.data
+                    is UseCaseResult.Error -> _error.emit(result.exception.message.orEmpty())
+                }
+                hideLoading()
             }
-            hideLoading()
-        }
+        })
     }
 }
