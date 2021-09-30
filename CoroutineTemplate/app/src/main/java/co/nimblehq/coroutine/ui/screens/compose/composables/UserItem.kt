@@ -11,8 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import co.nimblehq.coroutine.R
-import co.nimblehq.coroutine.ui.screens.compose.theme.Dimension
 import co.nimblehq.coroutine.entity.UserEntity
+import co.nimblehq.coroutine.ui.screens.compose.theme.Dimension
 
 @Suppress("LongMethod")
 @Composable
@@ -40,11 +40,11 @@ fun UserItem(
             ) {
                 with(user) {
                     Text(
-                        text = name,
+                        text = name.orEmpty(),
                         style = MaterialTheme.typography.subtitle1
                     )
                     Text(
-                        text = phone,
+                        text = phone.orEmpty(),
                         style = MaterialTheme.typography.body1,
                         modifier = Modifier.padding(top = Dimension.Dp4)
                     )

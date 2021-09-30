@@ -7,6 +7,11 @@ import javax.inject.Inject
 class GetUsersUseCase @Inject constructor(private val userRepository: UserRepository) {
 
     suspend fun execute(): UseCaseResult<List<UserEntity>> {
-        return userRepository.getUsers()
+        return try {
+            val response = userRepository.getUsers()
+            UseCaseResult.Success(response)
+        } catch (e: Exception) {
+            UseCaseResult.Error(e)
+        }
     }
 }
