@@ -32,9 +32,7 @@ class SecondFragment : BaseFragment<FragmentSecondBinding>() {
     private val args: SecondFragmentArgs by navArgs()
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSecondBinding
-        get() = { inflater, container, attachToParent ->
-            FragmentSecondBinding.inflate(inflater, container, attachToParent)
-        }
+        get() = { inflater, container, attachToParent -> FragmentSecondBinding.inflate(inflater, container, attachToParent) }
 
     override fun setupView() {
         with(binding) {
