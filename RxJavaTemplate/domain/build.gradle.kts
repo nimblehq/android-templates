@@ -53,17 +53,17 @@ dependencies {
     implementation(project(Module.COMMON_RX))
     api(project(Module.DATA))
 
-    implementation(KOTLIN_STDLIB_JDK7)
-    implementation(KOTLIN_STDLIB)
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.KOTLIN_VERSION}")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:${Versions.KOTLIN_VERSION}")
 
-    implementation(ANDROIDX_CORE)
-    implementation(ANDROID_SECURITY_CRYPTO)
+    implementation("androidx.core:core-ktx:${Versions.ANDROID_CORE_VERSION}")
+    implementation("androidx.security:security-crypto:${Versions.ANDROID_CRYPTO_VERSION}")
 
-    implementation(HILT)
-    implementation(RX_ANDROID)
+    implementation("com.google.dagger:hilt-android:${Versions.HILT_VERSION}")
+    implementation("io.reactivex.rxjava2:rxandroid:${Versions.RXANDROID_VERSION}")
 
-    testImplementation(JUNIT)
-    testImplementation(KLUENT_ANDROID)
-    testImplementation(MOCKITO_KOTLIN)
-    testImplementation(ROBOLECTRIC)
+    testImplementation("junit:junit:${Versions.TEST_JUNIT_VERSION}")
+    testImplementation("org.amshove.kluent:kluent-android:${Versions.TEST_KLUENT_VERSION}")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:${Versions.TEST_MOCKITO_VERSION}")
+    testImplementation("org.robolectric:shadowapi:${Versions.TEST_ROBOLECTRIC_VERSION}")
 }

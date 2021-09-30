@@ -52,21 +52,21 @@ android {
 dependencies {
     implementation(project(Module.COMMON_RX))
 
-    api(RETROFIT)
-    api(RETROFIT_ADAPTER_RXJAVA2)
-    api(RETROFIT_CONVERTER_MOSHI)
+    api("com.squareup.retrofit2:retrofit:${Versions.RETROFIT_VERSION}")
+    api("com.squareup.retrofit2:adapter-rxjava2:${Versions.RETROFIT_VERSION}")
+    api("com.squareup.retrofit2:converter-moshi:${Versions.RETROFIT_VERSION}")
 
-    api(MOSHI_KOTLIN)
-    api(MOSHI_ADAPTERS)
+    api("com.squareup.moshi:moshi-kotlin:${Versions.MOSHI_VERSION}")
+    api("com.squareup.moshi:moshi-adapters:${Versions.MOSHI_VERSION}")
 
-    api(OKHTTP3)
-    api(OKHTTP3_LOGGING)
+    api("com.squareup.okhttp3:okhttp:${Versions.OKHTTP_VERSION}")
+    api("com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP_VERSION}")
 
-    implementation(KOTLIN_STDLIB_JDK7)
-    implementation(KOTLIN_STDLIB)
-    implementation(ANDROIDX_CORE)
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.KOTLIN_VERSION}")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:${Versions.KOTLIN_VERSION}")
+    implementation("androidx.core:core-ktx:${Versions.ANDROID_CORE_VERSION}")
 
-    testImplementation(JUNIT)
-    testImplementation(MOCKITO_KOTLIN)
+    testImplementation("junit:junit:${Versions.TEST_JUNIT_VERSION}")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:${Versions.TEST_MOCKITO_VERSION}")
     testImplementation(project(Module.DOMAIN))
 }

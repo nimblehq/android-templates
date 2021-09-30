@@ -5,10 +5,10 @@ plugins {
 
 dependencies {
     // noinspection DifferentStdlibGradleVersion
-    implementation(KOTLIN_STDLIB_JDK7)
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.KOTLIN_VERSION}")
 
-    api(RX_JAVA)
-    api(RX_KOTLIN)
+    api("io.reactivex.rxjava2:rxjava:${Versions.RXJAVA_VERSION}")
+    api("io.reactivex.rxjava2:rxkotlin:${Versions.RXKOTLIN_VERSION}")
 }
 
 java {
