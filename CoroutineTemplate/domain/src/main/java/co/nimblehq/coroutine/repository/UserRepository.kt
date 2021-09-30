@@ -5,5 +5,5 @@ import co.nimblehq.coroutine.usecase.UseCaseResult
 
 interface UserRepository {
 
-    suspend fun getUsers(page: Int, size: Int): UseCaseResult<List<UserEntity>>
+    suspend fun getUsers(): UseCaseResult<List<UserEntity>>
 }

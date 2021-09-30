@@ -14,6 +14,6 @@ dependencies {
         "com.squareup.retrofit2:converter-moshi:$retrofit_version",
         "com.squareup.moshi:moshi:$moshi_version",
         "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
-        "javax.inject:javax.inject:1"
+        "javax.inject:javax.inject:$javax_inject_version"
     )
 }

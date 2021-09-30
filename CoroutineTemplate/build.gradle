@@ -22,6 +22,8 @@ buildscript {
         compose_version = '1.0.2'
         constraint_layout_version = '2.0.0-alpha3'
 
+        javax_inject_version = '1'
+
         hilt_version = '2.38.1'
 
         kotlin_version = '1.5.21'

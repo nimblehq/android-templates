@@ -3,9 +3,9 @@ package co.nimblehq.coroutine.ui.screens.compose
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import co.nimblehq.coroutine.dispatcher.DispatchersProvider
+import co.nimblehq.coroutine.entity.UserEntity
 import co.nimblehq.coroutine.ui.base.BaseViewModel
 import co.nimblehq.coroutine.usecase.GetUsersUseCase
-import co.nimblehq.coroutine.entity.UserEntity
 import co.nimblehq.coroutine.usecase.UseCaseResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -46,7 +46,7 @@ class ComposeViewModel @Inject constructor(
     private fun fetchUsers() {
         showLoading()
         execute {
-            when (val result = getUsersUseCase.execute(page = 1, size = 10)) {
+            when (val result = getUsersUseCase.execute()) {
                 is UseCaseResult.Success -> _users.value = result.data
                 is UseCaseResult.Error -> _error.emit(result.exception.message.orEmpty())
             }

@@ -10,7 +10,7 @@ class UserRepositoryImpl constructor(
     private val apiService: ApiService,
 ) : UserRepository {
 
-    override suspend fun getUsers(page: Int, size: Int): UseCaseResult<List<UserEntity>> {
+    override suspend fun getUsers(): UseCaseResult<List<UserEntity>> {
         return try {
             val response = apiService.getUsers()
             UseCaseResult.Success(response.toUserEntities())
