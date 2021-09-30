@@ -69,17 +69,9 @@ class SecondFragment : BaseFragment<FragmentSecondBinding>() {
 
     private fun handleCameraPermission(permission: Permission) {
         when {
-            permission.granted -> {
-                startActivity(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
-            }
-            permission.shouldShowRequestPermissionRationale -> {
-                // Deny
-                toaster.display("Permission camera denied")
-            }
-            else -> {
-                // Deny and never ask again
-                toaster.display("Permission camera never ask again")
-            }
+            permission.granted -> { startActivity(Intent(MediaStore.ACTION_IMAGE_CAPTURE)) }
+            permission.shouldShowRequestPermissionRationale -> { toaster.display("Permission camera denied") }
+            else -> { toaster.display("Permission camera never ask again") }
         }
     }
 
