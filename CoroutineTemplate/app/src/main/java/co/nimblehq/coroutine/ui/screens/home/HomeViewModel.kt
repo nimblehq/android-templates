@@ -49,14 +49,12 @@ class HomeViewModel @Inject constructor(
 
     private fun fetchUsers() {
         showLoading()
-        execute(run {
-            {
-                when (val result = getUsersUseCase.execute()) {
-                    is UseCaseResult.Success -> _users.value = result.data
-                    is UseCaseResult.Error -> _error.emit(result.exception.message.orEmpty())
-                }
-                hideLoading()
+        execute({
+            when (val result = getUsersUseCase.execute()) {
+                is UseCaseResult.Success -> _users.value = result.data
+                is UseCaseResult.Error -> _error.emit(result.exception.message.orEmpty())
             }
+            hideLoading()
         })
     }
 }

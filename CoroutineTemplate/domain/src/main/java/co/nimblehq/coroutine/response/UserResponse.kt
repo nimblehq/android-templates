@@ -26,7 +26,7 @@ data class UserResponse(
     }
 }
 
-fun List<UserResponse>.toUser(): List<User> {
+fun List<UserResponse>.toUsers(): List<User> {
     return this.map { it.toUser() }
 }
 
