@@ -5,13 +5,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import co.nimblehq.coroutine.databinding.FragmentHomeBinding
 import co.nimblehq.coroutine.databinding.ViewLoadingBinding
-import co.nimblehq.coroutine.entity.UserEntity
 import co.nimblehq.coroutine.extension.visibleOrGone
 import co.nimblehq.coroutine.lib.IsLoading
 import co.nimblehq.coroutine.ui.base.BaseFragment
 import co.nimblehq.coroutine.ui.screens.MainNavigator
 import co.nimblehq.coroutine.ui.screens.second.SecondBundle
 import dagger.hilt.android.AndroidEntryPoint
+import co.nimblehq.coroutine.model.User
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -55,7 +55,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         viewModel.navigator bindTo navigator::navigate
     }
 
-    private fun displayUsers(users: List<UserEntity>) {
+    private fun displayUsers(users: List<User>) {
         Timber.d("Result : $users")
     }
 

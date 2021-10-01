@@ -7,14 +7,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import co.nimblehq.coroutine.entity.UserEntity
 import co.nimblehq.coroutine.ui.screens.compose.theme.ComposeTheme
+import co.nimblehq.coroutine.model.User
 
 @Suppress("LongMethod", "LongParameterList")
 @ExperimentalComposeUiApi
 @Composable
 fun ComposeScreen(
-    users: List<UserEntity>,
+    users: List<User>,
     showLoading: Boolean,
     textFieldValue: String,
     onTextFieldValueChange: (String) -> Unit,

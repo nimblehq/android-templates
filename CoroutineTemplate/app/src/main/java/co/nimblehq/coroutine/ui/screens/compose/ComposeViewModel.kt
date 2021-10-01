@@ -2,18 +2,18 @@ package co.nimblehq.coroutine.ui.screens.compose
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import co.nimblehq.coroutine.entity.UserEntity
 import co.nimblehq.coroutine.ui.base.BaseViewModel
 import co.nimblehq.coroutine.usecase.GetUsersUseCase
 import co.nimblehq.coroutine.usecase.UseCaseResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import co.nimblehq.coroutine.model.User
 import javax.inject.Inject
 
 interface Output {
 
-    val users: StateFlow<List<UserEntity>>
+    val users: StateFlow<List<User>>
 
     val textFieldValue: State<String>
 
@@ -25,8 +25,8 @@ class ComposeViewModel @Inject constructor(
     private val getUsersUseCase: GetUsersUseCase
 ) : BaseViewModel(), Output {
 
-    private val _users = MutableStateFlow<List<UserEntity>>(emptyList())
-    override val users: StateFlow<List<UserEntity>>
+    private val _users = MutableStateFlow<List<User>>(emptyList())
+    override val users: StateFlow<List<User>>
         get() = _users
 
     private val _textFieldValue = mutableStateOf("")
@@ -43,7 +43,7 @@ class ComposeViewModel @Inject constructor(
 
     private fun fetchUsers() {
         showLoading()
-        execute(kotlin.run {
+        execute(run {
             {
                 when (val result = getUsersUseCase.execute()) {
                     is UseCaseResult.Success -> _users.value = result.data

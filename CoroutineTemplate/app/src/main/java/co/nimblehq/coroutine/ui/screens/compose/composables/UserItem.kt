@@ -11,13 +11,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import co.nimblehq.coroutine.R
-import co.nimblehq.coroutine.entity.UserEntity
 import co.nimblehq.coroutine.ui.screens.compose.theme.Dimension
+import co.nimblehq.coroutine.model.User
 
 @Suppress("LongMethod")
 @Composable
 fun UserItem(
-    user: UserEntity,
+    user: User,
     onClick: (String) -> Unit
 ) {
     Surface(
@@ -40,11 +40,11 @@ fun UserItem(
             ) {
                 with(user) {
                     Text(
-                        text = name.orEmpty(),
+                        text = name,
                         style = MaterialTheme.typography.subtitle1
                     )
                     Text(
-                        text = phone.orEmpty(),
+                        text = phone,
                         style = MaterialTheme.typography.body1,
                         modifier = Modifier.padding(top = Dimension.Dp4)
                     )
