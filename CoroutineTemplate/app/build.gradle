@@ -71,6 +71,11 @@ android {
         viewBinding true
         compose true
     }
+
+    lintOptions {
+        xmlReport = true
+        xmlOutput = file("build/reports/lint/lint-result.xml")
+    }
 }
 
 dependencies {

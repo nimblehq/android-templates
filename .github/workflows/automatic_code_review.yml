@@ -28,7 +28,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      # Run Detekt and Archive Detekt reports
+      # Run Detekt and generate Detekt reports
       - name: Run Detekt on CoroutineTemplate
         working-directory: ./CoroutineTemplate
         run: ./gradlew detekt
@@ -37,11 +37,16 @@ jobs:
         working-directory: ./RxJavaTemplate
         run: ./gradlew detekt
 
+      # Run Android Lint and generate Lint reports
       - name: Run Android Lint on RxJavaTemplate
         working-directory: ./RxJavaTemplate      
         run: ./gradlew lint
 
-        # Run Unit Test & Jacoco for code coverage & Archive reports
+      - name: Run Android Lint on CoroutineTemplate
+        working-directory: ./CoroutineTemplate      
+        run: ./gradlew lint
+
+        # Run Unit Test & Jacoco for code coverage for RxJavaTemplate
       - name: Run Unit Tests & Jacoco on RxJavaTemplate
         working-directory: ./RxJavaTemplate
         run: ./gradlew jacocoTestReport
