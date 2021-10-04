@@ -29,8 +29,10 @@ Dir[lint_dir].each do |file_name|
   android_lint.lint(inline_mode: true)
 end
   
-# Show Junit test coverage report from Jacoco for app module (not working at the moment)
-# files = Dir.glob("app/build/reports/jacoco/jacocoTestReport/*.xml")
-# message files
-# junit.parse "app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"
-# junit.report
+# Show Danger test coverage report from Jacoco for RxJavaTemplate
+jacoco_dir = "RxJavaTemplate/**/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"
+Dir[jacoco_dir].each do |file_name|
+  # Report coverage of modified files, warn if total project coverage is under 80%
+  # or if any modified file's coverage is under 95%
+  shroud.report file_name, 80, 95, false
+end

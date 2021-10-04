@@ -60,13 +60,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gems-
 
-      - name: Bundle Install
+      - name: Bundle Install and Version Check
         run: |
+          echo 'Install Bundle'
           bundle config path vendor/bundle
-          bundle install --jobs 4 --retry 3
-
-      - name: Check Versions
-        run: |
+          bundle install
+          echo 'Check environment setup versions'
           ruby --version
           gem --version
           bundler --version
