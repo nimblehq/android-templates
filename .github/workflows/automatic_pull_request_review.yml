@@ -1,12 +1,12 @@
-name: Automatic code review
+name: Automatic pull request review
 
 on:
   pull_request:
-    types: [opened, reopened, synchronize]
+    types: [opened, edited, reopened, synchronize]
 
 jobs:
-  review_code:
-    name: Run Danger 
+  review_pull_request:
+    name: Pull request review by Danger
     runs-on: ubuntu-latest
     steps:
       - name: Set up JDK 1.8
@@ -46,8 +46,9 @@ jobs:
         working-directory: ./CoroutineTemplate      
         run: ./gradlew lint
 
-        # Run Unit Test & Jacoco for code coverage for RxJavaTemplate
-      - name: Run Unit Tests & Jacoco on RxJavaTemplate
+      # TODO: Update to support test coverage report from Jacoco for Coroutine Template
+      # Run Unit Test & Jacoco for code coverage for RxJavaTemplate
+      - name: Run unit tests & Jacoco on RxJavaTemplate
         working-directory: ./RxJavaTemplate
         run: ./gradlew jacocoTestReport
 
@@ -57,7 +58,7 @@ jobs:
         with:
           ruby-version: '2.7'
 
-      - name: Cache Gems
+      - name: Cache gems
         uses: actions/cache@v2
         with:
           path: vendor/bundle
@@ -65,7 +66,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gems-
 
-      - name: Bundle Install and Version Check
+      - name: Bundle install and version check
         run: |
           echo 'Install Bundle'
           bundle config path vendor/bundle

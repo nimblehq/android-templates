@@ -49,11 +49,11 @@ detekt {
     reports {
         xml {
             enabled = true
-            destination = file("build/reports/detekt/detekt-checkstyle.xml")
+            destination = file("build/reports/detekt/detekt-result.xml")
         }
         html {
             enabled = true
-            destination = file("build/reports/detekt/detekt-checkstyle.html")
+            destination = file("build/reports/detekt/detekt-result.html")
         }
     }
 }

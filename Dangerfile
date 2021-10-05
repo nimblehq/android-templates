@@ -1,5 +1,5 @@
 # Make it more obvious that a PR is a work in progress and shouldn't be merged yet
-warn("PR is classed as Work in Progress") if github.pr_title.include? "[WIP]"
+warn("PR is classed as Work in Progress") if github.pr_title.include? "WIP"
 
 # Warn when there is a big PR
 warn("Big PR") if git.lines_of_code > 500
@@ -14,7 +14,7 @@ warn("Please add labels to this PR") if github.pr_labels.empty?
 commit_lint.check warn: :all, disable: [:subject_length]
 
 # Detekt output check
-detekt_dir = "**/build/reports/detekt/detekt-checkstyle.xml" 
+detekt_dir = "**/build/reports/detekt/detekt-result.xml" 
 Dir[detekt_dir].each do |file_name|
   kotlin_detekt.skip_gradle_task = true
   kotlin_detekt.report_file = file_name
@@ -38,4 +38,3 @@ Dir[jacoco_dir].each do |file_name|
   # or if any modified file's coverage is under 95%
   shroud.report file_name, 80, 95, false
 end
-
