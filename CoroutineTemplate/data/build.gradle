@@ -33,7 +33,10 @@ dependencies {
         project(':domain'),
         "androidx.core:core-ktx:$androidx_core_ktx_version",
         "androidx.security:security-crypto:$android_crypto_version",
-        "com.google.dagger:hilt-android:$hilt_version"
+        "com.google.dagger:hilt-android:$hilt_version",
+        "com.squareup.moshi:moshi:$moshi_version",
+        "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+        "javax.inject:javax.inject:$javax_inject_version"
     )
 
     api(

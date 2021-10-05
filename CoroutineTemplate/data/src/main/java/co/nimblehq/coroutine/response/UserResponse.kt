@@ -12,6 +12,7 @@ data class UserResponse(
     @Json(name = "phone") val phone: String?,
     @Json(name = "website") val website: String?
 ) {
+
     data class AddressResponse(
         @Json(name = "street") val street: String?,
         @Json(name = "suite") val suite: String?,
@@ -19,6 +20,7 @@ data class UserResponse(
         @Json(name = "zipcode") val zipCode: String?,
         @Json(name = "geo") val geoResponse: GeoResponse?
     ) {
+
         data class GeoResponse(
             @Json(name = "lat") val latitude: String?,
             @Json(name = "lng") val longitude: String?

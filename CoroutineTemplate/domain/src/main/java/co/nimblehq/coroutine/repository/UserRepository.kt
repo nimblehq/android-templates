@@ -1,8 +1,8 @@
 package co.nimblehq.coroutine.repository
 
-import co.nimblehq.coroutine.response.UserResponse
+import co.nimblehq.coroutine.model.User
 
 interface UserRepository {
 
-    suspend fun getUsers(): List<UserResponse>
+    suspend fun getUsers(): List<User>
 }

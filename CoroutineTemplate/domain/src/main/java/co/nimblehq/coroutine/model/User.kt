@@ -8,7 +8,8 @@ data class User(
     val address: Address?,
     val phone: String,
     val website: String
-)  {
+) {
+
     data class Address(
         val street: String,
         val suite: String,
@@ -16,6 +17,7 @@ data class User(
         val zipCode: String,
         val geo: Geo?
     ) {
+
         data class Geo(
             val latitude: String,
             val longitude: String
