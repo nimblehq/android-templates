@@ -11,13 +11,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import co.nimblehq.coroutine.R
+import co.nimblehq.coroutine.model.UserUiModel
 import co.nimblehq.coroutine.ui.screens.compose.theme.Dimension
-import co.nimblehq.coroutine.model.User
 
 @Suppress("LongMethod")
 @Composable
 fun UserItem(
-    user: User,
+    user: UserUiModel,
     onClick: (String) -> Unit
 ) {
     Surface(

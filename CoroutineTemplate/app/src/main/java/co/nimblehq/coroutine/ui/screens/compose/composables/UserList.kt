@@ -9,10 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import co.nimblehq.coroutine.ui.screens.compose.theme.Dimension
 import co.nimblehq.coroutine.model.User
+import co.nimblehq.coroutine.model.UserUiModel
 
 @Composable
 fun UserList(
-    users: List<User>,
+    users: List<UserUiModel>,
     onUserItemClick: (String) -> Unit
 ) {
     LazyColumn {
