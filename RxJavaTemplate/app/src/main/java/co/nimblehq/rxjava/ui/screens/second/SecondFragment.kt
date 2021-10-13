@@ -9,8 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import co.nimblehq.rxjava.databinding.FragmentSecondBinding
 import co.nimblehq.rxjava.domain.data.Data
-import co.nimblehq.rxjava.extension.loadImage
-import co.nimblehq.rxjava.extension.subscribeOnClick
+import co.nimblehq.rxjava.extension.*
 import co.nimblehq.rxjava.ui.base.BaseFragment
 import co.nimblehq.rxjava.ui.helpers.handleVisualOverlaps
 import co.nimblehq.rxjava.ui.screens.MainNavigator
@@ -28,7 +27,7 @@ class SecondFragment : BaseFragment<FragmentSecondBinding>() {
     @Inject
     lateinit var rxPermissions: RxPermissions
 
-    private val viewModel by viewModels<SecondViewModel>()
+    private val viewModel by provideViewModels<SecondViewModel>()
     private val args: SecondFragmentArgs by navArgs()
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSecondBinding
