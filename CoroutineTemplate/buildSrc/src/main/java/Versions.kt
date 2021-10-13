@@ -6,7 +6,7 @@ object Versions {
     const val ANDROID_TARGET_SDK_VERSION = 30
 
     const val ANDROID_VERSION_CODE = 1
-    const val ANDROID_VERSION_NAME = "3.2.0"
+    const val ANDROID_VERSION_NAME = "3.3.0"
 
     // Dependencies (Alphabet sorted)
     const val ANDROID_CRYPTO_VERSION = "1.0.0"
@@ -19,9 +19,9 @@ object Versions {
     const val COMPOSE_VERSION = "1.0.2"
     const val CONSTRAINT_LAYOUT_VERSION = "2.0.0-alpha3"
 
-    const val JAVAX_INJECT_VERSION = "1"
-
     const val HILT_VERSION = "2.38.1"
+
+    const val JAVAX_INJECT_VERSION = "1"
 
     const val KOTLIN_VERSION = "1.5.21"
     const val KOTLINX_COROUTINES_VERSION = "1.5.0"
