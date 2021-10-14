@@ -47,6 +47,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    lintOptions {
+        xmlReport = true
+        xmlOutput = file("build/reports/lint/lint-result.xml")
+    }
 }
 
 dependencies {
