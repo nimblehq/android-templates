@@ -31,7 +31,7 @@ jobs:
         run: ./gradlew detekt
 
       - name: Run Detekt on RxJavaTemplate
-        working-directory: ./RxJavaTemplate      
+        working-directory: ./RxJavaTemplate
         run: ./gradlew detekt
 
       - name: Archive Detekt report on CoroutineTemplate

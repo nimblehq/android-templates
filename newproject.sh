@@ -17,7 +17,7 @@ usage() {
     fi
 
     cat << EOF
-Usage: $PROGNAME --template [TEMPLATE] --package-name [PACKAGE_NAME] --name [APP_NAME]
+Usage: $PROGNAME --template [TEMPLATE] --package-name [PACKAGE_NAME] --app-name [APP_NAME]
 Set up an Android app and package name.
 Options:
 -h, --help                         display this usage message and exit
