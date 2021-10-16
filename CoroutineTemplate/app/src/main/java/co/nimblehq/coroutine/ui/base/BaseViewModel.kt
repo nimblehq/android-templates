@@ -49,7 +49,7 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 
-    fun execute(job: suspend () -> Unit, dispatchers: CoroutineDispatcher = Dispatchers.IO) =
+    fun execute(dispatchers: CoroutineDispatcher = Dispatchers.IO, job: suspend () -> Unit) =
         viewModelScope.launch {
             withContext(dispatchers) { job.invoke() }
         }

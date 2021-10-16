@@ -6,7 +6,7 @@ import co.nimblehq.coroutine.repository.UserRepository
 import co.nimblehq.coroutine.response.toUsers
 
 class UserRepositoryImpl constructor(
-    private val apiService: ApiService,
+    private val apiService: ApiService
 ) : UserRepository {
 
     override suspend fun getUsers(): List<User> {

@@ -49,7 +49,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     override fun bindViewModel() {
-        viewModel.users bindTo ::displayUsers
+        viewModel.userUiModels bindTo ::displayUsers
         viewModel.showLoading bindTo ::bindLoading
         viewModel.error bindTo toaster::display
         viewModel.navigator bindTo navigator::navigate

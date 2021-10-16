@@ -11,6 +11,6 @@ data class UserUiModel(
 private fun User.toUserUiModel(): UserUiModel =
     UserUiModel(id = id ?: 0, name = name, username = username, phone = phone)
 
-fun List<User>.toUserUiModelList(): List<UserUiModel> {
+fun List<User>.toUserUiModels(): List<UserUiModel> {
     return this.map { it.toUserUiModel() }
 }

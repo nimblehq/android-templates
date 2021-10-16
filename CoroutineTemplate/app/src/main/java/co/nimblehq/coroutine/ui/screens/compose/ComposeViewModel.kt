@@ -3,7 +3,7 @@ package co.nimblehq.coroutine.ui.screens.compose
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import co.nimblehq.coroutine.model.UserUiModel
-import co.nimblehq.coroutine.model.toUserUiModelList
+import co.nimblehq.coroutine.model.toUserUiModels
 import co.nimblehq.coroutine.ui.base.BaseViewModel
 import co.nimblehq.coroutine.usecase.GetUsersUseCase
 import co.nimblehq.coroutine.usecase.UseCaseResult
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 interface Output {
 
-    val users: StateFlow<List<UserUiModel>>
+    val userUiModels: StateFlow<List<UserUiModel>>
 
     val textFieldValue: State<String>
 
@@ -26,9 +26,9 @@ class ComposeViewModel @Inject constructor(
     private val getUsersUseCase: GetUsersUseCase
 ) : BaseViewModel(), Output {
 
-    private val _users = MutableStateFlow<List<UserUiModel>>(emptyList())
-    override val users: StateFlow<List<UserUiModel>>
-        get() = _users
+    private val _userUiModels = MutableStateFlow<List<UserUiModel>>(emptyList())
+    override val userUiModels: StateFlow<List<UserUiModel>>
+        get() = _userUiModels
 
     private val _textFieldValue = mutableStateOf("")
     override val textFieldValue: State<String>
@@ -44,12 +44,12 @@ class ComposeViewModel @Inject constructor(
 
     private fun fetchUsers() {
         showLoading()
-        execute({
+        execute {
             when (val result = getUsersUseCase.execute()) {
-                is UseCaseResult.Success -> _users.value = result.data.toUserUiModelList()
+                is UseCaseResult.Success -> _userUiModels.value = result.data.toUserUiModels()
                 is UseCaseResult.Error -> _error.emit(result.exception.message.orEmpty())
             }
             hideLoading()
-        })
+        }
     }
 }
