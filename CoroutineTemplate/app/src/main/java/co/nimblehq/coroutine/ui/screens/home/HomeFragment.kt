@@ -55,8 +55,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         viewModel.navigator bindTo navigator::navigate
     }
 
-    private fun displayUsers(users: List<UserUiModel>) {
-        Timber.d("Result : $users")
+    private fun displayUsers(userUiModels: List<UserUiModel>) {
+        Timber.d("Result : $userUiModels")
     }
 
     private fun bindLoading(isLoading: IsLoading) {

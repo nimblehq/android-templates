@@ -3,14 +3,8 @@ package co.nimblehq.coroutine.ui.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.nimblehq.coroutine.lib.IsLoading
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 
 @Suppress("PropertyName")
 abstract class BaseViewModel : ViewModel() {
@@ -50,7 +44,7 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     fun execute(dispatchers: CoroutineDispatcher = Dispatchers.IO, job: suspend () -> Unit) =
-        viewModelScope.launch {
-            withContext(dispatchers) { job.invoke() }
+        viewModelScope.launch (dispatchers) {
+            job.invoke()
         }
 }
