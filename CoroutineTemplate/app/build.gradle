@@ -75,6 +75,7 @@ android {
     }
 
     lintOptions {
+        checkDependencies true
         xmlReport = true
         xmlOutput = file("build/reports/lint/lint-result.xml")
     }
