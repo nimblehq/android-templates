@@ -1,6 +1,5 @@
 package co.nimblehq.coroutine.model
 
-
 data class UserUiModel(
     val id: Int,
     val name: String,
