@@ -1,6 +1,6 @@
 package co.nimblehq.coroutine.data.service
 
-import co.nimblehq.coroutine.response.UserResponse
+import co.nimblehq.coroutine.data.response.UserResponse
 import retrofit2.http.GET
 
 interface ApiService {

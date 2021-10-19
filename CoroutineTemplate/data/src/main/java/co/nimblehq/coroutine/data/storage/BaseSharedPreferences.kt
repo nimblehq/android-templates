@@ -1,4 +1,4 @@
-package co.nimblehq.coroutine.storage
+package co.nimblehq.coroutine.data.storage
 
 import android.content.SharedPreferences
 

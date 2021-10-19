@@ -1,7 +1,7 @@
-package co.nimblehq.coroutine.usecase
+package co.nimblehq.coroutine.domain.usecase
 
-import co.nimblehq.coroutine.model.User
-import co.nimblehq.coroutine.repository.UserRepository
+import co.nimblehq.coroutine.domain.model.User
+import co.nimblehq.coroutine.domain.repository.UserRepository
 import javax.inject.Inject
 
 class GetUsersUseCase @Inject constructor(private val userRepository: UserRepository) {

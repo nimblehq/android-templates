@@ -1,9 +1,9 @@
-package co.nimblehq.coroutine.repositoryimpl
+package co.nimblehq.coroutine.data.repositoryimpl
 
 import co.nimblehq.coroutine.data.service.ApiService
-import co.nimblehq.coroutine.model.User
-import co.nimblehq.coroutine.repository.UserRepository
-import co.nimblehq.coroutine.response.toUsers
+import co.nimblehq.coroutine.domain.model.User
+import co.nimblehq.coroutine.domain.repository.UserRepository
+import co.nimblehq.coroutine.data.response.toUsers
 
 class UserRepositoryImpl constructor(
     private val apiService: ApiService
