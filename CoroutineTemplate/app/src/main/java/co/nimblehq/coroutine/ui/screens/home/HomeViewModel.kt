@@ -8,6 +8,7 @@ import co.nimblehq.coroutine.ui.base.NavigationEvent
 import co.nimblehq.coroutine.ui.screens.second.SecondBundle
 import co.nimblehq.coroutine.usecase.GetUsersUseCase
 import co.nimblehq.coroutine.usecase.UseCaseResult
+import co.nimblehq.coroutine.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,8 +26,9 @@ interface Output {
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getUsersUseCase: GetUsersUseCase
-) : BaseViewModel(), Output {
+    private val getUsersUseCase: GetUsersUseCase,
+    dispatchers: DispatchersProvider
+) : BaseViewModel(dispatchers), Output {
 
     private val _userUiModels = MutableStateFlow<List<UserUiModel>>(emptyList())
     override val userUiModels: StateFlow<List<UserUiModel>>
