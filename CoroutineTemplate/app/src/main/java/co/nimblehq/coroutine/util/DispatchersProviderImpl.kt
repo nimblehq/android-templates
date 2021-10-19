@@ -1,12 +1,12 @@
 package co.nimblehq.coroutine.util
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
 
 class DispatchersProviderImpl : DispatchersProvider {
 
-    override fun getIO(): CoroutineDispatcher = Dispatchers.IO
+    override val io = Dispatchers.IO
 
-    override fun getMain(): MainCoroutineDispatcher = Dispatchers.Main
+    override val main = Dispatchers.Main
 
-    override fun getDefault(): CoroutineDispatcher = Dispatchers.Default
+    override val default = Dispatchers.Default
 }

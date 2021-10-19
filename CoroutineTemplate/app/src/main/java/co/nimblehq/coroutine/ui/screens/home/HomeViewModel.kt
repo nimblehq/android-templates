@@ -1,8 +1,8 @@
 package co.nimblehq.coroutine.ui.screens.home
 
 import androidx.lifecycle.viewModelScope
-import co.nimblehq.coroutine.domain.model.UserUiModel
-import co.nimblehq.coroutine.domain.model.toUserUiModels
+import co.nimblehq.coroutine.model.UserUiModel
+import co.nimblehq.coroutine.model.toUserUiModels
 import co.nimblehq.coroutine.ui.base.BaseViewModel
 import co.nimblehq.coroutine.ui.base.NavigationEvent
 import co.nimblehq.coroutine.ui.screens.second.SecondBundle

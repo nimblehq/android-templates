@@ -5,7 +5,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.*
-import co.nimblehq.coroutine.domain.model.UserUiModel
+import co.nimblehq.coroutine.model.UserUiModel
 import co.nimblehq.coroutine.ui.screens.compose.theme.ComposeTheme
 
 @Suppress("LongMethod", "LongParameterList")

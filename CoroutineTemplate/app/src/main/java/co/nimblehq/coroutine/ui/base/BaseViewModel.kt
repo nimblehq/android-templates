@@ -47,9 +47,9 @@ abstract class BaseViewModel(private val dispatchers: DispatchersProvider) : Vie
     fun execute(dispatchersType: DispatchersType = DispatchersType.IO, job: suspend () -> Unit) =
         viewModelScope.launch(
             when (dispatchersType) {
-                DispatchersType.IO -> dispatchers.getIO()
-                DispatchersType.MAIN -> dispatchers.getMain()
-                else -> dispatchers.getDefault()
+                DispatchersType.IO -> dispatchers.io
+                DispatchersType.MAIN -> dispatchers.main
+                else -> dispatchers.default
             }
         ) {
             job.invoke()

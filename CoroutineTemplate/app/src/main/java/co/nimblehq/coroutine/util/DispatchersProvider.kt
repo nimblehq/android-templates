@@ -3,7 +3,7 @@ package co.nimblehq.coroutine.util
 import kotlinx.coroutines.CoroutineDispatcher
 
 interface DispatchersProvider {
-    fun getIO(): CoroutineDispatcher
-    fun getMain(): CoroutineDispatcher
-    fun getDefault(): CoroutineDispatcher
+    val io: CoroutineDispatcher
+    val main: CoroutineDispatcher
+    val default: CoroutineDispatcher
 }

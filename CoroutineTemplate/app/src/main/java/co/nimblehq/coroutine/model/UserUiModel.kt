@@ -1,4 +1,6 @@
-package co.nimblehq.coroutine.domain.model
+package co.nimblehq.coroutine.model
+
+import co.nimblehq.coroutine.domain.model.User
 
 data class UserUiModel(
     val id: Int,

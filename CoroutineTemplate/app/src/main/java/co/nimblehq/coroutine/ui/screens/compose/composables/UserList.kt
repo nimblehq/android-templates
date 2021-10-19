@@ -7,7 +7,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import co.nimblehq.coroutine.domain.model.UserUiModel
+import co.nimblehq.coroutine.model.UserUiModel
 import co.nimblehq.coroutine.ui.screens.compose.theme.Dimension
 
 @Composable

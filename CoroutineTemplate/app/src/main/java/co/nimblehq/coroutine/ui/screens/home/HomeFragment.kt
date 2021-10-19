@@ -7,7 +7,7 @@ import co.nimblehq.coroutine.databinding.FragmentHomeBinding
 import co.nimblehq.coroutine.databinding.ViewLoadingBinding
 import co.nimblehq.coroutine.extension.visibleOrGone
 import co.nimblehq.coroutine.lib.IsLoading
-import co.nimblehq.coroutine.domain.model.UserUiModel
+import co.nimblehq.coroutine.model.UserUiModel
 import co.nimblehq.coroutine.ui.base.BaseFragment
 import co.nimblehq.coroutine.ui.screens.MainNavigator
 import co.nimblehq.coroutine.ui.screens.second.SecondBundle
