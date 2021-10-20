@@ -6,8 +6,8 @@ import org.junit.Test
 class KeywordExtensionKtTest {
 
     /**
-     * Temporarily disable this test because currently there is an issue with inline function in
-     * tested code of AGP 6.x.x.
+     * TODO Temporarily disable this test because currently there is an issue with inline function
+     * in tested code of AGP 6.x.x.
      * Reference issue: https://issuetracker.google.com/issues/197065758
      * Solution: Update to AGP >7.1 will fix the issue
      */

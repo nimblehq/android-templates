@@ -22,7 +22,6 @@ object Versions {
      const val GLIDE_VERSION = "4.8.0"
 
      const val HILT_VERSION = "2.37"
-     const val HILT_ANDROIDX_VERSION = "1.0.0-alpha03"
 
      const val KOTLIN_VERSION = "1.4.21"
      const val KOTLIN_REFLECT_VERSION = "1.5.10"

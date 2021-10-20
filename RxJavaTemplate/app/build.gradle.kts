@@ -128,6 +128,10 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes = true
+}
+
 dependencies {
     implementation(project(Module.COMMON_RX))
     implementation(project(Module.DOMAIN))
@@ -201,8 +205,4 @@ dependencies {
     androidTestImplementation("com.linkedin.dexmaker:dexmaker-mockito-inline:${Versions.TEST_MOCKITO_DEXMAKER_VERSION}")
 
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:${Versions.HILT_VERSION}")
-}
-
-kapt {
-    correctErrorTypes = true
 }
