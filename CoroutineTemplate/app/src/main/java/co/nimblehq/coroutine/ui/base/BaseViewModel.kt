@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.nimblehq.coroutine.lib.IsLoading
 import co.nimblehq.coroutine.util.DispatchersProvider
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -44,18 +45,8 @@ abstract class BaseViewModel(private val dispatchers: DispatchersProvider) : Vie
         }
     }
 
-    fun execute(dispatchersType: DispatchersType = DispatchersType.IO, job: suspend () -> Unit) =
-        viewModelScope.launch(
-            when (dispatchersType) {
-                DispatchersType.IO -> dispatchers.io
-                DispatchersType.MAIN -> dispatchers.main
-                else -> dispatchers.default
-            }
-        ) {
+    fun execute(coroutineDispatcher: CoroutineDispatcher = dispatchers.io, job: suspend () -> Unit) =
+        viewModelScope.launch(coroutineDispatcher) {
             job.invoke()
         }
-}
-
-enum class DispatchersType {
-    IO, MAIN, DEFAULT
 }
