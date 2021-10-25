@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 @Suppress("PropertyName")
-abstract class BaseViewModel(private val dispatchers: DispatchersProvider) : ViewModel() {
+abstract class BaseViewModel(private val dispatchersProvider: DispatchersProvider) : ViewModel() {
 
     private var loadingCount: Int = 0
 
@@ -45,7 +45,7 @@ abstract class BaseViewModel(private val dispatchers: DispatchersProvider) : Vie
         }
     }
 
-    fun execute(coroutineDispatcher: CoroutineDispatcher = dispatchers.io, job: suspend () -> Unit) =
+    fun execute(coroutineDispatcher: CoroutineDispatcher = dispatchersProvider.io, job: suspend () -> Unit) =
         viewModelScope.launch(coroutineDispatcher) {
             job.invoke()
         }
