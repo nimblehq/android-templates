@@ -2,20 +2,20 @@ package co.nimblehq.coroutine.ui.screens.compose
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.viewModelScope
-import co.nimblehq.coroutine.domain.data.entity.UserEntity
+import co.nimblehq.coroutine.model.UserUiModel
+import co.nimblehq.coroutine.model.toUserUiModels
+import co.nimblehq.coroutine.ui.base.BaseViewModel
 import co.nimblehq.coroutine.domain.usecase.GetUsersUseCase
 import co.nimblehq.coroutine.domain.usecase.UseCaseResult
-import co.nimblehq.coroutine.ui.base.BaseViewModel
+import co.nimblehq.coroutine.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 interface Output {
 
-    val users: StateFlow<List<UserEntity>>
+    val userUiModels: StateFlow<List<UserUiModel>>
 
     val textFieldValue: State<String>
 
@@ -24,12 +24,13 @@ interface Output {
 
 @HiltViewModel
 class ComposeViewModel @Inject constructor(
-    private val getUsersUseCase: GetUsersUseCase
-) : BaseViewModel(), Output {
+    private val getUsersUseCase: GetUsersUseCase,
+    dispatchers: DispatchersProvider
+) : BaseViewModel(dispatchers), Output {
 
-    private val _users = MutableStateFlow<List<UserEntity>>(emptyList())
-    override val users: StateFlow<List<UserEntity>>
-        get() = _users
+    private val _userUiModels = MutableStateFlow<List<UserUiModel>>(emptyList())
+    override val userUiModels: StateFlow<List<UserUiModel>>
+        get() = _userUiModels
 
     private val _textFieldValue = mutableStateOf("")
     override val textFieldValue: State<String>
@@ -45,9 +46,9 @@ class ComposeViewModel @Inject constructor(
 
     private fun fetchUsers() {
         showLoading()
-        viewModelScope.launch {
+        execute {
             when (val result = getUsersUseCase.execute()) {
-                is UseCaseResult.Success -> _users.value = result.data
+                is UseCaseResult.Success -> _userUiModels.value = result.data.toUserUiModels()
                 is UseCaseResult.Error -> _error.emit(result.exception.message.orEmpty())
             }
             hideLoading()

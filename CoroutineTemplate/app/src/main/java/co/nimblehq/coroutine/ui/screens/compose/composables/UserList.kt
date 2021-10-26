@@ -7,22 +7,22 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import co.nimblehq.coroutine.domain.data.entity.UserEntity
+import co.nimblehq.coroutine.model.UserUiModel
 import co.nimblehq.coroutine.ui.screens.compose.theme.Dimension
 
 @Composable
 fun UserList(
-    users: List<UserEntity>,
+    userUiModels: List<UserUiModel>,
     onUserItemClick: (String) -> Unit
 ) {
     LazyColumn {
-        itemsIndexed(items = users) { index, user ->
+        itemsIndexed(items = userUiModels) { index, user ->
             if (index == 0) Spacer(modifier = Modifier.height(Dimension.Dp8))
             UserItem(
-                user = user,
+                userUiModel = user,
                 onClick = onUserItemClick
             )
-            if (index != users.size - 1) Divider()
+            if (index != userUiModels.size - 1) Divider()
         }
     }
 }
