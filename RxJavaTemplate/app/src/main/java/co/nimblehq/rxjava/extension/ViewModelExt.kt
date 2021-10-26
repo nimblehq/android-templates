@@ -32,6 +32,7 @@ inline fun <reified VM : ViewModel> ComponentActivity.provideViewModels(
 ): Lazy<VM> = OverridableLazy(viewModels(factoryProducer))
 
 class OverridableLazy<T>(var implementation: Lazy<T>) : Lazy<T> {
+
     override val value
         get() = implementation.value
 
