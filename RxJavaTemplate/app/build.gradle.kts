@@ -51,6 +51,14 @@ android {
         getByName(BuildType.DEBUG) {
             // For quickly testing build with proguard, enable this
             isMinifyEnabled = false
+            /**
+             * From AGP 4.2.0, Jacoco generates the report incorrectly, and the report is missing
+             * some code coverage from module. On the new version of Gradle, they introduce a new
+             * flag [testCoverageEnabled], we must enable this flag if using Jacoco to capture
+             * coverage and creates a report in the build directory.
+             * Reference: https://developer.android.com/reference/tools/gradle-api/7.1/com/android/build/api/dsl/BuildType#istestcoverageenabled
+             */
+            isTestCoverageEnabled = true
         }
     }
 
@@ -103,6 +111,15 @@ android {
     tasks.withType<Test> {
         configure<JacocoTaskExtension> {
             isIncludeNoLocationClasses = true
+            /**
+             * From AGP 4.2, JDK 11 is now bundled, but Jacoco is running on JDK 8. It causes the
+             * build failed because of the missing of some classes that do not exist on JDK 8 but
+             * JDK 11. We need to exclude that classes temporarily until Jacoco supports running
+             * on JDK 11.
+             * Android Gradle Plugin 4.2.0 release note: https://developer.android.com/studio/releases#4.2-bundled-jdk-11
+             * Reference: https://stackoverflow.com/a/68739364/5187859
+             */
+            excludes = listOf("jdk.internal.*")
         }
     }
 
@@ -114,6 +131,10 @@ android {
         xmlReport = true
         xmlOutput = file("build/reports/lint/lint-result.xml")
     }
+}
+
+kapt {
+    correctErrorTypes = true
 }
 
 dependencies {
@@ -165,6 +186,17 @@ dependencies {
     testImplementation("org.amshove.kluent:kluent-android:${Versions.TEST_KLUENT_VERSION}")
     testImplementation("org.mockito.kotlin:mockito-kotlin:${Versions.TEST_MOCKITO_VERSION}")
     testImplementation("org.robolectric:shadowapi:${Versions.TEST_ROBOLECTRIC_VERSION}")
+    testImplementation("org.robolectric:robolectric:${Versions.TEST_ROBOLECTRIC_VERSION}")
+    testImplementation("androidx.test:core:${Versions.ANDROID_CORE_VERSION}")
+    testImplementation("androidx.test:runner:${Versions.TEST_RUNNER_VERSION}")
+    testImplementation("androidx.test:rules:${Versions.TEST_RUNNER_VERSION}")
+    testImplementation("androidx.test.ext:junit-ktx:${Versions.TEST_JUNIT_ANDROIDX_EXT_VERSION}")
+    testImplementation("com.google.dagger:hilt-android-testing:${Versions.HILT_VERSION}")
+    testImplementation("org.jetbrains.kotlin:kotlin-reflect:${Versions.KOTLIN_REFLECT_VERSION}")
+    testImplementation("io.mockk:mockk:${Versions.TEST_MOCKK_VERSION}")
+
+    kaptTest("com.google.dagger:hilt-android-compiler:${Versions.HILT_VERSION}")
+    testAnnotationProcessor("com.google.dagger:hilt-android-compiler:${Versions.HILT_VERSION}")
 
     androidTestImplementation("androidx.test:runner:${Versions.ANDROID_TEST_VERSION}")
     androidTestImplementation("androidx.test:rules:${Versions.ANDROID_TEST_VERSION}")
