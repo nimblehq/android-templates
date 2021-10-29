@@ -36,9 +36,7 @@ android {
             isMinifyEnabled = true
             isDebuggable = false
             isShrinkResources = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs["config"]
             buildConfigField("String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\"")
         }

@@ -9,6 +9,5 @@ java {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:${Versions.KOTLIN_VERSION}")
     implementation("javax.inject:javax.inject:${Versions.JAVAX_INJECT_VERSION}")
 }
