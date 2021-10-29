@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import co.nimblehq.coroutine.databinding.FragmentHomeBinding
 import co.nimblehq.coroutine.databinding.ViewLoadingBinding
+import co.nimblehq.coroutine.extension.provideViewModels
 import co.nimblehq.coroutine.extension.visibleOrGone
 import co.nimblehq.coroutine.lib.IsLoading
 import co.nimblehq.coroutine.model.UserUiModel
@@ -21,7 +22,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     @Inject
     lateinit var navigator: MainNavigator
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by provideViewModels()
 
     private lateinit var viewLoadingBinding: ViewLoadingBinding
 

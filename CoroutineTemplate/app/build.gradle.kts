@@ -56,6 +56,10 @@ android {
         create(Flavor.PRODUCTION) {}
     }
 
+    sourceSets["test"].resources {
+        srcDir("src/test/resources")
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -80,6 +84,18 @@ android {
         xmlReport = true
         xmlOutput = file("build/reports/lint/lint-result.xml")
     }
+
+    testOptions {
+        unitTests {
+            // Robolectric resource processing/loading
+            isIncludeAndroidResources = true
+            isReturnDefaultValues = true
+        }
+    }
+}
+
+kapt {
+    correctErrorTypes = true
 }
 
 dependencies {
@@ -111,4 +127,22 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLINX_COROUTINES_VERSION}")
 
     kapt("com.google.dagger:hilt-compiler:${Versions.HILT_VERSION}")
+
+    debugImplementation("androidx.fragment:fragment-testing:${Versions.ANDROID_FRAGMENT_VERSION}")
+
+    // Testing
+    testImplementation("io.kotest:kotest-assertions-core:${Versions.TEST_KOTEST_VERSION}")
+    testImplementation("junit:junit:${Versions.TEST_JUNIT_VERSION}")
+    testImplementation("org.robolectric:shadowapi:${Versions.TEST_ROBOLECTRIC_VERSION}")
+    testImplementation("org.robolectric:robolectric:${Versions.TEST_ROBOLECTRIC_VERSION}")
+    testImplementation("androidx.test:core:${Versions.ANDROIDX_CORE_KTX_VERSION}")
+    testImplementation("androidx.test:runner:${Versions.TEST_RUNNER_VERSION}")
+    testImplementation("androidx.test:rules:${Versions.TEST_RUNNER_VERSION}")
+    testImplementation("androidx.test.ext:junit-ktx:${Versions.TEST_JUNIT_ANDROIDX_EXT_VERSION}")
+    testImplementation("com.google.dagger:hilt-android-testing:${Versions.HILT_VERSION}")
+    testImplementation("org.jetbrains.kotlin:kotlin-reflect:${Versions.KOTLIN_REFLECT_VERSION}")
+    testImplementation("io.mockk:mockk:${Versions.TEST_MOCKK_VERSION}")
+
+    kaptTest("com.google.dagger:hilt-android-compiler:${Versions.HILT_VERSION}")
+    testAnnotationProcessor("com.google.dagger:hilt-android-compiler:${Versions.HILT_VERSION}")
 }

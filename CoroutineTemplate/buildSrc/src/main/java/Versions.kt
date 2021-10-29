@@ -12,6 +12,7 @@ object Versions {
     const val ANDROID_CRYPTO_VERSION = "1.0.0"
     const val ANDROIDX_ACTIVITY_KTX_VERSION = "1.2.1"
     const val ANDROIDX_CORE_KTX_VERSION = "1.3.0"
+    const val ANDROID_FRAGMENT_VERSION = "1.3.3"
     const val ANDROIDX_LIFECYCLE_VERSION = "2.4.0-alpha02"
     const val ANDROIDX_NAVIGATION_VERSION = "2.3.4"
     const val ANDROIDX_SUPPORT_VERSION = "1.3.0"
@@ -25,6 +26,7 @@ object Versions {
 
     const val KOTLIN_VERSION = "1.5.21"
     const val KOTLINX_COROUTINES_VERSION = "1.5.0"
+    const val KOTLIN_REFLECT_VERSION = "1.5.10"
 
     const val MOSHI_VERSION = "1.12.0"
 
@@ -35,4 +37,12 @@ object Versions {
 
     // Configuration
     const val DETEKT_VERSION = "1.18.1"
+
+    // Testing libraries
+    const val TEST_JUNIT_VERSION = "4.13.2"
+    const val TEST_JUNIT_ANDROIDX_EXT_VERSION = "1.1.2"
+    const val TEST_KOTEST_VERSION = "4.6.3"
+    const val TEST_MOCKK_VERSION = "1.10.6"
+    const val TEST_ROBOLECTRIC_VERSION = "4.3.1"
+    const val TEST_RUNNER_VERSION = "1.3.0"
 }
