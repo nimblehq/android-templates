@@ -18,7 +18,7 @@ class ComposeFragment : BaseComposeFragment() {
         get() = {
             with(viewModel) {
                 ComposeScreen(
-                    users = users.collectAsState().value,
+                    userUiModels = userUiModels.collectAsState().value,
                     showLoading = showLoading.collectAsState().value,
                     textFieldValue = textFieldValue.value,
                     onTextFieldValueChange = ::updateTextFieldValue,

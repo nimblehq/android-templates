@@ -1,14 +1,15 @@
 package co.nimblehq.coroutine.ui.base
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import co.nimblehq.coroutine.lib.IsLoading
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
+import co.nimblehq.coroutine.util.DispatchersProvider
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 @Suppress("PropertyName")
-abstract class BaseViewModel : ViewModel() {
+abstract class BaseViewModel(private val dispatchersProvider: DispatchersProvider) : ViewModel() {
 
     private var loadingCount: Int = 0
 
@@ -43,4 +44,9 @@ abstract class BaseViewModel : ViewModel() {
             _showLoading.value = false
         }
     }
+
+    fun execute(coroutineDispatcher: CoroutineDispatcher = dispatchersProvider.io, job: suspend () -> Unit) =
+        viewModelScope.launch(coroutineDispatcher) {
+            job.invoke()
+        }
 }

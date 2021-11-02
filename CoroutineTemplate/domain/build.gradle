@@ -1,41 +1,15 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-parcelize'
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
 
-android {
-    compileSdkVersion android_compile_sdk_version
-    defaultConfig {
-        minSdkVersion android_min_sdk_version
-        targetSdkVersion android_target_sdk_version
-        versionCode android_version_code
-        versionName android_version_name
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
-    }
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 dependencies {
     implementation(
-        project(':data'),
-
-        "androidx.core:core-ktx:$androidx_core_ktx_version",
-        "androidx.security:security-crypto:$android_crypto_version",
-        "com.google.dagger:hilt-android:$hilt_version",
-        "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_version"
+        "javax.inject:javax.inject:$javax_inject_version"
     )
 }

@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import co.nimblehq.coroutine.databinding.FragmentHomeBinding
 import co.nimblehq.coroutine.databinding.ViewLoadingBinding
-import co.nimblehq.coroutine.domain.data.entity.UserEntity
 import co.nimblehq.coroutine.extension.visibleOrGone
 import co.nimblehq.coroutine.lib.IsLoading
+import co.nimblehq.coroutine.model.UserUiModel
 import co.nimblehq.coroutine.ui.base.BaseFragment
 import co.nimblehq.coroutine.ui.screens.MainNavigator
 import co.nimblehq.coroutine.ui.screens.second.SecondBundle
@@ -49,14 +49,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     override fun bindViewModel() {
-        viewModel.users bindTo ::displayUsers
+        viewModel.userUiModels bindTo ::displayUsers
         viewModel.showLoading bindTo ::bindLoading
         viewModel.error bindTo toaster::display
         viewModel.navigator bindTo navigator::navigate
     }
 
-    private fun displayUsers(users: List<UserEntity>) {
-        Timber.d("Result : $users")
+    private fun displayUsers(userUiModels: List<UserUiModel>) {
+        Timber.d("Result : $userUiModels")
     }
 
     private fun bindLoading(isLoading: IsLoading) {

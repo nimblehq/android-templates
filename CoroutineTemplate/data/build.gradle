@@ -19,16 +19,34 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        checkDependencies true
+        xmlReport = true
+        xmlOutput = file("build/reports/lint/lint-result.xml")
     }
 }
 
 dependencies {
+    implementation(
+        project(':domain'),
+        "androidx.core:core-ktx:$androidx_core_ktx_version",
+        "androidx.security:security-crypto:$android_crypto_version",
+        "com.google.dagger:hilt-android:$hilt_version",
+        "com.squareup.moshi:moshi:$moshi_version",
+        "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+        "javax.inject:javax.inject:$javax_inject_version"
+    )
+
     api(
         "com.squareup.retrofit2:converter-moshi:$retrofit_version",
         "com.squareup.retrofit2:retrofit:$retrofit_version",

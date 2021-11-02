@@ -19,6 +19,7 @@ def packagesExcluded = ['co/nimblehq/di/**',
 def fileFilter = fileGenerated + packagesExcluded
 
 task jacocoTestReport(type: JacocoReport) {
+
     group = "Reporting"
     description = "Generate Jacoco coverage reports for Debug build"
 
@@ -44,11 +45,40 @@ task jacocoTestReport(type: JacocoReport) {
         "$project.rootDir/data/src/main/java"
     ])
 
+    /**
+     * Once enabled [testCoverageEnabled], Jacoco will capture the coverage and store them in
+     * [${project.module}/jacoco.exec]. We need to add all [jacoco.exec] to here.
+     * [${project.module}/build/jacoco/testFlavorDebugTest.exec] won't have the result anymore, so we
+     * can safety get rid of them.
+     * Reference: https://stackoverflow.com/a/67626100/5187859
+     * Issue tracker 1: https://issuetracker.google.com/issues/171125857#comment20
+     * Issue tracker 2: https://issuetracker.google.com/issues/195860510
+     */
     executionData.from = fileTree(dir: project.rootDir, includes: [
-        "app/build/jacoco/testStagingDebugUnitTest.exec",
-        "data/build/jacoco/testStagingDebugUnitTest.exec"
+        "app/jacoco.exec",
+        "common/jacoco.exec"
     ])
 
+    reports {
+        xml.enabled true
+        html.enabled true
+        csv.enabled false
+    }
+}
+
+/**
+ * Workaround to bypass "Caused by: java.lang.IllegalStateException:
+ * Cannot process instrumented class...
+ * Please supply original non-instrumented classes." issue.
+ *
+ * Application projects that depend on variants of libraries that have test coverage enabled will
+ * still not work as app code should be instrumented on the fly, while library code should not be.
+ * https://issuetracker.google.com/issues/171125857#comment26
+ */
+tasks.withType(Test.class).configureEach {
+    jacoco {
+        includes = ["com.application.*"] // include only application classes
+    }
 }
 
 tasks.withType(Test) {
