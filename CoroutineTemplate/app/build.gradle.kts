@@ -128,12 +128,11 @@ dependencies {
 
     kapt("com.google.dagger:hilt-compiler:${Versions.HILT_VERSION}")
 
-    debugImplementation("androidx.fragment:fragment-testing:${Versions.ANDROID_FRAGMENT_VERSION}")
+    debugImplementation("androidx.fragment:fragment-testing:${Versions.ANDROIDX_FRAGMENT_VERSION}")
 
     // Testing
     testImplementation("io.kotest:kotest-assertions-core:${Versions.TEST_KOTEST_VERSION}")
     testImplementation("junit:junit:${Versions.TEST_JUNIT_VERSION}")
-    testImplementation("org.robolectric:shadowapi:${Versions.TEST_ROBOLECTRIC_VERSION}")
     testImplementation("org.robolectric:robolectric:${Versions.TEST_ROBOLECTRIC_VERSION}")
     testImplementation("androidx.test:core:${Versions.ANDROIDX_CORE_KTX_VERSION}")
     testImplementation("androidx.test:runner:${Versions.TEST_RUNNER_VERSION}")

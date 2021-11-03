@@ -2,7 +2,6 @@ package co.nimblehq.coroutine.ui.screens.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import co.nimblehq.coroutine.databinding.FragmentHomeBinding
 import co.nimblehq.coroutine.databinding.ViewLoadingBinding
 import co.nimblehq.coroutine.extension.provideViewModels
