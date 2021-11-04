@@ -11,7 +11,7 @@ plugins {
 
 // TODO Migrate these files to gradle.kts
 apply(from = "codequality.gradle")
-apply(from = "../config/jacoco.gradle")
+apply(from = "../config/jacoco.gradle.kts")
 
 val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
 
@@ -105,21 +105,6 @@ android {
             // Robolectric resource processing/loading
             isIncludeAndroidResources = true
             isReturnDefaultValues = true
-        }
-    }
-
-    tasks.withType<Test> {
-        configure<JacocoTaskExtension> {
-            isIncludeNoLocationClasses = true
-            /**
-             * From AGP 4.2, JDK 11 is now bundled, but Jacoco is running on JDK 8. It causes the
-             * build failed because of the missing of some classes that do not exist on JDK 8 but
-             * JDK 11. We need to exclude that classes temporarily until Jacoco supports running
-             * on JDK 11.
-             * Android Gradle Plugin 4.2.0 release note: https://developer.android.com/studio/releases#4.2-bundled-jdk-11
-             * Reference: https://stackoverflow.com/a/68739364/5187859
-             */
-            excludes = listOf("jdk.internal.*")
         }
     }
 

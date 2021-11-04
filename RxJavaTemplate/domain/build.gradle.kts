@@ -5,7 +5,7 @@ plugins {
     id("kotlin-parcelize")
 }
 
-apply(from = "../config/jacoco.gradle")
+apply(from = "../config/jacoco.gradle.kts")
 
 android {
     compileSdk = Versions.ANDROID_COMPILE_SDK_VERSION
