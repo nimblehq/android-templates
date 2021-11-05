@@ -10,7 +10,7 @@ plugins {
 }
 
 // TODO Migrate these files to gradle.kts
-apply(from = "codequality.gradle")
+apply(from = "codequality.gradle.kts")
 apply(from = "../config/jacoco.gradle.kts")
 
 val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
