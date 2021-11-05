@@ -1,6 +1,6 @@
 plugins {
-    id 'java-library'
-    id 'kotlin'
+    id("java-library")
+    id("kotlin")
 }
 
 java {
@@ -9,7 +9,5 @@ java {
 }
 
 dependencies {
-    implementation(
-        "javax.inject:javax.inject:$javax_inject_version"
-    )
+    implementation("javax.inject:javax.inject:${Versions.JAVAX_INJECT_VERSION}")
 }
