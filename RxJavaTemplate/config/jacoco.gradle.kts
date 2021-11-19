@@ -1,6 +1,6 @@
 apply(plugin = "jacoco")
 
-val fileGenerated = mutableSetOf(
+val fileGenerated = setOf(
     "**/R.class",
     "**/R\$*.class",
     "**/*\$ViewBinder*.*",
@@ -14,7 +14,7 @@ val fileGenerated = mutableSetOf(
     "android/**/*.*"
 )
 
-val packagesExcluded = mutableSetOf(
+val packagesExcluded = setOf(
     "co/nimblehq/di/**",
     "co/nimblehq/ui/**/di/**",
     "com/bumptech/glide"
@@ -58,7 +58,6 @@ val executionDataTree = fileTree(project.rootDir) {
 }
 
 tasks.register<JacocoReport>("jacocoTestReport") {
-
     group = "Reporting"
     description = "Generate Jacoco coverage reports for Debug build"
 
@@ -81,7 +80,7 @@ tasks.register<JacocoReport>("jacocoTestReport") {
 tasks.withType<Test> {
     configure<JacocoTaskExtension> {
         isIncludeNoLocationClasses = true
-        /**
+        /*
          * From AGP 4.2, JDK 11 is now bundled, but Jacoco is running on JDK 8. It causes the
          * build failed because of the missing of some classes that do not exist on JDK 8 but
          * JDK 11. We need to exclude that classes temporarily until Jacoco supports running
