@@ -30,27 +30,15 @@ jobs:
             ${{ runner.os }}-gradle-
 
       # Run Detekt and generate Detekt reports
-      - name: Run Detekt on CoroutineTemplate
-        working-directory: ./CoroutineTemplate
-        run: ./gradlew detekt
-
-      - name: Run Detekt on RxJavaTemplate
-        working-directory: ./RxJavaTemplate
+      - name: Run Detekt
         run: ./gradlew detekt
 
       # Run Android Lint and generate Lint reports
-      - name: Run Android Lint on CoroutineTemplate
-        working-directory: ./CoroutineTemplate
+      - name: Run Android Lint
         run: ./gradlew lint
 
-      - name: Run Android Lint on RxJavaTemplate
-        working-directory: ./RxJavaTemplate
-        run: ./gradlew lint
-
-      # TODO: Update to support test coverage reports from Jacoco for CoroutineTemplate
-      # Run unit tests and Jacoco for code coverage for RxJavaTemplate
-      - name: Run unit tests and Jacoco on RxJavaTemplate
-        working-directory: ./RxJavaTemplate
+      # Run unit tests and Jacoco for code coverage
+      - name: Run unit tests and Jacoco
         run: ./gradlew jacocoTestReport
 
       # Set up Ruby gems and Bundle for executing danger-ruby

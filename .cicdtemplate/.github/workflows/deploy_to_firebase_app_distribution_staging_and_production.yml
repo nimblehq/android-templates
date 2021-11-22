@@ -1,4 +1,4 @@
-name: Deploy staging and production
+name: Deploy to Firebase App Distribution staging and production
 
 on:
   # Trigger the workflow on push action in develop branch
@@ -8,8 +8,8 @@ on:
       - develop
 
 jobs:
-  deploy_staging_and_production:
-    name: Deploy staging and production
+  deploy_to_firebase_app_distribution_staging_and_production:
+    name: Deploy to Firebase App Distribution staging and production
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
