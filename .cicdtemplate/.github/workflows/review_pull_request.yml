@@ -29,19 +29,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      # Run Detekt and generate Detekt reports
       - name: Run Detekt
         run: ./gradlew detekt
 
-      # Run Android Lint and generate Lint reports
       - name: Run Android Lint
         run: ./gradlew lint
 
-      # Run unit tests and Jacoco for code coverage
       - name: Run unit tests and Jacoco
         run: ./gradlew jacocoTestReport
 
-      # Set up Ruby gems and Bundle for executing danger-ruby
       - name: Set up Ruby
         uses: actions/setup-ruby@v1
         with:

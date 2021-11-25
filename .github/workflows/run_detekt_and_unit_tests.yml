@@ -1,6 +1,5 @@
 name: Run Detekt and unit tests
 
-# Choose the branch or branches you want to run this workflow
 on: push
 
 jobs:
@@ -28,7 +27,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      # Run Detekt and archive Detekt reports
       - name: Run Detekt on CoroutineTemplate
         working-directory: ./CoroutineTemplate
         run: ./gradlew detekt
@@ -40,16 +38,15 @@ jobs:
       - name: Archive Detekt reports on CoroutineTemplate
         uses: actions/upload-artifact@v2
         with:
-          name: detekt-reports-coroutine
+          name: DetektReportsCoroutine
           path: CoroutineTemplate/build/reports/detekt/
 
       - name: Archive Detekt reports on RxJavaTemplate
         uses: actions/upload-artifact@v2
         with:
-          name: detekt-reports-rxjava
+          name: DetektReportsRxJava
           path: RxJavaTemplate/build/reports/detekt/
 
-      # Run unit tests and Jacoco for code coverage and archive reports
       - name: Run unit tests and Jacoco on RxJavaTemplate
         working-directory: ./RxJavaTemplate
         run: ./gradlew jacocoTestReport
@@ -57,7 +54,7 @@ jobs:
       - name: Archive code coverage reports on RxJavaTemplate
         uses: actions/upload-artifact@v2
         with:
-          name: code-coverage-reports-rxjava
+          name: CodeCoverageReportsRxJava
           path: |
             RxJavaTemplate/app/build/reports/jacoco/jacocoTestReport/
             RxJavaTemplate/data/build/reports/jacoco/jacocoTestReport/

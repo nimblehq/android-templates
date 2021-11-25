@@ -2,7 +2,7 @@ name: Run Detekt and unit tests
 
 on:
   # Trigger the workflow on push or pull request,
-  # but push action is only for the feature branch
+  # but push action is only for the feature branch.
   pull_request:
     types: [ opened, synchronize, edited, reopened ]
   push:
@@ -46,18 +46,17 @@ jobs:
       - name: Archive Detekt reports
         uses: actions/upload-artifact@v2
         with:
-          name: detekt-reports
+          name: DetektReports
           path: build/reports/detekt/
 
       - name: Run unit tests and Jacoco
         run: ./gradlew jacocoTestReport
 
-      # Archive Jacoco code coverage reports
       - name: Archive code coverage reports
         uses: actions/upload-artifact@v2
         if: always()
         with:
-          name: code-coverage-reports
+          name: CodeCoverageReports
           path: |
             app/build/reports/
             data/build/reports/jacoco/jacocoTestReport/

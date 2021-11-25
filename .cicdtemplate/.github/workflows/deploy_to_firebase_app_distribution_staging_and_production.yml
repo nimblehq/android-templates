@@ -1,7 +1,7 @@
 name: Deploy to Firebase App Distribution staging and production
 
 on:
-  # Trigger the workflow on push action in develop branch
+  # Trigger the workflow on push action in develop branch.
   # So it will trigger when the PR of the feature branch was merged.
   push:
     branches:
@@ -43,27 +43,24 @@ jobs:
       - name: Archive Detekt reports
         uses: actions/upload-artifact@v2
         with:
-          name: detekt-reports
+          name: DetektReports
           path: build/reports/detekt/
 
       - name: Run unit tests and Jacoco
         run: ./gradlew jacocoTestReport
 
-      # Archive Jacoco code coverage reports
       - name: Archive code coverage reports
         uses: actions/upload-artifact@v2
         with:
-          name: code-coverage-reports
+          name: CodeCoverageReports
           path: |
             app/build/reports/jacoco/jacocoTestReport/
             data/build/reports/jacoco/jacocoTestReport/
 
-      # Build staging debug
-      - name: Build staging
+      - name: Build staging APK
         run: ./gradlew assembleStagingDebug
 
-      # Upload artifact to staging Firebase App Distribution
-      - name: Upload staging to Firebase
+      - name: Deploy staging to Firebase
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{secrets.FIREBASE_APP_ID_STAGING}}
@@ -71,12 +68,10 @@ jobs:
           groups: testers
           file: app/build/outputs/apk/staging/debug/app-staging-debug.apk
 
-      # Build production debug
-      - name: Build production
+      - name: Build production APK
         run: ./gradlew assembleProductionDebug
 
-      # Upload artifact to production Firebase App Distribution
-      - name: Upload production to Firebase
+      - name: Deploy production to Firebase
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{secrets.FIREBASE_APP_ID_PRODUCTION}}
