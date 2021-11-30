@@ -28,7 +28,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment(), BaseFragmentCallback
     private var _binding: ViewBinding? = null
 
     @Suppress("UNCHECKED_CAST")
-    protected val binding: VB
+    val binding: VB
         get() = _binding as VB
 
     @CallSuper
