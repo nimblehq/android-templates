@@ -10,7 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewbinding.ViewBinding
-import co.nimblehq.coroutine.extension.hideSoftKeyboard
+import co.nimblehq.common.extensions.hideSoftKeyboard
 import co.nimblehq.coroutine.ui.common.Toaster
 import co.nimblehq.coroutine.ui.userReadableMessage
 import kotlinx.coroutines.flow.Flow

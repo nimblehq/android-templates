@@ -20,7 +20,7 @@ plugins {
 allprojects {
     repositories {
         google()
-        maven { url = uri("https://jitpack.io") }
+        maven(url = "https://jitpack.io")
         mavenCentral()
     }
 }

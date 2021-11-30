@@ -123,6 +123,8 @@ dependencies {
 
     implementation("com.jakewharton.timber:timber:${Versions.TIMBER_LOG_VERSION}")
 
+    implementation("com.github.nimblehq:android-common-ktx:${Versions.ANDROID_COMMON_KTX_VERSION}")
+
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${Versions.KOTLIN_VERSION}")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLINX_COROUTINES_VERSION}")
 
