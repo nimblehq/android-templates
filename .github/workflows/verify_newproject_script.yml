@@ -3,10 +3,7 @@ name: Verify newproject script
 on:
   pull_request:
     types: [ opened, edited, reopened, synchronize ]
-    branches:
-      - 'feature/**'
-      - 'chore/**'
-      - 'bug/**'
+    branches: [ develop ]
 
 jobs:
   verify_newproject_script:

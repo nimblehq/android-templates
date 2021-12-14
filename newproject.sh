@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 # Script inspired by https://gist.github.com/szeidner/613fe4652fc86f083cefa21879d5522b
@@ -96,7 +96,7 @@ fi
 
 # Enforce package name
 regex='^[a-z][a-z0-9_]*(\.[a-z0-9_]+)+[0-9a-z_]$'
-if ! [[ $packagename =~ $regex ]]; then
+if ! [[ "$packagename" =~ $regex ]]; then
     die "Invalid Package Name: $packagename (needs to follow standard pattern {com.example.package})"
 fi
 
@@ -223,14 +223,26 @@ echo "✅  Completed"
 echo "=> 🔎 Replacing package and package name within files..."
 PACKAGE_NAME_ESCAPED="${packagename//./\.}"
 OLD_PACKAGE_NAME_ESCAPED="${OLD_PACKAGE//./\.}"
-LC_ALL=C find $WORKING_DIR/$NAME_NO_SPACES -type f -exec sed -i "" "s/$OLD_PACKAGE_NAME_ESCAPED/$PACKAGE_NAME_ESCAPED/g" {} +
-LC_ALL=C find $WORKING_DIR/$NAME_NO_SPACES -type f -exec sed -i "" "s/$OLD_NAME/$NAME_NO_SPACES/g" {} +
+if [[ "$OSTYPE" == "darwin"* ]] #MacOS
+then
+  LC_ALL=C find $WORKING_DIR/$NAME_NO_SPACES -type f -exec sed -i "" -e "s/$OLD_PACKAGE_NAME_ESCAPED/$PACKAGE_NAME_ESCAPED/g" {} +
+  LC_ALL=C find $WORKING_DIR/$NAME_NO_SPACES -type f -exec sed -i "" -e "s/$OLD_NAME/$NAME_NO_SPACES/g" {} +
+else
+  LC_ALL=C find $WORKING_DIR/$NAME_NO_SPACES -type f -exec sed -i -e "s/$OLD_PACKAGE_NAME_ESCAPED/$PACKAGE_NAME_ESCAPED/g" {} +
+  LC_ALL=C find $WORKING_DIR/$NAME_NO_SPACES -type f -exec sed -i -e "s/$OLD_NAME/$NAME_NO_SPACES/g" {} +
+fi
 echo "✅  Completed"
 
 # Search and replace files <...>
 echo "=> 🔎 Replacing app name in strings.xml..."
-sed -i "" "s/$OLD_APPNAME/$appname/" "$WORKING_DIR/$NAME_NO_SPACES/app/src/main/res/values/strings.xml"
-sed -i "" "s/$OLD_APPNAME/$appname/" "$WORKING_DIR/$NAME_NO_SPACES/app/src/staging/res/values/strings.xml"
+if [[ "$OSTYPE" == "darwin"* ]] #MacOS
+then
+  sed -i "" -e "s/$OLD_APPNAME/$appname/" "$WORKING_DIR/$NAME_NO_SPACES/app/src/main/res/values/strings.xml"
+  sed -i "" -e "s/$OLD_APPNAME/$appname/" "$WORKING_DIR/$NAME_NO_SPACES/app/src/staging/res/values/strings.xml"
+else
+  sed -i -e "s/$OLD_APPNAME/$appname/" "$WORKING_DIR/$NAME_NO_SPACES/app/src/main/res/values/strings.xml"
+  sed -i -e "s/$OLD_APPNAME/$appname/" "$WORKING_DIR/$NAME_NO_SPACES/app/src/staging/res/values/strings.xml"
+fi
 echo "✅  Completed"
 
 echo "=> 🔎 Replacing Application class..."
