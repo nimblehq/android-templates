@@ -146,21 +146,75 @@ renameFolderStructure() {
 echo "=> 🔎 Replacing files structure..."
 
 # Rename project folder structure
-PACKAGE_DIR="app/src/main/java"
-PACKAGE_DIR=$( renameFolderStructure $PACKAGE_DIR )
+APP_PACKAGE_DIR="app/src/main/java"
+APP_PACKAGE_DIR=$( renameFolderStructure $APP_PACKAGE_DIR )
+
+DATA_PACKAGE_DIR="data/src/main/java"
+DATA_PACKAGE_DIR=$( renameFolderStructure $DATA_PACKAGE_DIR )
+
+DOMAIN_PACKAGE_DIR="domain/src/main/java"
+DOMAIN_PACKAGE_DIR=$( renameFolderStructure $DOMAIN_PACKAGE_DIR )
+
+if [ $template = "rx" ]
+then
+  COMMON_RX_PACKAGE_DIR="common-rx/src/main/java"
+  COMMON_RX_PACKAGE_DIR=$( renameFolderStructure $COMMON_RX_PACKAGE_DIR )
+fi
 
 # Rename android test folder structure
-ANDROIDTEST_DIR="app/src/androidTest/java"
-if [ -d ANDROIDTEST_DIR ]
+APP_ANDROIDTEST_DIR="app/src/androidTest/java"
+if [ -d APP_ANDROIDTEST_DIR ]
 then
-    ANDROIDTEST_DIR=$( renameFolderStructure $ANDROIDTEST_DIR )
+    APP_ANDROIDTEST_DIR=$( renameFolderStructure $APP_ANDROIDTEST_DIR )
+fi
+
+DATA_ANDROIDTEST_DIR="data/src/androidTest/java"
+if [ -d DATA_ANDROIDTEST_DIR ]
+then
+    DATA_ANDROIDTEST_DIR=$( renameFolderStructure $DATA_ANDROIDTEST_DIR )
+fi
+
+DOMAIN_ANDROIDTEST_DIR="domain/src/androidTest/java"
+if [ -d DOMAIN_ANDROIDTEST_DIR ]
+then
+    DOMAIN_ANDROIDTEST_DIR=$( renameFolderStructure $DOMAIN_ANDROIDTEST_DIR )
+fi
+
+if [ $template = "rx" ]
+then
+  COMMON_RX_ANDROIDTEST_DIR="common-rx/src/androidTest/java"
+  if [ -d COMMON_RX_ANDROIDTEST_DIR ]
+  then
+      COMMON_RX_ANDROIDTEST_DIR=$( renameFolderStructure $COMMON_RX_ANDROIDTEST_DIR )
+  fi
 fi
 
 # Rename test folder structure
-TEST_DIR="app/src/test/java"
-if [ -d TEST_DIR ]
+APP_TEST_DIR="app/src/test/java"
+if [ -d APP_TEST_DIR ]
 then
-    TEST_DIR=$( renameFolderStructure TEST_DIR )
+    APP_TEST_DIR=$( renameFolderStructure $APP_TEST_DIR )
+fi
+
+DATA_TEST_DIR="data/src/test/java"
+if [ -d DATA_TEST_DIR ]
+then
+    DATA_TEST_DIR=$( renameFolderStructure $DATA_TEST_DIR )
+fi
+
+DOMAIN_TEST_DIR="domain/src/test/java"
+if [ -d DOMAIN_TEST_DIR ]
+then
+    DOMAIN_TEST_DIR=$( renameFolderStructure $DOMAIN_TEST_DIR )
+fi
+
+if [ $template = "rx" ]
+then
+  COMMON_RX_TEST_DIR="common-rx/src/test/java"
+  if [ -d COMMON_RX_TEST_DIR ]
+  then
+      COMMON_RX_TEST_DIR=$( renameFolderStructure $COMMON_RX_TEST_DIR )
+  fi
 fi
 
 echo "✅  Completed"
@@ -185,5 +239,14 @@ APPLICATION_CLASS_PATH="${OLD_APPLICATION_CLASS_PATH/$OLD_NAME/$NAME_NO_SPACES}"
 mv $OLD_APPLICATION_CLASS_PATH $APPLICATION_CLASS_PATH
 echo "✅  Completed"
 
+echo "=> 🛠️ Building generated project..."
+cd $appname
+./gradlew assembleDebug
+echo "✅  Build success"
+
+echo "=> 🚓 Executing all unittest..."
+./gradlew testStagingDebugUnitTest
+echo "✅  All test passed"
+
 # Done!
-echo "=> 🚀 Done! App is ready to be tested 🙌"
+echo "=> 🚀 Done! The project is ready for development 🙌"
