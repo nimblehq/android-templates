@@ -1,0 +1,40 @@
+name: Verify newproject script
+
+on:
+  pull_request:
+    types: [ opened, edited, reopened, synchronize ]
+    branches:
+      - 'feature/**'
+      - 'chore/**'
+      - 'bug/**'
+
+jobs:
+  verify_newproject_script:
+    name: Verify newproject script
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Checkout source code
+        uses: actions/checkout@v2.3.2
+
+      - name: Cache Gradle
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches/modules-*
+            ~/.gradle/caches/jars-*
+            ~/.gradle/caches/build-cache-*
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Verify generating new project from RxTemplate
+        run: ./newproject.sh -t rx -p co.myproject.example -n "MyProjectExampleRx"
+
+      - name: Verify generating new project from CoroutineTemplate
+        run: ./newproject.sh -t crt -p co.myproject.example -n "MyProjectExampleCoroutine"
