@@ -108,15 +108,14 @@ NAME_NO_SPACES=$(echo "$appname" | sed "s/ //g")
 # Copy main folder
 cp -R $OLD_NAME $NAME_NO_SPACES
 
+# clean the old build
+./$NAME_NO_SPACES/gradlew -p ./$NAME_NO_SPACES clean
 # get rid of idea settings
 rm -rf $NAME_NO_SPACES/.idea
 # get rid of gradle cache
 rm -rf $NAME_NO_SPACES/.gradle
 # get rid of the git history
 rm -rf $NAME_NO_SPACES/.git
-# get rid of the build
-rm -rf $NAME_NO_SPACES/build
-rm -rf $NAME_NO_SPACES/app/build
 
 # Rename folder structure
 renameFolderStructure() {
@@ -155,12 +154,6 @@ DATA_PACKAGE_DIR=$( renameFolderStructure $DATA_PACKAGE_DIR )
 DOMAIN_PACKAGE_DIR="domain/src/main/java"
 DOMAIN_PACKAGE_DIR=$( renameFolderStructure $DOMAIN_PACKAGE_DIR )
 
-if [ $template = "rx" ]
-then
-  COMMON_RX_PACKAGE_DIR="common-rx/src/main/java"
-  COMMON_RX_PACKAGE_DIR=$( renameFolderStructure $COMMON_RX_PACKAGE_DIR )
-fi
-
 # Rename android test folder structure
 APP_ANDROIDTEST_DIR="app/src/androidTest/java"
 if [ -d APP_ANDROIDTEST_DIR ]
@@ -178,15 +171,6 @@ DOMAIN_ANDROIDTEST_DIR="domain/src/androidTest/java"
 if [ -d DOMAIN_ANDROIDTEST_DIR ]
 then
     DOMAIN_ANDROIDTEST_DIR=$( renameFolderStructure $DOMAIN_ANDROIDTEST_DIR )
-fi
-
-if [ $template = "rx" ]
-then
-  COMMON_RX_ANDROIDTEST_DIR="common-rx/src/androidTest/java"
-  if [ -d COMMON_RX_ANDROIDTEST_DIR ]
-  then
-      COMMON_RX_ANDROIDTEST_DIR=$( renameFolderStructure $COMMON_RX_ANDROIDTEST_DIR )
-  fi
 fi
 
 # Rename test folder structure
@@ -208,8 +192,21 @@ then
     DOMAIN_TEST_DIR=$( renameFolderStructure $DOMAIN_TEST_DIR )
 fi
 
+# Rename common-rx module on RxTemplate
 if [ $template = "rx" ]
 then
+  # Rename package folder
+  COMMON_RX_PACKAGE_DIR="common-rx/src/main/java"
+  COMMON_RX_PACKAGE_DIR=$( renameFolderStructure $COMMON_RX_PACKAGE_DIR )
+
+  # Rename androidTest folder
+  COMMON_RX_ANDROIDTEST_DIR="common-rx/src/androidTest/java"
+  if [ -d COMMON_RX_ANDROIDTEST_DIR ]
+  then
+      COMMON_RX_ANDROIDTEST_DIR=$( renameFolderStructure $COMMON_RX_ANDROIDTEST_DIR )
+  fi
+
+  # Rename test folder
   COMMON_RX_TEST_DIR="common-rx/src/test/java"
   if [ -d COMMON_RX_TEST_DIR ]
   then
@@ -223,7 +220,7 @@ echo "✅  Completed"
 echo "=> 🔎 Replacing package and package name within files..."
 PACKAGE_NAME_ESCAPED="${packagename//./\.}"
 OLD_PACKAGE_NAME_ESCAPED="${OLD_PACKAGE//./\.}"
-if [[ "$OSTYPE" == "darwin"* ]] #MacOS
+if [[ "$OSTYPE" == "darwin"* ]] # Mac OSX
 then
   LC_ALL=C find $WORKING_DIR/$NAME_NO_SPACES -type f -exec sed -i "" -e "s/$OLD_PACKAGE_NAME_ESCAPED/$PACKAGE_NAME_ESCAPED/g" {} +
   LC_ALL=C find $WORKING_DIR/$NAME_NO_SPACES -type f -exec sed -i "" -e "s/$OLD_NAME/$NAME_NO_SPACES/g" {} +
@@ -235,7 +232,7 @@ echo "✅  Completed"
 
 # Search and replace files <...>
 echo "=> 🔎 Replacing app name in strings.xml..."
-if [[ "$OSTYPE" == "darwin"* ]] #MacOS
+if [[ "$OSTYPE" == "darwin"* ]] # Mac OSX
 then
   sed -i "" -e "s/$OLD_APPNAME/$appname/" "$WORKING_DIR/$NAME_NO_SPACES/app/src/main/res/values/strings.xml"
   sed -i "" -e "s/$OLD_APPNAME/$appname/" "$WORKING_DIR/$NAME_NO_SPACES/app/src/staging/res/values/strings.xml"
@@ -252,12 +249,11 @@ mv $OLD_APPLICATION_CLASS_PATH $APPLICATION_CLASS_PATH
 echo "✅  Completed"
 
 echo "=> 🛠️ Building generated project..."
-cd $appname
-./gradlew assembleDebug
+./$NAME_NO_SPACES/gradlew -p ./$NAME_NO_SPACES assembleDebug
 echo "✅  Build success"
 
 echo "=> 🚓 Executing all unittest..."
-./gradlew testStagingDebugUnitTest
+./$NAME_NO_SPACES/gradlew -p ./$NAME_NO_SPACES testStagingDebugUnitTest
 echo "✅  All test passed"
 
 # Done!
