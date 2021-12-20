@@ -108,13 +108,13 @@ NAME_NO_SPACES=$(echo "$appname" | sed "s/ //g")
 # Copy main folder
 cp -R $OLD_NAME $NAME_NO_SPACES
 
-# clean the old build
+# Clean the old build
 ./$NAME_NO_SPACES/gradlew -p ./$NAME_NO_SPACES clean
-# get rid of idea settings
+# Get rid of idea settings
 rm -rf $NAME_NO_SPACES/.idea
-# get rid of gradle cache
+# Get rid of gradle cache
 rm -rf $NAME_NO_SPACES/.gradle
-# get rid of the git history
+# Get rid of the git history
 rm -rf $NAME_NO_SPACES/.git
 
 # Rename folder structure
