@@ -9,7 +9,7 @@ object Versions {
     const val ANDROID_VERSION_NAME = "3.3.0"
 
     // Dependencies (Alphabet sorted)
-    const val ANDROID_COMMON_KTX_VERSION = "0.1.0"
+    const val ANDROID_COMMON_KTX_VERSION = "0.1.1"
     const val ANDROID_CRYPTO_VERSION = "1.0.0"
     const val ANDROIDX_ACTIVITY_KTX_VERSION = "1.2.1"
     const val ANDROIDX_CORE_KTX_VERSION = "1.3.0"

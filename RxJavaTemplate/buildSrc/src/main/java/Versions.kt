@@ -8,7 +8,7 @@ object Versions {
     const val ANDROID_COMPILE_SDK_VERSION = 28
 
     // Dependencies (Alphabet sorted)
-    const val ANDROID_COMMON_KTX_VERSION = "0.1.0"
+    const val ANDROID_COMMON_KTX_VERSION = "0.1.1"
     const val ANDROID_CORE_VERSION = "1.2.0"
     const val ANDROID_CRYPTO_VERSION = "1.0.0"
     const val ANDROID_FRAGMENT_VERSION = "1.3.3"
