@@ -252,9 +252,9 @@ echo "=> 🛠️ Building generated project..."
 ./$NAME_NO_SPACES/gradlew -p ./$NAME_NO_SPACES assembleDebug
 echo "✅  Build success"
 
-echo "=> 🚓 Executing all unittest..."
+echo "=> 🚓 Executing all unit tests..."
 ./$NAME_NO_SPACES/gradlew -p ./$NAME_NO_SPACES testStagingDebugUnitTest
-echo "✅  All test passed"
+echo "✅  All unit tests passed"
 
 # Done!
 echo "=> 🚀 Done! The project is ready for development 🙌"
