@@ -2,7 +2,7 @@ name: Verify newproject script
 
 on:
   pull_request:
-    types: [ opened, edited, reopened, synchronize ]
+    types: [ opened, reopened, synchronize ]
     branches: [ develop ]
 
 jobs:
