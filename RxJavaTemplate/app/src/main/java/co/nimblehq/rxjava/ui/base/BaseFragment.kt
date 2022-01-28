@@ -5,12 +5,10 @@ import android.os.Bundle
 import android.view.*
 import android.view.View.*
 import androidx.annotation.CallSuper
-import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import co.nimblehq.common.extensions.hideSoftKeyboard
 import co.nimblehq.rxjava.domain.schedulers.BaseSchedulerProvider
-import co.nimblehq.rxjava.domain.schedulers.SchedulerProvider
-import co.nimblehq.rxjava.extension.hideSoftKeyboard
 import co.nimblehq.rxjava.extension.subscribeOnClick
 import co.nimblehq.rxjava.ui.common.Toaster
 import co.nimblehq.rxjava.ui.userReadableMessage

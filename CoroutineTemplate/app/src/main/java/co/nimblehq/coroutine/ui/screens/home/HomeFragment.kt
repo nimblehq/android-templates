@@ -2,10 +2,10 @@ package co.nimblehq.coroutine.ui.screens.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import co.nimblehq.common.extensions.visibleOrGone
 import co.nimblehq.coroutine.databinding.FragmentHomeBinding
 import co.nimblehq.coroutine.databinding.ViewLoadingBinding
 import co.nimblehq.coroutine.extension.provideViewModels
-import co.nimblehq.coroutine.extension.visibleOrGone
 import co.nimblehq.coroutine.lib.IsLoading
 import co.nimblehq.coroutine.model.UserUiModel
 import co.nimblehq.coroutine.ui.base.BaseFragment
