@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 # Script inspired by https://gist.github.com/szeidner/613fe4652fc86f083cefa21879d5522b
@@ -96,7 +96,7 @@ fi
 
 # Enforce package name
 regex='^[a-z][a-z0-9_]*(\.[a-z0-9_]+)+[0-9a-z_]$'
-if ! [[ $packagename =~ $regex ]]; then
+if ! [[ "$packagename" =~ $regex ]]; then
     die "Invalid Package Name: $packagename (needs to follow standard pattern {com.example.package})"
 fi
 
@@ -108,15 +108,14 @@ NAME_NO_SPACES=$(echo "$appname" | sed "s/ //g")
 # Copy main folder
 cp -R $OLD_NAME $NAME_NO_SPACES
 
-# get rid of idea settings
+# Clean the old build
+./$NAME_NO_SPACES/gradlew -p ./$NAME_NO_SPACES clean
+# Get rid of idea settings
 rm -rf $NAME_NO_SPACES/.idea
-# get rid of gradle cache
+# Get rid of gradle cache
 rm -rf $NAME_NO_SPACES/.gradle
-# get rid of the git history
+# Get rid of the git history
 rm -rf $NAME_NO_SPACES/.git
-# get rid of the build
-rm -rf $NAME_NO_SPACES/build
-rm -rf $NAME_NO_SPACES/app/build
 
 # Rename folder structure
 renameFolderStructure() {
@@ -146,21 +145,73 @@ renameFolderStructure() {
 echo "=> 🔎 Replacing files structure..."
 
 # Rename project folder structure
-PACKAGE_DIR="app/src/main/java"
-PACKAGE_DIR=$( renameFolderStructure $PACKAGE_DIR )
+APP_PACKAGE_DIR="app/src/main/java"
+APP_PACKAGE_DIR=$( renameFolderStructure $APP_PACKAGE_DIR )
+
+DATA_PACKAGE_DIR="data/src/main/java"
+DATA_PACKAGE_DIR=$( renameFolderStructure $DATA_PACKAGE_DIR )
+
+DOMAIN_PACKAGE_DIR="domain/src/main/java"
+DOMAIN_PACKAGE_DIR=$( renameFolderStructure $DOMAIN_PACKAGE_DIR )
 
 # Rename android test folder structure
-ANDROIDTEST_DIR="app/src/androidTest/java"
-if [ -d ANDROIDTEST_DIR ]
+APP_ANDROIDTEST_DIR="app/src/androidTest/java"
+if [ -d APP_ANDROIDTEST_DIR ]
 then
-    ANDROIDTEST_DIR=$( renameFolderStructure $ANDROIDTEST_DIR )
+    APP_ANDROIDTEST_DIR=$( renameFolderStructure $APP_ANDROIDTEST_DIR )
+fi
+
+DATA_ANDROIDTEST_DIR="data/src/androidTest/java"
+if [ -d DATA_ANDROIDTEST_DIR ]
+then
+    DATA_ANDROIDTEST_DIR=$( renameFolderStructure $DATA_ANDROIDTEST_DIR )
+fi
+
+DOMAIN_ANDROIDTEST_DIR="domain/src/androidTest/java"
+if [ -d DOMAIN_ANDROIDTEST_DIR ]
+then
+    DOMAIN_ANDROIDTEST_DIR=$( renameFolderStructure $DOMAIN_ANDROIDTEST_DIR )
 fi
 
 # Rename test folder structure
-TEST_DIR="app/src/test/java"
-if [ -d TEST_DIR ]
+APP_TEST_DIR="app/src/test/java"
+if [ -d APP_TEST_DIR ]
 then
-    TEST_DIR=$( renameFolderStructure TEST_DIR )
+    APP_TEST_DIR=$( renameFolderStructure $APP_TEST_DIR )
+fi
+
+DATA_TEST_DIR="data/src/test/java"
+if [ -d DATA_TEST_DIR ]
+then
+    DATA_TEST_DIR=$( renameFolderStructure $DATA_TEST_DIR )
+fi
+
+DOMAIN_TEST_DIR="domain/src/test/java"
+if [ -d DOMAIN_TEST_DIR ]
+then
+    DOMAIN_TEST_DIR=$( renameFolderStructure $DOMAIN_TEST_DIR )
+fi
+
+# Rename common-rx module on RxTemplate
+if [ $template = "rx" ]
+then
+  # Rename package folder
+  COMMON_RX_PACKAGE_DIR="common-rx/src/main/java"
+  COMMON_RX_PACKAGE_DIR=$( renameFolderStructure $COMMON_RX_PACKAGE_DIR )
+
+  # Rename androidTest folder
+  COMMON_RX_ANDROIDTEST_DIR="common-rx/src/androidTest/java"
+  if [ -d COMMON_RX_ANDROIDTEST_DIR ]
+  then
+      COMMON_RX_ANDROIDTEST_DIR=$( renameFolderStructure $COMMON_RX_ANDROIDTEST_DIR )
+  fi
+
+  # Rename test folder
+  COMMON_RX_TEST_DIR="common-rx/src/test/java"
+  if [ -d COMMON_RX_TEST_DIR ]
+  then
+      COMMON_RX_TEST_DIR=$( renameFolderStructure $COMMON_RX_TEST_DIR )
+  fi
 fi
 
 echo "✅  Completed"
@@ -169,14 +220,26 @@ echo "✅  Completed"
 echo "=> 🔎 Replacing package and package name within files..."
 PACKAGE_NAME_ESCAPED="${packagename//./\.}"
 OLD_PACKAGE_NAME_ESCAPED="${OLD_PACKAGE//./\.}"
-LC_ALL=C find $WORKING_DIR/$NAME_NO_SPACES -type f -exec sed -i "" "s/$OLD_PACKAGE_NAME_ESCAPED/$PACKAGE_NAME_ESCAPED/g" {} +
-LC_ALL=C find $WORKING_DIR/$NAME_NO_SPACES -type f -exec sed -i "" "s/$OLD_NAME/$NAME_NO_SPACES/g" {} +
+if [[ "$OSTYPE" == "darwin"* ]] # Mac OSX
+then
+  LC_ALL=C find $WORKING_DIR/$NAME_NO_SPACES -type f -exec sed -i "" -e "s/$OLD_PACKAGE_NAME_ESCAPED/$PACKAGE_NAME_ESCAPED/g" {} +
+  LC_ALL=C find $WORKING_DIR/$NAME_NO_SPACES -type f -exec sed -i "" -e "s/$OLD_NAME/$NAME_NO_SPACES/g" {} +
+else
+  LC_ALL=C find $WORKING_DIR/$NAME_NO_SPACES -type f -exec sed -i -e "s/$OLD_PACKAGE_NAME_ESCAPED/$PACKAGE_NAME_ESCAPED/g" {} +
+  LC_ALL=C find $WORKING_DIR/$NAME_NO_SPACES -type f -exec sed -i -e "s/$OLD_NAME/$NAME_NO_SPACES/g" {} +
+fi
 echo "✅  Completed"
 
 # Search and replace files <...>
 echo "=> 🔎 Replacing app name in strings.xml..."
-sed -i "" "s/$OLD_APPNAME/$appname/" "$WORKING_DIR/$NAME_NO_SPACES/app/src/main/res/values/strings.xml"
-sed -i "" "s/$OLD_APPNAME/$appname/" "$WORKING_DIR/$NAME_NO_SPACES/app/src/staging/res/values/strings.xml"
+if [[ "$OSTYPE" == "darwin"* ]] # Mac OSX
+then
+  sed -i "" -e "s/$OLD_APPNAME/$appname/" "$WORKING_DIR/$NAME_NO_SPACES/app/src/main/res/values/strings.xml"
+  sed -i "" -e "s/$OLD_APPNAME/$appname/" "$WORKING_DIR/$NAME_NO_SPACES/app/src/staging/res/values/strings.xml"
+else
+  sed -i -e "s/$OLD_APPNAME/$appname/" "$WORKING_DIR/$NAME_NO_SPACES/app/src/main/res/values/strings.xml"
+  sed -i -e "s/$OLD_APPNAME/$appname/" "$WORKING_DIR/$NAME_NO_SPACES/app/src/staging/res/values/strings.xml"
+fi
 echo "✅  Completed"
 
 echo "=> 🔎 Replacing Application class..."
@@ -185,5 +248,13 @@ APPLICATION_CLASS_PATH="${OLD_APPLICATION_CLASS_PATH/$OLD_NAME/$NAME_NO_SPACES}"
 mv $OLD_APPLICATION_CLASS_PATH $APPLICATION_CLASS_PATH
 echo "✅  Completed"
 
+echo "=> 🛠️ Building generated project..."
+./$NAME_NO_SPACES/gradlew -p ./$NAME_NO_SPACES assembleDebug
+echo "✅  Build success"
+
+echo "=> 🚓 Executing all unit tests..."
+./$NAME_NO_SPACES/gradlew -p ./$NAME_NO_SPACES testStagingDebugUnitTest
+echo "✅  All unit tests passed"
+
 # Done!
-echo "=> 🚀 Done! App is ready to be tested 🙌"
+echo "=> 🚀 Done! The project is ready for development 🙌"

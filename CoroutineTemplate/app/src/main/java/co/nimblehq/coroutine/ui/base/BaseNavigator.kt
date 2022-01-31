@@ -6,7 +6,7 @@ import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import co.nimblehq.coroutine.extension.getResourceName
+import co.nimblehq.common.extensions.getResourceName
 import timber.log.Timber
 
 interface BaseNavigator {

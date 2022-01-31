@@ -6,7 +6,7 @@ import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import co.nimblehq.rxjava.extension.getResourceName
+import co.nimblehq.common.extensions.getResourceName
 import timber.log.Timber
 
 interface BaseNavigator {
@@ -49,7 +49,8 @@ abstract class BaseNavigatorImpl(
     protected fun unsupportedNavigation() {
         val navController = findNavController()
         val currentGraph = fragment.requireActivity().getResourceName(navController?.graph?.id)
-        val currentDestination = fragment.requireActivity().getResourceName(navController?.currentDestination?.id)
+        val currentDestination =
+            fragment.requireActivity().getResourceName(navController?.currentDestination?.id)
         handleError(NavigationError.UnsupportedNavigationError(currentGraph, currentDestination))
     }
 

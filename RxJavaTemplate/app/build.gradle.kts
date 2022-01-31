@@ -160,6 +160,7 @@ dependencies {
     implementation("com.jakewharton.timber:timber:${Versions.TIMBER_LOG_VERSION}")
     implementation("com.github.bumptech.glide:glide:${Versions.GLIDE_VERSION}")
     implementation("com.github.tbruyelle:rxpermissions:${Versions.RXPERMISSION_VERSION}")
+    implementation("com.github.nimblehq:android-common-ktx:${Versions.ANDROID_COMMON_KTX_VERSION}")
 
     debugImplementation("androidx.fragment:fragment-testing:${Versions.ANDROID_FRAGMENT_VERSION}")
     debugImplementation("com.github.chuckerteam.chucker:library:${Versions.CHUCKER_INTERCEPTOR_VERSION}")

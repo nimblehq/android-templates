@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import android.webkit.WebViewClient
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import co.nimblehq.common.extensions.visibleOrGone
 import co.nimblehq.rxjava.databinding.FragmentWebviewBinding
 import co.nimblehq.rxjava.databinding.ViewLoadingBinding
 import co.nimblehq.rxjava.extension.initialSetup
-import co.nimblehq.rxjava.extension.visibleOrGone
 import co.nimblehq.rxjava.lib.IsLoading
 import co.nimblehq.rxjava.ui.base.BaseFragment
 import co.nimblehq.rxjava.ui.helpers.handleVisualOverlaps

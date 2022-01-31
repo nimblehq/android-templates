@@ -2,12 +2,13 @@ object Versions {
     const val BUILD_GRADLE_VERSION = "4.2.2"
 
     const val ANDROID_VERSION_CODE = 9
-    const val ANDROID_VERSION_NAME = "3.3.0"
+    const val ANDROID_VERSION_NAME = "3.4.0"
     const val ANDROID_MIN_SDK_VERSION = 23
     const val ANDROID_TARGET_SDK_VERSION = 28
     const val ANDROID_COMPILE_SDK_VERSION = 28
 
     // Dependencies (Alphabet sorted)
+    const val ANDROID_COMMON_KTX_VERSION = "0.1.1"
     const val ANDROID_CORE_VERSION = "1.2.0"
     const val ANDROID_CRYPTO_VERSION = "1.0.0"
     const val ANDROID_FRAGMENT_VERSION = "1.3.3"
