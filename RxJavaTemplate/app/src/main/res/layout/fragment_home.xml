@@ -22,7 +22,8 @@
         android:layout_marginBottom="20dp"
         android:text="Refresh"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="HardcodedText" />
 
     <include layout="@layout/view_loading" />
 

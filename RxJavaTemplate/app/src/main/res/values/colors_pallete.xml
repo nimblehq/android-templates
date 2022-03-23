@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Declaring colors with their real name from the style guide we get -->
-    <color name="blue_free_speech">#3F51B5</color>
-    <color name="blue_free_speech_90a">#903F51B5</color>
-
-    <color name="blue_tory">#303F9F</color>
-
-    <color name="red_violet">#FF4081</color>
-    <color name="red_violet_70a">#70FF4081</color>
-
-    <color name="white">#FFFFFF</color>
-
-    <color name="black">#000000</color>
     <color name="black_20a">#20000000</color>
+    <color name="blue_free_speech">#3F51B5</color>
+    <color name="blue_tory">#303F9F</color>
+    <color name="red_violet">#FF4081</color>
 </resources>
