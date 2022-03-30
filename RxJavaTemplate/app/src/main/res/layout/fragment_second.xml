@@ -59,7 +59,8 @@
         android:text="Clickable text"
         app:layout_constraintBottom_toTopOf="@id/btOpenCamera"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/btOpenCamera"
@@ -69,7 +70,8 @@
         android:text="Open Camera"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btOpenPost"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/btOpenPost"
@@ -79,6 +81,7 @@
         android:text="Open Post"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btOpenCamera" />
+        app:layout_constraintStart_toEndOf="@id/btOpenCamera"
+        tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
