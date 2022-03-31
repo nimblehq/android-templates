@@ -6,11 +6,6 @@
         <item name="android:textSize">@dimen/dimen_normal_display_text</item>
     </style>
 
-    <style name="Widget.Template.TextView.Bold">
-        <item name="android:textColor">@color/blue_free_speech_90a</item>
-        <item name="android:fontFamily">@font/circularstd_bold</item>
-    </style>
-
     <style name="Widget.Template.TextView.Clickable">
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
