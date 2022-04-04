@@ -55,3 +55,6 @@ freeline_project_description.json
 
 # Fastlane
 fastlane/report.xml
+
+# Code coverage
+jacoco.exec
