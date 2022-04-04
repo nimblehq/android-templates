@@ -15,9 +15,8 @@ val fileGenerated = setOf(
 )
 
 val packagesExcluded = setOf(
-    "co/nimblehq/di/**",
-    "co/nimblehq/ui/**/di/**",
-    "com/bumptech/glide"
+    "**/co/nimblehq/rxjava/di/**",
+    "**/com/bumptech/glide"
 )
 
 val fileFilter = fileGenerated + packagesExcluded
