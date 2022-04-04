@@ -11,12 +11,28 @@ val fileGenerated = setOf(
     "**/*_ViewBinding*.*",
     "**/*Adapter*.*",
     "**/*Test*.*",
-    "android/**/*.*"
+    // Enum
+    "**/*\$Creator*",
+    // Nav Component
+    "**/*_Factory*",
+    "**/*FragmentArgs*",
+    "**/*FragmentDirections*",
+    "**/FragmentNavArgsLazy.kt",
+    "**/*Fragment*navArgs*",
+    "**/*ModuleDeps*.*",
+    "**/*NavGraphDirections*",
+    // Hilt
+    "**/*_HiltComponents*",
+    "**/*_HiltModules*",
+    "**/Hilt_*"
 )
 
 val packagesExcluded = setOf(
-    "**/co/nimblehq/rxjava/di/**",
-    "**/com/bumptech/glide"
+    "**/com/bumptech/glide",
+    "**/dagger/hilt/internal",
+    "**/hilt_aggregated_deps",
+    "**/co/nimblehq/rxjava/databinding/**",
+    "**/co/nimblehq/rxjava/di/**"
 )
 
 val fileFilter = fileGenerated + packagesExcluded
