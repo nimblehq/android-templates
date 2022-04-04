@@ -31,30 +31,8 @@ jobs:
         working-directory: ./CoroutineTemplate
         run: ./gradlew detekt
 
-      - name: Run Detekt on RxJavaTemplate
-        working-directory: ./RxJavaTemplate
-        run: ./gradlew detekt
-
       - name: Archive Detekt reports on CoroutineTemplate
         uses: actions/upload-artifact@v2
         with:
           name: DetektReportsCoroutine
           path: CoroutineTemplate/build/reports/detekt/
-
-      - name: Archive Detekt reports on RxJavaTemplate
-        uses: actions/upload-artifact@v2
-        with:
-          name: DetektReportsRxJava
-          path: RxJavaTemplate/build/reports/detekt/
-
-      - name: Run unit tests and Jacoco on RxJavaTemplate
-        working-directory: ./RxJavaTemplate
-        run: ./gradlew jacocoTestReport
-
-      - name: Archive code coverage reports on RxJavaTemplate
-        uses: actions/upload-artifact@v2
-        with:
-          name: CodeCoverageReportsRxJava
-          path: |
-            RxJavaTemplate/app/build/reports/jacoco/jacocoTestReport/
-            RxJavaTemplate/data/build/reports/jacoco/jacocoTestReport/

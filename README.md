@@ -7,7 +7,7 @@
 A collection of templates:
 
 * **[CoroutineTemplate](https://github.com/nimblehq/android-templates/tree/kotlin/CoroutineTemplate)**
-* **[RxJavaTemplate](https://github.com/nimblehq/android-templates/tree/kotlin/RxJavaTemplate)**
+* **[RxJavaTemplate[DEPRECATED]](https://github.com/nimblehq/android-templates/tree/kotlin/RxJavaTemplate)**
 
 ## Setup
 
@@ -29,7 +29,7 @@ Example:
   `./newproject.sh -t crt -p co.myproject.example -n "My Project"`
 
 3. Update `android_version_code` and `android_version_name`
-  - `RxJavaTemplate/build.gradle`
+  - `RxJavaTemplate[DEPRECATED]/build.gradle`
   - `CoroutineTemplate/build.gradle`
 
 ## About
