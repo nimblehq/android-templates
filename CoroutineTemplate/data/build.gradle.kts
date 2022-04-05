@@ -1,7 +1,11 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
+
+    jacoco
 }
+
+apply(from = "../config/jacoco.gradle.kts")
 
 android {
     compileSdk = Versions.ANDROID_COMPILE_SDK_VERSION
@@ -20,6 +24,16 @@ android {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
+        getByName(BuildType.DEBUG) {
+            /**
+             * From AGP 4.2.0, Jacoco generates the report incorrectly, and the report is missing
+             * some code coverage from module. On the new version of Gradle, they introduce a new
+             * flag [testCoverageEnabled], we must enable this flag if using Jacoco to capture
+             * coverage and creates a report in the build directory.
+             * Reference: https://developer.android.com/reference/tools/gradle-api/7.1/com/android/build/api/dsl/BuildType#istestcoverageenabled
+             */
+            isTestCoverageEnabled = true
+        }
     }
 
     compileOptions {
@@ -36,6 +50,10 @@ android {
         xmlReport = true
         xmlOutput = file("build/reports/lint/lint-result.xml")
     }
+}
+
+jacoco {
+    toolVersion = "0.8.7"
 }
 
 dependencies {
