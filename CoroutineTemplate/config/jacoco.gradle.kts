@@ -22,6 +22,7 @@ val fileGenerated = setOf(
     "**/*ModuleDeps*.*",
     "**/*NavGraphDirections*",
     // Hilt
+    "**/*_ComponentTreeDeps*",
     "**/*_HiltComponents*",
     "**/*_HiltModules*",
     "**/Hilt_*"
