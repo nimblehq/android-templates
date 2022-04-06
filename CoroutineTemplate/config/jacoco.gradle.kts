@@ -43,7 +43,8 @@ val classDirectoriesTree = files(
             "**/app/build/intermediates/javac/stagingDebug/classes/**",
             "**/data/build/intermediates/javac/debug/classes/**",
             "**/app/build/tmp/kotlin-classes/stagingDebug/**",
-            "**/data/build/tmp/kotlin-classes/debug/**"
+            "**/data/build/tmp/kotlin-classes/debug/**",
+            "**/domain/build/classes/kotlin/main/**"
         )
         exclude(fileFilter)
     }
@@ -52,7 +53,8 @@ val classDirectoriesTree = files(
 val sourceDirectoriesTree = files(
     listOf(
         "${project.rootDir}/app/src/main/java",
-        "${project.rootDir}/data/src/main/java"
+        "${project.rootDir}/data/src/main/java",
+        "${project.rootDir}/domain/src/main/java"
     )
 )
 
@@ -68,7 +70,8 @@ val sourceDirectoriesTree = files(
 val executionDataTree = fileTree(project.rootDir) {
     include(
         "app/jacoco.exec",
-        "data/jacoco.exec"
+        "data/jacoco.exec",
+        "domain/build/jacoco/test.exec"
     )
 }
 
@@ -78,7 +81,8 @@ tasks.register<JacocoReport>("jacocoTestReport") {
 
     dependsOn(
         ":app:testStagingDebugUnitTest",
-        ":data:testDebugUnitTest"
+        ":data:testDebugUnitTest",
+        ":domain:test"
     )
 
     classDirectories.setFrom(classDirectoriesTree)
