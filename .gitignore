@@ -2,7 +2,7 @@
 .idea
 .gradle
 /CoroutineTemplate/local.properties
-/RxJavaTemplate/local.properties
+/RxJavaTemplate[DEPRECATED]/local.properties
 .DS_Store
 build/
 /captures
