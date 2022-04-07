@@ -107,7 +107,7 @@ android {
 }
 
 jacoco {
-    toolVersion = "0.8.7"
+    toolVersion = Versions.JACOCO_VERSION
 }
 
 kapt {

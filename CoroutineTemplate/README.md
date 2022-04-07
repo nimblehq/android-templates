@@ -28,7 +28,9 @@ Report is located at: `./build/reports/detekt`
 - Run unit testing:
 
 ```
-$ ./gradlew test
+$ ./gradlew app:testStagingDebugUnitTest
+$ ./gradlew data:testDebugUnitTest
+$ ./gradlew domain:test
 ```
 
 - Run unit testing with coverage:
