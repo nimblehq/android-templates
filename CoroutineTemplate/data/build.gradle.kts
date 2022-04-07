@@ -2,10 +2,8 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
 
-    jacoco
+    id("plugins.jacoco-report")
 }
-
-apply(from = "../config/jacoco.gradle.kts")
 
 android {
     compileSdk = Versions.ANDROID_COMPILE_SDK_VERSION
@@ -50,10 +48,6 @@ android {
         xmlReport = true
         xmlOutput = file("build/reports/lint/lint-result.xml")
     }
-}
-
-jacoco {
-    toolVersion = Versions.JACOCO_VERSION
 }
 
 dependencies {

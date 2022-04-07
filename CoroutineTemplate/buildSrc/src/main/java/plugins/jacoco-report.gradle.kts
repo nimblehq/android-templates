@@ -1,4 +1,12 @@
-apply(plugin = "jacoco")
+package plugins
+
+plugins {
+    jacoco
+}
+
+jacoco {
+    toolVersion = Versions.JACOCO_VERSION
+}
 
 val fileGenerated = setOf(
     "**/R.class",

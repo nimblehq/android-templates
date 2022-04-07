@@ -8,10 +8,8 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
 
-    jacoco
+    id("plugins.jacoco-report")
 }
-
-apply(from = "../config/jacoco.gradle.kts")
 
 val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
 
@@ -104,10 +102,6 @@ android {
             isReturnDefaultValues = true
         }
     }
-}
-
-jacoco {
-    toolVersion = Versions.JACOCO_VERSION
 }
 
 kapt {
