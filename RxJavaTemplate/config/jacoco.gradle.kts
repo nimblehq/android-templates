@@ -11,13 +11,28 @@ val fileGenerated = setOf(
     "**/*_ViewBinding*.*",
     "**/*Adapter*.*",
     "**/*Test*.*",
-    "android/**/*.*"
+    // Enum
+    "**/*\$Creator*",
+    // Nav Component
+    "**/*_Factory*",
+    "**/*FragmentArgs*",
+    "**/*FragmentDirections*",
+    "**/FragmentNavArgsLazy.kt",
+    "**/*Fragment*navArgs*",
+    "**/*ModuleDeps*.*",
+    "**/*NavGraphDirections*",
+    // Hilt
+    "**/*_HiltComponents*",
+    "**/*_HiltModules*",
+    "**/Hilt_*"
 )
 
 val packagesExcluded = setOf(
-    "co/nimblehq/di/**",
-    "co/nimblehq/ui/**/di/**",
-    "com/bumptech/glide"
+    "**/com/bumptech/glide",
+    "**/dagger/hilt/internal",
+    "**/hilt_aggregated_deps",
+    "**/co/nimblehq/rxjava/databinding/**",
+    "**/co/nimblehq/rxjava/di/**"
 )
 
 val fileFilter = fileGenerated + packagesExcluded
@@ -27,8 +42,10 @@ val classDirectoriesTree = files(
         include(
             "**/app/build/intermediates/javac/stagingDebug/classes/**",
             "**/data/build/intermediates/javac/stagingDebug/classes/**",
+            "**/domain/build/intermediates/javac/stagingDebug/classes/**",
             "**/app/build/tmp/kotlin-classes/stagingDebug/**",
-            "**/data/build/tmp/kotlin-classes/stagingDebug/**"
+            "**/data/build/tmp/kotlin-classes/stagingDebug/**",
+            "**/domain/build/tmp/kotlin-classes/stagingDebug/**"
         )
         exclude(fileFilter)
     }
@@ -37,7 +54,8 @@ val classDirectoriesTree = files(
 val sourceDirectoriesTree = files(
     listOf(
         "${project.rootDir}/app/src/main/java",
-        "${project.rootDir}/data/src/main/java"
+        "${project.rootDir}/data/src/main/java",
+        "${project.rootDir}/domain/src/main/java"
     )
 )
 
@@ -53,7 +71,8 @@ val sourceDirectoriesTree = files(
 val executionDataTree = fileTree(project.rootDir) {
     include(
         "app/jacoco.exec",
-        "common/jacoco.exec"
+        "data/jacoco.exec",
+        "domain/jacoco.exec"
     )
 }
 
@@ -63,7 +82,8 @@ tasks.register<JacocoReport>("jacocoTestReport") {
 
     dependsOn(
         ":app:testStagingDebugUnitTest",
-        ":data:testStagingDebugUnitTest"
+        ":data:testStagingDebugUnitTest",
+        ":domain:testStagingDebugUnitTest"
     )
 
     classDirectories.setFrom(classDirectoriesTree)
