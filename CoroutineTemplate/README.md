@@ -3,23 +3,40 @@
 
 ### Setup
 - Clone the project
-- Checkout our main development branch `kotlin`
 - Run the project with Android Studio
 
 ### Linter and static code analysis
 
-1. Check Style:
+- Lint:
 
 ```
-$ ./gradlew checkStyle
+$ ./gradlew lint
 ```
 
-Report is located at: `./app/build/reports/checkstyle/`
+Report is located at: `./app/build/reports/lint/`
 
-2. Detekt
+- Detekt
 
 ```
 $ ./gradlew detekt
 ```
 
-Report is located at: `./build/reports/detekt.html`
+Report is located at: `./build/reports/detekt`
+
+### Testing
+
+- Run unit testing:
+
+```
+$ ./gradlew app:testStagingDebugUnitTest
+$ ./gradlew data:testDebugUnitTest
+$ ./gradlew domain:test
+```
+
+- Run unit testing with coverage:
+
+```
+$ ./gradlew jacocoTestReport
+```
+
+Report is located at: `./app/build/reports/jacoco/`

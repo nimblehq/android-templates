@@ -29,4 +29,11 @@ Dir[lint_dir].each do |file_name|
   android_lint.lint(inline_mode: true)
 end
   
-# TODO: Update to support test coverage report from Jacoco for Coroutine Template
+# Show Danger test coverage report from Jacoco for CoroutineTemplate
+jacoco_dir = "CoroutineTemplate/**/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"
+markdown "## CoroutineTemplate Jacoco report:"
+Dir[jacoco_dir].each do |file_name|
+  # Report coverage of modified files, warn if total project coverage is under 80%
+  # or if any modified file's coverage is under 95%
+  shroud.report file_name, 80, 95, false
+end

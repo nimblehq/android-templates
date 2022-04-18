@@ -36,3 +36,13 @@ jobs:
         with:
           name: DetektReportsCoroutine
           path: CoroutineTemplate/build/reports/detekt/
+
+      - name: Run unit tests and Jacoco on CoroutineTemplate
+        working-directory: ./CoroutineTemplate
+        run: ./gradlew jacocoTestReport
+
+      - name: Archive code coverage reports on CoroutineTemplate
+        uses: actions/upload-artifact@v2
+        with:
+          name: CodeCoverageReportsCoroutine
+          path: CoroutineTemplate/app/build/reports/jacoco/jacocoTestReport/

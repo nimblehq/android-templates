@@ -37,7 +37,9 @@ jobs:
         working-directory: ./CoroutineTemplate
         run: ./gradlew lint
 
-      # TODO: Update to support test coverage reports from Jacoco for CoroutineTemplate
+      - name: Run unit tests and Jacoco on CoroutineTemplate
+        working-directory: ./CoroutineTemplate
+        run: ./gradlew jacocoTestReport
 
       - name: Set up Ruby
         uses: actions/setup-ruby@v1
