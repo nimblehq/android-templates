@@ -22,6 +22,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
+
         getByName(BuildType.DEBUG) {
             /**
              * From AGP 4.2.0, Jacoco generates the report incorrectly, and the report is missing

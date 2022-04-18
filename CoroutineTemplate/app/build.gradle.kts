@@ -49,6 +49,7 @@ android {
             signingConfig = signingConfigs[BuildType.RELEASE]
             buildConfigField("String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\"")
         }
+
         getByName(BuildType.DEBUG) {
             // For quickly testing build with proguard, enable this
             isMinifyEnabled = false
