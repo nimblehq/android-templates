@@ -1,11 +1,13 @@
 # Android Templates: Coroutine
+
 - Our optimized Android templates used in our android projects
 
-### Setup
+## Setup
+
 - Clone the project
 - Run the project with Android Studio
 
-### Linter and static code analysis
+## Linter and static code analysis
 
 - Lint:
 
@@ -23,7 +25,7 @@ $ ./gradlew detekt
 
 Report is located at: `./build/reports/detekt`
 
-### Testing
+## Testing
 
 - Run unit testing:
 
@@ -40,3 +42,10 @@ $ ./gradlew jacocoTestReport
 ```
 
 Report is located at: `./app/build/reports/jacoco/`
+
+## Build and deploy
+
+For `release` builds, we need to provide release keystore and signing properties:
+
+- Put the `release.keystore` file at root `config` folder.
+- Put keystore signing properties in [signing.properties](https://github.com/nimblehq/android-templates/blob/develop/CoroutineTemplate/signing.properties).

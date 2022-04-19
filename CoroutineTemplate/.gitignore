@@ -45,3 +45,8 @@ secret/
 
 # Code coverage
 jacoco.exec
+
+# Google services
+google-services.json
+# Keystore
+config/release.keystore
