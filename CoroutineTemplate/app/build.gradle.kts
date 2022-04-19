@@ -17,14 +17,14 @@ android {
     signingConfigs {
         create(BuildType.RELEASE) {
             // Remember to edit signing.properties to have the correct info for release build.
-            storeFile = file("config/release.keystore")
+            storeFile = file("../config/release.keystore")
             storePassword = keystoreProperties.getProperty("KEYSTORE_PASSWORD") as String
             keyPassword = keystoreProperties.getProperty("KEY_PASSWORD") as String
             keyAlias = keystoreProperties.getProperty("KEY_ALIAS") as String
         }
 
         getByName(BuildType.DEBUG) {
-            storeFile = file("config/debug.keystore")
+            storeFile = file("../config/debug.keystore")
             storePassword = "oQ4mL1jY2uX7wD8q"
             keyAlias = "debug-key-alias"
             keyPassword = "oQ4mL1jY2uX7wD8q"
