@@ -38,7 +38,7 @@ object Versions {
     const val TIMBER_LOG_VERSION = "4.7.1"
 
     // Configuration
-    const val DETEKT_VERSION = "1.19.0"
+    const val DETEKT_VERSION = "1.20.0"
 
     // Testing libraries
     const val TEST_JUNIT_ANDROIDX_EXT_VERSION = "1.1.2"
