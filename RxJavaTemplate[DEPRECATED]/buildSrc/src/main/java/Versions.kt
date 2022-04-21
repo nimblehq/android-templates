@@ -42,7 +42,7 @@ object Versions {
     const val RXKOTLIN_VERSION = "2.2.0"
     const val RXPERMISSION_VERSION = "0.10.2"
 
-    const val TIMBER_LOG_VERSION = "4.7.1"
+    const val TIMBER_LOG_VERSION = "5.0.1"
 
     // Testing libraries
     const val ANDROID_TEST_VERSION = "1.3.0"
