@@ -1,4 +1,4 @@
-package co.nimblehq.coroutine.data.repositoryimpl
+package co.nimblehq.coroutine.data.repository
 
 import co.nimblehq.coroutine.data.response.UserResponse
 import co.nimblehq.coroutine.data.response.toUsers
