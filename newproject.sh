@@ -77,7 +77,7 @@ case "$template" in
         ;;
     "rx")
         OLD_APPNAME="RxJava Template"
-        OLD_NAME="RxJavaTemplate"
+        OLD_NAME="RxJavaTemplate[DEPRECATED]"
         OLD_PACKAGE="co.nimblehq.rxjava"
         THIRD_PACKAGE_SEGMENT="rxjava"
         ;;

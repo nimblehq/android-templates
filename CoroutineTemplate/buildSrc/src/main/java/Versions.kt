@@ -6,7 +6,7 @@ object Versions {
     const val ANDROID_TARGET_SDK_VERSION = 30
 
     const val ANDROID_VERSION_CODE = 1
-    const val ANDROID_VERSION_NAME = "3.6.0"
+    const val ANDROID_VERSION_NAME = "3.7.0"
 
     // Dependencies (Alphabet sorted)
     const val ANDROID_COMMON_KTX_VERSION = "0.1.1"
@@ -24,6 +24,7 @@ object Versions {
     const val HILT_VERSION = "2.38.1"
 
     const val JAVAX_INJECT_VERSION = "1"
+    const val JACOCO_VERSION = "0.8.7"
 
     const val KOTLIN_REFLECT_VERSION = "1.5.10"
     const val KOTLIN_VERSION = "1.5.21"
@@ -37,7 +38,7 @@ object Versions {
     const val TIMBER_LOG_VERSION = "4.7.1"
 
     // Configuration
-    const val DETEKT_VERSION = "1.18.1"
+    const val DETEKT_VERSION = "1.20.0"
 
     // Testing libraries
     const val TEST_JUNIT_ANDROIDX_EXT_VERSION = "1.1.2"

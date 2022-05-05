@@ -37,6 +37,12 @@ tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
 detekt {
     toolVersion = Versions.DETEKT_VERSION
 
+    source = files(
+        "app/src/main/java",
+        "data/src/main/java",
+        "domain/src/main/java",
+        "buildSrc/src/main/java"
+    )
     parallel = false
     config = files("detekt-config.yml")
     buildUponDefaultConfig = false

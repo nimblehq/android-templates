@@ -7,18 +7,27 @@ plugins {
 
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
+
+    id("plugins.jacoco-report")
 }
 
 val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
 
 android {
     signingConfigs {
-        create("config") {
+        create(BuildType.RELEASE) {
             // Remember to edit signing.properties to have the correct info for release build.
-            storeFile = file("../keystore_production")
+            storeFile = file("../config/release.keystore")
             storePassword = keystoreProperties.getProperty("KEYSTORE_PASSWORD") as String
             keyPassword = keystoreProperties.getProperty("KEY_PASSWORD") as String
             keyAlias = keystoreProperties.getProperty("KEY_ALIAS") as String
+        }
+
+        getByName(BuildType.DEBUG) {
+            storeFile = file("../config/debug.keystore")
+            storePassword = "oQ4mL1jY2uX7wD8q"
+            keyAlias = "debug-key-alias"
+            keyPassword = "oQ4mL1jY2uX7wD8q"
         }
     }
 
@@ -37,13 +46,23 @@ android {
             isDebuggable = false
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-            signingConfig = signingConfigs["config"]
+            signingConfig = signingConfigs[BuildType.RELEASE]
             buildConfigField("String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\"")
         }
+
         getByName(BuildType.DEBUG) {
             // For quickly testing build with proguard, enable this
             isMinifyEnabled = false
+            signingConfig = signingConfigs[BuildType.DEBUG]
             buildConfigField("String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\"")
+            /**
+             * From AGP 4.2.0, Jacoco generates the report incorrectly, and the report is missing
+             * some code coverage from module. On the new version of Gradle, they introduce a new
+             * flag [testCoverageEnabled], we must enable this flag if using Jacoco to capture
+             * coverage and creates a report in the build directory.
+             * Reference: https://developer.android.com/reference/tools/gradle-api/7.1/com/android/build/api/dsl/BuildType#istestcoverageenabled
+             */
+            isTestCoverageEnabled = true
         }
     }
 
