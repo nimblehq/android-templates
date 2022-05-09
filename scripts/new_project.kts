@@ -14,8 +14,10 @@ object NewProject {
     private fun handleArguments(args: Array<String>) {
         args.forEach {
             val (key, value) = it.split(ARGUMENT_DELIMITER)
-            if (key == KEY_APP_NAME) appName = value
-            if (key == KEY_PACKAGE_NAME) packageName = value
+            when (key) {
+                KEY_APP_NAME -> appName = value
+                KEY_PACKAGE_NAME -> packageName = value
+            }
         }
     }
 }
