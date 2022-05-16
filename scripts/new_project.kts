@@ -11,17 +11,22 @@ object NewProject {
     private val appNameWithoutSpace: String
         get() = appName.replace(" ", "")
     private var packageName = ""
+    private val projectPath: String
+        get() = rootPath + appNameWithoutSpace
+    private val rootPath: String
+        get() = System.getProperty("user.dir").replace("scripts", "")
 
     fun generate(args: Array<String>) {
         handleArguments(args)
         initializeNewProjectFolder()
+        cleanNewProjectFolder()
     }
 
     private fun initializeNewProjectFolder() {
         showMessage("=> 🐢 Initializing new project...")
-        copyFiles(fromPath = TEMPLATE_FOLDER_NAME, toPath = appNameWithoutSpace)
+        copyFiles(fromPath = rootPath + TEMPLATE_FOLDER_NAME, toPath = projectPath)
         // Set gradlew file as executable, because copying files from one folder to another doesn't copy file permissions correctly (= read, write & execute).
-        File("../$appNameWithoutSpace/gradlew")?.setExecutable(true)
+        File(projectPath + File.separator + "gradlew")?.setExecutable(true)
     }
 
     private fun handleArguments(args: Array<String>) {
@@ -39,12 +44,27 @@ object NewProject {
     }
 
     private fun copyFiles(fromPath: String, toPath: String) {
-        val targetFolder = File("../$toPath")
-        val sourceFolder = File("../$fromPath")
+        val targetFolder = File(toPath)
+        val sourceFolder = File(fromPath)
         sourceFolder.copyRecursively(targetFolder, true) { file, exception ->
             showMessage(exception?.message ?: "Error copying files")
             return@copyRecursively OnErrorAction.TERMINATE
         }
+    }
+
+    private fun cleanNewProjectFolder() {
+        executeCommand("sh $projectPath${File.separator}gradlew -p $projectPath clean")
+        executeCommand("sh $projectPath${File.separator}gradlew -p $projectPath${File.separator}buildSrc clean")
+        listOf(".idea",".gradle","buildSrc${File.separator}.gradle",".git").forEach {
+            File( "$projectPath${File.separator}$it")?.let { targetFile ->
+                targetFile.deleteRecursively()
+            }
+        }
+    }
+
+    private fun executeCommand(command: String) {
+        val process = Runtime.getRuntime().exec(command)
+        process.inputStream.reader().forEachLine { println(it) }
     }
 }
 
