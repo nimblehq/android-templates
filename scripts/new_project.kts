@@ -6,6 +6,7 @@ object NewProject {
     private const val KEY_APP_NAME = "app-name"
     private const val KEY_PACKAGE_NAME = "package-name"
     private const val TEMPLATE_FOLDER_NAME = "CoroutineTemplate"
+    private const val TEMPLATE_PACKAGE_NAME = "co.nimblehq.coroutine"
 
     private var appName = ""
     private val appNameWithoutSpace: String
@@ -20,6 +21,7 @@ object NewProject {
         handleArguments(args)
         initializeNewProjectFolder()
         cleanNewProjectFolder()
+        renamePackageNameWithinFiles()
     }
 
     private fun initializeNewProjectFolder() {
@@ -65,6 +67,27 @@ object NewProject {
     private fun executeCommand(command: String) {
         val process = Runtime.getRuntime().exec(command)
         process.inputStream.reader().forEachLine { println(it) }
+    }
+
+    private fun renamePackageNameWithinFiles() {
+        showMessage("=> 🔎 Renaming package name within files...")
+        File(projectPath)
+            ?.walk()
+            .filter { it.isFile }
+            .forEach { filePath ->
+                rename(
+                    sourcePath = filePath.toString(),
+                    oldValue = TEMPLATE_PACKAGE_NAME,
+                    newValue = packageName
+                )
+            }
+    }
+
+    private fun rename(sourcePath: String, oldValue: String, newValue: String) {
+        val sourceFile = File(sourcePath)
+        var sourceText = sourceFile.readText()
+        sourceText = sourceText.replace(oldValue, newValue)
+        sourceFile.writeText(sourceText)
     }
 }
 
