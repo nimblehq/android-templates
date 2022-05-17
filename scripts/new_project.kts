@@ -24,7 +24,7 @@ object NewProject {
         handleArguments(args)
         initializeNewProjectFolder()
         cleanNewProjectFolder()
-        repackage()
+        renamePackageNameFolders()
         renamePackageNameWithinFiles()
     }
 
@@ -45,7 +45,7 @@ object NewProject {
         }
     }
 
-    private fun repackage() {
+    private fun renamePackageNameFolders() {
         showMessage("=> 🔎 Rename the package folders...")
         modules.forEach { module ->
             val srcPath = projectPath + File.separator + module + File.separator + "src"
