@@ -73,7 +73,7 @@ object NewProject {
         showMessage("=> 🔎 Renaming package name within files...")
         File(projectPath)
             ?.walk()
-            .filter { it.isFile }
+            .filter { it.isFile && it.name != "debug.keystore" }
             .forEach { filePath ->
                 rename(
                     sourcePath = filePath.toString(),
