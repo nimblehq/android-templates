@@ -49,9 +49,12 @@ object NewProject {
         showMessage("=> 🔎 Rename the package folders...")
         modules.forEach { module ->
             val srcPath = projectPath + File.separator + module + File.separator + "src"
-            for (file in File(srcPath).listFiles()) {
-                if (file.isDirectory) {
-                    val javaPath = file.absolutePath + File.separator + "java"
+            File(srcPath)
+                .walk()
+                .maxDepth(2)
+                .filter { it.isDirectory && it.name == "java" }
+                .forEach { javaDirectory ->
+                    val javaPath = javaDirectory.absolutePath
                     val currentPackagePath =
                         javaPath + File.separator + TEMPLATE_PACKAGE_NAME.replace(
                             DOT_SEPARATOR,
@@ -70,7 +73,6 @@ object NewProject {
                         )
                     }
                 }
-            }
         }
     }
 
@@ -79,14 +81,14 @@ object NewProject {
         tempPath: String,
         newPackagePath: String
     ) {
-        copyFiles(currentPackagePath, tempPath)
+        copyFiles(fromPath = currentPackagePath, toPath = tempPath)
         deleteFilesOrDirectories(
             currentPackagePath.replace(
                 TEMPLATE_PACKAGE_NAME.replace(DOT_SEPARATOR, File.separator),
                 TEMPLATE_PACKAGE_NAME.split(DOT_SEPARATOR).first()
             )
         )
-        copyFiles(tempPath, newPackagePath)
+        copyFiles(fromPath = tempPath, toPath = newPackagePath)
         deleteFilesOrDirectories(tempPath)
     }
 
