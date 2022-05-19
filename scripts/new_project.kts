@@ -54,46 +54,27 @@ object NewProject {
                 .maxDepth(2)
                 .filter { it.isDirectory && it.name == "java" }
                 .forEach { javaDirectory ->
-                    val javaPath = javaDirectory.absolutePath
-                    val currentPackagePath =
-                        javaPath + File.separator + TEMPLATE_PACKAGE_NAME.replace(
-                            DOT_SEPARATOR,
-                            File.separator
+                    val oldDirectory = File(
+                        javaDirectory, TEMPLATE_PACKAGE_NAME.replace(
+                            oldValue = DOT_SEPARATOR,
+                            newValue = File.separator
                         )
-                    val newPackagePath =
-                        javaPath + File.separator + packageName.replace(
-                            DOT_SEPARATOR,
-                            File.separator
+                    )
+                    val newDirectory = File(
+                        javaDirectory, packageName.replace(
+                            oldValue = DOT_SEPARATOR,
+                            newValue = File.separator
                         )
-                    if (File(currentPackagePath).exists()) {
-                        copyCurrentPackageToNewPackageAndClean(
-                            currentPackagePath = currentPackagePath,
-                            tempPath = javaPath + File.separator + "temp_folder",
-                            newPackagePath = newPackagePath
-                        )
-                    }
+                    )
+
+                    val tempDirectory = File(javaDirectory, "temp_directory")
+                    oldDirectory.copyRecursively(tempDirectory)
+                    oldDirectory.parentFile?.parentFile?.deleteRecursively()
+                    newDirectory.mkdirs()
+                    tempDirectory.copyRecursively(newDirectory)
+                    tempDirectory.deleteRecursively()
                 }
         }
-    }
-
-    private fun copyCurrentPackageToNewPackageAndClean(
-        currentPackagePath: String,
-        tempPath: String,
-        newPackagePath: String
-    ) {
-        copyFiles(fromPath = currentPackagePath, toPath = tempPath)
-        deleteFilesOrDirectories(
-            currentPackagePath.replace(
-                TEMPLATE_PACKAGE_NAME.replace(DOT_SEPARATOR, File.separator),
-                TEMPLATE_PACKAGE_NAME.split(DOT_SEPARATOR).first()
-            )
-        )
-        copyFiles(fromPath = tempPath, toPath = newPackagePath)
-        deleteFilesOrDirectories(tempPath)
-    }
-
-    private fun deleteFilesOrDirectories(fromPath: String) {
-        File(fromPath).deleteRecursively()
     }
 
     private fun showMessage(message: String) {
