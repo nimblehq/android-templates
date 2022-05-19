@@ -3,10 +3,13 @@ import java.io.File
 object NewProject {
 
     private const val ARGUMENT_DELIMITER = "="
+    private const val DOT_SEPARATOR = "."
     private const val KEY_APP_NAME = "app-name"
     private const val KEY_PACKAGE_NAME = "package-name"
     private const val TEMPLATE_FOLDER_NAME = "CoroutineTemplate"
     private const val TEMPLATE_PACKAGE_NAME = "co.nimblehq.coroutine"
+
+    private val modules = listOf("app", "data", "domain")
 
     private var appName = ""
     private val appNameWithoutSpace: String
@@ -21,6 +24,7 @@ object NewProject {
         handleArguments(args)
         initializeNewProjectFolder()
         cleanNewProjectFolder()
+        renamePackageNameFolders()
         renamePackageNameWithinFiles()
     }
 
@@ -41,6 +45,38 @@ object NewProject {
         }
     }
 
+    private fun renamePackageNameFolders() {
+        showMessage("=> 🔎 Rename the package folders...")
+        modules.forEach { module ->
+            val srcPath = projectPath + File.separator + module + File.separator + "src"
+            File(srcPath)
+                .walk()
+                .maxDepth(2)
+                .filter { it.isDirectory && it.name == "java" }
+                .forEach { javaDirectory ->
+                    val oldDirectory = File(
+                        javaDirectory, TEMPLATE_PACKAGE_NAME.replace(
+                            oldValue = DOT_SEPARATOR,
+                            newValue = File.separator
+                        )
+                    )
+                    val newDirectory = File(
+                        javaDirectory, packageName.replace(
+                            oldValue = DOT_SEPARATOR,
+                            newValue = File.separator
+                        )
+                    )
+
+                    val tempDirectory = File(javaDirectory, "temp_directory")
+                    oldDirectory.copyRecursively(tempDirectory)
+                    oldDirectory.parentFile?.parentFile?.deleteRecursively()
+                    newDirectory.mkdirs()
+                    tempDirectory.copyRecursively(newDirectory)
+                    tempDirectory.deleteRecursively()
+                }
+        }
+    }
+
     private fun showMessage(message: String) {
         println("\n${message}\n")
     }
@@ -57,8 +93,8 @@ object NewProject {
     private fun cleanNewProjectFolder() {
         executeCommand("sh $projectPath${File.separator}gradlew -p $projectPath clean")
         executeCommand("sh $projectPath${File.separator}gradlew -p $projectPath${File.separator}buildSrc clean")
-        listOf(".idea",".gradle","buildSrc${File.separator}.gradle",".git").forEach {
-            File( "$projectPath${File.separator}$it")?.let { targetFile ->
+        listOf(".idea", ".gradle", "buildSrc${File.separator}.gradle", ".git").forEach {
+            File("$projectPath${File.separator}$it")?.let { targetFile ->
                 targetFile.deleteRecursively()
             }
         }
