@@ -80,10 +80,16 @@ object NewProject {
                     )
 
                     val tempDirectory = File(javaDirectory, "temp_directory")
-                    copyFiles(fromPath = oldDirectory.absolutePath, toPath = tempDirectory.absolutePath)
+                    copyFiles(
+                        fromPath = oldDirectory.absolutePath,
+                        toPath = tempDirectory.absolutePath
+                    )
                     oldDirectory.parentFile?.parentFile?.deleteRecursively()
                     newDirectory.mkdirs()
-                    copyFiles(fromPath = tempDirectory.absolutePath, toPath = newDirectory.absolutePath)
+                    copyFiles(
+                        fromPath = tempDirectory.absolutePath,
+                        toPath = newDirectory.absolutePath
+                    )
                     tempDirectory.deleteRecursively()
                 }
         }
@@ -93,7 +99,7 @@ object NewProject {
         showMessage("=> 🔎 Renaming package name within files...")
         File(projectPath)
             ?.walk()
-            .filter { it.isFile && it.name != "debug.keystore" && it.name != "gradle-wrapper.jar"}
+            .filter { it.name.endsWith(".kt") || it.name.endsWith(".xml") }
             .forEach { filePath ->
                 rename(
                     sourcePath = filePath.toString(),
@@ -127,6 +133,11 @@ object NewProject {
     private fun executeCommand(command: String) {
         val process = Runtime.getRuntime().exec(command)
         process.inputStream.reader().forEachLine { println(it) }
+        val exitValue = process.waitFor()
+        if (exitValue != 0) {
+            showMessage("❌ Something went wrong!")
+            System.exit(exitValue)
+        }
     }
 
     private fun rename(sourcePath: String, oldValue: String, newValue: String) {
