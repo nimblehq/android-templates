@@ -14,6 +14,7 @@ object NewProject {
     private var appName = ""
     private val appNameWithoutSpace: String
         get() = appName.replace(" ", "")
+    private val fileSeparator = File.separator
     private var packageName = ""
     private val projectPath: String
         get() = rootPath + appNameWithoutSpace
@@ -26,13 +27,7 @@ object NewProject {
         cleanNewProjectFolder()
         renamePackageNameFolders()
         renamePackageNameWithinFiles()
-    }
-
-    private fun initializeNewProjectFolder() {
-        showMessage("=> 🐢 Initializing new project...")
-        copyFiles(fromPath = rootPath + TEMPLATE_FOLDER_NAME, toPath = projectPath)
-        // Set gradlew file as executable, because copying files from one folder to another doesn't copy file permissions correctly (= read, write & execute).
-        File(projectPath + File.separator + "gradlew")?.setExecutable(true)
+        buildProjectAndRunTests()
     }
 
     private fun handleArguments(args: Array<String>) {
@@ -45,10 +40,27 @@ object NewProject {
         }
     }
 
+    private fun initializeNewProjectFolder() {
+        showMessage("=> 🐢 Initializing new project...")
+        copyFiles(fromPath = rootPath + TEMPLATE_FOLDER_NAME, toPath = projectPath)
+        // Set gradlew file as executable, because copying files from one folder to another doesn't copy file permissions correctly (= read, write & execute).
+        File(projectPath + fileSeparator + "gradlew")?.setExecutable(true)
+    }
+
+    private fun cleanNewProjectFolder() {
+        executeCommand("sh $projectPath${fileSeparator}gradlew -p $projectPath clean")
+        executeCommand("sh $projectPath${fileSeparator}gradlew -p $projectPath${fileSeparator}buildSrc clean")
+        listOf(".idea", ".gradle", "buildSrc$fileSeparator.gradle", ".git").forEach {
+            File("$projectPath$fileSeparator$it")?.let { targetFile ->
+                targetFile.deleteRecursively()
+            }
+        }
+    }
+
     private fun renamePackageNameFolders() {
-        showMessage("=> 🔎 Rename the package folders...")
+        showMessage("=> 🔎 Renaming the package folders...")
         modules.forEach { module ->
-            val srcPath = projectPath + File.separator + module + File.separator + "src"
+            val srcPath = projectPath + fileSeparator + module + fileSeparator + "src"
             File(srcPath)
                 .walk()
                 .maxDepth(2)
@@ -57,24 +69,52 @@ object NewProject {
                     val oldDirectory = File(
                         javaDirectory, TEMPLATE_PACKAGE_NAME.replace(
                             oldValue = DOT_SEPARATOR,
-                            newValue = File.separator
+                            newValue = fileSeparator
                         )
                     )
                     val newDirectory = File(
                         javaDirectory, packageName.replace(
                             oldValue = DOT_SEPARATOR,
-                            newValue = File.separator
+                            newValue = fileSeparator
                         )
                     )
 
                     val tempDirectory = File(javaDirectory, "temp_directory")
-                    oldDirectory.copyRecursively(tempDirectory)
+                    copyFiles(
+                        fromPath = oldDirectory.absolutePath,
+                        toPath = tempDirectory.absolutePath
+                    )
                     oldDirectory.parentFile?.parentFile?.deleteRecursively()
                     newDirectory.mkdirs()
-                    tempDirectory.copyRecursively(newDirectory)
+                    copyFiles(
+                        fromPath = tempDirectory.absolutePath,
+                        toPath = newDirectory.absolutePath
+                    )
                     tempDirectory.deleteRecursively()
                 }
         }
+    }
+
+    private fun renamePackageNameWithinFiles() {
+        showMessage("=> 🔎 Renaming package name within files...")
+        File(projectPath)
+            ?.walk()
+            .filter { it.name.endsWith(".kt") || it.name.endsWith(".xml") }
+            .forEach { filePath ->
+                rename(
+                    sourcePath = filePath.toString(),
+                    oldValue = TEMPLATE_PACKAGE_NAME,
+                    newValue = packageName
+                )
+            }
+    }
+
+    private fun buildProjectAndRunTests() {
+        showMessage("=> 🛠️ Building project...")
+        executeCommand("sh $projectPath${fileSeparator}gradlew -p /$projectPath assembleDebug")
+        showMessage("=> 🚓 Running tests...")
+        executeCommand("sh $projectPath${fileSeparator}gradlew -p /$projectPath testStagingDebugUnitTest")
+        showMessage("=> 🚀 Done! The project is ready for development")
     }
 
     private fun showMessage(message: String) {
@@ -90,33 +130,14 @@ object NewProject {
         }
     }
 
-    private fun cleanNewProjectFolder() {
-        executeCommand("sh $projectPath${File.separator}gradlew -p $projectPath clean")
-        executeCommand("sh $projectPath${File.separator}gradlew -p $projectPath${File.separator}buildSrc clean")
-        listOf(".idea", ".gradle", "buildSrc${File.separator}.gradle", ".git").forEach {
-            File("$projectPath${File.separator}$it")?.let { targetFile ->
-                targetFile.deleteRecursively()
-            }
-        }
-    }
-
     private fun executeCommand(command: String) {
         val process = Runtime.getRuntime().exec(command)
         process.inputStream.reader().forEachLine { println(it) }
-    }
-
-    private fun renamePackageNameWithinFiles() {
-        showMessage("=> 🔎 Renaming package name within files...")
-        File(projectPath)
-            ?.walk()
-            .filter { it.isFile && it.name != "debug.keystore" }
-            .forEach { filePath ->
-                rename(
-                    sourcePath = filePath.toString(),
-                    oldValue = TEMPLATE_PACKAGE_NAME,
-                    newValue = packageName
-                )
-            }
+        val exitValue = process.waitFor()
+        if (exitValue != 0) {
+            showMessage("❌ Something went wrong!")
+            System.exit(exitValue)
+        }
     }
 
     private fun rename(sourcePath: String, oldValue: String, newValue: String) {
