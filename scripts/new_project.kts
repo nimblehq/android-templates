@@ -6,6 +6,7 @@ object NewProject {
     private const val DOT_SEPARATOR = "."
     private const val KEY_APP_NAME = "app-name"
     private const val KEY_PACKAGE_NAME = "package-name"
+    private const val TEMPLATE_APPLICATION_CLASS_NAME = "CoroutineTemplateApplication"
     private const val TEMPLATE_FOLDER_NAME = "CoroutineTemplate"
     private const val TEMPLATE_PACKAGE_NAME = "co.nimblehq.coroutine"
 
@@ -14,6 +15,8 @@ object NewProject {
     private var appName = ""
     private val appNameWithoutSpace: String
         get() = appName.replace(" ", "")
+    private val applicationClassName: String
+        get() = "${appNameWithoutSpace}Application"
     private val fileSeparator = File.separator
     private var packageName = ""
     private val projectPath: String
@@ -27,6 +30,7 @@ object NewProject {
         cleanNewProjectFolder()
         renamePackageNameFolders()
         renamePackageNameWithinFiles()
+        renameApplicationClass()
         buildProjectAndRunTests()
     }
 
@@ -106,6 +110,28 @@ object NewProject {
                     oldValue = TEMPLATE_PACKAGE_NAME,
                     newValue = packageName
                 )
+            }
+    }
+
+    private fun renameApplicationClass() {
+        showMessage("=> 🔎 Renaming application class...")
+        File(projectPath)
+            ?.walk()
+            .filter { it.name == "$TEMPLATE_APPLICATION_CLASS_NAME.kt" || it.name == "AndroidManifest.xml" }
+            .forEach { file ->
+                rename(
+                    sourcePath = file.absolutePath,
+                    oldValue = TEMPLATE_APPLICATION_CLASS_NAME,
+                    newValue = applicationClassName
+                )
+                if (file.name == "$TEMPLATE_APPLICATION_CLASS_NAME.kt") {
+                    val newApplicationPath = file.absolutePath.replaceAfterLast(
+                        delimiter = fileSeparator,
+                        replacement = "$applicationClassName.kt"
+                    )
+                    val newApplicationFile = File(newApplicationPath)
+                    file.renameTo(newApplicationFile)
+                }
             }
     }
 
