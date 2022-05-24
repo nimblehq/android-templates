@@ -10,7 +10,7 @@ object NewProject {
     private const val TEMPLATE_FOLDER_NAME = "CoroutineTemplate"
     private const val TEMPLATE_PACKAGE_NAME = "co.nimblehq.coroutine"
 
-    private const val APP_PATTERN = "^[A-Z\$][a-zA-Z0-9\$]*\$"
+    private const val APP_PATTERN = "^[A-Z\$][a-zA-Z0-9(\\s)\$]*\$"
     private const val PACKAGE_PATTERN = "^[a-z]+(\\.[a-z][a-z0-9]*)*\$"
 
     private val modules = listOf("app", "data", "domain")
@@ -23,7 +23,7 @@ object NewProject {
         get() = "${appNameWithoutSpace}Application"
 
     private val projectPath: String
-        get() = rootPath + appName
+        get() = rootPath + appName.replace(oldValue = " ", newValue = "")
 
     private val rootPath: String
         get() = System.getProperty("user.dir").replace("scripts", "")
@@ -33,7 +33,7 @@ object NewProject {
     }
 
     private fun handleArguments(args: Array<String>) {
-        val agrumentError = "ERROR: Invalid Agrument name: Ensure define argruments => app-name={\"MyProject\"} package-name={com.sample.myproject}"
+        val agrumentError = "ERROR: Invalid Agrument name: Ensure define argruments => app-name={\"MyProject\"} or {\"My Project\"} { package-name={com.sample.myproject}"
         when (args.size) {
             1 -> when {
                 args.first().startsWith(KEY_APP_NAME) -> showMessage("ERROR: No package has been provided")
@@ -56,7 +56,7 @@ object NewProject {
         if (APP_PATTERN.toRegex().containsMatchIn(value)) {
             appName = value
         } else {
-            showMessage("ERROR: Invalid App Name: $value (needs to follow standard pattern {AppName})")
+            showMessage("ERROR: Invalid App Name: $value (needs to follow standard pattern {MyProject} or {My Project})")
         }
     }
 
