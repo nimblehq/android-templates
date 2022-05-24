@@ -19,11 +19,14 @@ object NewProject {
     private var appName = ""
     private var packageName = ""
 
+    private val appNameWithoutSpace: String
+        get() = appName.replace(" ", "")
+
     private val applicationClassName: String
         get() = "${appNameWithoutSpace}Application"
 
     private val projectPath: String
-        get() = rootPath + appName.replace(oldValue = " ", newValue = "")
+        get() = rootPath + appNameWithoutSpace
 
     private val rootPath: String
         get() = System.getProperty("user.dir").replace("scripts", "")
@@ -76,6 +79,23 @@ object NewProject {
             renamePackageNameWithinFiles()
             renameApplicationClass()
             buildProjectAndRunTests()
+        }
+    }
+
+    private fun initializeNewProjectFolder() {
+        showMessage("=> 🐢 Initializing new project...")
+        copyFiles(fromPath = rootPath + TEMPLATE_FOLDER_NAME, toPath = projectPath)
+        // Set gradlew file as executable, because copying files from one folder to another doesn't copy file permissions correctly (= read, write & execute).
+        File(projectPath + fileSeparator + "gradlew")?.setExecutable(true)
+    }
+
+    private fun cleanNewProjectFolder() {
+        executeCommand("sh $projectPath${fileSeparator}gradlew -p $projectPath clean")
+        executeCommand("sh $projectPath${fileSeparator}gradlew -p $projectPath${fileSeparator}buildSrc clean")
+        listOf(".idea", ".gradle", "buildSrc$fileSeparator.gradle", ".git").forEach {
+            File("$projectPath$fileSeparator$it")?.let { targetFile ->
+                targetFile.deleteRecursively()
+            }
         }
     }
 
@@ -159,10 +179,6 @@ object NewProject {
         showMessage("=> 🚓 Running tests...")
         executeCommand("sh $projectPath${fileSeparator}gradlew -p /$projectPath testStagingDebugUnitTest")
         showMessage("=> 🚀 Done! The project is ready for development")
-    }
-
-    private fun showMessage(message: String) {
-        println("\n${message}\n")
     }
 
     private fun copyFiles(fromPath: String, toPath: String) {
