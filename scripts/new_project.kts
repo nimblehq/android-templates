@@ -111,25 +111,21 @@ object NewProject {
         showMessage("=> 🔎 Renaming application class...")
         File(projectPath)
             ?.walk()
-            .find { it.name == "$TEMPLATE_APPLICATION_CLASS_NAME.kt" }
-            ?.let { templateApplicationFile ->
-                val newApplicationPath = templateApplicationFile.absolutePath.replaceAfterLast(
-                    delimiter = fileSeparator,
-                    replacement = "$applicationClassName.kt"
-                )
-                val newApplicationFile = File(newApplicationPath)
-                templateApplicationFile.renameTo(newApplicationFile)
-            }
-
-        File(projectPath)
-            ?.walk()
-            .filter { it.name.endsWith(".kt") || it.name.endsWith(".xml") }
+            .filter { it.name == "$TEMPLATE_APPLICATION_CLASS_NAME.kt" || it.name == "AndroidManifest.xml" }
             .forEach { file ->
                 rename(
                     sourcePath = file.absolutePath,
                     oldValue = TEMPLATE_APPLICATION_CLASS_NAME,
                     newValue = applicationClassName
                 )
+                if (file.name == "$TEMPLATE_APPLICATION_CLASS_NAME.kt") {
+                    val newApplicationPath = file.absolutePath.replaceAfterLast(
+                        delimiter = fileSeparator,
+                        replacement = "$applicationClassName.kt"
+                    )
+                    val newApplicationFile = File(newApplicationPath)
+                    file.renameTo(newApplicationFile)
+                }
             }
     }
 
