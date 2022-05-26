@@ -6,6 +6,7 @@ object NewProject {
     private const val DOT_SEPARATOR = "."
     private const val KEY_APP_NAME = "app-name"
     private const val KEY_PACKAGE_NAME = "package-name"
+    private const val TEMPLATE_APP_NAME = "Coroutine Template"
     private const val TEMPLATE_APPLICATION_CLASS_NAME = "CoroutineTemplateApplication"
     private const val TEMPLATE_FOLDER_NAME = "CoroutineTemplate"
     private const val TEMPLATE_PACKAGE_NAME = "co.nimblehq.coroutine"
@@ -38,6 +39,7 @@ object NewProject {
         renamePackageNameFolders()
         renamePackageNameWithinFiles()
         renameApplicationClass()
+        renameAppName()
         buildProjectAndRunTests()
     }
 
@@ -192,6 +194,20 @@ object NewProject {
         if (exitValue != 0) {
             showErrorMessage("❌ Something went wrong!", exitValue)
         }
+    }
+
+    private fun renameAppName() {
+        showMessage("=> 🔎 Renaming app name...")
+        File(projectPath)
+            ?.walk()
+            .filter { it.name == "strings.xml" }
+            .forEach { filePath ->
+                rename(
+                    sourcePath = filePath.toString(),
+                    oldValue = TEMPLATE_APP_NAME,
+                    newValue = appName
+                )
+            }
     }
 
     private fun rename(sourcePath: String, oldValue: String, newValue: String) {
