@@ -2,7 +2,7 @@ Welcome to the android-templates wiki!
 
 This repository generates a new project based on our preferences, by running a simple script. 
 
-Example: `./newproject.sh -t crt -p co.myproject.example -n "MyProjectExampleCoroutine"`
+Example: `kscript new_project.kts package-name=co.myproject.example app-name="My Project"`
 
 This script must include all essentials by default, while optional features can be appended with flags. To prevent this repository from becoming a dumping playground, features can be rejected too.
 

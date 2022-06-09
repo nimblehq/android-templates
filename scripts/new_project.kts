@@ -172,9 +172,9 @@ object NewProject {
 
     private fun buildProjectAndRunTests() {
         showMessage("=> 🛠️ Building project...")
-        executeCommand("sh $projectPath${fileSeparator}gradlew -p /$projectPath assembleDebug")
+        executeCommand("sh $projectPath${fileSeparator}gradlew -p $fileSeparator$projectPath assembleDebug")
         showMessage("=> 🚓 Running tests...")
-        executeCommand("sh $projectPath${fileSeparator}gradlew -p /$projectPath testStagingDebugUnitTest")
+        executeCommand("sh $projectPath${fileSeparator}gradlew -p $fileSeparator$projectPath testStagingDebugUnitTest")
         showMessage("=> 🚀 Done! The project is ready for development")
     }
 
