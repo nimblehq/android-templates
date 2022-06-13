@@ -45,4 +45,10 @@ Keep in mind, the features are based on _our team's_ requirements. In case the c
 
 Please note that the above examples are not definitive as new and existing libraries keep on emerging and evolving.
 
+How do we vote on an issue? 🗳
+
+- If we agree with the RFC, we must react with 👍.
+- If we disagree with the RFC, we must react with 👎 and leave a comment explaining why.
+- It is the responsibility of the RFC creator to label their proposed change as **essential** or **optional**.
+
 Still unsure where your future contribution belongs? Let's discuss! 🚀
