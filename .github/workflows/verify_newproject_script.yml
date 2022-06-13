@@ -34,8 +34,8 @@ jobs:
         run: |
           curl -s "https://get.sdkman.io" | bash
           source "$HOME/.sdkman/bin/sdkman-init.sh"
-          sdk install kotlin
-          sdk install kscript
+          sdk install kotlin 1.6.21
+          sdk install kscript 4.0.3
           echo $PATH >> $GITHUB_PATH
 
       - name: Verify generating new project from CoroutineTemplate
