@@ -49,11 +49,11 @@ Before an issue can be worked on, it must go through our voting process.
 
 How do we vote on an issue? 🗳
 
+- It is the responsibility of the RFC creator to label their proposed change as **essential** or **optional**.
 - If we agree with the RFC, we must react with 👍. 
   - If there are 3 x 👍, then the issue is approved.
 - If we disagree with the RFC, we must react with 👎 and leave a comment explaining why. 
   - If there are 3 x 👎, then the issue is rejected.
-- It is the responsibility of the RFC creator to label their proposed change as **essential** or **optional**.
 - If there are differing opinions, then the repository maintainer must resolve it.
 
 Still unsure where your future contribution belongs? Let's discuss! 🚀
