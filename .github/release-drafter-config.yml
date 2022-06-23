@@ -1,0 +1,16 @@
+name-template: '$RESOLVED_VERSION'
+
+tag-template: '$RESOLVED_VERSION'
+
+categories:
+  - title: 'Features'
+    label: 'feature'
+  - title: 'Chores'
+    label: 'chore'
+  - title: 'Bugs'
+    label: 'bug'
+
+change-template: '- $TITLE'
+
+template: |
+  $CHANGES
