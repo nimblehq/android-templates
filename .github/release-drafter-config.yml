@@ -4,11 +4,11 @@ tag-template: '$RESOLVED_VERSION'
 
 categories:
   - title: 'Features'
-    label: 'feature'
+    label: 'type : feature'
   - title: 'Chores'
-    label: 'chore'
+    label: 'type : chore'
   - title: 'Bugs'
-    label: 'bug'
+    label: 'type : bug'
 
 change-template: '- $TITLE'
 

@@ -1,4 +1,4 @@
-name: Create Draft Release
+name: Draft a new release
 
 on:
   push:
@@ -11,15 +11,28 @@ permissions:
 jobs:
   update_release_draft:
     permissions:
-      contents: write  # for release-drafter/release-drafter to create a github release
-      pull-requests: write  # for release-drafter/release-drafter to add label to PR
+      contents: write
     runs-on: ubuntu-latest
     steps:
-      # TODO: determine the next version before the following step and pass it as an input.
-      - uses: release-drafter/release-drafter@v5
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install Kscript
+        run: |
+          curl -s "https://get.sdkman.io" | bash
+          source "$HOME/.sdkman/bin/sdkman-init.sh"
+          sdk install kotlin 1.6.21
+          sdk install kscript 4.0.3
+          echo $PATH >> $GITHUB_PATH
+      - name: Set version
+        working-directory: scripts
+        run: |
+          COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
+          VERSION=$(kscript get_version.kts "$COMMIT_MESSAGE")
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+      - name: Draft release
+        uses: release-drafter/release-drafter@v5
         with:
           config-name: release-drafter-config.yml
-          disable-autolabeler: true
-          # version: here goes the next version
+          version: ${{ env.VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
