@@ -3,11 +3,11 @@ name-template: '$RESOLVED_VERSION'
 tag-template: '$RESOLVED_VERSION'
 
 categories:
-  - title: 'Features'
+  - title: '⭐ Features'
     label: 'type : feature'
-  - title: 'Chores'
+  - title: '🧹 Chores'
     label: 'type : chore'
-  - title: 'Bugs'
+  - title: '🐞 Bugs'
     label: 'type : bug'
 
 change-template: '- $TITLE'
