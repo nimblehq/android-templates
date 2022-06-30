@@ -26,7 +26,7 @@ jobs:
           sdk install kscript 4.0.3
           echo $PATH >> $GITHUB_PATH
 
-      - name: Set version
+      - name: Get version from the latest commit message
         working-directory: scripts
         run: |
           COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
@@ -35,8 +35,8 @@ jobs:
 
       - name: Draft release
         uses: release-drafter/release-drafter@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           config-name: release-drafter-config.yml
           version: ${{ env.VERSION }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
