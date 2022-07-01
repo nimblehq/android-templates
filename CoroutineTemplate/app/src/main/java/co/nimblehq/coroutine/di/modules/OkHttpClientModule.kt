@@ -23,6 +23,5 @@ class OkHttpClientModule {
             })
             readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
         }
-    }
-        .build()
+    }.build()
 }
