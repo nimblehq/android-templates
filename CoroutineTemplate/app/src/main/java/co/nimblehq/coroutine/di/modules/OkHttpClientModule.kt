@@ -9,6 +9,10 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 
+private const val CONNECT_TIME_OUT = 30L
+private const val WRITE_TIME_OUT = 30L
+private const val READ_TIME_OUT = 30L
+
 @Module
 @InstallIn(SingletonComponent::class)
 class OkHttpClientModule {
@@ -19,9 +23,9 @@ class OkHttpClientModule {
             addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             })
-            connectTimeout(30, TimeUnit.SECONDS)
-            writeTimeout(30, TimeUnit.SECONDS)
-            readTimeout(30, TimeUnit.SECONDS)
+            connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
+            writeTimeout(WRITE_TIME_OUT, TimeUnit.SECONDS)
+            readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
         }
     }
         .build()
