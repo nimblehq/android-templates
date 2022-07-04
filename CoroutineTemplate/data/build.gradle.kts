@@ -19,11 +19,14 @@ android {
 
     buildTypes {
         getByName(BuildType.RELEASE) {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            )
         }
 
         getByName(BuildType.DEBUG) {
+            isMinifyEnabled = false
             /**
              * From AGP 4.2.0, Jacoco generates the report incorrectly, and the report is missing
              * some code coverage from module. On the new version of Gradle, they introduce a new

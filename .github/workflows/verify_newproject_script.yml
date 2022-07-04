@@ -30,8 +30,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Verify generating new project from RxTemplate
-        run: ./newproject.sh -t rx -p co.myproject.example -n "MyProjectExampleRx"
+      - name: Install Kscript
+        run: |
+          curl -s "https://get.sdkman.io" | bash
+          source "$HOME/.sdkman/bin/sdkman-init.sh"
+          sdk install kotlin 1.6.21
+          sdk install kscript 4.0.3
+          echo $PATH >> $GITHUB_PATH
 
       - name: Verify generating new project from CoroutineTemplate
-        run: ./newproject.sh -t crt -p co.myproject.example -n "MyProjectExampleCoroutine"
+        working-directory: scripts
+        run: kscript new_project.kts package-name=co.myproject.example app-name="My Project"

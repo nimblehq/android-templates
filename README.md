@@ -1,40 +1,38 @@
 <p align="center">
-  <img alt="Nimble logo" src="https://assets.nimblehq.co/logo/light/logo-light-text-320.png" />
+  <a href="https://nimblehq.co/">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://assets.nimblehq.co/logo/dark/logo-dark-text-320.png">
+      <img alt="Nimble logo" src="https://assets.nimblehq.co/logo/light/logo-light-text-320.png">
+    </picture>    
+  </a>
 </p>
 
 ---
 
-A collection of templates:
-
-* **[CoroutineTemplate](https://github.com/nimblehq/android-templates/tree/kotlin/CoroutineTemplate)**
-* **[RxJavaTemplate[DEPRECATED]](https://github.com/nimblehq/android-templates/tree/kotlin/RxJavaTemplate)**
+Our Android template: **[CoroutineTemplate](https://github.com/nimblehq/android-templates/tree/develop/CoroutineTemplate)**
 
 ## Setup
 
 1. Clone or download this repository to your local machine, then extract and open the folder
-2. Run `newproject.sh` script to create a new project with the following inputs:
+2. Install [Kscript](https://github.com/holgerbrandl/kscript#installation)
+3. Run `kscript new_project.kts` to create a new project with the following arguments:
+  ```   
+    package-name=                      New package name (i.e. com.example.package)
+    app-name=                          New app name (i.e. MyApp, "My App")
+  ```
 
-```
-  -h, --help                         Display this usage message and exit
-  -t, --template [TEMPLATE]          Select template: "rx" - RxJavaTemplate or "crt" - CoroutineTemplate (i.e. rx)
-  -p, --package-name [PACKAGE_NAME]  New package name (i.e. com.example.package)
-  -n, --app-name [APP_NAME]          New app name (i.e. MyApp, "My App")
-```
+  Example: `kscript new_project.kts package-name=co.myproject.example app-name="My Project"`
 
-Example:
-- Init a new project with `RxJavaTemplate`
-  `./newproject.sh -t rx -p co.myproject.example -n "My Project"`
-
-- Init a new project with `CoroutineTemplate`
-  `./newproject.sh -t crt -p co.myproject.example -n "My Project"`
-
-3. Update `android_version_code` and `android_version_name`
-  - `RxJavaTemplate[DEPRECATED]/build.gradle`
-  - `CoroutineTemplate/build.gradle`
+4. Update `android_version_code` and `android_version_name` in `CoroutineTemplate/build.gradle`
 
 ## About
 
-![Nimble](https://assets.nimblehq.co/logo/dark/logo-dark-text-160.png)
+<a href="https://nimblehq.co/">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://assets.nimblehq.co/logo/dark/logo-dark-text-160.png">
+    <img alt="Nimble logo" src="https://assets.nimblehq.co/logo/light/logo-light-text-160.png">
+  </picture>    
+</a>
 
 This project is maintained and funded by Nimble.
 
