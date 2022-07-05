@@ -6,28 +6,43 @@ object NewProject {
     private const val DOT_SEPARATOR = "."
     private const val KEY_APP_NAME = "app-name"
     private const val KEY_PACKAGE_NAME = "package-name"
+    private const val MINUS_SEPARATOR = "-"
+    private const val SPACE_SEPARATOR = " "
     private const val TEMPLATE_APP_NAME = "Coroutine Template"
     private const val TEMPLATE_APPLICATION_CLASS_NAME = "CoroutineTemplateApplication"
     private const val TEMPLATE_FOLDER_NAME = "CoroutineTemplate"
     private const val TEMPLATE_PACKAGE_NAME = "co.nimblehq.coroutine"
 
-    private const val PATTERN_APP = "^[A-Z][a-zA-Z0-9\\s]*$"
+    private const val PATTERN_APP = "^([A-Z][a-zA-Z0-9\\s]*)|([a-z][a-z0-9-]*)$"
     private const val PATTERN_PACKAGE = "^[a-z]+(\\.[a-z][a-z0-9]*)+$"
 
     private val modules = listOf("app", "data", "domain")
     private val fileSeparator = File.separator
 
-    private var appName = ""
+    private var appName: String = ""
+        set(value) {
+            field = if (value.contains(MINUS_SEPARATOR)) {
+                projectFolderName = value
+                value.replace(MINUS_SEPARATOR, SPACE_SEPARATOR).uppercaseEveryFirstCharacter()
+            } else {
+                value.uppercaseEveryFirstCharacter().also {
+                    projectFolderName = it.getStringWithoutSpace()
+                }
+            }
+        }
+
     private var packageName = ""
 
     private val appNameWithoutSpace: String
-        get() = appName.replace(" ", "")
+        get() = appName.getStringWithoutSpace()
 
     private val applicationClassName: String
         get() = "${appNameWithoutSpace}Application"
 
+    private var projectFolderName: String = ""
+
     private val projectPath: String
-        get() = rootPath + appNameWithoutSpace
+        get() = rootPath + projectFolderName
 
     private val rootPath: String
         get() = System.getProperty("user.dir").replace("scripts", "")
@@ -65,7 +80,7 @@ object NewProject {
 
     private fun validateAppName(value: String) {
         if (PATTERN_APP.toRegex().matches(value)) {
-            appName = value
+            appName = value.trim()
         } else {
             showErrorMessage("ERROR: Invalid App Name: $value (needs to follow standard pattern {MyProject} or {My Project})")
         }
@@ -73,7 +88,7 @@ object NewProject {
 
     private fun validatePackageName(value: String) {
         if (PATTERN_PACKAGE.toRegex().matches(value)) {
-            packageName = value
+            packageName = value.trim()
         } else {
             showErrorMessage("ERROR: Invalid Package Name: $value (needs to follow standard pattern {com.example.package})")
         }
@@ -137,7 +152,7 @@ object NewProject {
     private fun renamePackageNameWithinFiles() {
         showMessage("=> 🔎 Renaming package name within files...")
         File(projectPath)
-            ?.walk()
+            .walk()
             .filter { it.name.endsWith(".kt") || it.name.endsWith(".xml") }
             .forEach { filePath ->
                 rename(
@@ -151,7 +166,7 @@ object NewProject {
     private fun renameApplicationClass() {
         showMessage("=> 🔎 Renaming application class...")
         File(projectPath)
-            ?.walk()
+            .walk()
             .filter { it.name == "$TEMPLATE_APPLICATION_CLASS_NAME.kt" || it.name == "AndroidManifest.xml" }
             .forEach { file ->
                 rename(
@@ -192,14 +207,14 @@ object NewProject {
         process.inputStream.reader().forEachLine { println(it) }
         val exitValue = process.waitFor()
         if (exitValue != 0) {
-            showErrorMessage("❌ Something went wrong!", exitValue)
+            showErrorMessage("❌ Something went wrong! when executing command: $command", exitValue)
         }
     }
 
     private fun renameAppName() {
         showMessage("=> 🔎 Renaming app name...")
         File(projectPath)
-            ?.walk()
+            .walk()
             .filter { it.name == "strings.xml" }
             .forEach { filePath ->
                 rename(
@@ -224,6 +239,16 @@ object NewProject {
     private fun showErrorMessage(message: String, exitCode: Int = 0) {
         println("\n${message}\n")
         System.exit(exitCode)
+    }
+
+    private fun String.uppercaseEveryFirstCharacter(): String {
+        return this.split(SPACE_SEPARATOR).joinToString(separator = SPACE_SEPARATOR) { string ->
+            string.replaceFirstChar { it.uppercase() }
+        }
+    }
+
+    private fun String.getStringWithoutSpace(): String {
+        return this.replace(SPACE_SEPARATOR, "")
     }
 }
 
