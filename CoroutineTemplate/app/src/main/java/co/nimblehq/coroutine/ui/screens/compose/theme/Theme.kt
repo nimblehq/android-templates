@@ -4,21 +4,17 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 
-object Palette {
-    val ComposeLightPalette = lightColors(
-        primary = Color.BlueFreeSpeech,
-        background = Color.AlmostWhite
-    )
-}
-
+@Suppress("FunctionNaming")
 @Composable
-fun ComposeTheme(
+fun Theme(
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
-        colors = Palette.ComposeLightPalette,
-        typography = Typography.ComposeTypography,
-        shapes = Shape.ComposeShapes,
+        colors = lightColors(
+            primary = Color.GreenCitrus,
+            primaryVariant = Color.GreenChristi,
+            secondary = Color.GreenCitrus
+        ),
         content = content
     )
 }

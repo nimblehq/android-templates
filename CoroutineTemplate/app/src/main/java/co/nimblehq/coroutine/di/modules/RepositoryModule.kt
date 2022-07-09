@@ -1,8 +1,8 @@
 package co.nimblehq.coroutine.di.modules
 
-import co.nimblehq.coroutine.data.repository.UserRepositoryImpl
+import co.nimblehq.coroutine.data.repository.RepositoryImpl
 import co.nimblehq.coroutine.data.service.ApiService
-import co.nimblehq.coroutine.domain.repository.UserRepository
+import co.nimblehq.coroutine.domain.repository.Repository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,6 +13,5 @@ import dagger.hilt.android.components.ViewModelComponent
 class RepositoryModule {
 
     @Provides
-    fun provideUserRepository(apiService: ApiService): UserRepository =
-        UserRepositoryImpl(apiService)
+    fun provideRepository(apiService: ApiService): Repository = RepositoryImpl(apiService)
 }

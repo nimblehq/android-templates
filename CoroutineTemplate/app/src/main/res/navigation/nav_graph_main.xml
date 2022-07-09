@@ -7,38 +7,11 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="co.nimblehq.coroutine.ui.screens.home.HomeFragment"
-        tools:layout="@layout/fragment_home">
-
-        <action
-            android:id="@+id/action_homeFragment_to_secondFragment"
-            app:destination="@id/secondFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-
-        <action
-            android:id="@+id/action_homeFragment_to_composeFragment"
-            app:destination="@id/composeFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-    </fragment>
+        android:name="co.nimblehq.coroutine.ui.screens.xml.HomeFragment"
+        tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/secondFragment"
-        android:name="co.nimblehq.coroutine.ui.screens.second.SecondFragment"
-        tools:layout="@layout/fragment_second">
-
-        <argument
-            android:name="bundle"
-            app:argType="co.nimblehq.coroutine.ui.screens.second.SecondBundle" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/composeFragment"
-        android:name="co.nimblehq.coroutine.ui.screens.compose.ComposeFragment" />
+        android:id="@+id/homeComposeFragment"
+        android:name="co.nimblehq.coroutine.ui.screens.compose.HomeComposeFragment" />
 
 </navigation>

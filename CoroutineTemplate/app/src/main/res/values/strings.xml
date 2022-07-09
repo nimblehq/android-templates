@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Coroutine Template</string>
     <string name="error_generic">Unexpected error</string>
