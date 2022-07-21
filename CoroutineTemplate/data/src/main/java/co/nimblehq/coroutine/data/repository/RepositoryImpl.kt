@@ -9,7 +9,5 @@ class RepositoryImpl constructor(
     private val apiService: ApiService
 ) : Repository {
 
-    override suspend fun getModels(): List<Model> {
-        return apiService.getResponses().toModels()
-    }
+    override suspend fun getModels(): List<Model> = apiService.getResponses().toModels()
 }

@@ -4,5 +4,5 @@ import androidx.compose.ui.unit.dp
 
 @Suppress("MagicNumber")
 object Dimension {
-    val spacingNormal = 16.dp
+    val SpacingNormal = 16.dp
 }

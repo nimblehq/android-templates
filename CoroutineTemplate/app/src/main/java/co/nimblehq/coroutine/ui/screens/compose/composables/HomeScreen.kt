@@ -8,7 +8,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import co.nimblehq.coroutine.model.UiModel
-import co.nimblehq.coroutine.ui.screens.compose.theme.Dimension.spacingNormal
+import co.nimblehq.coroutine.ui.screens.compose.theme.Dimension.SpacingNormal
 import co.nimblehq.coroutine.ui.screens.compose.theme.Theme
 import timber.log.Timber
 
@@ -25,7 +25,7 @@ fun HomeScreen(
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .wrapContentHeight()
-                .padding(all = spacingNormal)
+                .padding(all = SpacingNormal)
         )
     }
     Timber.d("Result : $uiModels")

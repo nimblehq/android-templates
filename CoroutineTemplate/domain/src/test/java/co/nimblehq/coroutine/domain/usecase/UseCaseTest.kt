@@ -14,14 +14,14 @@ import org.junit.Test
 class UseCaseTest {
 
     private lateinit var mockRepository: Repository
-    private lateinit var usecase: UseCase
+    private lateinit var useCase: UseCase
 
     private val model = Model(id = 1)
 
     @Before
     fun setup() {
         mockRepository = mockk()
-        usecase = UseCase(mockRepository)
+        useCase = UseCase(mockRepository)
     }
 
     @Test
@@ -29,7 +29,7 @@ class UseCaseTest {
         val expected = listOf(model)
         coEvery { mockRepository.getModels() } returns expected
 
-        usecase.execute().run {
+        useCase.execute().run {
             (this as UseCaseResult.Success).data shouldBe expected
         }
     }
@@ -39,7 +39,7 @@ class UseCaseTest {
         val expected = IllegalStateException()
         coEvery { mockRepository.getModels() } throws expected
 
-        usecase.execute().run {
+        useCase.execute().run {
             (this as UseCaseResult.Error).exception shouldBe expected
         }
     }
