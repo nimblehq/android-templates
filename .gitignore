@@ -1,7 +1,7 @@
 *.iml
 .idea
 .gradle
-/CoroutineTemplate/local.properties
+/template/local.properties
 /RxJavaTemplate[DEPRECATED]/local.properties
 .DS_Store
 build/

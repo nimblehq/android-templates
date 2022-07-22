@@ -29,16 +29,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Run Detekt on CoroutineTemplate
-        working-directory: ./CoroutineTemplate
+      - name: Run Detekt on template
+        working-directory: ./template
         run: ./gradlew detekt
 
-      - name: Run Android Lint on CoroutineTemplate
-        working-directory: ./CoroutineTemplate
+      - name: Run Android Lint on template
+        working-directory: ./template
         run: ./gradlew lint
 
-      - name: Run unit tests and Jacoco on CoroutineTemplate
-        working-directory: ./CoroutineTemplate
+      - name: Run unit tests and Jacoco on template
+        working-directory: ./template
         run: ./gradlew jacocoTestReport
 
       - name: Set up Ruby

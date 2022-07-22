@@ -40,8 +40,8 @@ val packagesExcluded = setOf(
     "**/com/bumptech/glide",
     "**/dagger/hilt/internal",
     "**/hilt_aggregated_deps",
-    "**/co/nimblehq/coroutine/databinding/**",
-    "**/co/nimblehq/coroutine/di/**"
+    "**/co/nimblehq/template/databinding/**",
+    "**/co/nimblehq/template/di/**"
 )
 
 val fileFilter = fileGenerated + packagesExcluded

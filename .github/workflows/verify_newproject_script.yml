@@ -38,6 +38,6 @@ jobs:
           sdk install kscript 4.0.3
           echo $PATH >> $GITHUB_PATH
 
-      - name: Verify generating new project from CoroutineTemplate
+      - name: Verify generating new project from template
         working-directory: scripts
         run: kscript new_project.kts package-name=co.myproject.example app-name="My Project"

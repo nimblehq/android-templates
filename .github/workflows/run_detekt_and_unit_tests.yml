@@ -27,22 +27,22 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Run Detekt on CoroutineTemplate
-        working-directory: ./CoroutineTemplate
+      - name: Run Detekt on template
+        working-directory: ./template
         run: ./gradlew detekt
 
-      - name: Archive Detekt reports on CoroutineTemplate
+      - name: Archive Detekt reports on template
         uses: actions/upload-artifact@v2
         with:
-          name: DetektReportsCoroutine
-          path: CoroutineTemplate/build/reports/detekt/
+          name: DetektReportsTemplate
+          path: template/build/reports/detekt/
 
-      - name: Run unit tests and Jacoco on CoroutineTemplate
-        working-directory: ./CoroutineTemplate
+      - name: Run unit tests and Jacoco on template
+        working-directory: ./template
         run: ./gradlew jacocoTestReport
 
-      - name: Archive code coverage reports on CoroutineTemplate
+      - name: Archive code coverage reports on template
         uses: actions/upload-artifact@v2
         with:
-          name: CodeCoverageReportsCoroutine
-          path: CoroutineTemplate/app/build/reports/jacoco/jacocoTestReport/
+          name: CodeCoverageReportsTemplate
+          path: template/app/build/reports/jacoco/jacocoTestReport/
