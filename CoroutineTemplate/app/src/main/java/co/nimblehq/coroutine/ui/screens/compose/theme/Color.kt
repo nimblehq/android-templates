@@ -4,6 +4,6 @@ import androidx.compose.ui.graphics.Color
 
 @Suppress("MagicNumber")
 object Color {
-    val BlueFreeSpeech = Color(0xFF3F51B5)
-    val AlmostWhite = Color(0xFFDFE4EA)
+    val GreenCitrus = Color(0xFF99CC00)
+    val GreenChristi = Color(0xFF669900)
 }

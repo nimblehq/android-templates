@@ -1,5 +1,6 @@
-package co.nimblehq.coroutine.ui.screens.home
+package co.nimblehq.coroutine.ui.screens.xml
 
+import co.nimblehq.coroutine.R
 import co.nimblehq.coroutine.databinding.FragmentHomeBinding
 import co.nimblehq.coroutine.test.TestNavigatorModule.mockMainNavigator
 import co.nimblehq.coroutine.test.getPrivateProperty
@@ -25,10 +26,9 @@ class HomeFragmentTest : BaseFragmentTest<HomeFragment, FragmentHomeBinding>() {
     }
 
     @Test
-    fun `When initializing HomeFragment, its views display the text correctly`() {
+    fun `When initializing fragment, it displays the title correctly`() {
         launchFragment()
-        fragment.binding.btNext.text.toString() shouldBe "Next"
-        fragment.binding.btCompose.text.toString() shouldBe "Jetpack Compose"
+        fragment.binding.tvTitle.text.toString() shouldBe fragment.resources.getString(R.string.app_name)
     }
 
     private fun launchFragment() {

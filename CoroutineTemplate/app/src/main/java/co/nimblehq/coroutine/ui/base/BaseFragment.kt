@@ -39,6 +39,8 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment(), BaseFragmentCallback
 
     override fun initViewModel() {}
 
+    override fun setupView() {}
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
