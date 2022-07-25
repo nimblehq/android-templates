@@ -9,7 +9,7 @@
 
 ---
 
-Our Android template: **[Template](https://github.com/nimblehq/android-templates/tree/develop/template)**
+Our Android template: **[template](https://github.com/nimblehq/android-templates/tree/develop/template)**
 
 ## Setup
 

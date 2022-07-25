@@ -29,9 +29,9 @@ Dir[lint_dir].each do |file_name|
   android_lint.lint(inline_mode: true)
 end
   
-# Show Danger test coverage report from Jacoco for Template
+# Show Danger test coverage report from Jacoco for template
 jacoco_dir = "template/**/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"
-markdown "## Template Jacoco report:"
+markdown "## template Jacoco report:"
 Dir[jacoco_dir].each do |file_name|
   # Report coverage of modified files, warn if total project coverage is under 80%
   # or if any modified file's coverage is under 95%
