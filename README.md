@@ -9,7 +9,7 @@
 
 ---
 
-Our Android template: **[CoroutineTemplate](https://github.com/nimblehq/android-templates/tree/develop/CoroutineTemplate)**
+Our Android template: **[template](https://github.com/nimblehq/android-templates/tree/develop/template)**
 
 ## Setup
 
@@ -23,7 +23,7 @@ Our Android template: **[CoroutineTemplate](https://github.com/nimblehq/android-
 
   Example: `kscript new_project.kts package-name=co.myproject.example app-name="My Project"`
 
-4. Update `android_version_code` and `android_version_name` in `CoroutineTemplate/build.gradle`
+4. Update `android_version_code` and `android_version_name` in `template/build.gradle`
 
 ## About
 
