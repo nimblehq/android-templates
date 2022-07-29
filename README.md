@@ -17,8 +17,8 @@ Our Android template: **[template](https://github.com/nimblehq/android-templates
 2. Install [Kscript](https://github.com/holgerbrandl/kscript#installation)
 3. Run `kscript new_project.kts` to create a new project with the following arguments:
   ```   
-    package-name=                      New package name (i.e. com.example.package)
-    app-name=                          New app name (i.e. MyApp, "My App")
+    package-name=                      New package name (i.e., com.example.package)
+    app-name=                          New app name (i.e., MyApp, "My App", "my-app")
   ```
 
   Example: `kscript new_project.kts package-name=co.myproject.example app-name="My Project"`
