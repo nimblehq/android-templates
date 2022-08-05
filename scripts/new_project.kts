@@ -73,7 +73,7 @@ Example: kscript new_project.kts package-name=co.myproject.example app-name="My 
         args.forEach { arg ->
             if (arg == KEY_HELP) {
                 showMessage(
-                    message = HELP_MESSAGE,
+                    message = helpMessage,
                     exitAfterMessage = true
                 )
             } else if (arg.startsWith("$KEY_APP_NAME$ARGUMENT_DELIMITER")) {
@@ -86,18 +86,18 @@ Example: kscript new_project.kts package-name=co.myproject.example app-name="My 
                 hasPackageName = true
             } else {
                 showMessage(
-                    message = "ERROR: Invalid argument name: $arg \n$HELP_MESSAGE",
+                    message = "ERROR: Invalid argument name: $arg \n$helpMessage",
                     exitAfterMessage = true
                 )
             }
         }
         when {
             !hasAppName -> showMessage(
-                message = "ERROR: No app name has been provided \n$HELP_MESSAGE",
+                message = "ERROR: No app name has been provided \n$helpMessage",
                 exitAfterMessage = true
             )
             !hasPackageName -> showMessage(
-                message = "ERROR: No package name has been provided \n$HELP_MESSAGE",
+                message = "ERROR: No package name has been provided \n$helpMessage",
                 exitAfterMessage = true
             )
         }
