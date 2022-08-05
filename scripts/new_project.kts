@@ -227,9 +227,9 @@ Example: kscript new_project.kts package-name=co.myproject.example app-name="My 
 
     private fun buildProjectAndRunTests() {
         showMessage("=> 🛠️ Building project...")
-        executeCommand("sh $projectPath${fileSeparator}gradlew -p $fileSeparator$projectPath assembleDebug")
+        executeCommand("sh $projectPath${fileSeparator}gradlew -p $projectPath assembleDebug")
         showMessage("=> 🚓 Running tests...")
-        executeCommand("sh $projectPath${fileSeparator}gradlew -p $fileSeparator$projectPath testStagingDebugUnitTest")
+        executeCommand("sh $projectPath${fileSeparator}gradlew -p $projectPath testStagingDebugUnitTest")
         showMessage("=> 🚀 Done! The project is ready for development")
     }
 
