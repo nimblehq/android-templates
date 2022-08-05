@@ -68,36 +68,36 @@ Example: kscript new_project.kts package-name=co.myproject.example app-name="My 
     }
 
     private fun handleArguments(args: Array<String>) {
-        val argumentError = "ERROR: Invalid argument name \n$helpMessage"
-        when {
-            args.size == 1 -> when {
-                args.first().isHelp() -> showMessage(
-                    message = helpMessage,
+        var hasAppName = false
+        var hasPackageName = false
+        args.forEach { arg ->
+            if (arg == KEY_HELP) {
+                showMessage(
+                    message = HELP_MESSAGE,
                     exitAfterMessage = true
                 )
-                args.first().startsWith(KEY_APP_NAME) -> showMessage(
-                    message = "ERROR: No package name has been provided",
-                    exitAfterMessage = true
-                )
-                args.first().startsWith(KEY_PACKAGE_NAME) -> showMessage(
-                    message = "ERROR: No app name has been provided",
-                    exitAfterMessage = true
-                )
-                else -> showMessage(
-                    message = argumentError,
-                    exitAfterMessage = true
-                )
-            }
-            args.size == 2 && args.isBothKeyValuePair() -> args.forEach { arg ->
+            } else if (arg.startsWith("$KEY_APP_NAME$ARGUMENT_DELIMITER")) {
                 val (key, value) = arg.split(ARGUMENT_DELIMITER)
-                when (key) {
-                    KEY_APP_NAME -> validateAppName(value)
-                    KEY_PACKAGE_NAME -> validatePackageName(value)
-                    else -> showMessage(message = argumentError, exitAfterMessage = true)
-                }
+                validateAppName(value)
+                hasAppName = true
+            } else if (arg.startsWith("$KEY_PACKAGE_NAME$ARGUMENT_DELIMITER")) {
+                val (key, value) = arg.split(ARGUMENT_DELIMITER)
+                validatePackageName(value)
+                hasPackageName = true
+            } else {
+                showMessage(
+                    message = "ERROR: Invalid argument name: $arg \n$HELP_MESSAGE",
+                    exitAfterMessage = true
+                )
             }
-            else -> showMessage(
-                message = "ERROR: Wrong format to initialize the new project \n$helpMessage",
+        }
+        when {
+            !hasAppName -> showMessage(
+                message = "ERROR: No app name has been provided \n$HELP_MESSAGE",
+                exitAfterMessage = true
+            )
+            !hasPackageName -> showMessage(
+                message = "ERROR: No package name has been provided \n$HELP_MESSAGE",
                 exitAfterMessage = true
             )
         }
