@@ -18,11 +18,11 @@ object NewProject {
     private const val PATTERN_PACKAGE = "^[a-z]+(\\.[a-z][a-z0-9]*)+$"
 
     private val helpMessage = """
-Run kscript new_project.kts to create a new project with the following arguments:
-    package-name=   New package name (i.e., com.example.package)
-    app-name=       New app name (i.e., MyApp, "My App", "my-app")
-
-Example: kscript new_project.kts package-name=co.myproject.example app-name="My Project"
+        Run kscript new_project.kts to create a new project with the following arguments:
+            package-name=   New package name (i.e., com.example.package)
+            app-name=       New app name (i.e., MyApp, "My App", "my-app")
+        
+        Example: kscript new_project.kts package-name=co.myproject.example app-name="My Project"
     """.trimIndent()
 
     private val modules = listOf("app", "data", "domain")
