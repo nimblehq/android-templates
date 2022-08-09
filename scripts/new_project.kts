@@ -8,14 +8,13 @@ object NewProject {
     private const val KEY_HELP = "--help"
     private const val KEY_PACKAGE_NAME = "package-name"
     private const val MINUS_SEPARATOR = "-"
+    private const val PATTERN_APP = "^([A-Z][a-zA-Z0-9\\s]*)|([a-z][a-z0-9-]*)$"
+    private const val PATTERN_PACKAGE = "^[a-z]+(\\.[a-z][a-z0-9]*)+$"
     private const val SPACE_SEPARATOR = " "
     private const val TEMPLATE_APP_NAME = "Template"
     private const val TEMPLATE_APPLICATION_CLASS_NAME = "TemplateApplication"
     private const val TEMPLATE_FOLDER_NAME = "template"
     private const val TEMPLATE_PACKAGE_NAME = "co.nimblehq.template"
-
-    private const val PATTERN_APP = "^([A-Z][a-zA-Z0-9\\s]*)|([a-z][a-z0-9-]*)$"
-    private const val PATTERN_PACKAGE = "^[a-z]+(\\.[a-z][a-z0-9]*)+$"
 
     private val helpMessage = """
         Run kscript new_project.kts to create a new project with the following arguments:
@@ -26,6 +25,7 @@ object NewProject {
     """.trimIndent()
 
     private val modules = listOf("app", "data", "domain")
+
     private val fileSeparator = File.separator
 
     private var appName: String = ""
@@ -71,24 +71,29 @@ object NewProject {
         var hasAppName = false
         var hasPackageName = false
         args.forEach { arg ->
-            if (arg == KEY_HELP) {
-                showMessage(
-                    message = helpMessage,
-                    exitAfterMessage = true
-                )
-            } else if (arg.startsWith("$KEY_APP_NAME$ARGUMENT_DELIMITER")) {
-                val (key, value) = arg.split(ARGUMENT_DELIMITER)
-                validateAppName(value)
-                hasAppName = true
-            } else if (arg.startsWith("$KEY_PACKAGE_NAME$ARGUMENT_DELIMITER")) {
-                val (key, value) = arg.split(ARGUMENT_DELIMITER)
-                validatePackageName(value)
-                hasPackageName = true
-            } else {
-                showMessage(
-                    message = "ERROR: Invalid argument name: $arg \n$helpMessage",
-                    exitAfterMessage = true
-                )
+            when {
+                arg == KEY_HELP -> {
+                    showMessage(
+                        message = helpMessage,
+                        exitAfterMessage = true
+                    )
+                }
+                arg.startsWith("$KEY_APP_NAME$ARGUMENT_DELIMITER") -> {
+                    val (key, value) = arg.split(ARGUMENT_DELIMITER)
+                    validateAppName(value)
+                    hasAppName = true
+                }
+                arg.startsWith("$KEY_PACKAGE_NAME$ARGUMENT_DELIMITER") -> {
+                    val (key, value) = arg.split(ARGUMENT_DELIMITER)
+                    validatePackageName(value)
+                    hasPackageName = true
+                }
+                else -> {
+                    showMessage(
+                        message = "ERROR: Invalid argument name: $arg \n$helpMessage",
+                        exitAfterMessage = true
+                    )
+                }
             }
         }
         when {
@@ -103,21 +108,13 @@ object NewProject {
         }
     }
 
-    private fun Array<String>.isBothKeyValuePair(): Boolean {
-        val firstArg = this.first()
-        val secondArg = this[1]
-        return firstArg.contains(ARGUMENT_DELIMITER) && firstArg.contains("help")
-            .not() && secondArg.contains(ARGUMENT_DELIMITER) && secondArg.contains("help").not()
-    }
-
-    private fun String.isHelp(): Boolean = this == KEY_HELP
-
     private fun validateAppName(value: String) {
         if (PATTERN_APP.toRegex().matches(value)) {
             appName = value.trim()
         } else {
             showMessage(
-                message = "ERROR: Invalid App Name: $value (needs to follow standard pattern {MyProject} or {My Project})",
+                message = "ERROR: Invalid App Name: $value (needs to follow standard pattern {MyProject} or {My Project}) or {my-project} \n" +
+                        "$helpMessage",
                 exitAfterMessage = true
             )
         }
