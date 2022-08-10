@@ -5,18 +5,27 @@ object NewProject {
     private const val ARGUMENT_DELIMITER = "="
     private const val DOT_SEPARATOR = "."
     private const val KEY_APP_NAME = "app-name"
+    private const val KEY_HELP = "--help"
     private const val KEY_PACKAGE_NAME = "package-name"
     private const val MINUS_SEPARATOR = "-"
+    private const val PATTERN_APP = "^([A-Z][a-zA-Z0-9\\s]*)|([a-z][a-z0-9-]*)$"
+    private const val PATTERN_PACKAGE = "^[a-z]+(\\.[a-z][a-z0-9]*)+$"
     private const val SPACE_SEPARATOR = " "
     private const val TEMPLATE_APP_NAME = "Template"
     private const val TEMPLATE_APPLICATION_CLASS_NAME = "TemplateApplication"
     private const val TEMPLATE_FOLDER_NAME = "template"
     private const val TEMPLATE_PACKAGE_NAME = "co.nimblehq.template"
 
-    private const val PATTERN_APP = "^([A-Z][a-zA-Z0-9\\s]*)|([a-z][a-z0-9-]*)$"
-    private const val PATTERN_PACKAGE = "^[a-z]+(\\.[a-z][a-z0-9]*)+$"
+    private val helpMessage = """
+        Run kscript new_project.kts to create a new project with the following arguments:
+            package-name=   New package name (i.e., com.example.package)
+            app-name=       New app name (i.e., MyApp, "My App", "my-app")
+        
+        Example: kscript new_project.kts package-name=co.myproject.example app-name="My Project"
+    """.trimIndent()
 
     private val modules = listOf("app", "data", "domain")
+
     private val fileSeparator = File.separator
 
     private var appName: String = ""
@@ -59,22 +68,43 @@ object NewProject {
     }
 
     private fun handleArguments(args: Array<String>) {
-        val argumentError = "ERROR: Invalid argument name: Ensure define arguments => app-name={\"MyProject\"} or {\"My Project\"} package-name={com.sample.myproject}"
-        when (args.size) {
-            1 -> when {
-                args.first().startsWith(KEY_APP_NAME) -> showErrorMessage("ERROR: No package name has been provided")
-                args.first().startsWith(KEY_PACKAGE_NAME) -> showErrorMessage("ERROR: No app name has been provided")
-                else -> showErrorMessage(argumentError)
-            }
-            2 -> args.forEach { arg ->
-                val (key, value) = arg.split(ARGUMENT_DELIMITER)
-                when (key) {
-                    KEY_APP_NAME -> validateAppName(value)
-                    KEY_PACKAGE_NAME -> validatePackageName(value)
-                    else -> showErrorMessage(argumentError)
+        var hasAppName = false
+        var hasPackageName = false
+        args.forEach { arg ->
+            when {
+                arg == KEY_HELP -> {
+                    showMessage(
+                        message = helpMessage,
+                        exitAfterMessage = true
+                    )
+                }
+                arg.startsWith("$KEY_APP_NAME$ARGUMENT_DELIMITER") -> {
+                    val (key, value) = arg.split(ARGUMENT_DELIMITER)
+                    validateAppName(value)
+                    hasAppName = true
+                }
+                arg.startsWith("$KEY_PACKAGE_NAME$ARGUMENT_DELIMITER") -> {
+                    val (key, value) = arg.split(ARGUMENT_DELIMITER)
+                    validatePackageName(value)
+                    hasPackageName = true
+                }
+                else -> {
+                    showMessage(
+                        message = "ERROR: Invalid argument name: $arg \n$helpMessage",
+                        exitAfterMessage = true
+                    )
                 }
             }
-            else -> showErrorMessage("ERROR: Require app-name and package-name to initialize the new project")
+        }
+        when {
+            !hasAppName -> showMessage(
+                message = "ERROR: No app name has been provided \n$helpMessage",
+                exitAfterMessage = true
+            )
+            !hasPackageName -> showMessage(
+                message = "ERROR: No package name has been provided \n$helpMessage",
+                exitAfterMessage = true
+            )
         }
     }
 
@@ -82,7 +112,10 @@ object NewProject {
         if (PATTERN_APP.toRegex().matches(value)) {
             appName = value.trim()
         } else {
-            showErrorMessage("ERROR: Invalid App Name: $value (needs to follow standard pattern {MyProject} or {My Project})")
+            showMessage(
+                message = "ERROR: Invalid App Name: $value (needs to follow standard pattern {MyProject} or {My Project}) or {my-project} \n$helpMessage",
+                exitAfterMessage = true
+            )
         }
     }
 
@@ -90,7 +123,10 @@ object NewProject {
         if (PATTERN_PACKAGE.toRegex().matches(value)) {
             packageName = value.trim()
         } else {
-            showErrorMessage("ERROR: Invalid Package Name: $value (needs to follow standard pattern {com.example.package})")
+            showMessage(
+                message = "ERROR: Invalid Package Name: $value (needs to follow standard pattern {com.example.package}) \n$helpMessage",
+                exitAfterMessage = true
+            )
         }
     }
 
@@ -187,9 +223,9 @@ object NewProject {
 
     private fun buildProjectAndRunTests() {
         showMessage("=> 🛠️ Building project...")
-        executeCommand("sh $projectPath${fileSeparator}gradlew -p $fileSeparator$projectPath assembleDebug")
+        executeCommand("sh $projectPath${fileSeparator}gradlew -p $projectPath assembleDebug")
         showMessage("=> 🚓 Running tests...")
-        executeCommand("sh $projectPath${fileSeparator}gradlew -p $fileSeparator$projectPath testStagingDebugUnitTest")
+        executeCommand("sh $projectPath${fileSeparator}gradlew -p $projectPath testStagingDebugUnitTest")
         showMessage("=> 🚀 Done! The project is ready for development")
     }
 
@@ -207,7 +243,11 @@ object NewProject {
         process.inputStream.reader().forEachLine { println(it) }
         val exitValue = process.waitFor()
         if (exitValue != 0) {
-            showErrorMessage("❌ Something went wrong! when executing command: $command", exitValue)
+            showMessage(
+                message = "❌ Something went wrong! when executing command: $command",
+                exitAfterMessage = true,
+                exitValue = exitValue
+            )
         }
     }
 
@@ -232,13 +272,13 @@ object NewProject {
         sourceFile.writeText(sourceText)
     }
 
-    private fun showMessage(message: String) {
+    private fun showMessage(
+        message: String,
+        exitAfterMessage: Boolean = false,
+        exitValue: Int = 0
+    ) {
         println("\n${message}\n")
-    }
-
-    private fun showErrorMessage(message: String, exitCode: Int = 0) {
-        println("\n${message}\n")
-        System.exit(exitCode)
+        if (exitAfterMessage) System.exit(exitValue)
     }
 
     private fun String.uppercaseEveryFirstCharacter(): String {
