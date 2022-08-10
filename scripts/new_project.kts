@@ -113,8 +113,7 @@ object NewProject {
             appName = value.trim()
         } else {
             showMessage(
-                message = "ERROR: Invalid App Name: $value (needs to follow standard pattern {MyProject} or {My Project}) or {my-project} \n" +
-                        "$helpMessage",
+                message = "ERROR: Invalid App Name: $value (needs to follow standard pattern {MyProject} or {My Project}) or {my-project} \n$helpMessage",
                 exitAfterMessage = true
             )
         }
@@ -125,7 +124,7 @@ object NewProject {
             packageName = value.trim()
         } else {
             showMessage(
-                message = "ERROR: Invalid Package Name: $value (needs to follow standard pattern {com.example.package})",
+                message = "ERROR: Invalid Package Name: $value (needs to follow standard pattern {com.example.package}) \n$helpMessage",
                 exitAfterMessage = true
             )
         }
@@ -246,7 +245,8 @@ object NewProject {
         if (exitValue != 0) {
             showMessage(
                 message = "❌ Something went wrong! when executing command: $command",
-                exitAfterMessage = true
+                exitAfterMessage = true,
+                exitValue = exitValue
             )
         }
     }
@@ -272,7 +272,11 @@ object NewProject {
         sourceFile.writeText(sourceText)
     }
 
-    private fun showMessage(message: String, exitAfterMessage: Boolean = false) {
+    private fun showMessage(
+        message: String,
+        exitAfterMessage: Boolean = false,
+        exitValue: Int = 0
+    ) {
         println("\n${message}\n")
         if (exitAfterMessage) System.exit(0)
     }
