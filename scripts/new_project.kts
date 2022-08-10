@@ -278,7 +278,7 @@ object NewProject {
         exitValue: Int = 0
     ) {
         println("\n${message}\n")
-        if (exitAfterMessage) System.exit(0)
+        if (exitAfterMessage) System.exit(exitValue)
     }
 
     private fun String.uppercaseEveryFirstCharacter(): String {
