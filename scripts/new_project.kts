@@ -10,6 +10,7 @@ object NewProject {
     private const val PATTERN_PACKAGE = "^[a-z]+(\\.[a-z][a-z0-9]*)+$"
     private const val SEPARATOR_DOT = "."
     private const val SEPARATOR_MINUS = "-"
+    private const val SEPARATOR_SLASH = "/"
     private const val SEPARATOR_SPACE = " "
     private const val TEMPLATE_APP_NAME = "Template"
     private const val TEMPLATE_APPLICATION_CLASS_NAME = "TemplateApplication"
@@ -201,13 +202,25 @@ object NewProject {
         showMessage("=> 🔎 Renaming package name within files...")
         File(projectPath)
             .walk()
-            .filter { it.name.endsWith(".kt") || it.name.endsWith(".xml") }
+            .filter {
+                it.name.endsWith(".kt")
+                        || it.name.endsWith(".xml")
+                        || it.name.endsWith(".gradle.kts")
+            }
             .forEach { filePath ->
-                rename(
-                    sourcePath = filePath.toString(),
-                    oldValue = TEMPLATE_PACKAGE_NAME,
-                    newValue = packageName
-                )
+                if (filePath.name == "jacoco-report.gradle.kts") {
+                    rename(
+                        sourcePath = filePath.toString(),
+                        oldValue = TEMPLATE_PACKAGE_NAME.replace(SEPARATOR_DOT, SEPARATOR_SLASH),
+                        newValue = packageName.replace(SEPARATOR_DOT, SEPARATOR_SLASH)
+                    )
+                } else {
+                    rename(
+                        sourcePath = filePath.toString(),
+                        oldValue = TEMPLATE_PACKAGE_NAME,
+                        newValue = packageName
+                    )
+                }
             }
     }
 
