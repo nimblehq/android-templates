@@ -1,6 +1,6 @@
-# Sample XML 
+# Android XML Sample
 
-- Our sample project with XML UI implementation
+A sample project generated from our template using XML layouts
 
 ## Setup
 
