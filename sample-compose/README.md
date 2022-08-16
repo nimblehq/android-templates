@@ -1,6 +1,6 @@
-# Android Templates
+# Android Compose Sample
 
-- Our optimized Android templates used in our android projects
+A sample project generated from our template using Compose layouts
 
 ## Setup
 
@@ -48,4 +48,4 @@ Report is located at: `./app/build/reports/jacoco/`
 For `release` builds, we need to provide release keystore and signing properties:
 
 - Put the `release.keystore` file at root `config` folder.
-- Put keystore signing properties in [signing.properties](https://github.com/nimblehq/android-templates/blob/develop/template/signing.properties).
+- Put keystore signing properties in `signing.properties`
