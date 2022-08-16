@@ -1,5 +1,5 @@
 # Created by .ignore support plugin (hsz.mobi)
-### Android template
+
 # Built application files
 *.apk
 *.ap_
@@ -29,7 +29,6 @@ proguard/
 # Log Files
 *.log
 
-
 # Android Studio captures folder
 captures/
 
@@ -48,5 +47,6 @@ jacoco.exec
 
 # Google services
 google-services.json
+
 # Keystore
 config/release.keystore
