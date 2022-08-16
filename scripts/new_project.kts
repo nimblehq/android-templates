@@ -3,14 +3,14 @@ import java.io.File
 object NewProject {
 
     private const val ARGUMENT_DELIMITER = "="
-    private const val DOT_SEPARATOR = "."
     private const val KEY_APP_NAME = "app-name"
     private const val KEY_HELP = "--help"
     private const val KEY_PACKAGE_NAME = "package-name"
-    private const val MINUS_SEPARATOR = "-"
     private const val PATTERN_APP = "^([A-Z][a-zA-Z0-9\\s]*)|([a-z][a-z0-9-]*)$"
     private const val PATTERN_PACKAGE = "^[a-z]+(\\.[a-z][a-z0-9]*)+$"
-    private const val SPACE_SEPARATOR = " "
+    private const val SEPARATOR_DOT = "."
+    private const val SEPARATOR_MINUS = "-"
+    private const val SEPARATOR_SPACE = " "
     private const val TEMPLATE_APP_NAME = "Template"
     private const val TEMPLATE_APPLICATION_CLASS_NAME = "TemplateApplication"
     private const val TEMPLATE_FOLDER_NAME = "template"
@@ -30,9 +30,9 @@ object NewProject {
 
     private var appName: String = ""
         set(value) {
-            field = if (value.contains(MINUS_SEPARATOR)) {
+            field = if (value.contains(SEPARATOR_MINUS)) {
                 projectFolderName = value
-                value.replace(MINUS_SEPARATOR, SPACE_SEPARATOR).uppercaseEveryFirstCharacter()
+                value.replace(SEPARATOR_MINUS, SEPARATOR_SPACE).uppercaseEveryFirstCharacter()
             } else {
                 value.uppercaseEveryFirstCharacter().also {
                     projectFolderName = it.getStringWithoutSpace()
@@ -170,13 +170,13 @@ object NewProject {
                 .forEach { javaDirectory ->
                     val oldDirectory = File(
                         javaDirectory, TEMPLATE_PACKAGE_NAME.replace(
-                            oldValue = DOT_SEPARATOR,
+                            oldValue = SEPARATOR_DOT,
                             newValue = fileSeparator
                         )
                     )
                     val newDirectory = File(
                         javaDirectory, packageName.replace(
-                            oldValue = DOT_SEPARATOR,
+                            oldValue = SEPARATOR_DOT,
                             newValue = fileSeparator
                         )
                     )
@@ -319,13 +319,13 @@ object NewProject {
     }
 
     private fun String.uppercaseEveryFirstCharacter(): String {
-        return this.split(SPACE_SEPARATOR).joinToString(separator = SPACE_SEPARATOR) { string ->
+        return this.split(SEPARATOR_SPACE).joinToString(separator = SEPARATOR_SPACE) { string ->
             string.replaceFirstChar { it.uppercase() }
         }
     }
 
     private fun String.getStringWithoutSpace(): String {
-        return this.replace(SPACE_SEPARATOR, "")
+        return this.replace(SEPARATOR_SPACE, "")
     }
 }
 
