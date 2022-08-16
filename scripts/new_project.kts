@@ -248,7 +248,7 @@ object NewProject {
             "$projectPath${fileSeparator}gradlew",
             "-p",
             "$projectPath",
-            "testStagingDebugUnitTest"
+            "jacocoTestReport"
         )
         showMessage("=> 🚀 Done! The project is ready for development")
     }
