@@ -202,11 +202,7 @@ object NewProject {
         showMessage("=> 🔎 Renaming package name within files...")
         File(projectPath)
             .walk()
-            .filter {
-                it.name.endsWith(".kt")
-                        || it.name.endsWith(".xml")
-                        || it.name.endsWith(".gradle.kts")
-            }
+            .filter { it.name.endsWithAny(".kt", ".xml", ".gradle.kts") }
             .forEach { filePath ->
                 if (filePath.name == "jacoco-report.gradle.kts") {
                     rename(
@@ -339,6 +335,10 @@ object NewProject {
 
     private fun String.getStringWithoutSpace(): String {
         return this.replace(SEPARATOR_SPACE, "")
+    }
+
+    private fun String.endsWithAny(vararg suffixes: String): Boolean {
+        return suffixes.any { endsWith(it) }
     }
 }
 
