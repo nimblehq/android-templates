@@ -76,7 +76,7 @@ abstract class BaseNavigatorImpl(
     }
 
     private fun handleError(error: Throwable) {
-        if (fragment is BaseFragment<*>) {
+        if (fragment is BaseComposeFragment) {
             Timber.e(error)
             fragment.displayError(error)
         } else {

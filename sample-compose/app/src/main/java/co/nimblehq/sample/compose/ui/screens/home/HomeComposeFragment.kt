@@ -1,4 +1,4 @@
-package co.nimblehq.sample.compose.ui.screens.compose
+package co.nimblehq.sample.compose.ui.screens.home
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -8,7 +8,6 @@ import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.extension.provideViewModels
 import co.nimblehq.sample.compose.ui.base.BaseComposeFragment
 import co.nimblehq.sample.compose.ui.screens.MainNavigator
-import co.nimblehq.sample.compose.ui.screens.compose.composables.HomeScreen
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
