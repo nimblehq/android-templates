@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Sample Compose</string>
     <string name="error_generic">Unexpected error</string>
+    <string name="id_title">ID: %1$d</string>
 </resources>

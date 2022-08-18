@@ -6,6 +6,24 @@
 
     <fragment
         android:id="@+id/homeComposeFragment"
-        android:name="co.nimblehq.sample.compose.ui.screens.home.HomeComposeFragment" />
+        android:name="co.nimblehq.sample.compose.ui.screens.home.HomeComposeFragment">
+
+        <action
+            android:id="@+id/action_homeComposeFragment_to_secondFragment"
+            app:destination="@id/secondFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/secondFragment"
+        android:name="co.nimblehq.sample.compose.ui.screens.second.SecondFragment">
+
+        <argument
+            android:name="uiModel"
+            app:argType="co.nimblehq.sample.compose.model.UiModel" />
+    </fragment>
 
 </navigation>
