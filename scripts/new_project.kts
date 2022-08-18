@@ -248,7 +248,9 @@ object NewProject {
             "$projectPath${fileSeparator}gradlew",
             "-p",
             "$projectPath",
-            "testStagingDebugUnitTest"
+            ":app:testStagingDebugUnitTest",
+            ":data:testDebugUnitTest",
+            ":domain:test"
         )
         showMessage("=> 🚀 Done! The project is ready for development")
     }
