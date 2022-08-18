@@ -2,16 +2,20 @@ import java.io.File
 
 object NewProject {
 
-    private const val ARGUMENT_DELIMITER = "="
+    private const val DELIMITER_ARGUMENT = "="
+
     private const val KEY_APP_NAME = "app-name"
     private const val KEY_HELP = "--help"
     private const val KEY_PACKAGE_NAME = "package-name"
+
     private const val PATTERN_APP = "^([A-Z][a-zA-Z0-9\\s]*)|([a-z][a-z0-9-]*)$"
     private const val PATTERN_PACKAGE = "^[a-z]+(\\.[a-z][a-z0-9]*)+$"
+
     private const val SEPARATOR_DOT = "."
     private const val SEPARATOR_MINUS = "-"
     private const val SEPARATOR_SLASH = "/"
     private const val SEPARATOR_SPACE = " "
+
     private const val TEMPLATE_APP_NAME = "Template"
     private const val TEMPLATE_APPLICATION_CLASS_NAME = "TemplateApplication"
     private const val TEMPLATE_FOLDER_NAME = "template"
@@ -79,13 +83,13 @@ object NewProject {
                         exitAfterMessage = true
                     )
                 }
-                arg.startsWith("$KEY_APP_NAME$ARGUMENT_DELIMITER") -> {
-                    val (key, value) = arg.split(ARGUMENT_DELIMITER)
+                arg.startsWith("$KEY_APP_NAME$DELIMITER_ARGUMENT") -> {
+                    val (key, value) = arg.split(DELIMITER_ARGUMENT)
                     validateAppName(value)
                     hasAppName = true
                 }
-                arg.startsWith("$KEY_PACKAGE_NAME$ARGUMENT_DELIMITER") -> {
-                    val (key, value) = arg.split(ARGUMENT_DELIMITER)
+                arg.startsWith("$KEY_PACKAGE_NAME$DELIMITER_ARGUMENT") -> {
+                    val (key, value) = arg.split(DELIMITER_ARGUMENT)
                     validatePackageName(value)
                     hasPackageName = true
                 }
@@ -204,14 +208,16 @@ object NewProject {
             .walk()
             .filter { it.name.endsWithAny(".kt", ".xml", ".gradle.kts") }
             .forEach { filePath ->
-                if (filePath.name == "jacoco-report.gradle.kts") {
-                    rename(
+                when (filePath.name) {
+                    "jacoco-report.gradle.kts" -> rename(
                         sourcePath = filePath.toString(),
-                        oldValue = TEMPLATE_PACKAGE_NAME.replace(SEPARATOR_DOT, SEPARATOR_SLASH),
+                        oldValue = TEMPLATE_PACKAGE_NAME.replace(
+                            SEPARATOR_DOT,
+                            SEPARATOR_SLASH
+                        ),
                         newValue = packageName.replace(SEPARATOR_DOT, SEPARATOR_SLASH)
                     )
-                } else {
-                    rename(
+                    else -> rename(
                         sourcePath = filePath.toString(),
                         oldValue = TEMPLATE_PACKAGE_NAME,
                         newValue = packageName
