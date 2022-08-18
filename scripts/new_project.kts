@@ -138,8 +138,20 @@ object NewProject {
     }
 
     private fun cleanNewProjectFolder() {
-        executeCommand("sh $projectPath${fileSeparator}gradlew -p $projectPath clean")
-        executeCommand("sh $projectPath${fileSeparator}gradlew -p $projectPath${fileSeparator}buildSrc clean")
+        executeCommand(
+            "sh",
+            "$projectPath${fileSeparator}gradlew",
+            "-p",
+            "$projectPath",
+            "clean"
+        )
+        executeCommand(
+            "sh",
+            "$projectPath${fileSeparator}gradlew",
+            "-p",
+            "$projectPath${fileSeparator}buildSrc",
+            "clean"
+        )
         listOf(".idea", ".gradle", "buildSrc$fileSeparator.gradle", ".git").forEach {
             File("$projectPath$fileSeparator$it")?.let { targetFile ->
                 targetFile.deleteRecursively()
@@ -223,9 +235,21 @@ object NewProject {
 
     private fun buildProjectAndRunTests() {
         showMessage("=> 🛠️ Building project...")
-        executeCommand("sh $projectPath${fileSeparator}gradlew -p $projectPath assembleDebug")
+        executeCommand(
+            "sh",
+            "$projectPath${fileSeparator}gradlew",
+            "-p",
+            "$projectPath",
+            "assembleDebug"
+        )
         showMessage("=> 🚓 Running tests...")
-        executeCommand("sh $projectPath${fileSeparator}gradlew -p $projectPath testStagingDebugUnitTest")
+        executeCommand(
+            "sh",
+            "$projectPath${fileSeparator}gradlew",
+            "-p",
+            "$projectPath",
+            "testStagingDebugUnitTest"
+        )
         showMessage("=> 🚀 Done! The project is ready for development")
     }
 
@@ -238,9 +262,22 @@ object NewProject {
         }
     }
 
-    private fun executeCommand(command: String) {
+    /**
+     * Execute a shell command
+     *
+     * Runtime.getRuntime().exec(String) will partition a command automatically, based on white spaces.
+     * If a file path contains any white spaces, it will not be able to find the file and result in an error.
+     *
+     * Example: "Desktop/My Projects/android-templates" -> ["Desktop/My", "Projects/android-templates"]
+     * Solution: Partition the command before passing it to Runtime.getRuntime().exec(String)
+     * Reference: https://stackoverflow.com/questions/33077129/java-runtime-exec-with-white-spaces-on-path-name
+     *
+     * @param [command]: A command partitioned into multiple arguments
+     */
+    private fun executeCommand(vararg command: String) {
         val process = Runtime.getRuntime().exec(command)
         process.inputStream.reader().forEachLine { println(it) }
+        process.errorStream.reader().forEachLine { println(it) }
         val exitValue = process.waitFor()
         if (exitValue != 0) {
             showMessage(
