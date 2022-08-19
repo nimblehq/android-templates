@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
+// TODO: Rename to 'HomeViewModel'
 @HiltViewModel
 class HomeComposeViewModel @Inject constructor(
     private val useCase: UseCase,
