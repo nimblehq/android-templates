@@ -6,9 +6,9 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class UiModel(
-    val id: Int
+    val id: String
 ) : Parcelable
 
-private fun Model.toUiModel() = UiModel(id = id ?: -1)
+private fun Model.toUiModel() = UiModel(id.toString())
 
 fun List<Model>.toUiModels() = this.map { it.toUiModel() }

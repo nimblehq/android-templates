@@ -9,8 +9,8 @@ import androidx.lifecycle.*
 
 /**
  * PLEASE READ THIS BEFORE IMPLEMENT:
- * Right now, there is no easy way to mock / fake the viewModel inside the Fragment when applying
- * the 'by viewModels()' Kotlin property delegate from the activity-ktx / fragment-ktx artifact.
+ * Right now, there is no easy way to mock/fake the viewModel inside the Fragment when applying
+ * the 'by viewModels()' Kotlin property delegate from the activity-ktx/fragment-ktx artifact.
  * After finding many ways to handle this issue, I end up with this solution that is to override the
  * loading mechanism of the delegate.
  * There is another way to resolve the issue as well and it is mentioned in the reference link.

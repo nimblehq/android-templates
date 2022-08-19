@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import co.nimblehq.sample.compose.model.UiModel
 import co.nimblehq.sample.compose.ui.theme.ComposeSampleTheme
-import co.nimblehq.sample.compose.ui.theme.Dimension
+import co.nimblehq.sample.compose.ui.theme.SpacingNormal
 
 @Composable
 fun Item(
@@ -21,18 +21,18 @@ fun Item(
             .clickable(onClick = { onClick(uiModel) })
     ) {
         Text(
-            modifier = Modifier.padding(Dimension.SpacingNormal),
-            text = uiModel.id.toString()
+            modifier = Modifier.padding(SpacingNormal),
+            text = uiModel.id
         )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun ItemPreview() {
+private fun ItemPreview() {
     ComposeSampleTheme {
         Item(
-            uiModel = UiModel(1),
+            uiModel = UiModel("1"),
             onClick = {}
         )
     }

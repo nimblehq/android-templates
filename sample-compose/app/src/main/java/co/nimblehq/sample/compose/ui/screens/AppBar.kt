@@ -18,6 +18,6 @@ fun AppBar(@StringRes title: Int) {
 
 @Preview(showBackground = true)
 @Composable
-fun AppBarPreview() {
-    ComposeSampleTheme { AppBar(R.string.home_title) }
+private fun AppBarPreview() {
+    ComposeSampleTheme { AppBar(R.string.home_title_bar) }
 }

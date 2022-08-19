@@ -10,9 +10,7 @@ fun ComposeSampleTheme(
 ) {
     MaterialTheme(
         colors = lightColors(
-            primary = Color.GreenCitrus,
-            primaryVariant = Color.GreenChristi,
-            secondary = Color.GreenCitrus
+            primary = GreenCitrus
         ),
         content = content
     )

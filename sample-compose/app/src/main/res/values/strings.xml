@@ -2,7 +2,9 @@
 <resources>
     <string name="app_name">Sample Compose</string>
     <string name="error_generic">Unexpected error</string>
-    <string name="id_title">ID: %1$d</string>
-    <string name="home_title">Home</string>
-    <string name="second_title">Second</string>
+
+    <string name="home_title_bar">Home</string>
+
+    <string name="second_title_bar">Second</string>
+    <string name="second_id_title">ID: %1$s</string>
 </resources>

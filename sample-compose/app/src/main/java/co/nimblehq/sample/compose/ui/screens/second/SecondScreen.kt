@@ -17,11 +17,11 @@ import co.nimblehq.sample.compose.ui.theme.ComposeSampleTheme
 @Composable
 fun SecondScreen(uiModel: UiModel) {
     Scaffold(topBar = {
-        AppBar(R.string.second_title)
+        AppBar(R.string.second_title_bar)
     }) {
         Box(modifier = Modifier.fillMaxSize()) {
             Text(
-                text = stringResource(R.string.id_title, uiModel.id),
+                text = stringResource(R.string.second_id_title, uiModel.id),
                 modifier = Modifier.align(Alignment.Center)
             )
         }
@@ -30,8 +30,8 @@ fun SecondScreen(uiModel: UiModel) {
 
 @Preview(showBackground = true)
 @Composable
-fun SecondScreenPreview() {
+private fun SecondScreenPreview() {
     ComposeSampleTheme {
-        SecondScreen(UiModel(1))
+        SecondScreen(UiModel("1"))
     }
 }

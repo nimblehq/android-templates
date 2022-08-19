@@ -26,10 +26,10 @@ fun ItemList(
 
 @Preview(showBackground = true)
 @Composable
-fun ItemListPreview() {
+private fun ItemListPreview() {
     ComposeSampleTheme {
         ItemList(
-            uiModels = listOf(UiModel(1), UiModel(2), UiModel(3)),
+            uiModels = listOf(UiModel("1"), UiModel("2"), UiModel("3")),
             onItemClick = {}
         )
     }
