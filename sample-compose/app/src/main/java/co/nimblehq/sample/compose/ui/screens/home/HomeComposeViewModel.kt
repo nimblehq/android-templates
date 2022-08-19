@@ -24,8 +24,8 @@ class HomeComposeViewModel @Inject constructor(
         get() = _uiModels
 
     init {
-        showLoading()
         execute {
+            showLoading()
             when (val result = useCase.execute()) {
                 is UseCaseResult.Success -> {
                     val uiModels = result.data.toUiModels()
