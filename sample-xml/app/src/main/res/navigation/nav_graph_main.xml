@@ -8,10 +8,12 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="co.nimblehq.sample.xml.ui.screens.home.HomeFragment"
+        android:label="@string/home_title_bar"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/secondFragment"
         android:name="co.nimblehq.sample.xml.ui.screens.second.SecondFragment"
+        android:label="@string/second_title_bar"
         tools:layout="@layout/fragment_home" />
 </navigation>
