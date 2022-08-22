@@ -189,6 +189,7 @@ naming:
   FunctionNaming:
     active: true
     functionPattern: '^([a-z$][a-zA-Z$0-9]*)|(`.*`)$'
+    ignoreAnnotated: [ 'Composable' ]
   MatchingDeclarationName:
     active: true
   MemberNameEqualsClassName:
@@ -203,7 +204,7 @@ naming:
   TopLevelPropertyNaming:
     active: true
     constantPattern: '[A-Z][_A-Z0-9]*'
-    propertyPattern: '[a-z][A-Za-z\d]*'
+    propertyPattern: '[A-Z][A-Za-z0-9]*'
     privatePropertyPattern: '(_)?[a-z][A-Za-z0-9]*'
   VariableMaxLength:
     active: false

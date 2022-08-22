@@ -8,6 +8,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import co.nimblehq.sample.compose.ui.common.Toaster
+import co.nimblehq.sample.compose.ui.theme.ComposeSampleTheme
 import co.nimblehq.sample.compose.ui.userReadableMessage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -35,7 +36,7 @@ abstract class BaseComposeFragment : Fragment(), BaseComposeFragmentCallbacks {
         savedInstanceState: Bundle?
     ): View? {
         return ComposeView(requireContext()).apply {
-            setContent { composeScreen.invoke() }
+            setContent { ComposeSampleTheme { composeScreen.invoke() } }
         }
     }
 

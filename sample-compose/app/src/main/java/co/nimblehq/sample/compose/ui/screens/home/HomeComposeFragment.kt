@@ -2,16 +2,12 @@ package co.nimblehq.sample.compose.ui.screens.home
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.res.stringResource
-import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.extension.provideViewModels
 import co.nimblehq.sample.compose.ui.base.BaseComposeFragment
 import co.nimblehq.sample.compose.ui.screens.MainNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-@ExperimentalComposeUiApi
 @AndroidEntryPoint
 class HomeComposeFragment : BaseComposeFragment() {
 
@@ -22,9 +18,10 @@ class HomeComposeFragment : BaseComposeFragment() {
 
     override val composeScreen: @Composable () -> Unit
         get() = {
-            HomeScreen(
-                title = stringResource(id = R.string.app_name),
-                uiModels = viewModel.uiModels.collectAsState().value
+            HomeComposeScreen(
+                uiModels = viewModel.uiModels.collectAsState().value,
+                showLoading = viewModel.showLoading.collectAsState().value,
+                onItemClick = { uiModel -> viewModel.navigateToSecond(uiModel) }
             )
         }
 

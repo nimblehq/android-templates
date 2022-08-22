@@ -4,16 +4,13 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 
-@Suppress("FunctionNaming")
 @Composable
-fun Theme(
+fun ComposeSampleTheme(
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
         colors = lightColors(
-            primary = Color.GreenCitrus,
-            primaryVariant = Color.GreenChristi,
-            secondary = Color.GreenCitrus
+            primary = GreenCitrus
         ),
         content = content
     )

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/greenCitrus</item>
-        <item name="colorPrimaryDark">@color/greenChristi</item>
-        <item name="colorAccent">@color/greenCitrus</item>
+        <item name="android:statusBarColor">@color/greenChristi</item>
     </style>
 </resources>
