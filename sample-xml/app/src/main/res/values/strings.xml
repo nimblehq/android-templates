@@ -6,4 +6,5 @@
     <string name="home_title_bar">Home</string>
 
     <string name="second_title_bar">Second</string>
+    <string name="second_id">ID: %s</string>
 </resources>
