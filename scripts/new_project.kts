@@ -298,7 +298,7 @@ object NewProject {
         val exitValue = process.waitFor()
         if (exitValue != 0) {
             showMessage(
-                message = "❌ Something went wrong! when executing command: $command",
+                message = "❌ Something went wrong! when executing command: ${command.joinToString(" ")}",
                 exitAfterMessage = true,
                 exitValue = exitValue
             )
