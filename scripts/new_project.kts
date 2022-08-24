@@ -59,7 +59,13 @@ object NewProject {
         get() = rootPath + projectFolderName
 
     private val rootPath: String
-        get() = System.getProperty("user.dir").replace("scripts", "")
+        get() = System.getProperty("user.dir").let { userDir ->
+            if (userDir.endsWith("/scripts")) {
+                userDir.substring(0, userDir.lastIndexOf("scripts"))
+            } else {
+                userDir + "/"
+            }
+        }
 
     fun generate(args: Array<String>) {
         handleArguments(args)
