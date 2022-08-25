@@ -17,7 +17,5 @@ class SecondViewModel @Inject constructor(
     val id: StateFlow<String?>
         get() = _id
 
-    fun initViewModel(uiModel: UiModel) {
-        execute { _id.emit(uiModel.id) }
-    }
+    fun initViewModel(uiModel: UiModel) = execute { _id.emit(uiModel.id) }
 }

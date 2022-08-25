@@ -2,13 +2,14 @@ package co.nimblehq.sample.xml.ui.screens.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.*
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import co.nimblehq.sample.xml.databinding.ItemHomeListBinding
 import co.nimblehq.sample.xml.model.UiModel
 
-class ItemListAdapter : ListAdapter<UiModel, ItemListAdapter.ItemViewHolder>(ItemDiffCallback()) {
-
-    var onItemClicked: ((uiModel: UiModel) -> Unit)? = null
+class ItemListAdapter constructor(var onItemClicked: ((uiModel: UiModel) -> Unit)? = null) :
+    ListAdapter<UiModel, ItemListAdapter.ItemViewHolder>(ItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val binding =
@@ -25,7 +26,7 @@ class ItemListAdapter : ListAdapter<UiModel, ItemListAdapter.ItemViewHolder>(Ite
 
         fun bind(item: UiModel, onItemClicked: ((uiModel: UiModel) -> Unit)?) {
             binding.tvItemHome.text = item.id
-            binding.lItemHome.setOnClickListener { onItemClicked?.invoke(item) }
+            binding.root.setOnClickListener { onItemClicked?.invoke(item) }
         }
     }
 

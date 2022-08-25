@@ -2,11 +2,14 @@ package co.nimblehq.sample.xml.ui.screens.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.recyclerview.widget.DividerItemDecoration
+import co.nimblehq.common.extensions.visibleOrGone
 import co.nimblehq.sample.xml.databinding.FragmentHomeBinding
 import co.nimblehq.sample.xml.extension.provideViewModels
+import co.nimblehq.sample.xml.lib.IsLoading
 import co.nimblehq.sample.xml.model.UiModel
 import co.nimblehq.sample.xml.ui.base.BaseFragment
-import co.nimblehq.sample.xml.ui.common.ItemDivider
 import co.nimblehq.sample.xml.ui.screens.MainNavigator
 import co.nimblehq.sample.xml.ui.screens.home.adapter.ItemListAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,10 +31,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun setupView() {
         binding.rvHome.apply {
-            adapter = itemListAdapter.apply {
-                onItemClicked = { uiModel -> viewModel.navigateToSecond(uiModel) }
-            }
-            addItemDecoration(ItemDivider(this.context))
+            itemListAdapter.onItemClicked = { uiModel -> viewModel.navigateToSecond(uiModel) }
+            adapter = itemListAdapter
+            addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
         }
     }
 
@@ -39,6 +41,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         viewModel.uiModels bindTo ::displayUiModels
         viewModel.error bindTo toaster::display
         viewModel.navigator bindTo navigator::navigate
+        viewModel.showLoading bindTo ::showLoading
+    }
+
+    private fun showLoading(isShow: IsLoading) {
+        binding.pbHome.visibleOrGone(isShow)
     }
 
     private fun displayUiModels(uiModels: List<UiModel>) {

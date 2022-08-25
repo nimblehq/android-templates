@@ -1,6 +1,5 @@
 package co.nimblehq.sample.xml.ui.screens.second
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -22,9 +21,7 @@ class SecondFragment : BaseFragment<FragmentSecondBinding>() {
             FragmentSecondBinding.inflate(inflater, container, attachToParent)
         }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun setupView() {
         // Hide navigation button on toolbar
         (requireActivity() as AppCompatActivity).supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(false)
@@ -41,6 +38,6 @@ class SecondFragment : BaseFragment<FragmentSecondBinding>() {
     }
 
     private fun displayId(id: String?) {
-        binding.tvSecondId.text = getString(R.string.second_id, id)
+        binding.tvSecondId.text = getString(R.string.second_id_title, id)
     }
 }
