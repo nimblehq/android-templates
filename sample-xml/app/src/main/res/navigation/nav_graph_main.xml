@@ -8,10 +8,26 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="co.nimblehq.sample.xml.ui.screens.home.HomeFragment"
-        tools:layout="@layout/fragment_home" />
+        android:label="@string/home_title_bar"
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_homeFragment_to_secondFragment"
+            app:destination="@id/secondFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
 
     <fragment
         android:id="@+id/secondFragment"
         android:name="co.nimblehq.sample.xml.ui.screens.second.SecondFragment"
-        tools:layout="@layout/fragment_home" />
+        android:label="@string/second_title_bar"
+        tools:layout="@layout/fragment_second">
+
+        <argument
+            android:name="uiModel"
+            app:argType="co.nimblehq.sample.xml.model.UiModel" />
+    </fragment>
 </navigation>

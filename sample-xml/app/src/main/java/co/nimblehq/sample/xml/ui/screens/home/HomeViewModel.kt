@@ -5,6 +5,7 @@ import co.nimblehq.sample.xml.domain.usecase.UseCaseResult
 import co.nimblehq.sample.xml.model.UiModel
 import co.nimblehq.sample.xml.model.toUiModels
 import co.nimblehq.sample.xml.ui.base.BaseViewModel
+import co.nimblehq.sample.xml.ui.base.NavigationEvent
 import co.nimblehq.sample.xml.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,6 +24,7 @@ class HomeViewModel @Inject constructor(
 
     init {
         execute {
+            showLoading()
             when (val result = useCase.execute()) {
                 is UseCaseResult.Success -> {
                     val uiModels = result.data.toUiModels()
@@ -33,6 +35,11 @@ class HomeViewModel @Inject constructor(
                     _error.emit(errorMessage)
                 }
             }
+            hideLoading()
         }
+    }
+
+    fun navigateToSecond(uiModel: UiModel) {
+        execute { _navigator.emit(NavigationEvent.Second(uiModel)) }
     }
 }

@@ -1,10 +1,43 @@
 package co.nimblehq.sample.xml.ui.screens.second
 
-import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.navArgs
+import co.nimblehq.sample.xml.R
+import co.nimblehq.sample.xml.databinding.FragmentSecondBinding
+import co.nimblehq.sample.xml.extension.provideViewModels
+import co.nimblehq.sample.xml.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SecondFragment : Fragment() {
+class SecondFragment : BaseFragment<FragmentSecondBinding>() {
 
-    // TODO: Implement SecondFragment in Part2
+    private val viewModel: SecondViewModel by provideViewModels()
+    private val args: SecondFragmentArgs by navArgs()
+
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSecondBinding
+        get() = { inflater, container, attachToParent ->
+            FragmentSecondBinding.inflate(inflater, container, attachToParent)
+        }
+
+    override fun setupView() {
+        // Hide navigation button on toolbar
+        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(false)
+            setHomeButtonEnabled(false)
+        }
+    }
+
+    override fun initViewModel() {
+        viewModel.initViewModel(args.uiModel)
+    }
+
+    override fun bindViewModel() {
+        viewModel.id bindTo ::displayId
+    }
+
+    private fun displayId(id: String?) {
+        binding.tvSecondId.text = getString(R.string.second_id_title, id)
+    }
 }

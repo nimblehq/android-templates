@@ -1,3 +1,7 @@
 package co.nimblehq.sample.xml.ui.base
 
-sealed class NavigationEvent
+import co.nimblehq.sample.xml.model.UiModel
+
+sealed class NavigationEvent {
+    data class Second(val uiModel: UiModel) : NavigationEvent()
+}

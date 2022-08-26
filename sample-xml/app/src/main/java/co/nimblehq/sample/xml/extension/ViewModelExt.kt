@@ -1,15 +1,17 @@
 package co.nimblehq.sample.xml.extension
 
-import androidx.activity.ComponentActivity
-import androidx.activity.viewModels
 import androidx.annotation.MainThread
-import androidx.fragment.app.*
-import androidx.lifecycle.*
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 
 /**
  * PLEASE READ THIS BEFORE IMPLEMENT:
- * Right now, there is no easy way to mock/ fake the viewModel inside the Fragment when applying
- * the 'by viewModels()' Kotlin property delegate from the activity-ktx/ fragment-ktx artifact.
+ * Right now, there is no easy way to mock/fake the viewModel inside the Fragment when applying
+ * the 'by viewModels()' Kotlin property delegate from the activity-ktx/fragment-ktx artifact.
  * After finding many ways to handle this issue, I end up with this solution that is to override the
  * loading mechanism of the delegate.
  * There is another way to resolve the issue as well and it is mentioned in the reference link.
@@ -25,11 +27,6 @@ inline fun <reified VM : ViewModel> Fragment.provideViewModels(
     noinline ownerProducer: () -> ViewModelStoreOwner = { this },
     noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null
 ): Lazy<VM> = OverridableLazy(viewModels(ownerProducer, factoryProducer))
-
-@MainThread
-inline fun <reified VM : ViewModel> ComponentActivity.provideViewModels(
-    noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null
-): Lazy<VM> = OverridableLazy(viewModels(factoryProducer))
 
 class OverridableLazy<T>(var implementation: Lazy<T>) : Lazy<T> {
 
