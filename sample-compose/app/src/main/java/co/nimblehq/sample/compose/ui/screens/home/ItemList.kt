@@ -14,12 +14,12 @@ fun ItemList(
     onItemClick: (UiModel) -> Unit
 ) {
     LazyColumn {
-        itemsIndexed(items = uiModels) { index, uiModel ->
+        itemsIndexed(items = uiModels) { _, uiModel ->
             Item(
                 uiModel = uiModel,
                 onClick = onItemClick
             )
-            if (index != uiModels.lastIndex) Divider()
+            Divider()
         }
     }
 }
