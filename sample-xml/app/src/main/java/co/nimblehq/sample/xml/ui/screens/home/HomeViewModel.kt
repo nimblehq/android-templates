@@ -1,15 +1,13 @@
 package co.nimblehq.sample.xml.ui.screens.home
 
 import co.nimblehq.sample.xml.domain.usecase.UseCase
-import co.nimblehq.sample.xml.domain.usecase.UseCaseResult
 import co.nimblehq.sample.xml.model.UiModel
 import co.nimblehq.sample.xml.model.toUiModels
 import co.nimblehq.sample.xml.ui.base.BaseViewModel
 import co.nimblehq.sample.xml.ui.base.NavigationEvent
 import co.nimblehq.sample.xml.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,16 +23,15 @@ class HomeViewModel @Inject constructor(
     init {
         execute {
             showLoading()
-            when (val result = useCase.execute()) {
-                is UseCaseResult.Success -> {
-                    val uiModels = result.data.toUiModels()
-                    _uiModels.emit(uiModels)
-                }
-                is UseCaseResult.Error -> {
-                    val errorMessage = result.exception.message.orEmpty()
+            useCase.execute()
+                .catch {
+                    val errorMessage = it.message.orEmpty()
                     _error.emit(errorMessage)
                 }
-            }
+                .collect { result ->
+                    val uiModels = result.toUiModels()
+                    _uiModels.emit(uiModels)
+                }
             hideLoading()
         }
     }

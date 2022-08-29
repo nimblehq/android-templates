@@ -64,6 +64,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${Versions.KOTLIN_VERSION}")
     implementation("javax.inject:javax.inject:${Versions.JAVAX_INJECT_VERSION}")
 
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLINX_COROUTINES_VERSION}")
+
     api("com.squareup.retrofit2:converter-moshi:${Versions.RETROFIT_VERSION}")
     api("com.squareup.retrofit2:retrofit:${Versions.RETROFIT_VERSION}")
 
