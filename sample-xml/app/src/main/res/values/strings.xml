@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sample Xml</string>
+    <string name="error_generic">Unexpected error</string>
+
+    <string name="home_title_bar">Home</string>
+
+    <string name="second_title_bar">Second</string>
+    <string name="second_id_title">ID: %s</string>
+</resources>

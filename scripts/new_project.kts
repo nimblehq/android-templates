@@ -2,28 +2,46 @@ import java.io.File
 
 object NewProject {
 
-    private const val ARGUMENT_DELIMITER = "="
-    private const val DOT_SEPARATOR = "."
+    private const val DELIMITER_ARGUMENT = "="
+
     private const val KEY_APP_NAME = "app-name"
+    private const val KEY_HELP = "--help"
     private const val KEY_PACKAGE_NAME = "package-name"
-    private const val MINUS_SEPARATOR = "-"
-    private const val SPACE_SEPARATOR = " "
+
+    private const val PATTERN_APP = "^([A-Z][a-zA-Z0-9\\s]*)|([a-z][a-z0-9-]*)$"
+    private const val PATTERN_PACKAGE = "^[a-z]+(\\.[a-z][a-z0-9]*)+$"
+
+    private const val SCRIPTS_FOLDER_NAME = "scripts"
+
+    private const val SEPARATOR_DOT = "."
+    private const val SEPARATOR_MINUS = "-"
+    private const val SEPARATOR_SLASH = "/"
+    private const val SEPARATOR_SPACE = " "
+
     private const val TEMPLATE_APP_NAME = "Template"
     private const val TEMPLATE_APPLICATION_CLASS_NAME = "TemplateApplication"
     private const val TEMPLATE_FOLDER_NAME = "template"
     private const val TEMPLATE_PACKAGE_NAME = "co.nimblehq.template"
 
-    private const val PATTERN_APP = "^([A-Z][a-zA-Z0-9\\s]*)|([a-z][a-z0-9-]*)$"
-    private const val PATTERN_PACKAGE = "^[a-z]+(\\.[a-z][a-z0-9]*)+$"
+    private val helpMessage = """
+        Run kscript new_project.kts to create a new project with the following arguments:
+            package-name=   New package name (i.e., com.example.package)
+            app-name=       New app name (i.e., MyApp, "My App", "my-app")
+        
+        Examples:
+            kscript new_project.kts package-name=co.myproject.example app-name="My Project"
+            kscript scripts/new_project.kts package-name=co.myproject.example app-name="My Project"
+    """.trimIndent()
 
     private val modules = listOf("app", "data", "domain")
+
     private val fileSeparator = File.separator
 
     private var appName: String = ""
         set(value) {
-            field = if (value.contains(MINUS_SEPARATOR)) {
+            field = if (value.contains(SEPARATOR_MINUS)) {
                 projectFolderName = value
-                value.replace(MINUS_SEPARATOR, SPACE_SEPARATOR).uppercaseEveryFirstCharacter()
+                value.replace(SEPARATOR_MINUS, SEPARATOR_SPACE).uppercaseEveryFirstCharacter()
             } else {
                 value.uppercaseEveryFirstCharacter().also {
                     projectFolderName = it.getStringWithoutSpace()
@@ -45,7 +63,13 @@ object NewProject {
         get() = rootPath + projectFolderName
 
     private val rootPath: String
-        get() = System.getProperty("user.dir").replace("scripts", "")
+        get() = System.getProperty("user.dir").let { userDir ->
+            if (userDir.endsWith("$fileSeparator$SCRIPTS_FOLDER_NAME")) {
+                userDir.substring(0, userDir.lastIndexOf(SCRIPTS_FOLDER_NAME))
+            } else {
+                "$userDir$fileSeparator"
+            }
+        }
 
     fun generate(args: Array<String>) {
         handleArguments(args)
@@ -59,22 +83,43 @@ object NewProject {
     }
 
     private fun handleArguments(args: Array<String>) {
-        val argumentError = "ERROR: Invalid argument name: Ensure define arguments => app-name={\"MyProject\"} or {\"My Project\"} package-name={com.sample.myproject}"
-        when (args.size) {
-            1 -> when {
-                args.first().startsWith(KEY_APP_NAME) -> showErrorMessage("ERROR: No package name has been provided")
-                args.first().startsWith(KEY_PACKAGE_NAME) -> showErrorMessage("ERROR: No app name has been provided")
-                else -> showErrorMessage(argumentError)
-            }
-            2 -> args.forEach { arg ->
-                val (key, value) = arg.split(ARGUMENT_DELIMITER)
-                when (key) {
-                    KEY_APP_NAME -> validateAppName(value)
-                    KEY_PACKAGE_NAME -> validatePackageName(value)
-                    else -> showErrorMessage(argumentError)
+        var hasAppName = false
+        var hasPackageName = false
+        args.forEach { arg ->
+            when {
+                arg == KEY_HELP -> {
+                    showMessage(
+                        message = helpMessage,
+                        exitAfterMessage = true
+                    )
+                }
+                arg.startsWith("$KEY_APP_NAME$DELIMITER_ARGUMENT") -> {
+                    val (key, value) = arg.split(DELIMITER_ARGUMENT)
+                    validateAppName(value)
+                    hasAppName = true
+                }
+                arg.startsWith("$KEY_PACKAGE_NAME$DELIMITER_ARGUMENT") -> {
+                    val (key, value) = arg.split(DELIMITER_ARGUMENT)
+                    validatePackageName(value)
+                    hasPackageName = true
+                }
+                else -> {
+                    showMessage(
+                        message = "ERROR: Invalid argument name: $arg \n$helpMessage",
+                        exitAfterMessage = true
+                    )
                 }
             }
-            else -> showErrorMessage("ERROR: Require app-name and package-name to initialize the new project")
+        }
+        when {
+            !hasAppName -> showMessage(
+                message = "ERROR: No app name has been provided \n$helpMessage",
+                exitAfterMessage = true
+            )
+            !hasPackageName -> showMessage(
+                message = "ERROR: No package name has been provided \n$helpMessage",
+                exitAfterMessage = true
+            )
         }
     }
 
@@ -82,7 +127,10 @@ object NewProject {
         if (PATTERN_APP.toRegex().matches(value)) {
             appName = value.trim()
         } else {
-            showErrorMessage("ERROR: Invalid App Name: $value (needs to follow standard pattern {MyProject} or {My Project})")
+            showMessage(
+                message = "ERROR: Invalid App Name: $value (needs to follow standard pattern {MyProject} or {My Project}) or {my-project} \n$helpMessage",
+                exitAfterMessage = true
+            )
         }
     }
 
@@ -90,7 +138,10 @@ object NewProject {
         if (PATTERN_PACKAGE.toRegex().matches(value)) {
             packageName = value.trim()
         } else {
-            showErrorMessage("ERROR: Invalid Package Name: $value (needs to follow standard pattern {com.example.package})")
+            showMessage(
+                message = "ERROR: Invalid Package Name: $value (needs to follow standard pattern {com.example.package}) \n$helpMessage",
+                exitAfterMessage = true
+            )
         }
     }
 
@@ -102,8 +153,20 @@ object NewProject {
     }
 
     private fun cleanNewProjectFolder() {
-        executeCommand("sh $projectPath${fileSeparator}gradlew -p $projectPath clean")
-        executeCommand("sh $projectPath${fileSeparator}gradlew -p $projectPath${fileSeparator}buildSrc clean")
+        executeCommand(
+            "sh",
+            "$projectPath${fileSeparator}gradlew",
+            "-p",
+            "$projectPath",
+            "clean"
+        )
+        executeCommand(
+            "sh",
+            "$projectPath${fileSeparator}gradlew",
+            "-p",
+            "$projectPath${fileSeparator}buildSrc",
+            "clean"
+        )
         listOf(".idea", ".gradle", "buildSrc$fileSeparator.gradle", ".git").forEach {
             File("$projectPath$fileSeparator$it")?.let { targetFile ->
                 targetFile.deleteRecursively()
@@ -122,13 +185,13 @@ object NewProject {
                 .forEach { javaDirectory ->
                     val oldDirectory = File(
                         javaDirectory, TEMPLATE_PACKAGE_NAME.replace(
-                            oldValue = DOT_SEPARATOR,
+                            oldValue = SEPARATOR_DOT,
                             newValue = fileSeparator
                         )
                     )
                     val newDirectory = File(
                         javaDirectory, packageName.replace(
-                            oldValue = DOT_SEPARATOR,
+                            oldValue = SEPARATOR_DOT,
                             newValue = fileSeparator
                         )
                     )
@@ -153,13 +216,23 @@ object NewProject {
         showMessage("=> 🔎 Renaming package name within files...")
         File(projectPath)
             .walk()
-            .filter { it.name.endsWith(".kt") || it.name.endsWith(".xml") }
+            .filter { it.name.endsWithAny(".kt", ".xml", ".gradle.kts") }
             .forEach { filePath ->
-                rename(
-                    sourcePath = filePath.toString(),
-                    oldValue = TEMPLATE_PACKAGE_NAME,
-                    newValue = packageName
-                )
+                when (filePath.name) {
+                    "jacoco-report.gradle.kts" -> rename(
+                        sourcePath = filePath.toString(),
+                        oldValue = TEMPLATE_PACKAGE_NAME.replace(
+                            SEPARATOR_DOT,
+                            SEPARATOR_SLASH
+                        ),
+                        newValue = packageName.replace(SEPARATOR_DOT, SEPARATOR_SLASH)
+                    )
+                    else -> rename(
+                        sourcePath = filePath.toString(),
+                        oldValue = TEMPLATE_PACKAGE_NAME,
+                        newValue = packageName
+                    )
+                }
             }
     }
 
@@ -187,9 +260,23 @@ object NewProject {
 
     private fun buildProjectAndRunTests() {
         showMessage("=> 🛠️ Building project...")
-        executeCommand("sh $projectPath${fileSeparator}gradlew -p $fileSeparator$projectPath assembleDebug")
+        executeCommand(
+            "sh",
+            "$projectPath${fileSeparator}gradlew",
+            "-p",
+            "$projectPath",
+            "assembleDebug"
+        )
         showMessage("=> 🚓 Running tests...")
-        executeCommand("sh $projectPath${fileSeparator}gradlew -p $fileSeparator$projectPath testStagingDebugUnitTest")
+        executeCommand(
+            "sh",
+            "$projectPath${fileSeparator}gradlew",
+            "-p",
+            "$projectPath",
+            ":app:testStagingDebugUnitTest",
+            ":data:testDebugUnitTest",
+            ":domain:test"
+        )
         showMessage("=> 🚀 Done! The project is ready for development")
     }
 
@@ -202,12 +289,29 @@ object NewProject {
         }
     }
 
-    private fun executeCommand(command: String) {
+    /**
+     * Execute a shell command
+     *
+     * Runtime.getRuntime().exec(String) will partition a command automatically, based on white spaces.
+     * If a file path contains any white spaces, it will not be able to find the file and result in an error.
+     *
+     * Example: "Desktop/My Projects/android-templates" -> ["Desktop/My", "Projects/android-templates"]
+     * Solution: Partition the command before passing it to Runtime.getRuntime().exec(String)
+     * Reference: https://stackoverflow.com/questions/33077129/java-runtime-exec-with-white-spaces-on-path-name
+     *
+     * @param [command]: A command partitioned into multiple arguments
+     */
+    private fun executeCommand(vararg command: String) {
         val process = Runtime.getRuntime().exec(command)
         process.inputStream.reader().forEachLine { println(it) }
+        process.errorStream.reader().forEachLine { println(it) }
         val exitValue = process.waitFor()
         if (exitValue != 0) {
-            showErrorMessage("❌ Something went wrong! when executing command: $command", exitValue)
+            showMessage(
+                message = "❌ Something went wrong! when executing command: ${command.joinToString(" ")}",
+                exitAfterMessage = true,
+                exitValue = exitValue
+            )
         }
     }
 
@@ -232,23 +336,27 @@ object NewProject {
         sourceFile.writeText(sourceText)
     }
 
-    private fun showMessage(message: String) {
+    private fun showMessage(
+        message: String,
+        exitAfterMessage: Boolean = false,
+        exitValue: Int = 0
+    ) {
         println("\n${message}\n")
-    }
-
-    private fun showErrorMessage(message: String, exitCode: Int = 0) {
-        println("\n${message}\n")
-        System.exit(exitCode)
+        if (exitAfterMessage) System.exit(exitValue)
     }
 
     private fun String.uppercaseEveryFirstCharacter(): String {
-        return this.split(SPACE_SEPARATOR).joinToString(separator = SPACE_SEPARATOR) { string ->
+        return this.split(SEPARATOR_SPACE).joinToString(separator = SEPARATOR_SPACE) { string ->
             string.replaceFirstChar { it.uppercase() }
         }
     }
 
     private fun String.getStringWithoutSpace(): String {
-        return this.replace(SPACE_SEPARATOR, "")
+        return this.replace(SEPARATOR_SPACE, "")
+    }
+
+    private fun String.endsWithAny(vararg suffixes: String): Boolean {
+        return suffixes.any { endsWith(it) }
     }
 }
 
