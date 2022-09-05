@@ -15,8 +15,9 @@ class RepositoryImpl constructor(
         try {
             val result = apiService.getResponses().toModels()
             emit(result)
-        } catch (e: Exception) {
-            throw e
+        } catch (exception: Exception) {
+            // TODO do error mapping here
+            throw exception
         }
     }
 }
