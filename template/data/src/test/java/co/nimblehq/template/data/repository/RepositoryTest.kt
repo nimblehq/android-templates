@@ -9,6 +9,7 @@ import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
@@ -32,13 +33,18 @@ class RepositoryTest {
         val expected = listOf(response)
         coEvery { mockService.getResponses() } returns expected
 
-        repository.getModels() shouldBe expected.toModels()
+        repository.getModels().collect {
+            it shouldBe expected.toModels()
+        }
     }
 
     @Test
     fun `When request failed, it returns error`() = runBlockingTest {
-        coEvery { mockService.getResponses() } throws Throwable()
+        val expected = Throwable()
+        coEvery { mockService.getResponses() } throws expected
 
-        shouldThrow<Throwable> { repository.getModels() }
+        repository.getModels().catch {
+            it shouldBe expected
+        }.collect()
     }
 }
