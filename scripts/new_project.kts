@@ -1,4 +1,5 @@
 import java.io.File
+import java.util.Properties
 
 object NewProject {
 
@@ -13,6 +14,7 @@ object NewProject {
 
     private const val SCRIPTS_FOLDER_NAME = "scripts"
 
+    private const val SCRIPT_VERSION_PROPERTY_NAME = "templateScriptVersion"
     private const val SEPARATOR_DOT = "."
     private const val SEPARATOR_MINUS = "-"
     private const val SEPARATOR_SLASH = "/"
@@ -22,6 +24,8 @@ object NewProject {
     private const val TEMPLATE_APPLICATION_CLASS_NAME = "TemplateApplication"
     private const val TEMPLATE_FOLDER_NAME = "template"
     private const val TEMPLATE_PACKAGE_NAME = "co.nimblehq.template"
+
+    private const val VERSION_FILE_NAME = "version.properties"
 
     private val helpMessage = """
         Run kscript new_project.kts to create a new project with the following arguments:
@@ -82,12 +86,19 @@ object NewProject {
         buildProjectAndRunTests()
     }
 
+    private fun showScriptVersion() {
+        val properties = File(rootPath).loadProperties(VERSION_FILE_NAME)
+        val scriptVersion = properties.getProperty(SCRIPT_VERSION_PROPERTY_NAME) as String
+        showMessage(message = "=> Running new project script version $scriptVersion... \uD83D\uDC4B")
+    }
+
     private fun handleArguments(args: Array<String>) {
         var hasAppName = false
         var hasPackageName = false
         args.forEach { arg ->
             when {
                 arg == KEY_HELP -> {
+                    showScriptVersion()
                     showMessage(
                         message = helpMessage,
                         exitAfterMessage = true
@@ -357,6 +368,16 @@ object NewProject {
 
     private fun String.endsWithAny(vararg suffixes: String): Boolean {
         return suffixes.any { endsWith(it) }
+    }
+
+    private fun File.loadProperties(fileName: String): Properties {
+        val properties = Properties()
+        val propertiesFile = File(this, fileName)
+
+        if (propertiesFile.isFile) {
+            properties.load(propertiesFile.inputStream())
+        }
+        return properties
     }
 }
 
