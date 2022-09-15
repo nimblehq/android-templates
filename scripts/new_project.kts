@@ -13,7 +13,6 @@ object NewProject {
     private const val PATTERN_PACKAGE = "^[a-z]+(\\.[a-z][a-z0-9]*)+$"
 
     private const val SCRIPTS_FOLDER_NAME = "scripts"
-
     private const val SCRIPT_VERSION_PROPERTY_NAME = "templateScriptVersion"
     private const val SEPARATOR_DOT = "."
     private const val SEPARATOR_MINUS = "-"
@@ -76,6 +75,7 @@ object NewProject {
         }
 
     fun generate(args: Array<String>) {
+        showScriptVersion()
         handleArguments(args)
         initializeNewProjectFolder()
         cleanNewProjectFolder()
@@ -89,7 +89,7 @@ object NewProject {
     private fun showScriptVersion() {
         val properties = File(rootPath).loadProperties(VERSION_FILE_NAME)
         val scriptVersion = properties.getProperty(SCRIPT_VERSION_PROPERTY_NAME) as String
-        showMessage(message = "=> Running new project script version $scriptVersion... \uD83D\uDC4B")
+        showMessage(message = "=> \uD83D\uDC4B Running new project script version $scriptVersion... ")
     }
 
     private fun handleArguments(args: Array<String>) {
@@ -98,7 +98,6 @@ object NewProject {
         args.forEach { arg ->
             when {
                 arg == KEY_HELP -> {
-                    showScriptVersion()
                     showMessage(
                         message = helpMessage,
                         exitAfterMessage = true
