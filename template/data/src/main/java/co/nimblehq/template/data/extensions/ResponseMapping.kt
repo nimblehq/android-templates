@@ -8,6 +8,7 @@ import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
+import retrofit2.Response
 import java.io.IOException
 import java.io.InterruptedIOException
 import java.net.UnknownHostException
@@ -26,17 +27,19 @@ fun <T> flowTransform(@BuilderInference block: suspend FlowCollector<T>.() -> T)
 
 private fun Throwable.mapError(): Throwable {
     return when (this) {
-        is UnknownHostException, is InterruptedIOException -> NoConnectivityException
+        is UnknownHostException,
+        is InterruptedIOException -> NoConnectivityException
         is HttpException -> {
-            val errorResponse = parseErrorResponse(this)
-            ApiException(errorResponse, response())
+            val response = response()
+            val errorResponse = parseErrorResponse(response)
+            ApiException(errorResponse, response)
         }
         else -> this
     }
 }
 
-private fun parseErrorResponse(httpException: HttpException): ErrorResponse? {
-    val jsonString = httpException.response()?.errorBody()?.string()
+private fun parseErrorResponse(response: Response<*>?): ErrorResponse? {
+    val jsonString = response?.errorBody()?.string()
     return parseErrorResponse(jsonString)
 }
 
