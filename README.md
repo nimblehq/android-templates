@@ -25,7 +25,9 @@ Our Android template: **[template](https://github.com/nimblehq/android-templates
 
 4. Update `android_version_code` and `android_version_name` in `template/build.gradle`
 
-> Learn more about our Android templates on the [Wiki](https://github.com/nimblehq/android-templates/wiki).
+## Wiki
+
+Learn more about our Android templates on the [Wiki](https://github.com/nimblehq/android-templates/wiki).
 
 ## License
 
