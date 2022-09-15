@@ -30,7 +30,7 @@ class HomeComposeFragment : BaseComposeFragment() {
         }
 
     override fun bindViewModel() {
-        viewModel.error bindTo toaster::display
+        viewModel.error bindTo ::displayError
         viewModel.navigator bindTo navigator::navigate
     }
 }

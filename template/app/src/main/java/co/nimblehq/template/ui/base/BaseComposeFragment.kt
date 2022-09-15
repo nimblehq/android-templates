@@ -1,17 +1,14 @@
 package co.nimblehq.template.ui.base
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.annotation.CallSuper
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.*
 import co.nimblehq.template.ui.common.Toaster
+import co.nimblehq.template.ui.userReadableMessage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -48,6 +45,11 @@ abstract class BaseComposeFragment : Fragment(), BaseComposeFragmentCallbacks {
         (this as? BaseComposeFragmentCallbacks)?.let {
             bindViewModel()
         }
+    }
+
+    open fun displayError(error: Throwable) {
+        val message = error.userReadableMessage(requireContext())
+        toaster.display(message)
     }
 
     protected inline infix fun <T> Flow<T>.bindTo(crossinline action: (T) -> Unit) {

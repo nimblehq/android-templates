@@ -26,7 +26,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun bindViewModel() {
         viewModel.uiModels bindTo ::displayUiModels
-        viewModel.error bindTo toaster::display
+        viewModel.error bindTo ::displayError
         viewModel.navigator bindTo navigator::navigate
     }
 
