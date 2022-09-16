@@ -44,10 +44,6 @@ private fun Throwable.mapError(): Throwable {
 
 private fun parseErrorResponse(response: Response<*>?): ErrorResponse? {
     val jsonString = response?.errorBody()?.string()
-    return parseErrorResponse(jsonString)
-}
-
-private fun parseErrorResponse(jsonString: String?): ErrorResponse? {
     return try {
         val moshi = MoshiBuilderProvider.moshiBuilder.build()
         val adapter = moshi.adapter(ErrorResponse::class.java)
