@@ -17,7 +17,8 @@ object MockUtil {
             every { response.code() } returns 500
             every { response.message() } returns "message"
             every { response.errorBody() } returns responseBody
-            every { httpException.code() } returns 500
+            every { httpException.code() } returns response.code()
+            every { httpException.message() } returns response.message()
             every { httpException.response() } returns response
             every { responseBody.string() } returns "{\n" +
                     "  \"message\": \"message\"\n" +

@@ -1,9 +1,10 @@
 package co.nimblehq.template.data.extensions
 
 import co.nimblehq.template.data.response.ErrorResponse
-import co.nimblehq.template.data.service.ApiException
-import co.nimblehq.template.data.service.NoConnectivityException
+import co.nimblehq.template.data.response.toModel
 import co.nimblehq.template.data.service.providers.MoshiBuilderProvider
+import co.nimblehq.template.domain.exceptions.ApiException
+import co.nimblehq.template.domain.exceptions.NoConnectivityException
 import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
@@ -30,9 +31,12 @@ private fun Throwable.mapError(): Throwable {
         is UnknownHostException,
         is InterruptedIOException -> NoConnectivityException
         is HttpException -> {
-            val response = response()
-            val errorResponse = parseErrorResponse(response)
-            ApiException(errorResponse, response)
+            val errorResponse = parseErrorResponse(response())
+            ApiException(
+                errorResponse?.toModel(),
+                code(),
+                message()
+            )
         }
         else -> this
     }

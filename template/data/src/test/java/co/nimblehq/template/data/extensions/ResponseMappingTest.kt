@@ -1,8 +1,9 @@
 package co.nimblehq.template.data.extensions
 
-import co.nimblehq.template.data.service.ApiException
-import co.nimblehq.template.data.service.NoConnectivityException
+import co.nimblehq.template.data.response.toModel
 import co.nimblehq.template.data.test.MockUtil
+import co.nimblehq.template.domain.exceptions.ApiException
+import co.nimblehq.template.domain.exceptions.NoConnectivityException
 import co.nimblehq.template.domain.model.Model
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -40,11 +41,15 @@ class ResponseMappingTest {
     @Test
     fun `When mapping API request flow failed with HttpException, it returns mapped ApiException error`() =
         runBlockingTest {
-            val exception = MockUtil.mockHttpException
+            val httpException = MockUtil.mockHttpException
             flowTransform<Model> {
-                throw exception
+                throw httpException
             }.catch {
-                it shouldBe ApiException(MockUtil.errorResponse, exception.response())
+                it shouldBe ApiException(
+                    MockUtil.errorResponse.toModel(),
+                    httpException.code(),
+                    httpException.message()
+                )
             }.collect()
         }
 
