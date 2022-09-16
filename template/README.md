@@ -68,4 +68,3 @@ See [our other projects][community] or [hire our team][hire] to help build your 
 
 [community]: https://github.com/nimblehq
 [hire]: https://nimblehq.co/
-
