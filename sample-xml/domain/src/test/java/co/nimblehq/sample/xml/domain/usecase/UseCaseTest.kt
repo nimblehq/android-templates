@@ -3,9 +3,10 @@ package co.nimblehq.sample.xml.domain.usecase
 import co.nimblehq.sample.xml.domain.model.Model
 import co.nimblehq.sample.xml.domain.repository.Repository
 import io.kotest.matchers.shouldBe
-import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
@@ -27,20 +28,20 @@ class UseCaseTest {
     @Test
     fun `When request successful, it returns success`() = runBlockingTest {
         val expected = listOf(model)
-        coEvery { mockRepository.getModels() } returns expected
+        every { mockRepository.getModels() } returns flowOf(expected)
 
-        useCase.execute().run {
-            (this as UseCaseResult.Success).data shouldBe expected
+        useCase.execute().collect {
+            it shouldBe expected
         }
     }
 
     @Test
     fun `When request failed, it returns error`() = runBlockingTest {
-        val expected = IllegalStateException()
-        coEvery { mockRepository.getModels() } throws expected
+        val expected = Exception()
+        every { mockRepository.getModels() } returns flow { throw expected }
 
-        useCase.execute().run {
-            (this as UseCaseResult.Error).exception shouldBe expected
-        }
+        useCase.execute().catch {
+            it shouldBe expected
+        }.collect()
     }
 }

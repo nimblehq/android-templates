@@ -1,8 +1,9 @@
 package co.nimblehq.sample.xml.domain.repository
 
 import co.nimblehq.sample.xml.domain.model.Model
+import kotlinx.coroutines.flow.Flow
 
 interface Repository {
 
-    suspend fun getModels(): List<Model>
+    fun getModels(): Flow<List<Model>>
 }

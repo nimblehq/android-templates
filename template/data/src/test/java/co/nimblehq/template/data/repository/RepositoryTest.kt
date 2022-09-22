@@ -4,12 +4,12 @@ import co.nimblehq.template.data.response.Response
 import co.nimblehq.template.data.response.toModels
 import co.nimblehq.template.data.service.ApiService
 import co.nimblehq.template.domain.repository.Repository
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test

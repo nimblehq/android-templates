@@ -12,6 +12,7 @@ java {
 
 dependencies {
     implementation("javax.inject:javax.inject:${Versions.JAVAX_INJECT_VERSION}")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLINX_COROUTINES_VERSION}")
 
     // Testing
     testImplementation("junit:junit:${Versions.TEST_JUNIT_VERSION}")
