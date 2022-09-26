@@ -20,8 +20,8 @@ import kotlin.experimental.ExperimentalTypeInference
 fun <T> flowTransform(@BuilderInference block: suspend FlowCollector<T>.() -> T) = flow {
     val result = try {
         block()
-    } catch (e: Exception) {
-        throw e.mapError()
+    } catch (exception: Exception) {
+        throw exception.mapError()
     }
     emit(result)
 }
