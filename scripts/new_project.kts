@@ -1,4 +1,5 @@
 import java.io.File
+import java.util.Properties
 
 object NewProject {
 
@@ -12,7 +13,7 @@ object NewProject {
     private const val PATTERN_PACKAGE = "^[a-z]+(\\.[a-z][a-z0-9]*)+$"
 
     private const val SCRIPTS_FOLDER_NAME = "scripts"
-
+    private const val SCRIPT_VERSION_PROPERTY_NAME = "templateScriptVersion"
     private const val SEPARATOR_DOT = "."
     private const val SEPARATOR_MINUS = "-"
     private const val SEPARATOR_SLASH = "/"
@@ -22,6 +23,8 @@ object NewProject {
     private const val TEMPLATE_APPLICATION_CLASS_NAME = "TemplateApplication"
     private const val TEMPLATE_FOLDER_NAME = "template"
     private const val TEMPLATE_PACKAGE_NAME = "co.nimblehq.template"
+
+    private const val VERSION_FILE_NAME = "version.properties"
 
     private val helpMessage = """
         Run kscript new_project.kts to create a new project with the following arguments:
@@ -72,6 +75,7 @@ object NewProject {
         }
 
     fun generate(args: Array<String>) {
+        showScriptVersion()
         handleArguments(args)
         initializeNewProjectFolder()
         cleanNewProjectFolder()
@@ -80,6 +84,12 @@ object NewProject {
         renameApplicationClass()
         renameAppName()
         buildProjectAndRunTests()
+    }
+
+    private fun showScriptVersion() {
+        val properties = File(rootPath).loadProperties(VERSION_FILE_NAME)
+        val scriptVersion = properties.getProperty(SCRIPT_VERSION_PROPERTY_NAME) as String
+        showMessage(message = "=> \uD83D\uDC4B Running new project script version $scriptVersion... ")
     }
 
     private fun handleArguments(args: Array<String>) {
@@ -357,6 +367,16 @@ object NewProject {
 
     private fun String.endsWithAny(vararg suffixes: String): Boolean {
         return suffixes.any { endsWith(it) }
+    }
+
+    private fun File.loadProperties(fileName: String): Properties {
+        val properties = Properties()
+        val propertiesFile = File(this, fileName)
+
+        if (propertiesFile.isFile) {
+            properties.load(propertiesFile.inputStream())
+        }
+        return properties
     }
 }
 
