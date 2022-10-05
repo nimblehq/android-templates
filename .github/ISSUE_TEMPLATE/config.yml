@@ -3,7 +3,7 @@ blank_issues_enabled: false
 contact_links:
   - name: Request For Comments (RFC)
     about: When having an idea on how to improve our processes, propose the idea so that the team can provide feedback.
-    url: https://nimble.link/android-templates-rfc
+    url: https://github.com/nimblehq/android-templates/discussions/new?category=rfcs&title=+&body=%23%23+Issue%0D%0A%0D%0ADescribe+the+issue+the+team+is+currently+facing.+Provide+as+much+content+as+possible.%0D%0A%0D%0A%23%23+Solution%0D%0A%0D%0ADescribe+the+solution+you+are+prescribing+for+the+issue%0D%0A%0D%0A%23%23+Who+Benefits%3F%0D%0A%0D%0ADescribe+who+will+be+the+beneficiaries+e.g.+everyone,+specific+chapters,+clients...%0D%0A%0D%0A%23%23+What%27s+Next%3F%0D%0A%0D%0AProvide+an+actionable+list+of+things+that+must+happen+in+order+to+implement+the+solution:%0D%0A%0D%0A-+[+]%0D%0A-+[+]%0D%0A-+[+]
 
   - name: Ask a question
     about: When having a question about a pull request, issue, or problem, create a Q&A discussion to get help from the team.
