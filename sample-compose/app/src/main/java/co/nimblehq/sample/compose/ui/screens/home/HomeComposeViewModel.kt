@@ -24,7 +24,7 @@ class HomeComposeViewModel @Inject constructor(
     init {
         execute {
             showLoading()
-            useCase.execute()
+            useCase()
                 .catch {
                     val errorMessage = it.message.orEmpty()
                     _error.emit(errorMessage)
