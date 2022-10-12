@@ -29,7 +29,7 @@ class UseCaseTest {
         val expected = listOf(model)
         every { mockRepository.getModels() } returns flowOf(expected)
 
-        useCase.execute().collect {
+        useCase().collect {
             it shouldBe expected
         }
     }
@@ -39,7 +39,7 @@ class UseCaseTest {
         val expected = Exception()
         every { mockRepository.getModels() } returns flow { throw expected }
 
-        useCase.execute().catch {
+        useCase().catch {
             it shouldBe expected
         }.collect()
     }

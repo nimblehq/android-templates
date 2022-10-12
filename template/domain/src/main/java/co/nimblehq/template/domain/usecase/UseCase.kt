@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class UseCase @Inject constructor(private val repository: Repository) {
 
-    fun execute(): Flow<List<Model>> {
+    operator fun invoke(): Flow<List<Model>> {
         return repository.getModels()
     }
 }

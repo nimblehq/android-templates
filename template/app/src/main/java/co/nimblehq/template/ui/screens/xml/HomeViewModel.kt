@@ -22,7 +22,7 @@ class HomeViewModel @Inject constructor(
     init {
         execute {
             showLoading()
-            useCase.execute()
+            useCase()
                 .catch {
                     _error.emit(it)
                 }
