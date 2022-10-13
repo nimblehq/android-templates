@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.annotation.MainThread
 import androidx.fragment.app.*
 import androidx.lifecycle.*
+import androidx.lifecycle.viewmodel.CreationExtras
 
 /**
  * PLEASE READ THIS BEFORE IMPLEMENT:
@@ -28,8 +29,9 @@ inline fun <reified VM : ViewModel> Fragment.provideViewModels(
 
 @MainThread
 inline fun <reified VM : ViewModel> ComponentActivity.provideViewModels(
+    noinline extrasProducer: (() -> CreationExtras)? = null,
     noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null
-): Lazy<VM> = OverridableLazy(viewModels(factoryProducer))
+): Lazy<VM> = OverridableLazy(viewModels(extrasProducer, factoryProducer))
 
 class OverridableLazy<T>(var implementation: Lazy<T>) : Lazy<T> {
 
