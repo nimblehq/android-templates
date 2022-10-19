@@ -25,11 +25,6 @@ allprojects {
     }
 }
 
-configurations.all {
-    resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
-    resolutionStrategy.cacheDynamicVersionsFor (0, TimeUnit.SECONDS)
-}
-
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
@@ -58,15 +53,25 @@ detekt {
 
     ignoredBuildTypes = listOf("release")
     ignoredFlavors = listOf("production")
+}
 
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    jvmTarget = "11"
     reports {
+        xml.required.set(true)
+        html.required.set(true)
+        txt.required.set(true)
+        sarif.required.set(true)
+        md.required.set(true)
         xml {
-            enabled = true
-            destination = file("build/reports/detekt.xml")
+            outputLocation.set(file("build/reports/detekt.xml"))
         }
         html {
-            enabled = true
-            destination = file("build/reports/detekt.html")
+            outputLocation.set(file("build/reports/detekt.html"))
         }
     }
+}
+
+tasks.withType<io.gitlab.arturbosch.detekt.DetektCreateBaselineTask>().configureEach {
+    jvmTarget = "11"
 }
