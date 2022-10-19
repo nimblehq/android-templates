@@ -34,6 +34,9 @@ object Versions {
     const val MOSHI_VERSION = "1.12.0"
 
     const val OKHTTP_VERSION = "4.9.1"
+
+    const val PEKO_VERSION = "2.1.2"
+
     const val RETROFIT_VERSION = "2.9.0"
 
     const val TIMBER_LOG_VERSION = "4.7.1"
