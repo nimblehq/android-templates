@@ -9,7 +9,7 @@ import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import java.io.IOException
 import java.io.InterruptedIOException
@@ -20,7 +20,7 @@ class ResponseMappingTest {
 
     @Test
     fun `When mapping API request flow failed with UnknownHostException, it returns mapped NoConnectivityException error`() =
-        runBlockingTest {
+        runTest {
             flowTransform<Model> {
                 throw UnknownHostException()
             }.catch {
@@ -30,7 +30,7 @@ class ResponseMappingTest {
 
     @Test
     fun `When mapping API request flow failed with InterruptedIOException, it returns mapped NoConnectivityException error`() =
-        runBlockingTest {
+        runTest {
             flowTransform<Model> {
                 throw InterruptedIOException()
             }.catch {
@@ -40,7 +40,7 @@ class ResponseMappingTest {
 
     @Test
     fun `When mapping API request flow failed with HttpException, it returns mapped ApiException error`() =
-        runBlockingTest {
+        runTest {
             val httpException = MockUtil.mockHttpException
             flowTransform<Model> {
                 throw httpException
@@ -55,7 +55,7 @@ class ResponseMappingTest {
 
     @Test
     fun `When mapping API request flow failed with unhandled exceptions, it should throw that error`() =
-        runBlockingTest {
+        runTest {
             val exception = IOException("Canceled")
             flowTransform<Model> {
                 throw exception
