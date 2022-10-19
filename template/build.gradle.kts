@@ -56,13 +56,10 @@ detekt {
 }
 
 tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
-    jvmTarget = "11"
+    jvmTarget = JavaVersion.VERSION_11.toString()
     reports {
         xml.required.set(true)
         html.required.set(true)
-        txt.required.set(true)
-        sarif.required.set(true)
-        md.required.set(true)
         xml {
             outputLocation.set(file("build/reports/detekt.xml"))
         }
@@ -73,5 +70,5 @@ tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
 }
 
 tasks.withType<io.gitlab.arturbosch.detekt.DetektCreateBaselineTask>().configureEach {
-    jvmTarget = "11"
+    jvmTarget = JavaVersion.VERSION_11.toString()
 }
