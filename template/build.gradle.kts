@@ -25,6 +25,11 @@ allprojects {
     }
 }
 
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
+    resolutionStrategy.cacheDynamicVersionsFor (0, TimeUnit.SECONDS)
+}
+
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
