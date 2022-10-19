@@ -157,7 +157,7 @@ dependencies {
     testImplementation("io.kotest:kotest-assertions-core:${Versions.TEST_KOTEST_VERSION}")
     testImplementation("junit:junit:${Versions.TEST_JUNIT_VERSION}")
     testImplementation("org.robolectric:robolectric:${Versions.TEST_ROBOLECTRIC_VERSION}")
-    testImplementation("androidx.test:core:${Versions.ANDROIDX_CORE_KTX_VERSION}")
+    testImplementation("androidx.test:core:${Versions.ANDROIDX_CORE_TEST_VERSION}")
     testImplementation("androidx.test:runner:${Versions.TEST_RUNNER_VERSION}")
     testImplementation("androidx.test:rules:${Versions.TEST_RUNNER_VERSION}")
     testImplementation("androidx.test.ext:junit-ktx:${Versions.TEST_JUNIT_ANDROIDX_EXT_VERSION}")
