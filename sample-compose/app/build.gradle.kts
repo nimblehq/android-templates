@@ -146,6 +146,9 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${Versions.KOTLIN_VERSION}")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLINX_COROUTINES_VERSION}")
 
+    debugImplementation("com.github.chuckerteam.chucker:library:${Versions.CHUCKER_VERSION}")
+    releaseImplementation("com.github.chuckerteam.chucker:library-no-op:${Versions.CHUCKER_VERSION}")
+
     kapt("com.google.dagger:hilt-compiler:${Versions.HILT_VERSION}")
 
     // Testing
