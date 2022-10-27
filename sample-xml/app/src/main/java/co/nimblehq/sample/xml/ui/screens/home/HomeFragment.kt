@@ -1,5 +1,6 @@
 package co.nimblehq.sample.xml.ui.screens.home
 
+import android.Manifest
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -13,9 +14,13 @@ import co.nimblehq.sample.xml.model.UiModel
 import co.nimblehq.sample.xml.ui.base.BaseFragment
 import co.nimblehq.sample.xml.ui.screens.MainNavigator
 import co.nimblehq.sample.xml.ui.screens.home.adapter.ItemListAdapter
+import com.markodevcic.peko.PermissionResult
+import com.markodevcic.peko.PermissionResult.Denied
+import com.markodevcic.peko.PermissionResult.Granted
 import com.markodevcic.peko.requestPermissionsAsync
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -38,6 +43,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             adapter = itemListAdapter
             addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
         }
+
+        requestPermissions(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.CAMERA
+        )
     }
 
     override fun bindViewModel() {
@@ -45,7 +55,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         viewModel.error bindTo ::displayError
         viewModel.navigator bindTo navigator::navigate
         viewModel.showLoading bindTo ::showLoading
-        viewModel.requestPermissions bindTo ::requestPermissions
     }
 
     private fun showLoading(isShow: IsLoading) {
@@ -59,7 +68,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun requestPermissions(vararg permissions: String) {
         lifecycleScope.launch {
             val result = requestPermissionsAsync(*permissions)
-            viewModel.onPermissionResult(result)
+            onPermissionResult(result)
+        }
+    }
+
+    private fun onPermissionResult(permissionResult: PermissionResult) {
+        when (permissionResult) {
+            is Granted -> Timber.d("${permissionResult.grantedPermissions} granted")
+            is Denied.NeedsRationale -> Timber.d("${permissionResult.deniedPermissions} needs rationale")
+            else -> Timber.d("Request cancelled, missing permissions in manifest or denied permanently")
         }
     }
 }
