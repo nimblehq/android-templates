@@ -2,8 +2,6 @@ name: Publish docs to Wiki
 
 on:
   push:
-    paths:
-      - docs/**
     branches:
       - main
 
