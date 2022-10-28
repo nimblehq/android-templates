@@ -6,7 +6,6 @@ import co.nimblehq.sample.compose.model.toUiModels
 import co.nimblehq.sample.compose.ui.base.BaseViewModel
 import co.nimblehq.sample.compose.ui.base.NavigationEvent
 import co.nimblehq.sample.compose.util.DispatchersProvider
-import com.markodevcic.peko.PermissionResult.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject

@@ -1,6 +1,7 @@
 package co.nimblehq.sample.compose.ui.screens.home
 
-import android.Manifest
+import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.Manifest.permission.CAMERA
 import android.os.Bundle
 import android.view.View
 import androidx.compose.runtime.Composable
@@ -37,10 +38,7 @@ class HomeComposeFragment : BaseComposeFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requestPermissions(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.CAMERA
-        )
+        requestPermissions(ACCESS_FINE_LOCATION, CAMERA)
     }
 
     override fun bindViewModel() {
@@ -51,11 +49,11 @@ class HomeComposeFragment : BaseComposeFragment() {
     private fun requestPermissions(vararg permissions: String) {
         lifecycleScope.launch {
             val result = requestPermissionsAsync(*permissions)
-            onPermissionResult(result)
+            handlePermissionResult(result)
         }
     }
 
-    private fun onPermissionResult(permissionResult: PermissionResult) {
+    private fun handlePermissionResult(permissionResult: PermissionResult) {
         when (permissionResult) {
             is Granted -> Timber.d("${permissionResult.grantedPermissions} granted")
             is Denied.NeedsRationale -> Timber.d("${permissionResult.deniedPermissions} needs rationale")

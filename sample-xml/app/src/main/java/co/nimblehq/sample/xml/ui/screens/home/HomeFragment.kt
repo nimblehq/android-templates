@@ -1,6 +1,7 @@
 package co.nimblehq.sample.xml.ui.screens.home
 
-import android.Manifest
+import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.Manifest.permission.CAMERA
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -43,11 +44,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             adapter = itemListAdapter
             addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
         }
-
-        requestPermissions(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.CAMERA
-        )
+        requestPermissions(ACCESS_FINE_LOCATION, CAMERA)
     }
 
     override fun bindViewModel() {
@@ -68,11 +65,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun requestPermissions(vararg permissions: String) {
         lifecycleScope.launch {
             val result = requestPermissionsAsync(*permissions)
-            onPermissionResult(result)
+            handlePermissionResult(result)
         }
     }
 
-    private fun onPermissionResult(permissionResult: PermissionResult) {
+    private fun handlePermissionResult(permissionResult: PermissionResult) {
         when (permissionResult) {
             is Granted -> Timber.d("${permissionResult.grantedPermissions} granted")
             is Denied.NeedsRationale -> Timber.d("${permissionResult.deniedPermissions} needs rationale")
