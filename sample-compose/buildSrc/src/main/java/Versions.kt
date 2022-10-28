@@ -18,6 +18,7 @@ object Versions {
     const val ANDROIDX_NAVIGATION_VERSION = "2.3.4"
     const val ANDROIDX_SUPPORT_VERSION = "1.3.0"
 
+    const val CHUCKER_VERSION = "3.5.2"
     const val COMPOSE_VERSION = "1.0.2"
 
     const val HILT_VERSION = "2.38.1"
