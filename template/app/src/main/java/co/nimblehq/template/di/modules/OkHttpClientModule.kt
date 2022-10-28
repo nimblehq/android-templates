@@ -41,7 +41,9 @@ class OkHttpClientModule {
             retentionPeriod = RetentionManager.Period.ONE_HOUR
         )
 
-        return ChuckerInterceptor.Builder(context).collector(chuckerCollector)
-            .alwaysReadResponseBody(true).build()
+        return ChuckerInterceptor.Builder(context)
+            .collector(chuckerCollector)
+            .alwaysReadResponseBody(true)
+            .build()
     }
 }
