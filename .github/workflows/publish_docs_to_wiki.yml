@@ -3,16 +3,9 @@ name: Publish docs to Wiki
 on:
   push:
     paths:
-      - docs/**
+      - .github/wiki/**
     branches:
       - main
-
-env:
-  USER_TOKEN: ${{ secrets.WIKI_ACTION_TOKEN }}
-  USER_NAME: team-nimblehq
-  USER_EMAIL: dev@nimblehq.co
-  OWNER: ${{ github.event.repository.owner.name }}
-  REPOSITORY_NAME: ${{ github.event.repository.name }}
 
 jobs:
   publish_docs_to_wiki:
@@ -20,22 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
-
-      - name: Pull content from Wiki
-        run: |
-          mkdir tmp_wiki
-          cd tmp_wiki
-          git init
-          git config user.name $USER_NAME
-          git config user.email $USER_EMAIL
-          git pull https://$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git
-
-      - name: Push content to Wiki
-        run: |
-          rsync -av --delete docs/ tmp_wiki/ --exclude .git
-          cd tmp_wiki
-          git add .
-          git commit -m "Update Wiki content"
-          git push -f --set-upstream https://$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git master
+      - name: Publish Github Wiki
+        uses: nimblehq/publish-github-wiki-action@v1.0
+        with:
+          user_name: team-nimblehq
+          user_email: dev@nimblehq.co
+          user_access_token: ${{ secrets.WIKI_ACTION_TOKEN }}
