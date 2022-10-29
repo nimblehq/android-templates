@@ -14,9 +14,10 @@ Our Android template: **[template](https://github.com/nimblehq/android-templates
 ## Setup
 
 1. Clone or download this repository to your local machine, then extract and open the folder
-2. Install [Kscript](https://github.com/holgerbrandl/kscript#installation)
-3. Run `cd scripts` to get into the scripts directory
-4. Run `kscript new_project.kts` to create a new project with the following arguments:
+2. Install [Kotlin](https://github.com/JetBrains/kotlin) v1.6.21
+3. Install [Kscript](https://github.com/holgerbrandl/kscript#installation) v4.0.3
+4. Run `cd scripts` to get into the scripts directory
+5. Run `kscript new_project.kts` to create a new project with the following arguments:
   ```   
     package-name=                      New package name (i.e., com.example.package)
     app-name=                          New app name (i.e., MyApp, "My App", "my-app")
@@ -24,7 +25,7 @@ Our Android template: **[template](https://github.com/nimblehq/android-templates
 
   Example: `kscript new_project.kts package-name=co.myproject.example app-name="My Project"`
 
-5. Update `android_version_code` and `android_version_name` in `template/build.gradle`
+6. Update `android_version_code` and `android_version_name` in `template/build.gradle`
 
 ## Wiki
 
