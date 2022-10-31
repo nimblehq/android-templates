@@ -147,9 +147,14 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${Versions.KOTLIN_VERSION}")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLINX_COROUTINES_VERSION}")
 
+    implementation("com.markodevcic:peko:${Versions.PEKO_VERSION}")
+
     kapt("com.google.dagger:hilt-compiler:${Versions.HILT_VERSION}")
 
     debugImplementation("androidx.fragment:fragment-testing:${Versions.ANDROIDX_FRAGMENT_VERSION}")
+
+    debugImplementation("com.github.chuckerteam.chucker:library:${Versions.CHUCKER_VERSION}")
+    releaseImplementation("com.github.chuckerteam.chucker:library-no-op:${Versions.CHUCKER_VERSION}")
 
     // Testing
     testImplementation("io.kotest:kotest-assertions-core:${Versions.TEST_KOTEST_VERSION}")

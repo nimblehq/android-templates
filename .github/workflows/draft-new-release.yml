@@ -22,8 +22,9 @@ jobs:
         run: |
           curl -s "https://get.sdkman.io" | bash
           source "$HOME/.sdkman/bin/sdkman-init.sh"
-          sdk install kotlin 1.6.21
-          sdk install kscript 4.0.3
+          source version.properties
+          sdk install kotlin $kotlinVersion
+          sdk install kscript $kscriptVersion
           echo $PATH >> $GITHUB_PATH
 
       - name: Get version from the latest commit message
