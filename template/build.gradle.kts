@@ -15,6 +15,7 @@ buildscript {
 
 plugins {
     id("io.gitlab.arturbosch.detekt").version(Versions.DETEKT_VERSION)
+    id("org.jetbrains.kotlinx.kover").version(Versions.KOVER_VERSION)
 }
 
 allprojects {
@@ -62,6 +63,29 @@ detekt {
         html {
             enabled = true
             destination = file("build/reports/detekt.html")
+        }
+    }
+}
+
+koverMerged {
+    enable()
+
+    val excludedFiles = setOf(
+        "dagger.hilt.internal.*",
+        "hilt_aggregated_deps.*",
+        "co.nimblehq.template.databinding.*",
+        "co.nimblehq.template.di.*",
+        "*_Factory",
+        "*_HiltModules*",
+        "*_MembersInjector",
+        "Hilt_*",
+        "_HiltComponents*",
+        "_ComponentTreeDeps",
+        "BuildConfig"
+    )
+    filters {
+        classes {
+            excludes += excludedFiles
         }
     }
 }

@@ -2,7 +2,7 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
 
-    id("plugins.jacoco-report")
+    id("kover")
 }
 
 android {

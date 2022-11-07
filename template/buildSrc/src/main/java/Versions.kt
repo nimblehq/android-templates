@@ -30,6 +30,7 @@ object Versions {
     const val KOTLIN_REFLECT_VERSION = "1.5.10"
     const val KOTLIN_VERSION = "1.5.21"
     const val KOTLINX_COROUTINES_VERSION = "1.5.0"
+    const val KOVER_VERSION = "0.6.0"
 
     const val MOSHI_VERSION = "1.12.0"
 

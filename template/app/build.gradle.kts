@@ -8,7 +8,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
 
-    id("plugins.jacoco-report")
+    id("kover")
 }
 
 val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
