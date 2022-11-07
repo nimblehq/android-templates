@@ -70,19 +70,45 @@ detekt {
 koverMerged {
     enable()
 
-    val excludedFiles = setOf(
+    val generatedFiles = setOf(
+        "*.R.class",
+        "*.R\$*.class",
+        "*.*\$ViewBinder*.*",
+        "*.*\$InjectAdapter*.*",
+        "*.*Injector*.*",
+        "*.BuildConfig.*",
+        "*.BuildConfig",
+        "*.Manifest*.*",
+        "*.*_ViewBinding*.*",
+        "*.*Adapter*.*",
+        "*.*Test*.*",
+        // Enum
+        "*.*\$Creator*",
+        // Nav Component
+        "*.*_Factory*",
+        "*.*FragmentArgs*",
+        "*.*FragmentDirections*",
+        "*.FragmentNavArgsLazy.kt",
+        "*.*Fragment*navArgs*",
+        "*.*ModuleDeps*.*",
+        "*.*NavGraphDirections*",
+        // Hilt
+        "*.*_ComponentTreeDeps*",
+        "*.*_HiltComponents*",
+        "*.*_HiltModules*",
+        "*.*_MembersInjector*",
+        "*.Hilt_*"
+    )
+
+    val excludedPackages = setOf(
+        "com.bumptech.glide.*",
         "dagger.hilt.internal.*",
         "hilt_aggregated_deps.*",
         "co.nimblehq.template.databinding.*",
-        "co.nimblehq.template.di.*",
-        "*_Factory",
-        "*_HiltModules*",
-        "*_MembersInjector",
-        "Hilt_*",
-        "_HiltComponents*",
-        "_ComponentTreeDeps",
-        "BuildConfig"
+        "co.nimblehq.template.di.*"
     )
+
+    val excludedFiles = generatedFiles + excludedPackages
     filters {
         classes {
             excludes += excludedFiles
