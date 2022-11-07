@@ -25,7 +25,6 @@ object Versions {
     const val HILT_VERSION = "2.38.1"
 
     const val JAVAX_INJECT_VERSION = "1"
-    const val JACOCO_VERSION = "0.8.7"
 
     const val KOTLIN_REFLECT_VERSION = "1.5.10"
     const val KOTLIN_VERSION = "1.5.21"
