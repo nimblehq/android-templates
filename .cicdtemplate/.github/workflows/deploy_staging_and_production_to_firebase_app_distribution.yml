@@ -53,8 +53,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: CodeCoverageReports
-          path: |
-            build/reports/kover/merged/
+          path: build/reports/kover/merged/
 
       - name: Build staging APK
         run: ./gradlew assembleStagingDebug

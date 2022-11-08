@@ -42,9 +42,6 @@ secret/
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
 
-# Code coverage
-jacoco.exec
-
 # Google services
 google-services.json
 
