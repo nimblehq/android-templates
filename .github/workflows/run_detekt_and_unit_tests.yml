@@ -37,12 +37,12 @@ jobs:
           name: DetektReportsTemplate
           path: template/build/reports/detekt/
 
-      - name: Run unit tests and Jacoco on template
+      - name: Run unit tests with Kover on template
         working-directory: ./template
-        run: ./gradlew jacocoTestReport
+        run: ./gradlew koverMergedXmlReport
 
       - name: Archive code coverage reports on template
         uses: actions/upload-artifact@v2
         with:
           name: CodeCoverageReportsTemplate
-          path: template/app/build/reports/jacoco/jacocoTestReport/
+          path: template/build/reports/kover/merged/

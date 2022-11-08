@@ -29,11 +29,9 @@ Dir[lint_dir].each do |file_name|
   android_lint.lint(inline_mode: true)
 end
   
-# Show Danger test coverage report from Jacoco for template
-jacoco_dir = "template/**/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"
-markdown "## template Jacoco report:"
-Dir[jacoco_dir].each do |file_name|
-  # Report coverage of modified files, warn if total project coverage is under 80%
-  # or if any modified file's coverage is under 95%
-  shroud.report file_name, 80, 95, false
-end
+# Show Danger test coverage report from Kover for template
+# Report coverage of modified files, warn if total project coverage is under 80%
+# or if any modified file's coverage is under 90%
+kover_file = "template/build/reports/kover/merged/xml/report.xml"
+markdown "## Kover report:"
+shroud.reportKover "Template Unit Tests", kover_file, 80, 95, false

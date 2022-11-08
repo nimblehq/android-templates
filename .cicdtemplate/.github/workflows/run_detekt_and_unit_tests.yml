@@ -49,8 +49,8 @@ jobs:
           name: DetektReports
           path: build/reports/detekt/
 
-      - name: Run unit tests and Jacoco
-        run: ./gradlew jacocoTestReport
+      - name: Run unit tests with Kover
+        run: ./gradlew koverMergedXmlReport
 
       - name: Archive code coverage reports
         uses: actions/upload-artifact@v2
@@ -58,5 +58,4 @@ jobs:
         with:
           name: CodeCoverageReports
           path: |
-            app/build/reports/
-            data/build/reports/jacoco/jacocoTestReport/
+            build/reports/kover/merged/
