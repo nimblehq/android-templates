@@ -48,7 +48,7 @@ android {
 
     testOptions {
         unitTests.all {
-            if (it.name != "testStagingDebugUnitTest") {
+            if (it.name != "testDebugUnitTest") {
                 it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
                     isDisabled.set(true)
                 }
