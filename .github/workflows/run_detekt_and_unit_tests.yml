@@ -39,7 +39,7 @@ jobs:
 
       - name: Run unit tests with Kover on template
         working-directory: ./template
-        run: ./gradlew koverMergedXmlReport
+        run: ./gradlew koverMergedHtmlReport
 
       - name: Archive code coverage reports on template
         uses: actions/upload-artifact@v2
