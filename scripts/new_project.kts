@@ -228,21 +228,11 @@ object NewProject {
             .walk()
             .filter { it.name.endsWithAny(".kt", ".xml", ".gradle.kts") }
             .forEach { filePath ->
-                when (filePath.name) {
-                    "jacoco-report.gradle.kts" -> rename(
-                        sourcePath = filePath.toString(),
-                        oldValue = TEMPLATE_PACKAGE_NAME.replace(
-                            SEPARATOR_DOT,
-                            SEPARATOR_SLASH
-                        ),
-                        newValue = packageName.replace(SEPARATOR_DOT, SEPARATOR_SLASH)
-                    )
-                    else -> rename(
-                        sourcePath = filePath.toString(),
-                        oldValue = TEMPLATE_PACKAGE_NAME,
-                        newValue = packageName
-                    )
-                }
+                rename(
+                    sourcePath = filePath.toString(),
+                    oldValue = TEMPLATE_PACKAGE_NAME,
+                    newValue = packageName
+                )
             }
     }
 

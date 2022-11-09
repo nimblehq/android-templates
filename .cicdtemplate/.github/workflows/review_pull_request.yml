@@ -35,8 +35,8 @@ jobs:
       - name: Run Android Lint
         run: ./gradlew lint
 
-      - name: Run unit tests and Jacoco
-        run: ./gradlew jacocoTestReport
+      - name: Run unit tests with Kover
+        run: ./gradlew koverMergedXmlReport
 
       - name: Set up Ruby
         uses: actions/setup-ruby@v1

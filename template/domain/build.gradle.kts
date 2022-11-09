@@ -2,7 +2,7 @@ plugins {
     id("java-library")
     id("kotlin")
 
-    jacoco
+    id("kover")
 }
 
 java {

@@ -38,10 +38,10 @@ $ ./gradlew domain:test
 - Run unit testing with coverage:
 
 ```
-$ ./gradlew jacocoTestReport
+$ ./gradlew koverMergedHtmlReport
 ```
 
-Report is located at: `./app/build/reports/jacoco/`
+Report is located at: `./build/reports/kover/merged/`
 
 ## Build and deploy
 

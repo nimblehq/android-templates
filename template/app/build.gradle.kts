@@ -8,7 +8,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
 
-    id("plugins.jacoco-report")
+    id("kover")
 }
 
 val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
@@ -55,14 +55,6 @@ android {
             isMinifyEnabled = false
             signingConfig = signingConfigs[BuildType.DEBUG]
             buildConfigField("String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\"")
-            /**
-             * From AGP 4.2.0, Jacoco generates the report incorrectly, and the report is missing
-             * some code coverage from module. On the new version of Gradle, they introduce a new
-             * flag [testCoverageEnabled], we must enable this flag if using Jacoco to capture
-             * coverage and creates a report in the build directory.
-             * Reference: https://developer.android.com/reference/tools/gradle-api/7.1/com/android/build/api/dsl/BuildType#istestcoverageenabled
-             */
-            isTestCoverageEnabled = true
         }
     }
 
@@ -109,6 +101,13 @@ android {
             // Robolectric resource processing/loading
             isIncludeAndroidResources = true
             isReturnDefaultValues = true
+        }
+        unitTests.all {
+            if (it.name != "testStagingDebugUnitTest") {
+                it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
+                    isDisabled.set(true)
+                }
+            }
         }
     }
 }
