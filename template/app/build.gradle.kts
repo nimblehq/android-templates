@@ -55,7 +55,6 @@ android {
             isMinifyEnabled = false
             signingConfig = signingConfigs[BuildType.DEBUG]
             buildConfigField("String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\"")
-            isTestCoverageEnabled = true
         }
     }
 
