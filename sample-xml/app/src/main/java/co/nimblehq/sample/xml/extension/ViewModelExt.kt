@@ -19,14 +19,22 @@ import androidx.lifecycle.ViewModelStoreOwner
  */
 @MainThread
 inline fun <reified VM : ViewModel> Fragment.provideActivityViewModels(
+    noinline extrasProducer: (() -> CreationExtras)? = null,
     noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null
-): Lazy<VM> = OverridableLazy(activityViewModels(factoryProducer))
+): Lazy<VM> = OverridableLazy(activityViewModels(extrasProducer, factoryProducer))
 
 @MainThread
 inline fun <reified VM : ViewModel> Fragment.provideViewModels(
     noinline ownerProducer: () -> ViewModelStoreOwner = { this },
+    noinline extrasProducer: (() -> CreationExtras)? = null,
     noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null
-): Lazy<VM> = OverridableLazy(viewModels(ownerProducer, factoryProducer))
+): Lazy<VM> = OverridableLazy(viewModels(ownerProducer, extrasProducer, factoryProducer))
+
+@MainThread
+inline fun <reified VM : ViewModel> ComponentActivity.provideViewModels(
+    noinline extrasProducer: (() -> CreationExtras)? = null,
+    noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null
+): Lazy<VM> = OverridableLazy(viewModels(extrasProducer, factoryProducer))
 
 class OverridableLazy<T>(var implementation: Lazy<T>) : Lazy<T> {
 
