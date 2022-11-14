@@ -48,6 +48,6 @@ object Versions {
     const val TEST_JUNIT_VERSION = "4.13.2"
     const val TEST_KOTEST_VERSION = "4.6.3"
     const val TEST_MOCKK_VERSION = "1.10.6"
-    const val TEST_ROBOLECTRIC_VERSION = "4.3.1"
+    const val TEST_ROBOLECTRIC_VERSION = "4.8.2"
     const val TEST_RUNNER_VERSION = "1.3.0"
 }
