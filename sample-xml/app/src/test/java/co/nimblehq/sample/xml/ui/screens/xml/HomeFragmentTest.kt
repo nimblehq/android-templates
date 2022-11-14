@@ -1,6 +1,6 @@
 package co.nimblehq.sample.xml.ui.screens.xml
 
-import co.nimblehq.sample.xml.R
+import androidx.core.view.isVisible
 import co.nimblehq.sample.xml.databinding.FragmentHomeBinding
 import co.nimblehq.sample.xml.test.TestNavigatorModule.mockMainNavigator
 import co.nimblehq.sample.xml.test.getPrivateProperty
@@ -9,8 +9,8 @@ import co.nimblehq.sample.xml.ui.BaseFragmentTest
 import co.nimblehq.sample.xml.ui.screens.home.HomeFragment
 import co.nimblehq.sample.xml.ui.screens.home.HomeViewModel
 import dagger.hilt.android.testing.*
+import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.nulls.shouldNotBeNull
-import io.kotest.matchers.shouldBe
 import io.mockk.mockk
 import org.junit.*
 
@@ -28,9 +28,9 @@ class HomeFragmentTest : BaseFragmentTest<HomeFragment, FragmentHomeBinding>() {
     }
 
     @Test
-    fun `When initializing fragment, it displays the title correctly`() {
+    fun `When initializing fragment, it displays the recycler view`() {
         launchFragment()
-        fragment.binding.tvTitle.text.toString() shouldBe fragment.resources.getString(R.string.app_name)
+        fragment.binding.rvHome.isVisible.shouldBeTrue()
     }
 
     private fun launchFragment() {
