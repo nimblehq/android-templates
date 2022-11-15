@@ -132,6 +132,7 @@ dependencies {
     implementation("androidx.compose.foundation:foundation:${Versions.COMPOSE_VERSION}")
     implementation("androidx.compose.material:material:${Versions.COMPOSE_VERSION}")
 
+    implementation("androidx.fragment:fragment-ktx:${Versions.ANDROIDX_FRAGMENT_KTX_VERSION}")
     implementation("androidx.navigation:navigation-fragment-ktx:${Versions.ANDROIDX_NAVIGATION_VERSION}")
     implementation("androidx.navigation:navigation-runtime-ktx:${Versions.ANDROIDX_NAVIGATION_VERSION}")
     implementation("androidx.navigation:navigation-ui-ktx:${Versions.ANDROIDX_NAVIGATION_VERSION}")

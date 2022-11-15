@@ -1,5 +1,7 @@
 package co.nimblehq.sample.xml.extension
 
+import androidx.activity.ComponentActivity
+import androidx.activity.viewModels
 import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -7,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.CreationExtras
 
 /**
  * PLEASE READ THIS BEFORE IMPLEMENT:
