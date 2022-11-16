@@ -7,7 +7,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 
@@ -26,7 +26,7 @@ class UseCaseTest {
     }
 
     @Test
-    fun `When request successful, it returns success`() = runBlockingTest {
+    fun `When request successful, it returns success`() = runTest {
         val expected = listOf(model)
         every { mockRepository.getModels() } returns flowOf(expected)
 
@@ -36,7 +36,7 @@ class UseCaseTest {
     }
 
     @Test
-    fun `When request failed, it returns error`() = runBlockingTest {
+    fun `When request failed, it returns error`() = runTest {
         val expected = Exception()
         every { mockRepository.getModels() } returns flow { throw expected }
 

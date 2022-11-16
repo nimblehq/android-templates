@@ -62,17 +62,6 @@ detekt {
 
     ignoredBuildTypes = listOf("release")
     ignoredFlavors = listOf("production")
-
-    reports {
-        xml {
-            enabled = true
-            destination = file("build/reports/detekt.xml")
-        }
-        html {
-            enabled = true
-            destination = file("build/reports/detekt.html")
-        }
-    }
 }
 
 koverMerged {

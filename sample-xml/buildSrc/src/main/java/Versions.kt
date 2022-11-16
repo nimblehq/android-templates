@@ -21,7 +21,6 @@ object Versions {
     const val ANDROIDX_SUPPORT_VERSION = "1.5.1"
 
     const val CHUCKER_VERSION = "3.5.2"
-    const val COMPOSE_COMPILER_VERSION = "1.3.2"
     const val CONSTRAINT_LAYOUT_VERSION = "2.1.4"
 
     const val HILT_VERSION = "2.44"
