@@ -28,8 +28,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Run Detekt on template
-        working-directory: ./template
+      - name: Run Detekt on template-xml
+        working-directory: ./template-xml
         run: ./gradlew detekt
 
       - name: Archive Detekt reports on template
@@ -38,8 +38,8 @@ jobs:
           name: DetektReportsTemplate
           path: template/build/reports/detekt/
 
-      - name: Run unit tests with Kover on template
-        working-directory: ./template
+      - name: Run unit tests with Kover on template-xml
+        working-directory: ./template-xml
         run: ./gradlew koverMergedHtmlReport
 
       - name: Archive code coverage reports on template

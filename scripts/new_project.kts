@@ -21,7 +21,7 @@ object NewProject {
 
     private const val TEMPLATE_APP_NAME = "Template"
     private const val TEMPLATE_APPLICATION_CLASS_NAME = "TemplateApplication"
-    private const val TEMPLATE_FOLDER_NAME = "template"
+    private const val TEMPLATE_FOLDER_NAME = "template-xml"
     private const val TEMPLATE_PACKAGE_NAME = "co.nimblehq.template"
 
     private const val VERSION_FILE_NAME = "version.properties"

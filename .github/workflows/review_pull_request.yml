@@ -30,16 +30,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Run Detekt on template
-        working-directory: ./template
+      - name: Run Detekt on template-xml
+        working-directory: ./template-xml
         run: ./gradlew detekt
 
-      - name: Run Android Lint on template
-        working-directory: ./template
+      - name: Run Android Lint on template-xml
+        working-directory: ./template-xml
         run: ./gradlew lint
 
-      - name: Run unit tests with Kover on template
-        working-directory: ./template
+      - name: Run unit tests with Kover on template-xml
+        working-directory: ./template-xml
         run: ./gradlew koverMergedXmlReport
 
       - name: Set up Ruby
