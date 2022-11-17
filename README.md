@@ -8,8 +8,8 @@
 </p>
 
 ---
-
-Our Android template: **[template](https://github.com/nimblehq/android-templates/tree/develop/template)**
+// TODO: Update description for template-compose in https://github.com/nimblehq/android-templates/issues/333
+Our Android template-xml: **[template-xml](https://github.com/nimblehq/android-templates/tree/develop/template-xml)**
 
 ## Prerequisites
 
