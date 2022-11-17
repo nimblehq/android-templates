@@ -32,6 +32,6 @@ end
 # Show Danger test coverage report from Kover for template
 # Report coverage of modified files, warn if total project coverage is under 80%
 # or if any modified file's coverage is under 90%
-kover_file = "template/build/reports/kover/merged/xml/report.xml"
+kover_file = "template-xml/build/reports/kover/merged/xml/report.xml"
 markdown "## Kover report:"
-shroud.reportKover "Template Unit Tests", kover_file, 80, 95, false
+shroud.reportKover "Template - XML Unit Tests", kover_file, 80, 95, false
