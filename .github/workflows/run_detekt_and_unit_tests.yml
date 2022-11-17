@@ -28,6 +28,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+        # TODO: Add new step for template-compose in https://github.com/nimblehq/android-templates/issues/333
       - name: Run Detekt on template-xml
         working-directory: ./template-xml
         run: ./gradlew detekt
