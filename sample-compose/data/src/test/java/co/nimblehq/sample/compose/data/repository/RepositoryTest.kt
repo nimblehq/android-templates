@@ -10,9 +10,9 @@ import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
+import kotlinx.coroutines.test.runTest
 
 @ExperimentalCoroutinesApi
 class RepositoryTest {
@@ -29,7 +29,7 @@ class RepositoryTest {
     }
 
     @Test
-    fun `When request successful, it returns success`() = runBlockingTest {
+    fun `When request successful, it returns success`() = runTest {
         val expected = listOf(response)
         coEvery { mockService.getResponses() } returns expected
 
@@ -39,7 +39,7 @@ class RepositoryTest {
     }
 
     @Test
-    fun `When request failed, it returns error`() = runBlockingTest {
+    fun `When request failed, it returns error`() = runTest {
         val expected = Throwable()
         coEvery { mockService.getResponses() } throws expected
 

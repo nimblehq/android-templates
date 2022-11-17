@@ -32,7 +32,15 @@ tasks.register("clean", Delete::class) {
 
 tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
     // Target version of the generated JVM bytecode. It is used for type resolution.
-    jvmTarget = JavaVersion.VERSION_1_8.toString()
+    jvmTarget = JavaVersion.VERSION_11.toString()
+    reports {
+        xml {
+            outputLocation.set(file("build/reports/detekt/detekt.xml"))
+        }
+        html {
+            outputLocation.set(file("build/reports/detekt/detekt.html"))
+        }
+    }
 }
 
 detekt {
@@ -54,17 +62,6 @@ detekt {
 
     ignoredBuildTypes = listOf("release")
     ignoredFlavors = listOf("production")
-
-    reports {
-        xml {
-            enabled = true
-            destination = file("build/reports/detekt.xml")
-        }
-        html {
-            enabled = true
-            destination = file("build/reports/detekt.html")
-        }
-    }
 }
 
 koverMerged {
