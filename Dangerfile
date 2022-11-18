@@ -29,10 +29,13 @@ Dir[lint_dir].each do |file_name|
   android_lint.lint(inline_mode: true)
 end
   
-# Show Danger test coverage report from Kover for template
+# Show Danger test coverage report from Kover for templates
 # Report coverage of modified files, warn if total project coverage is under 80%
 # or if any modified file's coverage is under 90%
-# TODO: Add new step for template-compose in https://github.com/nimblehq/android-templates/issues/333
 kover_file_template_xml = "template-xml/build/reports/kover/merged/xml/report.xml"
-markdown "## Kover report template-xml:"
+markdown "## Kover report for template-xml:"
 shroud.reportKover "Template - XML Unit Tests", kover_file_template_xml, 80, 95, false
+
+kover_file_template_compose = "template-compose/build/reports/kover/merged/xml/report.xml"
+markdown "## Kover report for template-compose:"
+shroud.reportKover "Template - Compose Unit Tests", kover_file_template_compose, 80, 95, false

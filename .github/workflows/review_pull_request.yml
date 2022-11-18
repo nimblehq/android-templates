@@ -30,7 +30,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      # TODO: Add new step for template-compose in https://github.com/nimblehq/android-templates/issues/333
       - name: Run Detekt on template-xml
         working-directory: ./template-xml
         run: ./gradlew detekt
@@ -41,6 +40,18 @@ jobs:
 
       - name: Run unit tests with Kover on template-xml
         working-directory: ./template-xml
+        run: ./gradlew koverMergedXmlReport
+
+      - name: Run Detekt on template-compose
+        working-directory: ./template-compose
+        run: ./gradlew detekt
+
+      - name: Run Android Lint on template-compose
+        working-directory: ./template-compose
+        run: ./gradlew lint
+
+      - name: Run unit tests with Kover on template-compose
+        working-directory: ./template-compose
         run: ./gradlew koverMergedXmlReport
 
       - name: Set up Ruby
