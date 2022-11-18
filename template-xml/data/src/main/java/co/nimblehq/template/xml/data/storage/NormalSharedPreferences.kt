@@ -1,4 +1,4 @@
-package co.nimblehq.template.xml.storage
+package co.nimblehq.template.xml.data.storage
 
 import android.content.Context
 import android.content.SharedPreferences

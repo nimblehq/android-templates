@@ -1,4 +1,4 @@
-package co.nimblehq.template.xml.service.providers
+package co.nimblehq.template.xml.data.service.providers
 
 import com.squareup.moshi.Moshi
 import retrofit2.Converter

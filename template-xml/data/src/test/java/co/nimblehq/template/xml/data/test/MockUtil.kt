@@ -1,6 +1,6 @@
 package co.nimblehq.template.xml.data.test
 
-import co.nimblehq.template.xml.response.ErrorResponse
+import co.nimblehq.template.xml.data.response.ErrorResponse
 import io.mockk.every
 import io.mockk.mockk
 import okhttp3.ResponseBody

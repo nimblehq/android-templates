@@ -1,4 +1,4 @@
-package co.nimblehq.template.xml.response
+package co.nimblehq.template.xml.data.response
 
 import co.nimblehq.template.xml.domain.model.Error
 import com.squareup.moshi.Json

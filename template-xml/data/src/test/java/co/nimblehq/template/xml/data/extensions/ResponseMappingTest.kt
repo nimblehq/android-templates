@@ -1,6 +1,6 @@
 package co.nimblehq.template.xml.data.extensions
 
-import co.nimblehq.template.xml.response.toModel
+import co.nimblehq.template.xml.data.response.toModel
 import co.nimblehq.template.xml.data.test.MockUtil
 import co.nimblehq.template.xml.domain.exceptions.ApiException
 import co.nimblehq.template.xml.domain.exceptions.NoConnectivityException

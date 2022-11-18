@@ -1,8 +1,8 @@
 package co.nimblehq.template.xml.data.extensions
 
-import co.nimblehq.template.xml.response.ErrorResponse
-import co.nimblehq.template.xml.response.toModel
-import co.nimblehq.template.xml.service.providers.MoshiBuilderProvider
+import co.nimblehq.template.xml.data.response.ErrorResponse
+import co.nimblehq.template.xml.data.response.toModel
+import co.nimblehq.template.xml.data.service.providers.MoshiBuilderProvider
 import co.nimblehq.template.xml.domain.exceptions.ApiException
 import co.nimblehq.template.xml.domain.exceptions.NoConnectivityException
 import com.squareup.moshi.JsonDataException

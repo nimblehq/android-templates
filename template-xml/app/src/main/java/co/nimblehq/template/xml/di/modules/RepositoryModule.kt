@@ -1,7 +1,7 @@
 package co.nimblehq.template.xml.di.modules
 
-import co.nimblehq.template.xml.repository.RepositoryImpl
-import co.nimblehq.template.xml.service.ApiService
+import co.nimblehq.template.xml.data.repository.RepositoryImpl
+import co.nimblehq.template.xml.data.service.ApiService
 import co.nimblehq.template.xml.domain.repository.Repository
 import dagger.Module
 import dagger.Provides

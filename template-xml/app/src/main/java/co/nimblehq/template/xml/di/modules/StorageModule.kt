@@ -3,8 +3,8 @@ package co.nimblehq.template.xml.di.modules
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import co.nimblehq.template.xml.storage.EncryptedSharedPreferences
-import co.nimblehq.template.xml.storage.NormalSharedPreferences
+import co.nimblehq.template.xml.data.storage.EncryptedSharedPreferences
+import co.nimblehq.template.xml.data.storage.NormalSharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

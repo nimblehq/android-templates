@@ -1,4 +1,4 @@
-package co.nimblehq.template.xml.service.providers
+package co.nimblehq.template.xml.data.service.providers
 
 import okhttp3.OkHttpClient
 import retrofit2.Converter

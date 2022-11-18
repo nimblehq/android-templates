@@ -1,8 +1,8 @@
-package co.nimblehq.template.xml.repository
+package co.nimblehq.template.xml.data.repository
 
 import co.nimblehq.template.xml.data.extensions.flowTransform
-import co.nimblehq.template.xml.response.toModels
-import co.nimblehq.template.xml.service.ApiService
+import co.nimblehq.template.xml.data.response.toModels
+import co.nimblehq.template.xml.data.service.ApiService
 import co.nimblehq.template.xml.domain.model.Model
 import co.nimblehq.template.xml.domain.repository.Repository
 import kotlinx.coroutines.flow.Flow

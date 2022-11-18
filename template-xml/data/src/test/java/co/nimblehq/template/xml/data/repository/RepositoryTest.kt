@@ -1,10 +1,10 @@
 package co.nimblehq.template.xml.data.repository
 
-import co.nimblehq.template.xml.response.Response
-import co.nimblehq.template.xml.response.toModels
-import co.nimblehq.template.xml.service.ApiService
+import co.nimblehq.template.xml.data.response.Response
+import co.nimblehq.template.xml.data.response.toModels
+import co.nimblehq.template.xml.data.service.ApiService
 import co.nimblehq.template.xml.domain.repository.Repository
-import co.nimblehq.template.xml.repository.RepositoryImpl
+import co.nimblehq.template.xml.data.repository.RepositoryImpl
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.mockk

@@ -1,6 +1,6 @@
-package co.nimblehq.template.xml.service
+package co.nimblehq.template.xml.data.service
 
-import co.nimblehq.template.xml.response.Response
+import co.nimblehq.template.xml.data.response.Response
 import retrofit2.http.GET
 
 interface ApiService {

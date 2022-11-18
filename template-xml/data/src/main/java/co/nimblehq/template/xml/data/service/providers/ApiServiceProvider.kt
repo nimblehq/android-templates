@@ -1,6 +1,6 @@
-package co.nimblehq.template.xml.service.providers
+package co.nimblehq.template.xml.data.service.providers
 
-import co.nimblehq.template.xml.service.ApiService
+import co.nimblehq.template.xml.data.service.ApiService
 import retrofit2.Retrofit
 
 object ApiServiceProvider {
