@@ -1,4 +1,4 @@
-package co.nimblehq.template.compose.ui.screens.compose.composables
+package co.nimblehq.template.compose.ui.screens.home
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -8,8 +8,8 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import co.nimblehq.template.compose.model.UiModel
-import co.nimblehq.template.compose.ui.screens.compose.theme.Dimension.SpacingNormal
-import co.nimblehq.template.compose.ui.screens.compose.theme.Theme
+import co.nimblehq.template.compose.ui.theme.Dimension.SpacingNormal
+import co.nimblehq.template.compose.ui.theme.Theme
 import timber.log.Timber
 
 @Suppress("FunctionNaming")

@@ -124,7 +124,6 @@ dependencies {
 
     implementation("androidx.activity:activity-ktx:${Versions.ANDROIDX_ACTIVITY_KTX_VERSION}")
     implementation("androidx.appcompat:appcompat:${Versions.ANDROIDX_SUPPORT_VERSION}")
-    implementation("androidx.constraintlayout:constraintlayout:${Versions.CONSTRAINT_LAYOUT_VERSION}")
     implementation("androidx.core:core-ktx:${Versions.ANDROIDX_CORE_KTX_VERSION}")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.ANDROIDX_LIFECYCLE_VERSION}")
 
@@ -151,8 +150,6 @@ dependencies {
     implementation("com.markodevcic:peko:${Versions.PEKO_VERSION}")
 
     kapt("com.google.dagger:hilt-compiler:${Versions.HILT_VERSION}")
-
-    debugImplementation("androidx.fragment:fragment-testing:${Versions.ANDROIDX_FRAGMENT_VERSION}")
 
     debugImplementation("com.github.chuckerteam.chucker:library:${Versions.CHUCKER_VERSION}")
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:${Versions.CHUCKER_VERSION}")

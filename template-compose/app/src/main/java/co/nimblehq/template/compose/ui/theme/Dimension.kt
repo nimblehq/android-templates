@@ -1,4 +1,4 @@
-package co.nimblehq.template.compose.ui.screens.compose.theme
+package co.nimblehq.template.compose.ui.theme
 
 import androidx.compose.ui.unit.dp
 

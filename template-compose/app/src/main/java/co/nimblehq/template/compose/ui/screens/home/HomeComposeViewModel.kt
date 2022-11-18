@@ -1,4 +1,4 @@
-package co.nimblehq.template.compose.ui.screens.compose
+package co.nimblehq.template.compose.ui.screens.home
 
 import co.nimblehq.template.compose.domain.usecase.UseCase
 import co.nimblehq.template.compose.model.UiModel
