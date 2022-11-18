@@ -1,9 +1,5 @@
 *.iml
 .idea
-.gradle
-/template-xml/local.properties
-/RxJavaTemplate[DEPRECATED]/local.properties
 .DS_Store
-build/
 /captures
 .externalNativeBuild

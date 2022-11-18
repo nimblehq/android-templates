@@ -33,18 +33,18 @@ jobs:
         working-directory: ./template-xml
         run: ./gradlew detekt
 
-      - name: Archive Detekt reports on template
+      - name: Archive Detekt reports on template-xml
         uses: actions/upload-artifact@v2
         with:
-          name: DetektReportsTemplate
-          path: template/build/reports/detekt/
+          name: DetektReportsTemplateXML
+          path: template-xml/build/reports/detekt/
 
       - name: Run unit tests with Kover on template-xml
         working-directory: ./template-xml
         run: ./gradlew koverMergedHtmlReport
 
-      - name: Archive code coverage reports on template
+      - name: Archive code coverage reports on template-xml
         uses: actions/upload-artifact@v2
         with:
-          name: CodeCoverageReportsTemplate
-          path: template/build/reports/kover/merged/
+          name: CodeCoverageReportsTemplateXML
+          path: template-xml/build/reports/kover/merged/
