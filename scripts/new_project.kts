@@ -19,10 +19,11 @@ object NewProject {
     private const val SEPARATOR_SLASH = "/"
     private const val SEPARATOR_SPACE = " "
 
-    private const val TEMPLATE_APP_NAME = "Template"
-    private const val TEMPLATE_APPLICATION_CLASS_NAME = "TemplateApplication"
-    private const val TEMPLATE_FOLDER_NAME = "template"
-    private const val TEMPLATE_PACKAGE_NAME = "co.nimblehq.template"
+    // TODO: Update script to support template-compose in https://github.com/nimblehq/android-templates/issues/336
+    private const val TEMPLATE_APP_NAME = "Template XML"
+    private const val TEMPLATE_APPLICATION_CLASS_NAME = "TemplateXMLApplication"
+    private const val TEMPLATE_FOLDER_NAME = "template-xml"
+    private const val TEMPLATE_PACKAGE_NAME = "co.nimblehq.template.xml"
 
     private const val VERSION_FILE_NAME = "version.properties"
 
