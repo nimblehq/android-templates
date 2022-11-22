@@ -1,4 +1,4 @@
-package co.nimblehq.template.xml.ui.screens.xml
+package co.nimblehq.template.xml.ui.screens.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
