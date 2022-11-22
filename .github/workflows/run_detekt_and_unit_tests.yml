@@ -28,7 +28,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-        # TODO: Add new step for template-compose in https://github.com/nimblehq/android-templates/issues/333
       - name: Run Detekt on template-xml
         working-directory: ./template-xml
         run: ./gradlew detekt
@@ -48,3 +47,23 @@ jobs:
         with:
           name: CodeCoverageReportsTemplateXML
           path: template-xml/build/reports/kover/merged/
+
+      - name: Run Detekt on template-compose
+        working-directory: ./template-compose
+        run: ./gradlew detekt
+
+      - name: Archive Detekt reports on template-compose
+        uses: actions/upload-artifact@v2
+        with:
+          name: DetektReportsTemplateCompose
+          path: template-compose/build/reports/detekt/
+
+      - name: Run unit tests with Kover on template-compose
+        working-directory: ./template-compose
+        run: ./gradlew koverMergedHtmlReport
+
+      - name: Archive code coverage reports on template-compose
+        uses: actions/upload-artifact@v2
+        with:
+          name: CodeCoverageReportsTemplateCompose
+          path: template-compose/build/reports/kover/merged/
