@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeComposeViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
     private val useCase: UseCase,
     dispatchers: DispatchersProvider
 ) : BaseViewModel(dispatchers) {

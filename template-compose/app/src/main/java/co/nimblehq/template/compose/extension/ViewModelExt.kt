@@ -1,9 +1,8 @@
 package co.nimblehq.template.compose.extension
 
-import androidx.activity.ComponentActivity
-import androidx.activity.viewModels
 import androidx.annotation.MainThread
-import androidx.fragment.app.*
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.*
 import androidx.lifecycle.viewmodel.CreationExtras
 
@@ -17,23 +16,11 @@ import androidx.lifecycle.viewmodel.CreationExtras
  * Reference: https://proandroiddev.com/testing-the-untestable-the-case-of-the-viewmodel-delegate-975c09160993
  */
 @MainThread
-inline fun <reified VM : ViewModel> Fragment.provideActivityViewModels(
-    noinline extrasProducer: (() -> CreationExtras)? = null,
-    noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null
-): Lazy<VM> = OverridableLazy(activityViewModels(extrasProducer, factoryProducer))
-
-@MainThread
 inline fun <reified VM : ViewModel> Fragment.provideViewModels(
     noinline ownerProducer: () -> ViewModelStoreOwner = { this },
     noinline extrasProducer: (() -> CreationExtras)? = null,
     noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null
 ): Lazy<VM> = OverridableLazy(viewModels(ownerProducer, extrasProducer, factoryProducer))
-
-@MainThread
-inline fun <reified VM : ViewModel> ComponentActivity.provideViewModels(
-    noinline extrasProducer: (() -> CreationExtras)? = null,
-    noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null
-): Lazy<VM> = OverridableLazy(viewModels(extrasProducer, factoryProducer))
 
 class OverridableLazy<T>(var implementation: Lazy<T>) : Lazy<T> {
 

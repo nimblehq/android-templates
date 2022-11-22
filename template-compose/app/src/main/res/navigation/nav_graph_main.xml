@@ -2,10 +2,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/homeComposeFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/homeComposeFragment"
-        android:name="co.nimblehq.template.compose.ui.screens.home.HomeComposeFragment" />
+        android:id="@+id/homeFragment"
+        android:name="co.nimblehq.template.compose.ui.screens.home.HomeFragment" />
 
 </navigation>

@@ -13,12 +13,12 @@ import javax.inject.Inject
 
 @ExperimentalComposeUiApi
 @AndroidEntryPoint
-class HomeComposeFragment : BaseComposeFragment() {
+class HomeFragment : BaseComposeFragment() {
 
     @Inject
     lateinit var navigator: MainNavigator
 
-    private val viewModel: HomeComposeViewModel by provideViewModels()
+    private val viewModel: HomeViewModel by provideViewModels()
 
     override val composeScreen: @Composable () -> Unit
         get() = {
