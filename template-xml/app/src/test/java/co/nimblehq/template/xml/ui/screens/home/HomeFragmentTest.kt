@@ -1,4 +1,4 @@
-package co.nimblehq.template.xml.ui.screens.xml
+package co.nimblehq.template.xml.ui.screens.home
 
 import co.nimblehq.template.xml.R
 import co.nimblehq.template.xml.databinding.FragmentHomeBinding
@@ -6,8 +6,6 @@ import co.nimblehq.template.xml.test.TestNavigatorModule.mockMainNavigator
 import co.nimblehq.template.xml.test.getPrivateProperty
 import co.nimblehq.template.xml.test.replace
 import co.nimblehq.template.xml.ui.BaseFragmentTest
-import co.nimblehq.template.xml.ui.screens.home.HomeFragment
-import co.nimblehq.template.xml.ui.screens.home.HomeViewModel
 import dagger.hilt.android.testing.*
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
