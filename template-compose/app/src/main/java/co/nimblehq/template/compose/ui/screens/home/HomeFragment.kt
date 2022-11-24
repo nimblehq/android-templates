@@ -6,14 +6,14 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.res.stringResource
 import co.nimblehq.template.compose.R
 import co.nimblehq.template.compose.extension.provideViewModels
-import co.nimblehq.template.compose.ui.base.BaseComposeFragment
+import co.nimblehq.template.compose.ui.base.BaseFragment
 import co.nimblehq.template.compose.ui.screens.MainNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @ExperimentalComposeUiApi
 @AndroidEntryPoint
-class HomeFragment : BaseComposeFragment() {
+class HomeFragment : BaseFragment() {
 
     @Inject
     lateinit var navigator: MainNavigator

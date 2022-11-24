@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-abstract class BaseComposeFragment : Fragment(), BaseComposeFragmentCallbacks {
+abstract class BaseFragment : Fragment(), BaseFragmentCallbacks {
 
     @Inject
     lateinit var toaster: Toaster
@@ -23,7 +23,7 @@ abstract class BaseComposeFragment : Fragment(), BaseComposeFragmentCallbacks {
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (this as? BaseComposeFragmentCallbacks)?.let { initViewModel() }
+        (this as? BaseFragmentCallbacks)?.let { initViewModel() }
     }
 
     override fun initViewModel() {}
@@ -41,7 +41,7 @@ abstract class BaseComposeFragment : Fragment(), BaseComposeFragmentCallbacks {
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (this as? BaseComposeFragmentCallbacks)?.let {
+        (this as? BaseFragmentCallbacks)?.let {
             bindViewModel()
         }
     }
