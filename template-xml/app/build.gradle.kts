@@ -80,14 +80,8 @@ android {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
-    composeOptions {
-        kotlinCompilerVersion = Versions.KOTLIN_VERSION
-        kotlinCompilerExtensionVersion = Versions.COMPOSE_COMPILER_VERSION
-    }
-
     buildFeatures {
         viewBinding = true
-        compose = true
     }
 
     lintOptions {
@@ -127,11 +121,6 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:${Versions.CONSTRAINT_LAYOUT_VERSION}")
     implementation("androidx.core:core-ktx:${Versions.ANDROIDX_CORE_KTX_VERSION}")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.ANDROIDX_LIFECYCLE_VERSION}")
-
-    implementation("androidx.compose.ui:ui:${Versions.COMPOSE_VERSION}")
-    implementation("androidx.compose.ui:ui-tooling:${Versions.COMPOSE_VERSION}")
-    implementation("androidx.compose.foundation:foundation:${Versions.COMPOSE_VERSION}")
-    implementation("androidx.compose.material:material:${Versions.COMPOSE_VERSION}")
 
     implementation("androidx.fragment:fragment-ktx:${Versions.ANDROIDX_FRAGMENT_KTX_VERSION}")
 

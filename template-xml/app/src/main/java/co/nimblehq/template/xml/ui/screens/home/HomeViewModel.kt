@@ -1,4 +1,4 @@
-package co.nimblehq.template.xml.ui.screens.compose
+package co.nimblehq.template.xml.ui.screens.home
 
 import co.nimblehq.template.xml.domain.usecase.UseCase
 import co.nimblehq.template.xml.model.UiModel
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeComposeViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
     private val useCase: UseCase,
     dispatchers: DispatchersProvider
 ) : BaseViewModel(dispatchers) {

@@ -1,4 +1,4 @@
-package co.nimblehq.template.xml.ui.screens.xml
+package co.nimblehq.template.xml.ui.screens.home
 
 import co.nimblehq.template.xml.R
 import co.nimblehq.template.xml.databinding.FragmentHomeBinding

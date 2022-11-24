@@ -7,11 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="co.nimblehq.template.xml.ui.screens.xml.HomeFragment"
+        android:name="co.nimblehq.template.xml.ui.screens.home.HomeFragment"
         tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/homeComposeFragment"
-        android:name="co.nimblehq.template.xml.ui.screens.compose.HomeComposeFragment" />
 
 </navigation>
