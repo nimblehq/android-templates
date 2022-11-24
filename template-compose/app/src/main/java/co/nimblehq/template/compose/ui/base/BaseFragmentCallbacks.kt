@@ -25,27 +25,6 @@ interface BaseFragmentCallbacks {
     fun initViewModel()
 
     /**
-     * The initial callback where you want to place your setup view components functions.
-     *
-     * This method usually get called multiple times, whenever the Fragment view is being created/re-created.
-     * Ideally, you would want to setup your RecyclerView, ViewPager here (without the data involvement).
-     *
-     * This is called right after [BaseFragment.onViewCreated]
-     */
-    fun setupView()
-
-    /**
-     * The initial callback where you want to place your view events functions.
-     *
-     * This method usually get called multiple times, whenever the Fragment view is being created/re-created.
-     * Ideally, you would want to setup your input events like:
-     * onClick, onPageChanged, onTextChanged here.
-     *
-     * This is called right after [BaseFragment.onViewCreated]
-     */
-    fun bindViewEvents()
-
-    /**
      * The initial callback where you want to place your view events functions.
      *
      * This method usually get called multiple times, whenever the Fragment view is being created/re-created.
