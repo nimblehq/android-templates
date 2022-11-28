@@ -42,4 +42,6 @@ jobs:
 
       - name: Verify generating new project from template
         working-directory: scripts
-        run: kscript new_project.kts package-name=co.myproject.example app-name="My Project"
+        run: |
+        kscript new_project.kts package-name=co.myproject.example app-name="My Project" template=xml
+        kscript new_project.kts package-name=co.myprojectcompose.example app-name="My Project Compose" template=compose

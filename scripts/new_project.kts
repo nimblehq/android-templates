@@ -8,6 +8,7 @@ object NewProject {
     private const val KEY_APP_NAME = "app-name"
     private const val KEY_HELP = "--help"
     private const val KEY_PACKAGE_NAME = "package-name"
+    private const val KEY_TEMPLATE = "template"
 
     private const val PATTERN_APP = "^([A-Z][a-zA-Z0-9\\s]*)|([a-z][a-z0-9-]*)$"
     private const val PATTERN_PACKAGE = "^[a-z]+(\\.[a-z][a-z0-9]*)+$"
@@ -19,22 +20,28 @@ object NewProject {
     private const val SEPARATOR_SLASH = "/"
     private const val SEPARATOR_SPACE = " "
 
-    // TODO: Update script to support template-compose in https://github.com/nimblehq/android-templates/issues/336
-    private const val TEMPLATE_APP_NAME = "Template XML"
-    private const val TEMPLATE_APPLICATION_CLASS_NAME = "TemplateXMLApplication"
-    private const val TEMPLATE_FOLDER_NAME = "template-xml"
-    private const val TEMPLATE_PACKAGE_NAME = "co.nimblehq.template.xml"
+    private const val TEMPLATE_APP_NAME_XML = "Template XML"
+    private const val TEMPLATE_APP_NAME_COMPOSE = "Template Compose"
+    private const val TEMPLATE_APPLICATION_CLASS_NAME_XML = "TemplateXMLApplication"
+    private const val TEMPLATE_APPLICATION_CLASS_NAME_COMPOSE = "TemplateComposeApplication"
+    private const val TEMPLATE_PACKAGE_NAME_XML = "co.nimblehq.template.xml"
+    private const val TEMPLATE_PACKAGE_NAME_COMPOSE = "co.nimblehq.template.compose"
+    private const val TEMPLATE_TYPE_XML = "xml"
+    private const val TEMPLATE_TYPE_COMPOSE = "compose"
+    private const val TEMPLATE_XML_FOLDER_NAME = "template-xml"
+    private const val TEMPLATE_COMPOSE_FOLDER_NAME = "template-compose"
 
     private const val VERSION_FILE_NAME = "version.properties"
 
     private val helpMessage = """
         Run kscript new_project.kts to create a new project with the following arguments:
-            package-name=   New package name (i.e., com.example.package)
-            app-name=       New app name (i.e., MyApp, "My App", "my-app")
+            $KEY_PACKAGE_NAME=   New package name (i.e., com.example.package)
+            $KEY_APP_NAME=       New app name (i.e., MyApp, "My App", "my-app")
+            $KEY_TEMPLATE=  Template type (i.e., $TEMPLATE_TYPE_XML, $TEMPLATE_TYPE_COMPOSE)
         
         Examples:
-            kscript new_project.kts package-name=co.myproject.example app-name="My Project"
-            kscript scripts/new_project.kts package-name=co.myproject.example app-name="My Project"
+            kscript new_project.kts $KEY_PACKAGE_NAME=co.myproject.example $KEY_APP_NAME="My Project" $KEY_TEMPLATE=$TEMPLATE_TYPE_XML
+            kscript scripts/new_project.kts $KEY_PACKAGE_NAME=co.myproject.example $KEY_APP_NAME="My Project" $KEY_TEMPLATE=$TEMPLATE_TYPE_XML
     """.trimIndent()
 
     private val modules = listOf("app", "data", "domain")
@@ -75,6 +82,36 @@ object NewProject {
             }
         }
 
+    private var templateType: String = ""
+
+    private val templatePackageName
+        get() = if (templateType == TEMPLATE_TYPE_XML) {
+            TEMPLATE_PACKAGE_NAME_XML
+        } else {
+            TEMPLATE_PACKAGE_NAME_COMPOSE
+        }
+
+    private val templateFolderName
+        get() = if (templateType == TEMPLATE_TYPE_XML) {
+            TEMPLATE_XML_FOLDER_NAME
+        } else {
+            TEMPLATE_COMPOSE_FOLDER_NAME
+        }
+
+    private val templateAppName
+        get() = if (templateType == TEMPLATE_TYPE_XML) {
+            TEMPLATE_APP_NAME_XML
+        } else {
+            TEMPLATE_APP_NAME_COMPOSE
+        }
+
+    private val templateApplicationClassName
+        get() = if (templateType == TEMPLATE_TYPE_XML) {
+            TEMPLATE_APPLICATION_CLASS_NAME_XML
+        } else {
+            TEMPLATE_APPLICATION_CLASS_NAME_COMPOSE
+        }
+
     fun generate(args: Array<String>) {
         showScriptVersion()
         handleArguments(args)
@@ -96,6 +133,7 @@ object NewProject {
     private fun handleArguments(args: Array<String>) {
         var hasAppName = false
         var hasPackageName = false
+        var hasTemplateType = false
         args.forEach { arg ->
             when {
                 arg == KEY_HELP -> {
@@ -114,6 +152,11 @@ object NewProject {
                     validatePackageName(value)
                     hasPackageName = true
                 }
+                arg.startsWith("$KEY_TEMPLATE$DELIMITER_ARGUMENT") -> {
+                    val (key, value) = arg.split(DELIMITER_ARGUMENT)
+                    validateTemplateTypeName(value)
+                    hasTemplateType = true
+                }
                 else -> {
                     showMessage(
                         message = "ERROR: Invalid argument name: $arg \n$helpMessage",
@@ -129,6 +172,10 @@ object NewProject {
             )
             !hasPackageName -> showMessage(
                 message = "ERROR: No package name has been provided \n$helpMessage",
+                exitAfterMessage = true
+            )
+            !hasTemplateType -> showMessage(
+                message = "ERROR: No template type has been provided \n$helpMessage",
                 exitAfterMessage = true
             )
         }
@@ -156,9 +203,20 @@ object NewProject {
         }
     }
 
+    private fun validateTemplateTypeName(value: String) {
+        if (value == TEMPLATE_TYPE_XML || value == TEMPLATE_TYPE_COMPOSE) {
+            templateType = value.trim()
+        } else {
+            showMessage(
+                message = "ERROR: Invalid Template Type: $value (can either be $TEMPLATE_TYPE_XML or $TEMPLATE_TYPE_COMPOSE) \n$helpMessage",
+                exitAfterMessage = true
+            )
+        }
+    }
+
     private fun initializeNewProjectFolder() {
         showMessage("=> 🐢 Initializing new project...")
-        copyFiles(fromPath = rootPath + TEMPLATE_FOLDER_NAME, toPath = projectPath)
+        copyFiles(fromPath = rootPath + templateFolderName, toPath = projectPath)
         // Set gradlew file as executable, because copying files from one folder to another doesn't copy file permissions correctly (= read, write & execute).
         File(projectPath + fileSeparator + "gradlew")?.setExecutable(true)
     }
@@ -195,7 +253,7 @@ object NewProject {
                 .filter { it.isDirectory && it.name == "java" }
                 .forEach { javaDirectory ->
                     val oldDirectory = File(
-                        javaDirectory, TEMPLATE_PACKAGE_NAME.replace(
+                        javaDirectory, templatePackageName.replace(
                             oldValue = SEPARATOR_DOT,
                             newValue = fileSeparator
                         )
@@ -231,7 +289,7 @@ object NewProject {
             .forEach { filePath ->
                 rename(
                     sourcePath = filePath.toString(),
-                    oldValue = TEMPLATE_PACKAGE_NAME,
+                    oldValue = templatePackageName,
                     newValue = packageName
                 )
             }
@@ -241,14 +299,14 @@ object NewProject {
         showMessage("=> 🔎 Renaming application class...")
         File(projectPath)
             .walk()
-            .filter { it.name == "$TEMPLATE_APPLICATION_CLASS_NAME.kt" || it.name == "AndroidManifest.xml" }
+            .filter { it.name == "${templateApplicationClassName}.kt" || it.name == "AndroidManifest.xml" }
             .forEach { file ->
                 rename(
                     sourcePath = file.absolutePath,
-                    oldValue = TEMPLATE_APPLICATION_CLASS_NAME,
+                    oldValue = templateApplicationClassName,
                     newValue = applicationClassName
                 )
-                if (file.name == "$TEMPLATE_APPLICATION_CLASS_NAME.kt") {
+                if (file.name == "${templateApplicationClassName}.kt") {
                     val newApplicationPath = file.absolutePath.replaceAfterLast(
                         delimiter = fileSeparator,
                         replacement = "$applicationClassName.kt"
@@ -324,7 +382,7 @@ object NewProject {
             .forEach { filePath ->
                 rename(
                     sourcePath = filePath.toString(),
-                    oldValue = TEMPLATE_APP_NAME,
+                    oldValue = templateAppName,
                     newValue = appName
                 )
             }
