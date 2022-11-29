@@ -28,8 +28,8 @@ object NewProject {
     private const val TEMPLATE_PACKAGE_NAME_COMPOSE = "co.nimblehq.template.compose"
     private const val TEMPLATE_XML = "xml"
     private const val TEMPLATE_COMPOSE = "compose"
-    private const val TEMPLATE_XML_FOLDER_NAME = "template-xml"
-    private const val TEMPLATE_COMPOSE_FOLDER_NAME = "template-compose"
+    private const val TEMPLATE_FOLDER_NAME_XML = "template-xml"
+    private const val TEMPLATE_FOLDER_NAME_COMPOSE = "template-compose"
 
     private const val VERSION_FILE_NAME = "version.properties"
 
@@ -93,9 +93,9 @@ object NewProject {
 
     private val templateFolderName
         get() = if (template == TEMPLATE_XML) {
-            TEMPLATE_XML_FOLDER_NAME
+            TEMPLATE_FOLDER_NAME_XML
         } else {
-            TEMPLATE_COMPOSE_FOLDER_NAME
+            TEMPLATE_FOLDER_NAME_COMPOSE
         }
 
     private val templateAppName
