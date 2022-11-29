@@ -26,8 +26,8 @@ object NewProject {
     private const val TEMPLATE_APPLICATION_CLASS_NAME_COMPOSE = "TemplateComposeApplication"
     private const val TEMPLATE_PACKAGE_NAME_XML = "co.nimblehq.template.xml"
     private const val TEMPLATE_PACKAGE_NAME_COMPOSE = "co.nimblehq.template.compose"
-    private const val TEMPLATE_TYPE_XML = "xml"
-    private const val TEMPLATE_TYPE_COMPOSE = "compose"
+    private const val TEMPLATE_XML = "xml"
+    private const val TEMPLATE_COMPOSE = "compose"
     private const val TEMPLATE_XML_FOLDER_NAME = "template-xml"
     private const val TEMPLATE_COMPOSE_FOLDER_NAME = "template-compose"
 
@@ -37,11 +37,11 @@ object NewProject {
         Run kscript new_project.kts to create a new project with the following arguments:
             $KEY_PACKAGE_NAME=   New package name (i.e., com.example.package)
             $KEY_APP_NAME=       New app name (i.e., MyApp, "My App", "my-app")
-            $KEY_TEMPLATE=  Template type (i.e., $TEMPLATE_TYPE_XML, $TEMPLATE_TYPE_COMPOSE)
+            $KEY_TEMPLATE=  Template type (i.e., $TEMPLATE_XML, $TEMPLATE_COMPOSE)
         
         Examples:
-            kscript new_project.kts $KEY_PACKAGE_NAME=co.myproject.example $KEY_APP_NAME="My Project" $KEY_TEMPLATE=$TEMPLATE_TYPE_XML
-            kscript scripts/new_project.kts $KEY_PACKAGE_NAME=co.myproject.example $KEY_APP_NAME="My Project" $KEY_TEMPLATE=$TEMPLATE_TYPE_XML
+            kscript new_project.kts $KEY_PACKAGE_NAME=co.myproject.example $KEY_APP_NAME="My Project" $KEY_TEMPLATE=$TEMPLATE_XML
+            kscript scripts/new_project.kts $KEY_PACKAGE_NAME=co.myproject.example $KEY_APP_NAME="My Project" $KEY_TEMPLATE=$TEMPLATE_XML
     """.trimIndent()
 
     private val modules = listOf("app", "data", "domain")
@@ -82,31 +82,31 @@ object NewProject {
             }
         }
 
-    private var templateType: String = ""
+    private var template: String = ""
 
     private val templatePackageName
-        get() = if (templateType == TEMPLATE_TYPE_XML) {
+        get() = if (template == TEMPLATE_XML) {
             TEMPLATE_PACKAGE_NAME_XML
         } else {
             TEMPLATE_PACKAGE_NAME_COMPOSE
         }
 
     private val templateFolderName
-        get() = if (templateType == TEMPLATE_TYPE_XML) {
+        get() = if (template == TEMPLATE_XML) {
             TEMPLATE_XML_FOLDER_NAME
         } else {
             TEMPLATE_COMPOSE_FOLDER_NAME
         }
 
     private val templateAppName
-        get() = if (templateType == TEMPLATE_TYPE_XML) {
+        get() = if (template == TEMPLATE_XML) {
             TEMPLATE_APP_NAME_XML
         } else {
             TEMPLATE_APP_NAME_COMPOSE
         }
 
     private val templateApplicationClassName
-        get() = if (templateType == TEMPLATE_TYPE_XML) {
+        get() = if (template == TEMPLATE_XML) {
             TEMPLATE_APPLICATION_CLASS_NAME_XML
         } else {
             TEMPLATE_APPLICATION_CLASS_NAME_COMPOSE
@@ -133,7 +133,7 @@ object NewProject {
     private fun handleArguments(args: Array<String>) {
         var hasAppName = false
         var hasPackageName = false
-        var hasTemplateType = false
+        var hasTemplate = false
         args.forEach { arg ->
             when {
                 arg == KEY_HELP -> {
@@ -154,8 +154,8 @@ object NewProject {
                 }
                 arg.startsWith("$KEY_TEMPLATE$DELIMITER_ARGUMENT") -> {
                     val (key, value) = arg.split(DELIMITER_ARGUMENT)
-                    validateTemplateTypeName(value)
-                    hasTemplateType = true
+                    validateTemplate(value)
+                    hasTemplate = true
                 }
                 else -> {
                     showMessage(
@@ -174,7 +174,7 @@ object NewProject {
                 message = "ERROR: No package name has been provided \n$helpMessage",
                 exitAfterMessage = true
             )
-            !hasTemplateType -> showMessage(
+            !hasTemplate -> showMessage(
                 message = "ERROR: No template type has been provided \n$helpMessage",
                 exitAfterMessage = true
             )
@@ -203,12 +203,12 @@ object NewProject {
         }
     }
 
-    private fun validateTemplateTypeName(value: String) {
-        if (value == TEMPLATE_TYPE_XML || value == TEMPLATE_TYPE_COMPOSE) {
-            templateType = value.trim()
+    private fun validateTemplate(value: String) {
+        if (value == TEMPLATE_XML || value == TEMPLATE_COMPOSE) {
+            template = value.trim()
         } else {
             showMessage(
-                message = "ERROR: Invalid Template Type: $value (can either be $TEMPLATE_TYPE_XML or $TEMPLATE_TYPE_COMPOSE) \n$helpMessage",
+                message = "ERROR: Invalid Template: $value (can either be $TEMPLATE_XML or $TEMPLATE_COMPOSE) \n$helpMessage",
                 exitAfterMessage = true
             )
         }
