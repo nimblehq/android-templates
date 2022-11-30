@@ -40,6 +40,11 @@ jobs:
           sdk install kscript $kscriptVersion
           echo $PATH >> $GITHUB_PATH
 
-      - name: Verify generating new project from template
+      - name: Verify generating new project from template-xml
         working-directory: scripts
-        run: kscript new_project.kts package-name=co.myproject.example app-name="My Project"
+        run: kscript new_project.kts package-name=co.myxmlproject.example app-name="My XML Project" template=xml
+
+      - name: Verify generating new project from template-compose
+        working-directory: scripts
+        run: kscript new_project.kts package-name=co.mycomposeproject.example app-name="My Compose Project" template=compose
+
