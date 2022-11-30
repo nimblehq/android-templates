@@ -31,7 +31,7 @@ A collection of our Android templates:
 
   Examples: 
     `kscript new_project.kts package-name=co.myxmlproject.example app-name="My XML Project" template=xml`
-    `kscript scripts/new_project.kts new_project.kts package-name=co.myxmlproject.example app-name="My XML Project" template=xml`
+    `kscript scripts/new_project.kts package-name=co.myxmlproject.example app-name="My XML Project" template=xml`
 
 4. Update `android_version_code` and `android_version_name` in `template/build.gradle`
 
