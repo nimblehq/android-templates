@@ -26,12 +26,12 @@ A collection of our Android templates:
   ```   
     package-name=                      New package name (i.e., com.example.package)
     app-name=                          New app name (i.e., MyApp, "My App", "my-app")
-    template=                          Template type (i.e., xml, compose)
+    template=                          Template (i.e., xml, compose)
   ```
 
   Examples: 
-    `kscript new_project.kts package-name=co.myproject.example app-name="My Project" template=xml`
-    `kscript scripts/new_project.kts new_project.kts package-name=co.myproject.example app-name="My Project" template=xml`
+    `kscript new_project.kts package-name=co.myxmlproject.example app-name="My XML Project" template=xml`
+    `kscript scripts/new_project.kts new_project.kts package-name=co.myxmlproject.example app-name="My XML Project" template=xml`
 
 4. Update `android_version_code` and `android_version_name` in `template/build.gradle`
 

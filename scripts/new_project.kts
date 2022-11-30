@@ -37,11 +37,11 @@ object NewProject {
         Run kscript new_project.kts to create a new project with the following arguments:
             $KEY_PACKAGE_NAME=   New package name (i.e., com.example.package)
             $KEY_APP_NAME=       New app name (i.e., MyApp, "My App", "my-app")
-            $KEY_TEMPLATE=  Template type (i.e., $TEMPLATE_XML, $TEMPLATE_COMPOSE)
+            $KEY_TEMPLATE=       Template (i.e., $TEMPLATE_XML, $TEMPLATE_COMPOSE)
         
         Examples:
-            kscript new_project.kts $KEY_PACKAGE_NAME=co.myproject.example $KEY_APP_NAME="My Project" $KEY_TEMPLATE=$TEMPLATE_XML
-            kscript scripts/new_project.kts $KEY_PACKAGE_NAME=co.myproject.example $KEY_APP_NAME="My Project" $KEY_TEMPLATE=$TEMPLATE_XML
+            kscript new_project.kts $KEY_PACKAGE_NAME=co.myxmlproject.example $KEY_APP_NAME="My XML Project" $KEY_TEMPLATE=$TEMPLATE_XML
+            kscript scripts/new_project.kts $KEY_PACKAGE_NAME=co.myxmlproject.example $KEY_APP_NAME="My XML Project" $KEY_TEMPLATE=$TEMPLATE_XML
     """.trimIndent()
 
     private val modules = listOf("app", "data", "domain")
@@ -175,7 +175,7 @@ object NewProject {
                 exitAfterMessage = true
             )
             !hasTemplate -> showMessage(
-                message = "ERROR: No template type has been provided \n$helpMessage",
+                message = "ERROR: No template has been provided \n$helpMessage",
                 exitAfterMessage = true
             )
         }
