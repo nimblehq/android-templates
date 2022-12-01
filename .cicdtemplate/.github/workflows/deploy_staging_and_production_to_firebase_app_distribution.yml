@@ -13,10 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
         with:
-          java-version: 1.8
+          distribution: 'temurin'
+          java-version: '11'
 
       - name: Set up timezone
         uses: zcong1993/setup-timezone@master
@@ -46,16 +47,14 @@ jobs:
           name: DetektReports
           path: build/reports/detekt/
 
-      - name: Run unit tests and Jacoco
-        run: ./gradlew jacocoTestReport
+      - name: Run unit tests with Kover
+        run: ./gradlew koverMergedHtmlReport
 
       - name: Archive code coverage reports
         uses: actions/upload-artifact@v2
         with:
           name: CodeCoverageReports
-          path: |
-            app/build/reports/jacoco/jacocoTestReport/
-            data/build/reports/jacoco/jacocoTestReport/
+          path: build/reports/kover/merged/
 
       - name: Build staging APK
         run: ./gradlew assembleStagingDebug

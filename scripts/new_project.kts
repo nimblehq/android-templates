@@ -8,6 +8,7 @@ object NewProject {
     private const val KEY_APP_NAME = "app-name"
     private const val KEY_HELP = "--help"
     private const val KEY_PACKAGE_NAME = "package-name"
+    private const val KEY_TEMPLATE = "template"
 
     private const val PATTERN_APP = "^([A-Z][a-zA-Z0-9\\s]*)|([a-z][a-z0-9-]*)$"
     private const val PATTERN_PACKAGE = "^[a-z]+(\\.[a-z][a-z0-9]*)+$"
@@ -19,21 +20,28 @@ object NewProject {
     private const val SEPARATOR_SLASH = "/"
     private const val SEPARATOR_SPACE = " "
 
-    private const val TEMPLATE_APP_NAME = "Template"
-    private const val TEMPLATE_APPLICATION_CLASS_NAME = "TemplateApplication"
-    private const val TEMPLATE_FOLDER_NAME = "template"
-    private const val TEMPLATE_PACKAGE_NAME = "co.nimblehq.template"
+    private const val TEMPLATE_APP_NAME_XML = "Template XML"
+    private const val TEMPLATE_APP_NAME_COMPOSE = "Template Compose"
+    private const val TEMPLATE_APPLICATION_CLASS_NAME_XML = "TemplateXMLApplication"
+    private const val TEMPLATE_APPLICATION_CLASS_NAME_COMPOSE = "TemplateComposeApplication"
+    private const val TEMPLATE_PACKAGE_NAME_XML = "co.nimblehq.template.xml"
+    private const val TEMPLATE_PACKAGE_NAME_COMPOSE = "co.nimblehq.template.compose"
+    private const val TEMPLATE_XML = "xml"
+    private const val TEMPLATE_COMPOSE = "compose"
+    private const val TEMPLATE_FOLDER_NAME_XML = "template-xml"
+    private const val TEMPLATE_FOLDER_NAME_COMPOSE = "template-compose"
 
     private const val VERSION_FILE_NAME = "version.properties"
 
     private val helpMessage = """
         Run kscript new_project.kts to create a new project with the following arguments:
-            package-name=   New package name (i.e., com.example.package)
-            app-name=       New app name (i.e., MyApp, "My App", "my-app")
+            $KEY_PACKAGE_NAME=   New package name (i.e., com.example.package)
+            $KEY_APP_NAME=       New app name (i.e., MyApp, "My App", "my-app")
+            $KEY_TEMPLATE=       Template (i.e., $TEMPLATE_XML, $TEMPLATE_COMPOSE)
         
         Examples:
-            kscript new_project.kts package-name=co.myproject.example app-name="My Project"
-            kscript scripts/new_project.kts package-name=co.myproject.example app-name="My Project"
+            kscript new_project.kts $KEY_PACKAGE_NAME=co.myxmlproject.example $KEY_APP_NAME="My XML Project" $KEY_TEMPLATE=$TEMPLATE_XML
+            kscript scripts/new_project.kts $KEY_PACKAGE_NAME=co.myxmlproject.example $KEY_APP_NAME="My XML Project" $KEY_TEMPLATE=$TEMPLATE_XML
     """.trimIndent()
 
     private val modules = listOf("app", "data", "domain")
@@ -74,6 +82,36 @@ object NewProject {
             }
         }
 
+    private var template: String = ""
+
+    private val templatePackageName
+        get() = if (template == TEMPLATE_XML) {
+            TEMPLATE_PACKAGE_NAME_XML
+        } else {
+            TEMPLATE_PACKAGE_NAME_COMPOSE
+        }
+
+    private val templateFolderName
+        get() = if (template == TEMPLATE_XML) {
+            TEMPLATE_FOLDER_NAME_XML
+        } else {
+            TEMPLATE_FOLDER_NAME_COMPOSE
+        }
+
+    private val templateAppName
+        get() = if (template == TEMPLATE_XML) {
+            TEMPLATE_APP_NAME_XML
+        } else {
+            TEMPLATE_APP_NAME_COMPOSE
+        }
+
+    private val templateApplicationClassName
+        get() = if (template == TEMPLATE_XML) {
+            TEMPLATE_APPLICATION_CLASS_NAME_XML
+        } else {
+            TEMPLATE_APPLICATION_CLASS_NAME_COMPOSE
+        }
+
     fun generate(args: Array<String>) {
         showScriptVersion()
         handleArguments(args)
@@ -95,6 +133,7 @@ object NewProject {
     private fun handleArguments(args: Array<String>) {
         var hasAppName = false
         var hasPackageName = false
+        var hasTemplate = false
         args.forEach { arg ->
             when {
                 arg == KEY_HELP -> {
@@ -113,6 +152,11 @@ object NewProject {
                     validatePackageName(value)
                     hasPackageName = true
                 }
+                arg.startsWith("$KEY_TEMPLATE$DELIMITER_ARGUMENT") -> {
+                    val (key, value) = arg.split(DELIMITER_ARGUMENT)
+                    validateTemplate(value)
+                    hasTemplate = true
+                }
                 else -> {
                     showMessage(
                         message = "ERROR: Invalid argument name: $arg \n$helpMessage",
@@ -128,6 +172,10 @@ object NewProject {
             )
             !hasPackageName -> showMessage(
                 message = "ERROR: No package name has been provided \n$helpMessage",
+                exitAfterMessage = true
+            )
+            !hasTemplate -> showMessage(
+                message = "ERROR: No template has been provided \n$helpMessage",
                 exitAfterMessage = true
             )
         }
@@ -155,9 +203,20 @@ object NewProject {
         }
     }
 
+    private fun validateTemplate(value: String) {
+        if (value == TEMPLATE_XML || value == TEMPLATE_COMPOSE) {
+            template = value.trim()
+        } else {
+            showMessage(
+                message = "ERROR: Invalid Template: $value (can either be $TEMPLATE_XML or $TEMPLATE_COMPOSE) \n$helpMessage",
+                exitAfterMessage = true
+            )
+        }
+    }
+
     private fun initializeNewProjectFolder() {
         showMessage("=> 🐢 Initializing new project...")
-        copyFiles(fromPath = rootPath + TEMPLATE_FOLDER_NAME, toPath = projectPath)
+        copyFiles(fromPath = rootPath + templateFolderName, toPath = projectPath)
         // Set gradlew file as executable, because copying files from one folder to another doesn't copy file permissions correctly (= read, write & execute).
         File(projectPath + fileSeparator + "gradlew")?.setExecutable(true)
     }
@@ -194,7 +253,7 @@ object NewProject {
                 .filter { it.isDirectory && it.name == "java" }
                 .forEach { javaDirectory ->
                     val oldDirectory = File(
-                        javaDirectory, TEMPLATE_PACKAGE_NAME.replace(
+                        javaDirectory, templatePackageName.replace(
                             oldValue = SEPARATOR_DOT,
                             newValue = fileSeparator
                         )
@@ -228,21 +287,11 @@ object NewProject {
             .walk()
             .filter { it.name.endsWithAny(".kt", ".xml", ".gradle.kts") }
             .forEach { filePath ->
-                when (filePath.name) {
-                    "jacoco-report.gradle.kts" -> rename(
-                        sourcePath = filePath.toString(),
-                        oldValue = TEMPLATE_PACKAGE_NAME.replace(
-                            SEPARATOR_DOT,
-                            SEPARATOR_SLASH
-                        ),
-                        newValue = packageName.replace(SEPARATOR_DOT, SEPARATOR_SLASH)
-                    )
-                    else -> rename(
-                        sourcePath = filePath.toString(),
-                        oldValue = TEMPLATE_PACKAGE_NAME,
-                        newValue = packageName
-                    )
-                }
+                rename(
+                    sourcePath = filePath.toString(),
+                    oldValue = templatePackageName,
+                    newValue = packageName
+                )
             }
     }
 
@@ -250,14 +299,14 @@ object NewProject {
         showMessage("=> 🔎 Renaming application class...")
         File(projectPath)
             .walk()
-            .filter { it.name == "$TEMPLATE_APPLICATION_CLASS_NAME.kt" || it.name == "AndroidManifest.xml" }
+            .filter { it.name == "${templateApplicationClassName}.kt" || it.name == "AndroidManifest.xml" }
             .forEach { file ->
                 rename(
                     sourcePath = file.absolutePath,
-                    oldValue = TEMPLATE_APPLICATION_CLASS_NAME,
+                    oldValue = templateApplicationClassName,
                     newValue = applicationClassName
                 )
-                if (file.name == "$TEMPLATE_APPLICATION_CLASS_NAME.kt") {
+                if (file.name == "${templateApplicationClassName}.kt") {
                     val newApplicationPath = file.absolutePath.replaceAfterLast(
                         delimiter = fileSeparator,
                         replacement = "$applicationClassName.kt"
@@ -333,7 +382,7 @@ object NewProject {
             .forEach { filePath ->
                 rename(
                     sourcePath = filePath.toString(),
-                    oldValue = TEMPLATE_APP_NAME,
+                    oldValue = templateAppName,
                     newValue = appName
                 )
             }

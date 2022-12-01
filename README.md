@@ -9,7 +9,9 @@
 
 ---
 
-Our Android template: **[template](https://github.com/nimblehq/android-templates/tree/develop/template)**
+A collection of our Android templates:
+- XML template: **[template-xml](https://github.com/nimblehq/android-templates/tree/develop/template-xml)**
+- Compose template: **[template-compose](https://github.com/nimblehq/android-templates/tree/develop/template-compose)**
 
 ## Prerequisites
 
@@ -24,9 +26,12 @@ Our Android template: **[template](https://github.com/nimblehq/android-templates
   ```   
     package-name=                      New package name (i.e., com.example.package)
     app-name=                          New app name (i.e., MyApp, "My App", "my-app")
+    template=                          Template (i.e., xml, compose)
   ```
 
-  Example: `kscript new_project.kts package-name=co.myproject.example app-name="My Project"`
+  Examples: 
+    `kscript new_project.kts package-name=co.myxmlproject.example app-name="My XML Project" template=xml`
+    `kscript scripts/new_project.kts package-name=co.myxmlproject.example app-name="My XML Project" template=xml`
 
 4. Update `android_version_code` and `android_version_name` in `template/build.gradle`
 
