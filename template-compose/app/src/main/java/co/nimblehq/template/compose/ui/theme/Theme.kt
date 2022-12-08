@@ -4,7 +4,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 
-@Suppress("FunctionNaming")
 @Composable
 fun Theme(
     content: @Composable () -> Unit
