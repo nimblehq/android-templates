@@ -55,7 +55,7 @@ jobs:
         run: ./gradlew koverMergedXmlReport
 
       - name: Set up Ruby
-        uses: actions/setup-ruby@v1
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: '2.7'
 
