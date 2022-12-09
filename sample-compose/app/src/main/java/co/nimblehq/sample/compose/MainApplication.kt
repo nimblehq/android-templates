@@ -1,11 +1,11 @@
-package co.nimblehq.template.xml
+package co.nimblehq.sample.compose
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
 @HiltAndroidApp
-class TemplateXMLApplication : Application() {
+class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
