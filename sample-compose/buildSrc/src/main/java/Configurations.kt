@@ -1,7 +1,7 @@
 object Flavor {
     const val PRODUCTION = "production"
     const val STAGING = "staging"
-    const val DIMENSIONS = "stage"
+    const val DIMENSION_VERSION = "version"
 }
 
 object BuildType {
