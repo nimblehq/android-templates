@@ -22,8 +22,6 @@ object NewProject {
 
     private const val TEMPLATE_APP_NAME_XML = "Template XML"
     private const val TEMPLATE_APP_NAME_COMPOSE = "Template Compose"
-    private const val TEMPLATE_APPLICATION_CLASS_NAME_XML = "TemplateXMLApplication"
-    private const val TEMPLATE_APPLICATION_CLASS_NAME_COMPOSE = "TemplateComposeApplication"
     private const val TEMPLATE_PACKAGE_NAME_XML = "co.nimblehq.template.xml"
     private const val TEMPLATE_PACKAGE_NAME_COMPOSE = "co.nimblehq.template.compose"
     private const val TEMPLATE_XML = "xml"
@@ -62,12 +60,6 @@ object NewProject {
 
     private var packageName = ""
 
-    private val appNameWithoutSpace: String
-        get() = appName.getStringWithoutSpace()
-
-    private val applicationClassName: String
-        get() = "${appNameWithoutSpace}Application"
-
     private var projectFolderName: String = ""
 
     private val projectPath: String
@@ -105,13 +97,6 @@ object NewProject {
             TEMPLATE_APP_NAME_COMPOSE
         }
 
-    private val templateApplicationClassName
-        get() = if (template == TEMPLATE_XML) {
-            TEMPLATE_APPLICATION_CLASS_NAME_XML
-        } else {
-            TEMPLATE_APPLICATION_CLASS_NAME_COMPOSE
-        }
-
     fun generate(args: Array<String>) {
         showScriptVersion()
         handleArguments(args)
@@ -119,7 +104,6 @@ object NewProject {
         cleanNewProjectFolder()
         renamePackageNameFolders()
         renamePackageNameWithinFiles()
-        renameApplicationClass()
         renameAppName()
         buildProjectAndRunTests()
     }
@@ -292,28 +276,6 @@ object NewProject {
                     oldValue = templatePackageName,
                     newValue = packageName
                 )
-            }
-    }
-
-    private fun renameApplicationClass() {
-        showMessage("=> 🔎 Renaming application class...")
-        File(projectPath)
-            .walk()
-            .filter { it.name == "${templateApplicationClassName}.kt" || it.name == "AndroidManifest.xml" }
-            .forEach { file ->
-                rename(
-                    sourcePath = file.absolutePath,
-                    oldValue = templateApplicationClassName,
-                    newValue = applicationClassName
-                )
-                if (file.name == "${templateApplicationClassName}.kt") {
-                    val newApplicationPath = file.absolutePath.replaceAfterLast(
-                        delimiter = fileSeparator,
-                        replacement = "$applicationClassName.kt"
-                    )
-                    val newApplicationFile = File(newApplicationPath)
-                    file.renameTo(newApplicationFile)
-                }
             }
     }
 
