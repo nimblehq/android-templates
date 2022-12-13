@@ -1,16 +1,23 @@
 package co.nimblehq.template.compose.ui.screens
 
+import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import co.nimblehq.template.compose.databinding.ActivityMainBinding
-import co.nimblehq.template.compose.ui.base.BaseActivity
+import co.nimblehq.template.compose.ui.AppNavigation
+import co.nimblehq.template.compose.ui.theme.ComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding>() {
+class MainActivity : ComponentActivity() {
 
-    override val bindingInflater: (LayoutInflater) -> ActivityMainBinding
-        get() = { inflater -> ActivityMainBinding.inflate(inflater) }
-
-    override val viewModel by viewModels<MainViewModel>()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            ComposeTheme {
+                AppNavigation()
+            }
+        }
+    }
 }

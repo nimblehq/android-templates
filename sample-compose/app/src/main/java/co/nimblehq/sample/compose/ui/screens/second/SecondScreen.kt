@@ -41,8 +41,8 @@ private fun SecondScreenContent(id: String) {
     }
 }
 
-@Preview(showBackground = true)
 @Composable
+@Preview(showSystemUi = true)
 private fun SecondScreenPreview() {
     ComposeTheme {
         SecondScreenContent("1")

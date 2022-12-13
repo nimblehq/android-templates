@@ -5,7 +5,7 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 
 @Composable
-fun Theme(
+fun ComposeTheme(
     content: @Composable () -> Unit
 ) {
     MaterialTheme(

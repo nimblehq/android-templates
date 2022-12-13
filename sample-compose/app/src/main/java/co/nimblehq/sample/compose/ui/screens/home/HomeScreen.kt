@@ -18,10 +18,9 @@ import co.nimblehq.sample.compose.ui.screens.AppBar
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import co.nimblehq.sample.compose.ui.userReadableMessage
 
-// TODO: Rename to 'HomeScreen'
 @Composable
-fun HomeComposeScreen(
-    viewModel: HomeComposeViewModel = hiltViewModel(),
+fun HomeScreen(
+    viewModel: HomeViewModel = hiltViewModel(),
     navigator: (destination: AppDestination) -> Unit
 ) {
     val context = LocalContext.current
@@ -71,8 +70,8 @@ private fun HomeScreenContent(
     }
 }
 
-@Preview(showBackground = true)
 @Composable
+@Preview(showSystemUi = true)
 private fun HomeComposeScreenPreview() {
     ComposeTheme {
         HomeScreenContent(

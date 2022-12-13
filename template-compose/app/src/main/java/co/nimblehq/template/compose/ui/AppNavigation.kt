@@ -1,10 +1,9 @@
-package co.nimblehq.sample.compose.ui
+package co.nimblehq.template.compose.ui
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.*
 import androidx.navigation.compose.*
-import co.nimblehq.sample.compose.ui.screens.home.HomeScreen
-import co.nimblehq.sample.compose.ui.screens.second.SecondScreen
+import co.nimblehq.template.compose.ui.screens.home.HomeScreen
 
 @Composable
 fun AppNavigation(
@@ -18,13 +17,6 @@ fun AppNavigation(
         composable(AppDestination.Home) {
             HomeScreen(
                 navigator = { destination -> navController.navigate(destination) }
-            )
-        }
-
-        composable(AppDestination.Second) { backStackEntry ->
-            SecondScreen(
-                navigator = { destination -> navController.navigate(destination) },
-                id = backStackEntry.arguments?.getString(KeyId).orEmpty()
             )
         }
     }
@@ -43,9 +35,9 @@ private fun NavGraphBuilder.composable(
     )
 }
 
-private fun NavHostController.navigate(appDestination: AppDestination) {
-    when (appDestination) {
+private fun NavHostController.navigate(destination: AppDestination) {
+    when (destination) {
         is AppDestination.Up -> navigateUp()
-        else -> navigate(route = appDestination.destination)
+        else -> navigate(route = destination.destination)
     }
 }

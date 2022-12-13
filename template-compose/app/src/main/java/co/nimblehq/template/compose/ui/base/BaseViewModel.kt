@@ -3,6 +3,7 @@ package co.nimblehq.template.compose.ui.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.nimblehq.template.compose.lib.IsLoading
+import co.nimblehq.template.compose.ui.AppDestination
 import co.nimblehq.template.compose.util.DispatchersProvider
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
@@ -21,8 +22,8 @@ abstract class BaseViewModel(private val dispatchersProvider: DispatchersProvide
     val error: SharedFlow<Throwable>
         get() = _error
 
-    protected val _navigator = MutableSharedFlow<NavigationEvent>()
-    val navigator: SharedFlow<NavigationEvent>
+    protected val _navigator = MutableSharedFlow<AppDestination>()
+    val navigator: SharedFlow<AppDestination>
         get() = _navigator
 
     /**
