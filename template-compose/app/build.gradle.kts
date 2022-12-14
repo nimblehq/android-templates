@@ -136,6 +136,8 @@ dependencies {
     implementation("androidx.navigation:navigation-runtime-ktx:${Versions.ANDROIDX_NAVIGATION_VERSION}")
     implementation("androidx.navigation:navigation-ui-ktx:${Versions.ANDROIDX_NAVIGATION_VERSION}")
 
+    implementation("androidx.datastore:datastore-preferences:${Versions.ANDROIDX_DATASTORE_PREFERENCE_VERSION}")
+
     implementation("com.google.dagger:hilt-android:${Versions.HILT_VERSION}")
 
     implementation("com.jakewharton.timber:timber:${Versions.TIMBER_LOG_VERSION}")

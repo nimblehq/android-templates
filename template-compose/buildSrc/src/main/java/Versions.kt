@@ -12,6 +12,7 @@ object Versions {
     const val ANDROID_COMMON_KTX_VERSION = "0.1.1"
     const val ANDROID_CRYPTO_VERSION = "1.0.0"
     const val ANDROIDX_CORE_KTX_VERSION = "1.9.0"
+    const val ANDROIDX_DATASTORE_PREFERENCE_VERSION = "1.0.0"
     const val ANDROIDX_TEST_CORE_VERSION = "1.4.0"
     const val ANDROIDX_FRAGMENT_KTX_VERSION = "1.5.3"
     const val ANDROIDX_LIFECYCLE_VERSION = "2.5.1"
