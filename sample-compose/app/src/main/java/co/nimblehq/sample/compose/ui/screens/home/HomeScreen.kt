@@ -1,12 +1,7 @@
 package co.nimblehq.sample.compose.ui.screens.home
 
 import android.Manifest.permission.*
-import android.content.Context
-import android.content.pm.PackageManager
 import android.widget.Toast
-import androidx.activity.compose.ManagedActivityResultLauncher
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
@@ -15,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.lib.IsLoading
@@ -24,6 +18,7 @@ import co.nimblehq.sample.compose.ui.AppDestination
 import co.nimblehq.sample.compose.ui.screens.AppBar
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import co.nimblehq.sample.compose.ui.userReadableMessage
+import com.google.accompanist.permissions.*
 import timber.log.Timber
 
 @Composable
@@ -52,35 +47,26 @@ fun HomeScreen(
     )
 }
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 private fun HomeScreenContent(
     uiModels: List<UiModel>,
     showLoading: IsLoading,
     onItemClick: (UiModel) -> Unit
 ) {
-    val permissions = arrayOf(
-        ACCESS_COARSE_LOCATION,
-        ACCESS_FINE_LOCATION,
-        CAMERA
-    )
-    val launcherMultiplePermissions = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissionsMap ->
-        val areGranted = permissionsMap.values.reduce { acc, next -> acc && next }
-        if (areGranted) {
-            Timber.d("${permissionsMap.keys} granted")
+    val cameraPermissionState = rememberPermissionState(CAMERA)
+    if (cameraPermissionState.status.isGranted) {
+        Timber.d("${cameraPermissionState.permission} granted")
+    } else {
+        if (cameraPermissionState.status.shouldShowRationale) {
+            Timber.d("${cameraPermissionState.permission} needs rationale")
         } else {
             Timber.d("Request cancelled, missing permissions in manifest or denied permanently")
         }
-    }
 
-    val context = LocalContext.current
-    LaunchedEffect(Unit) {
-        checkAndRequestLocationPermissions(
-            context,
-            permissions,
-            launcherMultiplePermissions
-        )
+        LaunchedEffect(Unit) {
+            cameraPermissionState.launchPermissionRequest()
+        }
     }
 
     Scaffold(topBar = {
@@ -100,26 +86,6 @@ private fun HomeScreenContent(
                 )
             }
         }
-    }
-}
-
-fun checkAndRequestLocationPermissions(
-    context: Context,
-    permissions: Array<String>,
-    launcher: ManagedActivityResultLauncher<Array<String>, Map<String, Boolean>>
-) {
-    if (
-        permissions.all {
-            ContextCompat.checkSelfPermission(
-                context,
-                it
-            ) == PackageManager.PERMISSION_GRANTED
-        }
-    ) {
-        // Permissions are already granted
-    } else {
-        // Request permissions
-        launcher.launch(permissions)
     }
 }
 
