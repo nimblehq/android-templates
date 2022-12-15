@@ -45,7 +45,7 @@ private fun NavGraphBuilder.composable(
 
 private fun NavHostController.navigate(destination: AppDestination) {
     when (destination) {
-        is AppDestination.Up -> popBackStack()
+        is AppDestination.Up -> navigateUp()
         else -> navigate(route = destination.destination)
     }
 }

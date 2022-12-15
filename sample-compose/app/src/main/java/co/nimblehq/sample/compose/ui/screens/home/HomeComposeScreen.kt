@@ -25,13 +25,13 @@ fun HomeComposeScreen(
     navigator: (destination: AppDestination) -> Unit
 ) {
     val context = LocalContext.current
-    LaunchedEffect(Unit) {
+    LaunchedEffect(viewModel.error) {
         viewModel.error.collect { error ->
             val message = error.userReadableMessage(context)
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         }
     }
-    LaunchedEffect(viewModel) {
+    LaunchedEffect(viewModel.navigator) {
         viewModel.navigator.collect { destination -> navigator(destination) }
     }
 
