@@ -336,6 +336,8 @@ style:
     active: false
   UnusedImports:
     active: false
+  UnusedPrivateMember:
+    active: true
   UseDataClass:
     active: false
     ignoreAnnotated: [ '' ]
