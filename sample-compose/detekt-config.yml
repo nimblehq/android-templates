@@ -204,7 +204,7 @@ naming:
   TopLevelPropertyNaming:
     active: true
     constantPattern: '[A-Z][_A-Za-z0-9]*'
-    propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
+    propertyPattern: '[A-Za-z][A-Za-z0-9]*'
     privatePropertyPattern: '(_)?[a-z][A-Za-z0-9]*'
   VariableMaxLength:
     active: false
@@ -337,6 +337,9 @@ style:
     active: false
   UnusedImports:
     active: false
+  UnusedPrivateMember:
+    active: true
+    ignoreAnnotated: [ 'Preview' ]
   UseDataClass:
     active: false
     excludeAnnotatedClasses: ""
