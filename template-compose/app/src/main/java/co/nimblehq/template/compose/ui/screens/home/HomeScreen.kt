@@ -12,7 +12,6 @@ import co.nimblehq.template.compose.ui.theme.Dimension.SpacingNormal
 import co.nimblehq.template.compose.ui.theme.Theme
 import timber.log.Timber
 
-@Suppress("FunctionNaming")
 @ExperimentalComposeUiApi
 @Composable
 fun HomeScreen(

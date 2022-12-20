@@ -71,7 +71,7 @@ complexity:
   LongParameterList:
     active: true
     threshold: 5
-    ignoreDefaultParameters: false
+    ignoreDefaultParameters: true
   MethodOverloading:
     active: false
     threshold: 5
@@ -189,6 +189,7 @@ naming:
   FunctionNaming:
     active: true
     functionPattern: '^([a-z$][a-zA-Z$0-9]*)|(`.*`)$'
+    ignoreAnnotated: [ 'Composable' ]
   MatchingDeclarationName:
     active: true
   MemberNameEqualsClassName:
@@ -202,8 +203,8 @@ naming:
     packagePattern: '^[a-z]+(\.[a-z][a-z0-9]*)*$'
   TopLevelPropertyNaming:
     active: true
-    constantPattern: '[A-Z][_A-Z0-9]*'
-    propertyPattern: '[a-z][A-Za-z\d]*'
+    constantPattern: '[A-Z][_A-Za-z0-9]*'
+    propertyPattern: '[A-Za-z][A-Za-z0-9]*'
     privatePropertyPattern: '(_)?[a-z][A-Za-z0-9]*'
   VariableMaxLength:
     active: false
@@ -286,7 +287,7 @@ style:
     active: true
     ignoreNumbers: '-1,0,1,2'
     ignoreHashCodeFunction: false
-    ignorePropertyDeclaration: false
+    ignorePropertyDeclaration: true
     ignoreConstantDeclaration: true
     ignoreCompanionObjectPropertyDeclaration: true
     ignoreAnnotation: false
@@ -336,6 +337,9 @@ style:
     active: false
   UnusedImports:
     active: false
+  UnusedPrivateMember:
+    active: true
+    ignoreAnnotated: [ 'Preview' ]
   UseDataClass:
     active: false
     excludeAnnotatedClasses: ""
