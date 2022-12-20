@@ -72,7 +72,7 @@ private fun HomeScreenContent(
 
 @Composable
 @Preview(showSystemUi = true)
-private fun HomeComposeScreenPreview() {
+private fun HomeScreenPreview() {
     ComposeTheme {
         HomeScreenContent(
             uiModels = listOf(UiModel("1"), UiModel("2"), UiModel("3")),

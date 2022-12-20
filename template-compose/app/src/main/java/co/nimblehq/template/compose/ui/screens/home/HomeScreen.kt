@@ -1,20 +1,18 @@
 package co.nimblehq.template.compose.ui.screens.home
 
-import android.content.res.Configuration
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import co.nimblehq.template.compose.ui.AppDestination
 import co.nimblehq.template.compose.R
 import co.nimblehq.template.compose.model.UiModel
-import co.nimblehq.template.compose.ui.theme.Dimension.SpacingNormal
+import co.nimblehq.template.compose.ui.AppDestination
 import co.nimblehq.template.compose.ui.theme.ComposeTheme
+import co.nimblehq.template.compose.ui.theme.Dimension.SpacingNormal
 import timber.log.Timber
 
 @Composable
@@ -35,7 +33,7 @@ private fun HomeScreenContent(
     title: String,
     uiModels: List<UiModel>
 ) {
-    Surface {
+    Column {
         Text(
             text = title,
             textAlign = TextAlign.Center,
@@ -49,7 +47,7 @@ private fun HomeScreenContent(
 
 @Composable
 @Preview(showSystemUi = true)
-private fun HomeComposeScreenPreview() {
+private fun HomeScreenPreview() {
     ComposeTheme {
         HomeScreenContent(
             title = stringResource(id = R.string.app_name),

@@ -35,9 +35,9 @@ private fun NavGraphBuilder.composable(
     )
 }
 
-private fun NavHostController.navigate(destination: AppDestination) {
-    when (destination) {
+private fun NavHostController.navigate(appDestination: AppDestination) {
+    when (appDestination) {
         is AppDestination.Up -> navigateUp()
-        else -> navigate(route = destination.destination)
+        else -> navigate(route = appDestination.destination)
     }
 }
