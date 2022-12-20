@@ -70,7 +70,7 @@ complexity:
     threshold: 20
   LongParameterList:
     active: true
-    threshold: 5
+    functionThreshold: 5
     ignoreDefaultParameters: true
   MethodOverloading:
     active: false
@@ -127,7 +127,7 @@ exceptions:
   active: true
   ExceptionRaisedInUnexpectedLocation:
     active: false
-    methodNames: 'toString,hashCode,equals,finalize'
+    methodNames: [ 'toString', 'hashCode', 'equals' , 'finalize' ]
   InstanceOfCheckForException:
     active: false
   NotImplementedDeclaration:
@@ -146,28 +146,28 @@ exceptions:
     active: false
   ThrowingExceptionsWithoutMessageOrCause:
     active: false
-    exceptions: 'IllegalArgumentException,IllegalStateException,IOException'
+    exceptions: [ 'IllegalArgumentException', 'IllegalStateException', 'IOException' ]
   ThrowingNewInstanceOfSameException:
     active: false
   TooGenericExceptionCaught:
     active: true
     exceptionNames:
-     - ArrayIndexOutOfBoundsException
-     - Error
-     - Exception
-     - IllegalMonitorStateException
-     - NullPointerException
-     - IndexOutOfBoundsException
-     - RuntimeException
-     - Throwable
+      - ArrayIndexOutOfBoundsException
+      - Error
+      - Exception
+      - IllegalMonitorStateException
+      - NullPointerException
+      - IndexOutOfBoundsException
+      - RuntimeException
+      - Throwable
   TooGenericExceptionThrown:
     active: true
     exceptionNames:
-     - Error
-     - Exception
-     - NullPointerException
-     - Throwable
-     - RuntimeException
+      - Error
+      - Exception
+      - NullPointerException
+      - Throwable
+      - RuntimeException
 
 naming:
   active: true
@@ -179,7 +179,7 @@ naming:
     enumEntryPattern: '^[A-Z$][a-zA-Z_$]*$'
   ForbiddenClassName:
     active: false
-    forbiddenName: ''
+    forbiddenName: [ '' ]
   FunctionMaxLength:
     active: false
     maximumFunctionNameLength: 30
@@ -188,13 +188,13 @@ naming:
     minimumFunctionNameLength: 3
   FunctionNaming:
     active: true
-    functionPattern: '^([a-z$][a-zA-Z$0-9]*)|(`.*`)$'
+    functionPattern: '[a-zA-Z][a-zA-Z0-9]*'
     ignoreAnnotated: [ 'Composable' ]
   MatchingDeclarationName:
     active: true
   MemberNameEqualsClassName:
     active: false
-    ignoreOverriddenFunction: true
+    ignoreOverridden: true
   ObjectPropertyNaming:
     active: true
     propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
@@ -244,7 +244,7 @@ potential-bugs:
     active: false
   LateinitUsage:
     active: false
-    excludeAnnotatedProperties: ""
+    ignoreAnnotated: [ '' ]
     ignoreOnClassesPattern: ""
   UnconditionalJumpStatementInLoop:
     active: false
@@ -272,10 +272,10 @@ style:
     active: false
   ForbiddenComment:
     active: true
-    values: 'FIXME:,STOPSHIP:'
+    values: [ 'FIXME:', 'STOPSHIP:' ]
   ForbiddenImport:
     active: false
-    imports: ''
+    imports: [ '' ]
   FunctionOnlyReturningConstant:
     active: false
     ignoreOverridableFunction: true
@@ -285,7 +285,7 @@ style:
     maxJumpCount: 1
   MagicNumber:
     active: true
-    ignoreNumbers: '-1,0,1,2'
+    ignoreNumbers: [ '-1', '0', '1', '2' ]
     ignoreHashCodeFunction: false
     ignorePropertyDeclaration: true
     ignoreConstantDeclaration: true
@@ -342,7 +342,7 @@ style:
     ignoreAnnotated: [ 'Preview' ]
   UseDataClass:
     active: false
-    excludeAnnotatedClasses: ""
+    ignoreAnnotated: [ '' ]
   UtilityClassWithPublicConstructor:
     active: false
   WildcardImport:
