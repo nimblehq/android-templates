@@ -21,10 +21,10 @@ fun AppNavigation(
             )
         }
 
-        composable(AppDestination.Second) {
+        composable(AppDestination.Second) { backStackEntry ->
             SecondScreen(
                 navigator = { destination -> navController.navigate(destination) },
-                id = it.arguments?.getString(KEY_ID).orEmpty()
+                id = backStackEntry.arguments?.getString(KEY_ID).orEmpty()
             )
         }
     }
@@ -43,9 +43,9 @@ private fun NavGraphBuilder.composable(
     )
 }
 
-private fun NavHostController.navigate(destination: AppDestination) {
-    when (destination) {
+private fun NavHostController.navigate(appDestination: AppDestination) {
+    when (appDestination) {
         is AppDestination.Up -> navigateUp()
-        else -> navigate(route = destination.destination)
+        else -> navigate(route = appDestination.destination)
     }
 }

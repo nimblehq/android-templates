@@ -10,8 +10,6 @@ sealed class AppDestination(val route: String = "") {
 
     open var destination: String = route
 
-    //====================================================//
-
     object Up : AppDestination()
 
     object Home : AppDestination("home")
