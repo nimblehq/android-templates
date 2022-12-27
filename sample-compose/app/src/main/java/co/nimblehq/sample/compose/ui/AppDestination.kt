@@ -2,7 +2,7 @@ package co.nimblehq.sample.compose.ui
 
 import androidx.navigation.*
 
-const val KEY_ID = "id"
+const val KeyId = "id"
 
 sealed class AppDestination(val route: String = "") {
 
@@ -14,10 +14,10 @@ sealed class AppDestination(val route: String = "") {
 
     object Home : AppDestination("home")
 
-    object Second : AppDestination("second/{$KEY_ID}") {
+    object Second : AppDestination("second/{$KeyId}") {
 
         override val arguments = listOf(
-            navArgument(KEY_ID) { type = NavType.StringType }
+            navArgument(KeyId) { type = NavType.StringType }
         )
 
         fun buildDestination(id: String) = apply {

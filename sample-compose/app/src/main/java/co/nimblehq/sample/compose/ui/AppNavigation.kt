@@ -24,7 +24,7 @@ fun AppNavigation(
         composable(AppDestination.Second) { backStackEntry ->
             SecondScreen(
                 navigator = { destination -> navController.navigate(destination) },
-                id = backStackEntry.arguments?.getString(KEY_ID).orEmpty()
+                id = backStackEntry.arguments?.getString(KeyId).orEmpty()
             )
         }
     }
