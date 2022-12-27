@@ -1,4 +1,4 @@
-package co.nimblehq.sample.compose.ui.theme
+package co.nimblehq.template.compose.ui.theme
 
 import androidx.compose.material.*
 import androidx.compose.runtime.staticCompositionLocalOf
