@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import co.nimblehq.sample.compose.model.UiModel
-import co.nimblehq.sample.compose.ui.theme.ComposeSampleTheme
+import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import co.nimblehq.sample.compose.ui.theme.SpacingNormal
 
 @Composable
@@ -30,7 +30,7 @@ fun Item(
 @Preview(showBackground = true)
 @Composable
 private fun ItemPreview() {
-    ComposeSampleTheme {
+    ComposeTheme {
         Item(
             uiModel = UiModel("1"),
             onClick = {}

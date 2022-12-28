@@ -11,20 +11,16 @@ object Versions {
     // Dependencies (Alphabet sorted)
     const val ANDROID_COMMON_KTX_VERSION = "0.1.1"
     const val ANDROID_CRYPTO_VERSION = "1.0.0"
-    const val ANDROIDX_ACTIVITY_KTX_VERSION = "1.6.0"
     const val ANDROIDX_CORE_KTX_VERSION = "1.9.0"
-    const val ANDROIDX_TEST_CORE_VERSION = "1.4.0"
-    const val ANDROIDX_FRAGMENT_VERSION = "1.4.0"
-    const val ANDROIDX_FRAGMENT_KTX_VERSION = "1.5.3"
     const val ANDROIDX_LIFECYCLE_VERSION = "2.5.1"
-    const val ANDROIDX_NAVIGATION_VERSION = "2.3.4"
-    const val ANDROIDX_SUPPORT_VERSION = "1.5.1"
 
     const val CHUCKER_VERSION = "3.5.2"
     const val COMPOSE_VERSION = "1.2.1"
     const val COMPOSE_COMPILER_VERSION = "1.3.2"
+    const val COMPOSE_NAVIGATION_VERSION = "2.5.1"
 
     const val HILT_VERSION = "2.44"
+    const val HILT_NAVIGATION_COMPOSE_VERSION = "1.0.0"
 
     const val JAVAX_INJECT_VERSION = "1"
 
@@ -47,10 +43,10 @@ object Versions {
     const val DETEKT_VERSION = "1.21.0"
 
     // Testing libraries
+    const val TEST_ANDROIDX_CORE_VERSION = "1.4.0"
     const val TEST_JUNIT_ANDROIDX_EXT_VERSION = "1.1.2"
     const val TEST_JUNIT_VERSION = "4.13.2"
     const val TEST_KOTEST_VERSION = "4.6.3"
     const val TEST_MOCKK_VERSION = "1.10.6"
-    const val TEST_ROBOLECTRIC_VERSION = "4.8.2"
     const val TEST_RUNNER_VERSION = "1.4.0"
 }

@@ -67,7 +67,7 @@ complexity:
     threshold: 150
   LongMethod:
     active: true
-    threshold: 20
+    threshold: 60
   LongParameterList:
     active: true
     functionThreshold: 5
@@ -127,7 +127,7 @@ exceptions:
   active: true
   ExceptionRaisedInUnexpectedLocation:
     active: false
-    methodNames: [ 'toString', 'hashCode', 'equals' , 'finalize' ]
+    methodNames: [ 'toString', 'hashCode', 'equals', 'finalize' ]
   InstanceOfCheckForException:
     active: false
   NotImplementedDeclaration:

@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import co.nimblehq.sample.compose.R
-import co.nimblehq.sample.compose.ui.theme.ComposeSampleTheme
+import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 
 @Composable
 fun AppBar(@StringRes title: Int) {
@@ -19,5 +19,5 @@ fun AppBar(@StringRes title: Int) {
 @Preview(showBackground = true)
 @Composable
 private fun AppBarPreview() {
-    ComposeSampleTheme { AppBar(R.string.home_title_bar) }
+    ComposeTheme { AppBar(R.string.home_title_bar) }
 }
