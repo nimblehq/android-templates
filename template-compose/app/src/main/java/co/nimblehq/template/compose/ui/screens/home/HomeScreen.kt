@@ -33,20 +33,23 @@ private fun HomeScreenContent(
     title: String,
     uiModels: List<UiModel>
 ) {
-    Column {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center
+    ) {
         Text(
             text = title,
             textAlign = TextAlign.Center,
             modifier = Modifier
-                .wrapContentHeight()
+                .fillMaxWidth()
                 .padding(all = SpacingNormal)
         )
     }
     Timber.d("Result : $uiModels")
 }
 
-@Composable
 @Preview(showSystemUi = true)
+@Composable
 private fun HomeScreenPreview() {
     ComposeTheme {
         HomeScreenContent(

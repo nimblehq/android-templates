@@ -70,8 +70,8 @@ private fun HomeScreenContent(
     }
 }
 
-@Composable
 @Preview(showSystemUi = true)
+@Composable
 private fun HomeScreenPreview() {
     ComposeTheme {
         HomeScreenContent(
