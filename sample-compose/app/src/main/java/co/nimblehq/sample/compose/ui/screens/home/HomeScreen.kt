@@ -39,7 +39,7 @@ fun HomeScreen(
     val showLoading: IsLoading by viewModel.showLoading.collectAsState()
     val uiModels: List<UiModel> by viewModel.uiModels.collectAsState()
 
-    CheckCameraPermission()
+    CameraPermission()
 
     HomeScreenContent(
         uiModels = uiModels,
@@ -53,7 +53,7 @@ fun HomeScreen(
  */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-private fun CheckCameraPermission() {
+private fun CameraPermission() {
     val context = LocalContext.current
     val cameraPermissionState = rememberPermissionState(CAMERA)
     if (cameraPermissionState.status.isGranted) {
