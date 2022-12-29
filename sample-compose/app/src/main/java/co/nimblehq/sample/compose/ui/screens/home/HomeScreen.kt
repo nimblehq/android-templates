@@ -49,7 +49,7 @@ fun HomeScreen(
 }
 
 /**
- * The permission check composable needs to be separate from the HomeScreenContent composable to avoid re-composition
+ * [CameraPermission] needs to be separate from [HomeScreenContent] to avoid re-composition
  */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
