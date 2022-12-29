@@ -1,5 +1,6 @@
 package co.nimblehq.sample.compose.ui.screens.home
 
+import android.Manifest.permission.*
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
@@ -17,6 +18,7 @@ import co.nimblehq.sample.compose.ui.AppDestination
 import co.nimblehq.sample.compose.ui.screens.AppBar
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import co.nimblehq.sample.compose.ui.userReadableMessage
+import com.google.accompanist.permissions.*
 
 @Composable
 fun HomeScreen(
@@ -37,11 +39,40 @@ fun HomeScreen(
     val showLoading: IsLoading by viewModel.showLoading.collectAsState()
     val uiModels: List<UiModel> by viewModel.uiModels.collectAsState()
 
+    CameraPermission()
+
     HomeScreenContent(
         uiModels = uiModels,
         showLoading = showLoading,
         onItemClick = viewModel::navigateToSecond
     )
+}
+
+/**
+ * [CameraPermission] needs to be separate from [HomeScreenContent] to avoid re-composition
+ */
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+private fun CameraPermission() {
+    val context = LocalContext.current
+    val cameraPermissionState = rememberPermissionState(CAMERA)
+    if (cameraPermissionState.status.isGranted) {
+        Toast.makeText(context, "${cameraPermissionState.permission} granted", Toast.LENGTH_SHORT).show()
+    } else {
+        if (cameraPermissionState.status.shouldShowRationale) {
+            Toast.makeText(context, "${cameraPermissionState.permission} needs rationale", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(
+                context,
+                "Request cancelled, missing permissions in manifest or denied permanently",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        LaunchedEffect(Unit) {
+            cameraPermissionState.launchPermissionRequest()
+        }
+    }
 }
 
 @Composable
