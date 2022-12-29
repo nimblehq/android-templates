@@ -6,7 +6,6 @@ plugins {
     id("kotlin-parcelize")
 
     id("dagger.hilt.android.plugin")
-    id("androidx.navigation.safeargs.kotlin")
 
     id("kover")
 }
@@ -58,7 +57,7 @@ android {
         }
     }
 
-    flavorDimensions(Flavor.DIMENSIONS)
+    flavorDimensions += Flavor.DIMENSION_VERSION
     productFlavors {
         create(Flavor.STAGING) {
             applicationIdSuffix = ".staging"
@@ -81,27 +80,20 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion = Versions.KOTLIN_VERSION
         kotlinCompilerExtensionVersion = Versions.COMPOSE_COMPILER_VERSION
     }
 
     buildFeatures {
-        viewBinding = true
         compose = true
     }
 
-    lintOptions {
-        isCheckDependencies = true
+    lint {
+        checkDependencies = true
         xmlReport = true
         xmlOutput = file("build/reports/lint/lint-result.xml")
     }
 
     testOptions {
-        unitTests {
-            // Robolectric resource processing/loading
-            isIncludeAndroidResources = true
-            isReturnDefaultValues = true
-        }
         unitTests.all {
             if (it.name != "testStagingDebugUnitTest") {
                 it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
@@ -122,8 +114,6 @@ dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    implementation("androidx.activity:activity-ktx:${Versions.ANDROIDX_ACTIVITY_KTX_VERSION}")
-    implementation("androidx.appcompat:appcompat:${Versions.ANDROIDX_SUPPORT_VERSION}")
     implementation("androidx.core:core-ktx:${Versions.ANDROIDX_CORE_KTX_VERSION}")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.ANDROIDX_LIFECYCLE_VERSION}")
 
@@ -131,13 +121,10 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling:${Versions.COMPOSE_VERSION}")
     implementation("androidx.compose.foundation:foundation:${Versions.COMPOSE_VERSION}")
     implementation("androidx.compose.material:material:${Versions.COMPOSE_VERSION}")
-
-    implementation("androidx.fragment:fragment-ktx:${Versions.ANDROIDX_FRAGMENT_KTX_VERSION}")
-    implementation("androidx.navigation:navigation-fragment-ktx:${Versions.ANDROIDX_NAVIGATION_VERSION}")
-    implementation("androidx.navigation:navigation-runtime-ktx:${Versions.ANDROIDX_NAVIGATION_VERSION}")
-    implementation("androidx.navigation:navigation-ui-ktx:${Versions.ANDROIDX_NAVIGATION_VERSION}")
+    implementation("androidx.navigation:navigation-compose:${Versions.COMPOSE_NAVIGATION_VERSION}")
 
     implementation("com.google.dagger:hilt-android:${Versions.HILT_VERSION}")
+    implementation("androidx.hilt:hilt-navigation-compose:${Versions.HILT_NAVIGATION_COMPOSE_VERSION}")
 
     implementation("com.jakewharton.timber:timber:${Versions.TIMBER_LOG_VERSION}")
 
@@ -146,18 +133,17 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${Versions.KOTLIN_VERSION}")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLINX_COROUTINES_VERSION}")
 
-    implementation("com.markodevcic:peko:${Versions.PEKO_VERSION}")
+    implementation("com.google.accompanist:accompanist-permissions:${Versions.ACCOMPANIST_PERMISSIONS_VERSION}")
+
+    kapt("com.google.dagger:hilt-compiler:${Versions.HILT_VERSION}")
 
     debugImplementation("com.github.chuckerteam.chucker:library:${Versions.CHUCKER_VERSION}")
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:${Versions.CHUCKER_VERSION}")
 
-    kapt("com.google.dagger:hilt-compiler:${Versions.HILT_VERSION}")
-
     // Testing
     testImplementation("io.kotest:kotest-assertions-core:${Versions.TEST_KOTEST_VERSION}")
     testImplementation("junit:junit:${Versions.TEST_JUNIT_VERSION}")
-    testImplementation("org.robolectric:robolectric:${Versions.TEST_ROBOLECTRIC_VERSION}")
-    testImplementation("androidx.test:core:${Versions.ANDROIDX_TEST_CORE_VERSION}")
+    testImplementation("androidx.test:core:${Versions.TEST_ANDROIDX_CORE_VERSION}")
     testImplementation("androidx.test:runner:${Versions.TEST_RUNNER_VERSION}")
     testImplementation("androidx.test:rules:${Versions.TEST_RUNNER_VERSION}")
     testImplementation("androidx.test.ext:junit-ktx:${Versions.TEST_JUNIT_ANDROIDX_EXT_VERSION}")
