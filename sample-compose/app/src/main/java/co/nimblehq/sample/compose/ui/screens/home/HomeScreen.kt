@@ -19,7 +19,6 @@ import co.nimblehq.sample.compose.ui.screens.AppBar
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import co.nimblehq.sample.compose.ui.userReadableMessage
 import com.google.accompanist.permissions.*
-import timber.log.Timber
 
 @Composable
 fun HomeScreen(
@@ -40,6 +39,8 @@ fun HomeScreen(
     val showLoading: IsLoading by viewModel.showLoading.collectAsState()
     val uiModels: List<UiModel> by viewModel.uiModels.collectAsState()
 
+    CheckCameraPermission()
+
     HomeScreenContent(
         uiModels = uiModels,
         showLoading = showLoading,
@@ -47,28 +48,39 @@ fun HomeScreen(
     )
 }
 
+/**
+ * The permission check composable needs to be separate from the HomeScreenContent composable to avoid re-composition
+ */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-private fun HomeScreenContent(
-    uiModels: List<UiModel>,
-    showLoading: IsLoading,
-    onItemClick: (UiModel) -> Unit
-) {
+private fun CheckCameraPermission() {
+    val context = LocalContext.current
     val cameraPermissionState = rememberPermissionState(CAMERA)
     if (cameraPermissionState.status.isGranted) {
-        Timber.d("${cameraPermissionState.permission} granted")
+        Toast.makeText(context, "${cameraPermissionState.permission} granted", Toast.LENGTH_SHORT).show()
     } else {
         if (cameraPermissionState.status.shouldShowRationale) {
-            Timber.d("${cameraPermissionState.permission} needs rationale")
+            Toast.makeText(context, "${cameraPermissionState.permission} needs rationale", Toast.LENGTH_SHORT).show()
         } else {
-            Timber.d("Request cancelled, missing permissions in manifest or denied permanently")
+            Toast.makeText(
+                context,
+                "Request cancelled, missing permissions in manifest or denied permanently",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         LaunchedEffect(Unit) {
             cameraPermissionState.launchPermissionRequest()
         }
     }
+}
 
+@Composable
+private fun HomeScreenContent(
+    uiModels: List<UiModel>,
+    showLoading: IsLoading,
+    onItemClick: (UiModel) -> Unit
+) {
     Scaffold(topBar = {
         AppBar(R.string.home_title_bar)
     }) { paddingValues ->
