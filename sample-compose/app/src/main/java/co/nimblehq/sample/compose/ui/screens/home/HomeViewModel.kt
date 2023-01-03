@@ -3,16 +3,15 @@ package co.nimblehq.sample.compose.ui.screens.home
 import co.nimblehq.sample.compose.domain.usecase.UseCase
 import co.nimblehq.sample.compose.model.UiModel
 import co.nimblehq.sample.compose.model.toUiModels
+import co.nimblehq.sample.compose.ui.AppDestination
 import co.nimblehq.sample.compose.ui.base.BaseViewModel
-import co.nimblehq.sample.compose.ui.base.NavigationEvent
 import co.nimblehq.sample.compose.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
-// TODO: Rename to 'HomeViewModel'
 @HiltViewModel
-class HomeComposeViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
     private val useCase: UseCase,
     dispatchers: DispatchersProvider
 ) : BaseViewModel(dispatchers) {
@@ -37,6 +36,6 @@ class HomeComposeViewModel @Inject constructor(
     }
 
     fun navigateToSecond(uiModel: UiModel) {
-        execute { _navigator.emit(NavigationEvent.Second(uiModel)) }
+        execute { _navigator.emit(AppDestination.Second.buildDestination(uiModel.id)) }
     }
 }

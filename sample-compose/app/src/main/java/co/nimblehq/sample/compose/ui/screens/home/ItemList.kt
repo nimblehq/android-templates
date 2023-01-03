@@ -6,7 +6,7 @@ import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import co.nimblehq.sample.compose.model.UiModel
-import co.nimblehq.sample.compose.ui.theme.ComposeSampleTheme
+import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 
 @Composable
 fun ItemList(
@@ -27,7 +27,7 @@ fun ItemList(
 @Preview(showBackground = true)
 @Composable
 private fun ItemListPreview() {
-    ComposeSampleTheme {
+    ComposeTheme {
         ItemList(
             uiModels = listOf(UiModel("1"), UiModel("2"), UiModel("3")),
             onItemClick = {}
