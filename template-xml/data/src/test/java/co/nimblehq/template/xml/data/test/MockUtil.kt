@@ -27,6 +27,7 @@ object MockUtil {
         }
 
     val errorResponse = ErrorResponse(
-        message = "message"
+        message = "message",
+        type = null
     )
 }

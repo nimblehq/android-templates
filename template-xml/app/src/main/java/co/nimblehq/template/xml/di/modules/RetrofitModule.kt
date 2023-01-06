@@ -2,9 +2,11 @@ package co.nimblehq.template.xml.di.modules
 
 import co.nimblehq.template.xml.BuildConfig
 import co.nimblehq.template.xml.data.service.ApiService
+import co.nimblehq.template.xml.data.service.AuthService
 import co.nimblehq.template.xml.data.service.providers.ApiServiceProvider
 import co.nimblehq.template.xml.data.service.providers.ConverterFactoryProvider
 import co.nimblehq.template.xml.data.service.providers.RetrofitProvider
+import co.nimblehq.template.xml.di.Authenticate
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -37,4 +39,21 @@ class RetrofitModule {
     @Provides
     fun provideApiService(retrofit: Retrofit): ApiService =
         ApiServiceProvider.getApiService(retrofit)
+
+
+    @Authenticate
+    @Provides
+    fun provideAuthRetrofit(
+        baseUrl: String,
+        @Authenticate okHttpClient: OkHttpClient,
+        converterFactory: Converter.Factory,
+    ): Retrofit = RetrofitProvider
+        .getRetrofitBuilder(baseUrl, okHttpClient, converterFactory)
+        .build()
+
+    @Provides
+    fun provideAuthService(
+        @Authenticate retrofit: Retrofit
+    ): AuthService =
+        ApiServiceProvider.getAuthService(retrofit)
 }

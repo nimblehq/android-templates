@@ -54,3 +54,15 @@ private fun parseErrorResponse(response: Response<*>?): ErrorResponse? {
         null
     }
 }
+
+fun parseErrorResponse(jsonString: String?): ErrorResponse? {
+    return try {
+        val moshi = MoshiBuilderProvider.moshiBuilder.build()
+        val adapter = moshi.adapter(ErrorResponse::class.java)
+        adapter.fromJson(jsonString.orEmpty())
+    } catch (exception: IOException) {
+        null
+    } catch (exception: JsonDataException) {
+        null
+    }
+}
