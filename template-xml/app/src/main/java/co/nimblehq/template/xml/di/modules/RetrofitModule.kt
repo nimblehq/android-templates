@@ -40,7 +40,6 @@ class RetrofitModule {
     fun provideApiService(retrofit: Retrofit): ApiService =
         ApiServiceProvider.getApiService(retrofit)
 
-
     @Authenticate
     @Provides
     fun provideAuthRetrofit(
@@ -54,6 +53,5 @@ class RetrofitModule {
     @Provides
     fun provideAuthService(
         @Authenticate retrofit: Retrofit
-    ): AuthService =
-        ApiServiceProvider.getAuthService(retrofit)
+    ): AuthService = ApiServiceProvider.getAuthService(retrofit)
 }

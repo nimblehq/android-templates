@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.last
 import okhttp3.*
 
 const val REQUEST_HEADER_AUTHORIZATION = "Authorization"
+const val HEADER_AUTHENTICATION_SKIPPING_ERROR_TYPE = "Authentication-Skipping-ErrorType"
+private const val MAX_ATTEMPTS = 3
 
 class ApplicationRequestAuthenticator(
     private val tokenRefresher: TokenRefresher,
@@ -88,6 +90,3 @@ class ApplicationRequestAuthenticator(
         return false
     }
 }
-
-const val HEADER_AUTHENTICATION_SKIPPING_ERROR_TYPE = "Authentication-Skipping-ErrorType"
-private const val MAX_ATTEMPTS = 3
