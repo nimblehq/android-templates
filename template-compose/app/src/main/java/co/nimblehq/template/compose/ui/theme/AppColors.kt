@@ -7,7 +7,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
  * Extend final [Colors] class to provide more custom app colors.
  */
 data class AppColors(
-    val themeColors: Colors,
+    val themeColors: Colors
 
     // Custom colors here
 )

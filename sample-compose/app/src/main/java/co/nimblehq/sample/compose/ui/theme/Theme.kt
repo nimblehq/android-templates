@@ -64,4 +64,3 @@ object AppTheme {
         @ReadOnlyComposable
         get() = LocalAppStyles.current
 }
-
