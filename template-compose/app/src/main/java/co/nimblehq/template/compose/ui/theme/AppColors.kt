@@ -13,17 +13,11 @@ data class AppColors(
 )
 
 internal val LightColorPalette = AppColors(
-    themeColors = lightColors(
-        primary = GreenCitrus,
-        secondary = GreenChristi
-    )
+    themeColors = lightColors()
 )
 
 internal val DarkColorPalette = AppColors(
-    themeColors = darkColors(
-        primary = GreenCitrus,
-        secondary = GreenChristi
-    )
+    themeColors = darkColors()
 )
 
 internal val LocalColors = staticCompositionLocalOf { LightColorPalette }
