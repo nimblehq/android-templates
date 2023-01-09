@@ -48,4 +48,5 @@ object Versions {
     const val TEST_KOTEST_VERSION = "4.6.3"
     const val TEST_MOCKK_VERSION = "1.10.6"
     const val TEST_RUNNER_VERSION = "1.4.0"
+    const val TEST_TURBINE = "0.12.1"
 }

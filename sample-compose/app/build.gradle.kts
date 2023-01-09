@@ -142,6 +142,7 @@ dependencies {
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:${Versions.CHUCKER_VERSION}")
 
     // Testing
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.KOTLINX_COROUTINES_VERSION}")
     testImplementation("io.kotest:kotest-assertions-core:${Versions.TEST_KOTEST_VERSION}")
     testImplementation("junit:junit:${Versions.TEST_JUNIT_VERSION}")
     testImplementation("androidx.test:core:${Versions.TEST_ANDROIDX_CORE_VERSION}")
@@ -151,6 +152,7 @@ dependencies {
     testImplementation("com.google.dagger:hilt-android-testing:${Versions.HILT_VERSION}")
     testImplementation("org.jetbrains.kotlin:kotlin-reflect:${Versions.KOTLIN_REFLECT_VERSION}")
     testImplementation("io.mockk:mockk:${Versions.TEST_MOCKK_VERSION}")
+    testImplementation("app.cash.turbine:turbine:${Versions.TEST_TURBINE}")
 
     kaptTest("com.google.dagger:hilt-android-compiler:${Versions.HILT_VERSION}")
     testAnnotationProcessor("com.google.dagger:hilt-android-compiler:${Versions.HILT_VERSION}")
