@@ -35,8 +35,8 @@ android {
         applicationId = "co.nimblehq.sample.compose"
         minSdk = Versions.ANDROID_MIN_SDK_VERSION
         targetSdk = Versions.ANDROID_TARGET_SDK_VERSION
-        versionCode = Versions.ANDROID_VERSION_CODE
-        versionName = Versions.ANDROID_VERSION_NAME
+        versionCode = 5
+        versionName = "3.17.0"
     }
 
     buildTypes {
