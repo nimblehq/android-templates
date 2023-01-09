@@ -42,7 +42,7 @@ jobs:
         with:
           assignees: ${{ secrets.GITHUB_USER }}
           token: ${{ secrets.WIKI_ACTION_TOKEN }}
-          commit-message: Bump version to ${{ github.event.inputs.newVersion }}
+          commit-message: '[Chore] Bump version to ${{ github.event.inputs.newVersion }}'
           committer: Nimble Bot <bot@nimblehq.co>
           branch: chore/bump-version-to-${{ github.event.inputs.newVersion }}
           delete-branch: true
