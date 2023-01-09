@@ -19,9 +19,9 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bump version script
-          id: set_version
-          run: |
-            perl -i -pe 's/^(templateScriptVersion=(.*))$/"templateScriptVersion=${{ github.event.inputs.newVersion }}"/e' version.properties
+        id: set_version
+        run: |
+          perl -i -pe 's/^(templateScriptVersion=(.*))$/"templateScriptVersion=${{ github.event.inputs.newVersion }}"/e' version.properties
 
       - name: Bump Version XML
         uses: chkfung/android-version-actions@v1.2.1
