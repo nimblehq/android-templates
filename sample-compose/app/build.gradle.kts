@@ -114,13 +114,15 @@ dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
+    implementation(platform("androidx.compose:compose-bom:${Versions.COMPOSE_BOM_VERSION}"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-tooling")
+    implementation("androidx.compose.foundation:foundation")
+    implementation("androidx.compose.material:material")
+
     implementation("androidx.core:core-ktx:${Versions.ANDROIDX_CORE_KTX_VERSION}")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.ANDROIDX_LIFECYCLE_VERSION}")
 
-    implementation("androidx.compose.ui:ui:${Versions.COMPOSE_VERSION}")
-    implementation("androidx.compose.ui:ui-tooling:${Versions.COMPOSE_VERSION}")
-    implementation("androidx.compose.foundation:foundation:${Versions.COMPOSE_VERSION}")
-    implementation("androidx.compose.material:material:${Versions.COMPOSE_VERSION}")
     implementation("androidx.navigation:navigation-compose:${Versions.COMPOSE_NAVIGATION_VERSION}")
 
     implementation("com.google.dagger:hilt-android:${Versions.HILT_VERSION}")
