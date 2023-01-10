@@ -37,7 +37,7 @@ jobs:
           versionCode: ${{ github.run_number }}
           versionName: ${{ github.event.inputs.newVersion }}
 
-      - name: Create pull Request
+      - name: Create pull request
         uses: peter-evans/create-pull-request@v4
         with:
           assignees: ${{ secrets.GITHUB_USER }}
