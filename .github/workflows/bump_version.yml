@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the latest code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -23,21 +23,21 @@ jobs:
         run: |
           perl -i -pe 's/^(templateScriptVersion=(.*))$/"templateScriptVersion=${{ github.event.inputs.newVersion }}"/e' version.properties
 
-      - name: Bump Version XML
+      - name: Bump version XML
         uses: chkfung/android-version-actions@v1.2.1
         with:
-          gradlePath: sample-xml/app/build.gradle.kts
+          gradlePath: template-xml/app/build.gradle.kts
           versionCode: ${{ github.run_number }}
           versionName: ${{ github.event.inputs.newVersion }}
 
-      - name: Bump Version Compose
+      - name: Bump version Compose
         uses: chkfung/android-version-actions@v1.2.1
         with:
-          gradlePath: sample-compose/app/build.gradle.kts
+          gradlePath: template-compose/app/build.gradle.kts
           versionCode: ${{ github.run_number }}
           versionName: ${{ github.event.inputs.newVersion }}
 
-      - name: Create Pull Request
+      - name: Create pull Request
         uses: peter-evans/create-pull-request@v4
         with:
           assignees: ${{ secrets.GITHUB_USER }}
