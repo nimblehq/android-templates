@@ -25,7 +25,6 @@ object Versions {
 
     const val JAVAX_INJECT_VERSION = "1"
 
-    const val KOTLIN_REFLECT_VERSION = "1.7.20"
     const val KOTLIN_VERSION = "1.7.20"
     const val KOTLINX_COROUTINES_VERSION = "1.6.4"
     const val KOVER_VERSION = "0.6.0"
@@ -42,8 +41,7 @@ object Versions {
     const val DETEKT_VERSION = "1.21.0"
 
     // Testing libraries
-    const val TEST_ANDROIDX_CORE_VERSION = "1.4.0"
-    const val TEST_JUNIT_ANDROIDX_EXT_VERSION = "1.1.2"
+    const val TEST_ANDROIDX_CORE_VERSION = "1.5.0"
     const val TEST_JUNIT_VERSION = "4.13.2"
     const val TEST_KOTEST_VERSION = "4.6.3"
     const val TEST_MOCKK_VERSION = "1.10.6"
