@@ -26,15 +26,13 @@ jobs:
       - name: Bump version XML
         uses: chkfung/android-version-actions@v1.2.1
         with:
-          gradlePath: template-xml/app/build.gradle.kts
-          versionCode: ${{ github.run_number }}
+          gradlePath: sample-xml/app/build.gradle.kts
           versionName: ${{ github.event.inputs.newVersion }}
 
       - name: Bump version Compose
         uses: chkfung/android-version-actions@v1.2.1
         with:
-          gradlePath: template-compose/app/build.gradle.kts
-          versionCode: ${{ github.run_number }}
+          gradlePath: sample-compose/app/build.gradle.kts
           versionName: ${{ github.event.inputs.newVersion }}
 
       - name: Create pull request
