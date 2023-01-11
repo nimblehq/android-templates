@@ -1,6 +1,7 @@
 package co.nimblehq.sample.compose.ui.screens.home
 
-import co.nimblehq.sample.compose.domain.usecase.UseCase
+import androidx.lifecycle.viewModelScope
+import co.nimblehq.sample.compose.domain.usecase.*
 import co.nimblehq.sample.compose.model.UiModel
 import co.nimblehq.sample.compose.model.toUiModels
 import co.nimblehq.sample.compose.ui.AppDestination
@@ -12,26 +13,53 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val useCase: UseCase,
+    private val getModelsUseCase: GetModelsUseCase,
+    private val getFirstTimeLaunchPreferencesUseCase: GetFirstTimeLaunchPreferencesUseCase,
+    private val updateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase,
     dispatchers: DispatchersProvider
 ) : BaseViewModel(dispatchers) {
 
     private val _uiModels = MutableStateFlow<List<UiModel>>(emptyList())
-    val uiModels: StateFlow<List<UiModel>>
-        get() = _uiModels
+
+    private val _firstTimeLaunch = MutableStateFlow(false)
+
+    val homeViewState: StateFlow<HomeViewState> = combine(
+        _uiModels,
+        _firstTimeLaunch,
+        showLoading
+    ) { uiModels, firstTimeLaunch, showLoading ->
+        HomeViewState(
+            uiModels = uiModels,
+            firstTimeLaunch = firstTimeLaunch,
+            showLoading = showLoading
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = HomeViewState()
+    )
 
     init {
         execute {
             showLoading()
-            useCase()
+            val getModelsFlow = getModelsUseCase()
                 .catch {
                     _error.emit(it)
                 }
-                .collect { result ->
-                    val uiModels = result.toUiModels()
-                    _uiModels.emit(uiModels)
+            val getFirstTimeLaunchPreferencesFlow = getFirstTimeLaunchPreferencesUseCase()
+                .catch {
+                    _error.emit(it)
                 }
-            hideLoading()
+            getModelsFlow.combine(getFirstTimeLaunchPreferencesFlow) { uiModels, firstTimeLaunch ->
+                _uiModels.emit(uiModels.toUiModels())
+
+                _firstTimeLaunch.emit(firstTimeLaunch)
+                if (firstTimeLaunch) {
+                    updateFirstTimeLaunchPreferencesUseCase(false)
+                }
+            }.collect{
+                hideLoading()
+            }
         }
     }
 

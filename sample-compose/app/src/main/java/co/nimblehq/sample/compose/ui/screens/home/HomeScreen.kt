@@ -25,6 +25,8 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigator: (destination: AppDestination) -> Unit
 ) {
+    val homeViewState: HomeViewState by viewModel.homeViewState.collectAsState()
+
     val context = LocalContext.current
     LaunchedEffect(viewModel.error) {
         viewModel.error.collect { error ->
@@ -32,18 +34,20 @@ fun HomeScreen(
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         }
     }
+    LaunchedEffect(homeViewState.firstTimeLaunch) {
+        if (homeViewState.firstTimeLaunch) {
+            Toast.makeText(context, "This is the first time launch", Toast.LENGTH_SHORT).show()
+        }
+    }
     LaunchedEffect(viewModel.navigator) {
         viewModel.navigator.collect { destination -> navigator(destination) }
     }
 
-    val showLoading: IsLoading by viewModel.showLoading.collectAsState()
-    val uiModels: List<UiModel> by viewModel.uiModels.collectAsState()
-
     CameraPermission()
 
     HomeScreenContent(
-        uiModels = uiModels,
-        showLoading = showLoading,
+        uiModels = homeViewState.uiModels,
+        showLoading = homeViewState.showLoading,
         onItemClick = viewModel::navigateToSecond
     )
 }
@@ -57,10 +61,18 @@ private fun CameraPermission() {
     val context = LocalContext.current
     val cameraPermissionState = rememberPermissionState(CAMERA)
     if (cameraPermissionState.status.isGranted) {
-        Toast.makeText(context, "${cameraPermissionState.permission} granted", Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            context,
+            "${cameraPermissionState.permission} granted",
+            Toast.LENGTH_SHORT
+        ).show()
     } else {
         if (cameraPermissionState.status.shouldShowRationale) {
-            Toast.makeText(context, "${cameraPermissionState.permission} needs rationale", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                "${cameraPermissionState.permission} needs rationale",
+                Toast.LENGTH_SHORT
+            ).show()
         } else {
             Toast.makeText(
                 context,
