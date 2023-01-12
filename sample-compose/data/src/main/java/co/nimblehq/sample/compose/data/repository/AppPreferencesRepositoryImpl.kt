@@ -3,7 +3,6 @@ package co.nimblehq.sample.compose.data.repository
 import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
-import co.nimblehq.sample.compose.data.extensions.flowTransform
 import co.nimblehq.sample.compose.domain.repository.AppPreferencesRepository
 import kotlinx.coroutines.flow.*
 import java.io.IOException
@@ -17,8 +16,8 @@ class AppPreferencesRepositoryImpl @Inject constructor(
         val FIRST_TIME_LAUNCH = booleanPreferencesKey("FIRST_TIME_LAUNCH")
     }
 
-    override fun getFirstTimeLaunchPreferences(): Flow<Boolean> = flowTransform {
-        appPreferencesDataStore.data
+    override fun getFirstTimeLaunchPreferences(): Flow<Boolean> = flow {
+        val firstLaunchPreferences = appPreferencesDataStore.data
             .catch { exception ->
             if (exception is IOException) {
                 Log.e(
@@ -33,6 +32,8 @@ class AppPreferencesRepositoryImpl @Inject constructor(
         }.map { preferences ->
             preferences[PreferencesKeys.FIRST_TIME_LAUNCH] ?: true
         }.first()
+
+        emit(firstLaunchPreferences)
     }
 
     override suspend fun updateFirstTimeLaunchPreferences(isFirstTimeLaunch: Boolean) {
