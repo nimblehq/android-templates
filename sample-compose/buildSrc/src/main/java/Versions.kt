@@ -27,7 +27,7 @@ object Versions {
 
     const val KOTLIN_VERSION = "1.7.20"
     const val KOTLINX_COROUTINES_VERSION = "1.6.4"
-    const val KOVER_VERSION = "0.6.0"
+    const val KOVER_VERSION = "0.6.1"
 
     const val MOSHI_VERSION = "1.12.0"
 
@@ -43,8 +43,8 @@ object Versions {
     // Testing libraries
     const val TEST_ANDROIDX_CORE_VERSION = "1.5.0"
     const val TEST_JUNIT_VERSION = "4.13.2"
-    const val TEST_KOTEST_VERSION = "4.6.3"
-    const val TEST_MOCKK_VERSION = "1.10.6"
-    const val TEST_RUNNER_VERSION = "1.4.0"
+    const val TEST_KOTEST_VERSION = "5.5.4"
+    const val TEST_MOCKK_VERSION = "1.13.3"
+    const val TEST_RULES_VERSION = "1.5.0"
     const val TEST_TURBINE = "0.12.1"
 }

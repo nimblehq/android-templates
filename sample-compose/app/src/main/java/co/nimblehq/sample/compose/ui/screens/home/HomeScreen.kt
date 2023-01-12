@@ -39,8 +39,7 @@ fun HomeScreen(
     val showLoading: IsLoading by viewModel.showLoading.collectAsState()
     val uiModels: List<UiModel> by viewModel.uiModels.collectAsState()
 
-    // TODO test permission
-//    CameraPermission()
+    CameraPermission()
 
     HomeScreenContent(
         uiModels = uiModels,

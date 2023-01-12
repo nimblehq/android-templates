@@ -151,6 +151,7 @@ dependencies {
     testImplementation("app.cash.turbine:turbine:${Versions.TEST_TURBINE}")
 
     androidTestImplementation("androidx.test:core:${Versions.TEST_ANDROIDX_CORE_VERSION}")
+    androidTestImplementation("androidx.test:rules:${Versions.TEST_RULES_VERSION}")
     // Need to have BOM for androidTestImplementation https://github.com/gradle/gradle/issues/23347
     androidTestImplementation(platform("androidx.compose:compose-bom:${Versions.COMPOSE_BOM_VERSION}"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
