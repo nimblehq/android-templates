@@ -43,13 +43,8 @@ class HomeViewModel @Inject constructor(
         execute {
             showLoading()
             val getModelsFlow = getModelsUseCase()
-                .catch {
-                    _error.emit(it)
-                }
             val getFirstTimeLaunchPreferencesFlow = getFirstTimeLaunchPreferencesUseCase()
-                .catch {
-                    _error.emit(it)
-                }
+
             getModelsFlow.combine(getFirstTimeLaunchPreferencesFlow) { uiModels, firstTimeLaunch ->
                 _uiModels.emit(uiModels.toUiModels())
 
@@ -57,7 +52,10 @@ class HomeViewModel @Inject constructor(
                 if (firstTimeLaunch) {
                     updateFirstTimeLaunchPreferencesUseCase(false)
                 }
-            }.collect{
+            }.catch {
+                _error.emit(it)
+                hideLoading()
+            }.collect {
                 hideLoading()
             }
         }
