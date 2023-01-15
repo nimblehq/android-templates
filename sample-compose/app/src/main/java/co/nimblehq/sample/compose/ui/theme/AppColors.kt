@@ -4,8 +4,11 @@ import androidx.compose.material.*
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
+// Base colors here
+internal val GreenCitrus = Color(0xFF99CC00)
+
 /**
- * Extend final [Colors] class to provide more custom app colors.
+ * Expand the final [Colors] class to provide more custom app colors.
  */
 data class AppColors(
     val themeColors: Colors,
@@ -22,4 +25,4 @@ internal val DarkColorPalette = AppColors(
     themeColors = darkColors()
 )
 
-internal val LocalColors = staticCompositionLocalOf { LightColorPalette }
+internal val LocalAppColors = staticCompositionLocalOf { LightColorPalette }

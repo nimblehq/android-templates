@@ -20,7 +20,7 @@ fun ComposeTheme(
     val shapes = Shapes()
 
     CompositionLocalProvider(
-        LocalColors provides colors,
+        LocalAppColors provides colors,
         LocalAppDimensions provides dimensions,
         LocalAppStyles provides styles
     ) {
@@ -42,7 +42,7 @@ object AppTheme {
     val colors: AppColors
         @Composable
         @ReadOnlyComposable
-        get() = LocalColors.current
+        get() = LocalAppColors.current
 
     val typography: Typography
         @Composable
