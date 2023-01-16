@@ -44,7 +44,8 @@ fun HomeScreen(
     HomeScreenContent(
         uiModels = uiModels,
         showLoading = showLoading,
-        onItemClick = viewModel::navigateToSecond
+        onItemClick = viewModel::navigateToSecond,
+        onItemEdit = viewModel::navigateToThird
     )
 }
 
@@ -79,7 +80,8 @@ private fun CameraPermission() {
 private fun HomeScreenContent(
     uiModels: List<UiModel>,
     showLoading: IsLoading,
-    onItemClick: (UiModel) -> Unit
+    onItemClick: (UiModel) -> Unit,
+    onItemEdit: (UiModel) -> Unit
 ) {
     Scaffold(topBar = {
         AppBar(R.string.home_title_bar)
@@ -94,7 +96,8 @@ private fun HomeScreenContent(
             } else {
                 ItemList(
                     uiModels = uiModels,
-                    onItemClick = onItemClick
+                    onItemClick = onItemClick,
+                    onItemEdit = onItemEdit
                 )
             }
         }
@@ -108,7 +111,8 @@ private fun HomeScreenPreview() {
         HomeScreenContent(
             uiModels = listOf(UiModel("1"), UiModel("2"), UiModel("3")),
             showLoading = false,
-            onItemClick = {}
+            onItemClick = {},
+            onItemEdit = {}
         )
     }
 }

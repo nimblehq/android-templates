@@ -11,13 +11,15 @@ import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 @Composable
 fun ItemList(
     uiModels: List<UiModel>,
-    onItemClick: (UiModel) -> Unit
+    onItemClick: (UiModel) -> Unit,
+    onItemEdit: (UiModel) -> Unit
 ) {
     LazyColumn {
         items(uiModels) { uiModel ->
             Item(
                 uiModel = uiModel,
-                onClick = onItemClick
+                onClick = onItemClick,
+                onEdit = onItemEdit
             )
             Divider()
         }
@@ -30,7 +32,8 @@ private fun ItemListPreview() {
     ComposeTheme {
         ItemList(
             uiModels = listOf(UiModel("1"), UiModel("2"), UiModel("3")),
-            onItemClick = {}
+            onItemClick = {},
+            onItemEdit = {}
         )
     }
 }
