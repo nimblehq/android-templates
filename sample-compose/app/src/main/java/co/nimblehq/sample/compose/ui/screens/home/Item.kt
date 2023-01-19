@@ -31,7 +31,7 @@ fun Item(
     ) {
         Text(
             modifier = Modifier
-                .padding(AppTheme.dimensions.spacingNormal)
+                .padding(dimensions.spacingNormal)
                 .fillMaxWidth(0.8f),
             text = uiModel.id
         )
