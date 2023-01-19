@@ -14,15 +14,11 @@ fun ComposeTheme(
     } else {
         LightColorPalette
     }
-    val dimensions = LocalAppDimensions.current
-    val styles = LocalAppStyles.current
     val typography = LocalAppTypography.current
     val shapes = LocalAppShapes.current
 
     CompositionLocalProvider(
-        LocalAppColors provides colors,
-        LocalAppDimensions provides dimensions,
-        LocalAppStyles provides styles
+        LocalAppColors provides colors
     ) {
         MaterialTheme(
             colors = colors.themeColors,
