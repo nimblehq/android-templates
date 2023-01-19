@@ -4,7 +4,7 @@ import androidx.navigation.*
 import co.nimblehq.sample.compose.model.UiModel
 
 const val KeyId = "id"
-const val ModelKey = "model"
+const val KeyModel = "model"
 
 sealed class AppDestination(val route: String = "") {
 
@@ -12,7 +12,7 @@ sealed class AppDestination(val route: String = "") {
 
     open var destination: String = route
 
-    open var parcel : Pair<String,UiModel?> = "" to null
+    open var parcel: Pair<String, Any?> = "" to null
 
     object Up : AppDestination()
 
@@ -29,9 +29,9 @@ sealed class AppDestination(val route: String = "") {
         }
     }
 
-    object Third: AppDestination("third") {
+    object Third : AppDestination("third") {
         fun addParcel(value: UiModel) = apply {
-            parcel = ModelKey to value
+            parcel = KeyModel to value
         }
     }
 }

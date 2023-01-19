@@ -17,7 +17,7 @@ import co.nimblehq.sample.compose.ui.theme.AppTheme.dimensions
 fun Item(
     uiModel: UiModel,
     onClick: (UiModel) -> Unit,
-    onEdit: (UiModel) -> Unit
+    onLongClick: (UiModel) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -39,7 +39,7 @@ fun Item(
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            DropdownMenuItem(onClick = { onEdit(uiModel) }) {
+            DropdownMenuItem(onClick = { onLongClick(uiModel) }) {
                 Text(stringResource(id = R.string.third_edit_title))
             }
         }
@@ -53,7 +53,7 @@ private fun ItemPreview() {
         Item(
             uiModel = UiModel("1"),
             onClick = {},
-            onEdit = {}
+            onLongClick = {}
         )
     }
 }

@@ -20,7 +20,6 @@ fun AppNavigation(
         composable(destination = AppDestination.Home) {
             HomeScreen(
                 navigator = { destination ->
-//                    navController.navigate(destination)
                     navController.navigate(destination, destination.parcel)
                 }
             )
@@ -36,7 +35,7 @@ fun AppNavigation(
         composable(destination = AppDestination.Third) {
             ThirdScreen(
                 navigator = { destination -> navController.navigate(destination) },
-                model = navController.previousBackStackEntry?.savedStateHandle?.get<UiModel>(ModelKey) ?: UiModel()
+                model = navController.previousBackStackEntry?.savedStateHandle?.get<UiModel>(KeyModel) ?: UiModel()
             )
         }
     }
@@ -66,7 +65,7 @@ private fun <T> NavHostController.navigate(appDestination: AppDestination, parce
     when (appDestination) {
         is AppDestination.Up -> navigateUp()
         else -> {
-            currentBackStackEntry?.savedStateHandle?.set(parcel.first,parcel.second)
+            currentBackStackEntry?.savedStateHandle?.set(parcel.first, parcel.second)
             navigate(route = appDestination.destination)
         }
     }

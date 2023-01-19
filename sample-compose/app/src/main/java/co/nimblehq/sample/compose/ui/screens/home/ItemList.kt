@@ -12,14 +12,14 @@ import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 fun ItemList(
     uiModels: List<UiModel>,
     onItemClick: (UiModel) -> Unit,
-    onItemEdit: (UiModel) -> Unit
+    onItemLongClick: (UiModel) -> Unit
 ) {
     LazyColumn {
         items(uiModels) { uiModel ->
             Item(
                 uiModel = uiModel,
                 onClick = onItemClick,
-                onEdit = onItemEdit
+                onLongClick = onItemLongClick
             )
             Divider()
         }
@@ -33,7 +33,7 @@ private fun ItemListPreview() {
         ItemList(
             uiModels = listOf(UiModel("1"), UiModel("2"), UiModel("3")),
             onItemClick = {},
-            onItemEdit = {}
+            onItemLongClick = {}
         )
     }
 }
