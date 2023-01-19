@@ -7,12 +7,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import co.nimblehq.sample.compose.R
+import co.nimblehq.sample.compose.ui.theme.AppTheme.colors
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 
 @Composable
 fun AppBar(@StringRes title: Int) {
     TopAppBar(
-        title = { Text(text = stringResource(title)) }
+        title = { Text(text = stringResource(title)) },
+        backgroundColor = colors.topAppBarBackground
     )
 }
 

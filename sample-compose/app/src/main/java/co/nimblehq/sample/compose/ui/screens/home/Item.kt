@@ -7,8 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import co.nimblehq.sample.compose.model.UiModel
+import co.nimblehq.sample.compose.ui.theme.AppTheme.dimensions
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
-import co.nimblehq.sample.compose.ui.theme.SpacingNormal
 
 @Composable
 fun Item(
@@ -21,7 +21,7 @@ fun Item(
             .clickable(onClick = { onClick(uiModel) })
     ) {
         Text(
-            modifier = Modifier.padding(SpacingNormal),
+            modifier = Modifier.padding(dimensions.spacingNormal),
             text = uiModel.id
         )
     }

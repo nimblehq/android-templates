@@ -11,8 +11,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import co.nimblehq.template.compose.R
 import co.nimblehq.template.compose.model.UiModel
 import co.nimblehq.template.compose.ui.AppDestination
+import co.nimblehq.template.compose.ui.theme.AppTheme.dimensions
 import co.nimblehq.template.compose.ui.theme.ComposeTheme
-import co.nimblehq.template.compose.ui.theme.Dimension.SpacingNormal
 import timber.log.Timber
 
 @Composable
@@ -42,7 +42,7 @@ private fun HomeScreenContent(
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(all = SpacingNormal)
+                .padding(all = dimensions.spacingNormal)
         )
     }
     Timber.d("Result : $uiModels")
