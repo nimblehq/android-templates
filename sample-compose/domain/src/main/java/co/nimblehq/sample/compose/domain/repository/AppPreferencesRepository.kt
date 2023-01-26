@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface AppPreferencesRepository {
 
-    fun getFirstTimeLaunchPreferences(): Flow<Boolean>
+    fun isFirstTimeLaunchPreferences(): Flow<Boolean>
 
     suspend fun updateFirstTimeLaunchPreferences(isFirstTimeLaunch: Boolean)
 }

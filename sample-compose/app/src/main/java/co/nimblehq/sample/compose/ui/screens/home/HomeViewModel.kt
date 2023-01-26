@@ -1,6 +1,5 @@
 package co.nimblehq.sample.compose.ui.screens.home
 
-import androidx.lifecycle.viewModelScope
 import co.nimblehq.sample.compose.domain.usecase.*
 import co.nimblehq.sample.compose.model.UiModel
 import co.nimblehq.sample.compose.model.toUiModels
@@ -20,24 +19,12 @@ class HomeViewModel @Inject constructor(
 ) : BaseViewModel(dispatchers) {
 
     private val _uiModels = MutableStateFlow<List<UiModel>>(emptyList())
+    val uiModels: StateFlow<List<UiModel>>
+        get() = _uiModels
 
     private val _firstTimeLaunch = MutableStateFlow(false)
-
-    val homeViewState: StateFlow<HomeViewState> = combine(
-        _uiModels,
-        _firstTimeLaunch,
-        showLoading
-    ) { uiModels, firstTimeLaunch, showLoading ->
-        HomeViewState(
-            uiModels = uiModels,
-            firstTimeLaunch = firstTimeLaunch,
-            showLoading = showLoading
-        )
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = HomeViewState()
-    )
+    val firstTimeLaunch: StateFlow<Boolean>
+        get() = _firstTimeLaunch
 
     init {
         execute {

@@ -16,22 +16,22 @@ class AppPreferencesRepositoryImpl @Inject constructor(
         val FIRST_TIME_LAUNCH = booleanPreferencesKey("FIRST_TIME_LAUNCH")
     }
 
-    override fun getFirstTimeLaunchPreferences(): Flow<Boolean> = flow {
+    override fun isFirstTimeLaunchPreferences(): Flow<Boolean> = flow {
         val firstLaunchPreferences = appPreferencesDataStore.data
             .catch { exception ->
-            if (exception is IOException) {
-                Log.e(
-                    AppPreferencesRepositoryImpl::class.simpleName,
-                    "Error reading preferences.",
-                    exception
-                )
-                emit(emptyPreferences())
-            } else {
-                throw exception
-            }
-        }.map { preferences ->
-            preferences[PreferencesKeys.FIRST_TIME_LAUNCH] ?: true
-        }.first()
+                if (exception is IOException) {
+                    Log.e(
+                        AppPreferencesRepositoryImpl::class.simpleName,
+                        "Error reading preferences.",
+                        exception
+                    )
+                    emit(emptyPreferences())
+                } else {
+                    throw exception
+                }
+            }.map { preferences ->
+                preferences[PreferencesKeys.FIRST_TIME_LAUNCH] ?: true
+            }.first()
 
         emit(firstLaunchPreferences)
     }
