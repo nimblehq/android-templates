@@ -10,5 +10,5 @@
 
     <string name="third_title_bar">Third</string>
     <string name="third_data_title">Data: %1$s</string>
-    <string name="third_edit_title">Edit</string>
+    <string name="third_edit_menu_title">Edit</string>
 </resources>

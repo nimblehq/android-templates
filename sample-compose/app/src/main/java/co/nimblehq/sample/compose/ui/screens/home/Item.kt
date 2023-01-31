@@ -40,7 +40,7 @@ fun Item(
             onDismissRequest = { expanded = false }
         ) {
             DropdownMenuItem(onClick = { onLongClick(uiModel) }) {
-                Text(stringResource(id = R.string.third_edit_title))
+                Text(stringResource(id = R.string.third_edit_menu_title))
             }
         }
     }

@@ -54,6 +54,9 @@ private fun NavGraphBuilder.composable(
     )
 }
 
+/**
+ * Navigate to [AppDestination] with navArgument
+ */
 private fun NavHostController.navigate(appDestination: AppDestination) {
     when (appDestination) {
         is AppDestination.Up -> navigateUp()
@@ -61,6 +64,13 @@ private fun NavHostController.navigate(appDestination: AppDestination) {
     }
 }
 
+/**
+ * Navigate to AppDestination with Parcelable Data
+ * Caution to use this method. This method use savedStateHandle to store the Parcelable data.
+ * When previousBackstackEntry is popped out from navigation stack, savedStateHandle will return null and cannot retrieve data.
+ * eg.Login -> Home, the Login screen will be popped from the back-stack on logging in successfully.
+ * Navigate to provided [AppDestination] with a Pair of key value String and Data [parcel]
+ */
 private fun <T> NavHostController.navigate(appDestination: AppDestination, parcel: Pair<String, T>) {
     when (appDestination) {
         is AppDestination.Up -> navigateUp()
