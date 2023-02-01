@@ -64,8 +64,7 @@ private fun NavHostController.navigate(appDestination: AppDestination, parcel: P
     when (appDestination) {
         is AppDestination.Up -> navigateUp()
         else -> {
-            parcel?.let {
-                val (key, value) = it
+            parcel?.let { (key, value) ->
                 currentBackStackEntry?.savedStateHandle?.set(key, value)
             }
             navigate(route = appDestination.destination)
