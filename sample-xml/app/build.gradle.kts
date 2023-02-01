@@ -37,7 +37,7 @@ android {
         minSdk = Versions.ANDROID_MIN_SDK_VERSION
         targetSdk = Versions.ANDROID_TARGET_SDK_VERSION
         versionCode = Versions.ANDROID_VERSION_CODE
-        versionName = Versions.ANDROID_VERSION_NAME
+        versionName = "3.17.0"
     }
 
     buildTypes {
