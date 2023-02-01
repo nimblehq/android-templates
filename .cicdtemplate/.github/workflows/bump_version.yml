@@ -1,0 +1,50 @@
+name: Bump Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      newVersion:
+        description: "Version name"
+        required: true
+        type: string
+
+jobs:
+  bump_version:
+    name: Bump version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the latest code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Bump version name
+        uses: chkfung/android-version-actions@v1.2.1
+        with:
+          gradlePath: app/build.gradle.kts
+          versionName: ${{ github.event.inputs.newVersion }}
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          assignees: ${{ secrets.GITHUB_USER }}
+          token: ${{ secrets.WIKI_ACTION_TOKEN }}
+          commit-message: '[Chore] Bump version to ${{ github.event.inputs.newVersion }}'
+          committer: Nimble Bot <bot@nimblehq.co>
+          branch: chore/bump-version-to-${{ github.event.inputs.newVersion }}
+          delete-branch: true
+          title: '[Chore] Bump version to ${{ github.event.inputs.newVersion }}'
+          labels: |
+            type : chore
+          body: |
+            ## What happened 👀
+
+            Bump version to ${{ github.event.inputs.newVersion }}
+
+            ## Insight 📝
+
+            Automatically created by the `Bump Version` workflow.
+
+            ## Proof Of Work 📹
+
+            On the `Files changed` tab

@@ -36,6 +36,10 @@ class HomeViewModel @Inject constructor(
     }
 
     fun navigateToSecond(uiModel: UiModel) {
-        execute { _navigator.emit(AppDestination.Second.buildDestination(uiModel.id)) }
+        execute { _navigator.emit(AppDestination.Second.createRoute(uiModel.id)) }
+    }
+
+    fun navigateToThird(uiModel: UiModel) {
+        execute { _navigator.emit(AppDestination.Third.addParcel(uiModel)) }
     }
 }

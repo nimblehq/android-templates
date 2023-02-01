@@ -16,7 +16,7 @@ object Versions {
     const val ANDROIDX_LIFECYCLE_VERSION = "2.5.1"
 
     const val CHUCKER_VERSION = "3.5.2"
-    const val COMPOSE_VERSION = "1.2.1"
+    const val COMPOSE_BOM_VERSION = "2022.12.00"
     const val COMPOSE_COMPILER_VERSION = "1.3.2"
     const val COMPOSE_NAVIGATION_VERSION = "2.5.1"
 
