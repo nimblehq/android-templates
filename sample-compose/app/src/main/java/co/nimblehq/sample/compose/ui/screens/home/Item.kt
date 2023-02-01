@@ -26,7 +26,7 @@ fun Item(
             .fillMaxWidth()
             .combinedClickable(
                 onClick = { onClick(uiModel) },
-                onLongClick = { expanded = !expanded }
+                onLongClick = { expanded = true }
             )
     ) {
         Text(

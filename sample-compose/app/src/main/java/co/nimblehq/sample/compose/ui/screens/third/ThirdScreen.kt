@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.model.UiModel
@@ -21,13 +20,13 @@ import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 fun ThirdScreen(
     viewModel: ThirdViewModel = hiltViewModel(),
     navigator: (destination: AppDestination) -> Unit,
-    model: UiModel
+    model: UiModel?
 ) {
     ThirdScreenContent(data = model)
 }
 
 @Composable
-fun ThirdScreenContent(data: UiModel) {
+fun ThirdScreenContent(data: UiModel?) {
     Scaffold(
         topBar = {
             AppBar(title = R.string.third_title_bar)
@@ -41,9 +40,7 @@ fun ThirdScreenContent(data: UiModel) {
             Text(
                 text = stringResource(R.string.third_data_title, data.toString()),
                 textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(10.dp)
+                modifier = Modifier.align(Alignment.Center)
             )
         }
     }

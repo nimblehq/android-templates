@@ -12,7 +12,7 @@ sealed class AppDestination(val route: String = "") {
 
     open var destination: String = route
 
-    open var parcel: Pair<String, Any?> = "" to null
+    open var parcelableArgument: Pair<String, Any?> = "" to null
 
     object Up : AppDestination()
 
@@ -31,7 +31,7 @@ sealed class AppDestination(val route: String = "") {
 
     object Third : AppDestination("third") {
         fun addParcel(value: UiModel) = apply {
-            parcel = KeyModel to value
+            parcelableArgument = KeyModel to value
         }
     }
 }

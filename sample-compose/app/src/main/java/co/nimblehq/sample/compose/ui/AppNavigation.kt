@@ -20,7 +20,7 @@ fun AppNavigation(
         composable(destination = AppDestination.Home) {
             HomeScreen(
                 navigator = { destination ->
-                    navController.navigate(destination, destination.parcel)
+                    navController.navigate(destination, destination.parcelableArgument)
                 }
             )
         }
@@ -35,7 +35,7 @@ fun AppNavigation(
         composable(destination = AppDestination.Third) {
             ThirdScreen(
                 navigator = { destination -> navController.navigate(destination) },
-                model = navController.previousBackStackEntry?.savedStateHandle?.get<UiModel>(KeyModel) ?: UiModel()
+                model = navController.previousBackStackEntry?.savedStateHandle?.get<UiModel>(KeyModel)
             )
         }
     }
@@ -55,27 +55,19 @@ private fun NavGraphBuilder.composable(
 }
 
 /**
- * Navigate to [AppDestination] with navArgument
- */
-private fun NavHostController.navigate(appDestination: AppDestination) {
-    when (appDestination) {
-        is AppDestination.Up -> navigateUp()
-        else -> navigate(route = appDestination.destination)
-    }
-}
-
-/**
- * Navigate to AppDestination with Parcelable Data
+ * Navigate to provided [AppDestination] with a Pair of key value String and Data [parcel]
  * Caution to use this method. This method use savedStateHandle to store the Parcelable data.
  * When previousBackstackEntry is popped out from navigation stack, savedStateHandle will return null and cannot retrieve data.
  * eg.Login -> Home, the Login screen will be popped from the back-stack on logging in successfully.
- * Navigate to provided [AppDestination] with a Pair of key value String and Data [parcel]
  */
-private fun <T> NavHostController.navigate(appDestination: AppDestination, parcel: Pair<String, T>) {
+private fun NavHostController.navigate(appDestination: AppDestination, parcel: Pair<String, Any?>? = null) {
     when (appDestination) {
         is AppDestination.Up -> navigateUp()
         else -> {
-            currentBackStackEntry?.savedStateHandle?.set(parcel.first, parcel.second)
+            parcel?.let {
+                val (key, value) = it
+                currentBackStackEntry?.savedStateHandle?.set(key, value)
+            }
             navigate(route = appDestination.destination)
         }
     }
