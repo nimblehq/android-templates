@@ -18,7 +18,7 @@ object Versions {
     const val CHUCKER_VERSION = "3.5.2"
     const val COMPOSE_BOM_VERSION = "2022.12.00"
     const val COMPOSE_COMPILER_VERSION = "1.3.2"
-    const val COMPOSE_NAVIGATION_VERSION = "2.5.2"
+    const val COMPOSE_NAVIGATION_VERSION = "2.5.3"
 
     const val HILT_VERSION = "2.44"
     const val HILT_NAVIGATION_COMPOSE_VERSION = "1.0.0"
@@ -41,7 +41,6 @@ object Versions {
     const val DETEKT_VERSION = "1.21.0"
 
     // Testing libraries
-    const val TEST_ANDROIDX_CORE_VERSION = "1.5.0"
     const val TEST_JUNIT_VERSION = "4.13.2"
     const val TEST_KOTEST_VERSION = "4.6.3"
     const val TEST_MOCKK_VERSION = "1.13.3"

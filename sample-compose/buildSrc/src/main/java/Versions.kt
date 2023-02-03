@@ -41,10 +41,9 @@ object Versions {
     const val DETEKT_VERSION = "1.21.0"
 
     // Testing libraries
-    const val TEST_ANDROIDX_CORE_VERSION = "1.5.0"
     const val TEST_JUNIT_VERSION = "4.13.2"
     const val TEST_KOTEST_VERSION = "5.5.4"
-    const val TEST_MOCKK_VERSION = "1.13.3"
+    const val TEST_MOCKK_VERSION = "1.12.3"
     const val TEST_RULES_VERSION = "1.5.0"
     const val TEST_TURBINE = "0.12.1"
 }
