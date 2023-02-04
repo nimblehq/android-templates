@@ -104,6 +104,10 @@ android {
     }
 
     testOptions {
+        unitTests {
+            // Robolectric resource processing/loading https://github.com/robolectric/robolectric/pull/4736
+            isIncludeAndroidResources = true
+        }
         unitTests.all {
             if (it.name != "testStagingDebugUnitTest") {
                 it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
@@ -152,13 +156,21 @@ dependencies {
     debugImplementation("com.github.chuckerteam.chucker:library:${Versions.CHUCKER_VERSION}")
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:${Versions.CHUCKER_VERSION}")
 
-    // Testing
+    // Unit test
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.KOTLINX_COROUTINES_VERSION}")
     testImplementation("io.kotest:kotest-assertions-core:${Versions.TEST_KOTEST_VERSION}")
     testImplementation("junit:junit:${Versions.TEST_JUNIT_VERSION}")
     testImplementation("io.mockk:mockk:${Versions.TEST_MOCKK_VERSION}")
     testImplementation("app.cash.turbine:turbine:${Versions.TEST_TURBINE}")
 
+    // Instrument test with Robolectric
+    testImplementation("androidx.test:rules:${Versions.TEST_RULES_VERSION}")
+    // Need to have BOM for testImplementation https://github.com/gradle/gradle/issues/23347
+    testImplementation(platform("androidx.compose:compose-bom:${Versions.COMPOSE_BOM_VERSION}"))
+    testImplementation("androidx.compose.ui:ui-test-junit4")
+    testImplementation("org.robolectric:robolectric:${Versions.TEST_ROBOLECTRIC_VERSION}")
+
+    // Instrument test
     androidTestImplementation("androidx.test:rules:${Versions.TEST_RULES_VERSION}")
     // Need to have BOM for androidTestImplementation https://github.com/gradle/gradle/issues/23347
     androidTestImplementation(platform("androidx.compose:compose-bom:${Versions.COMPOSE_BOM_VERSION}"))
