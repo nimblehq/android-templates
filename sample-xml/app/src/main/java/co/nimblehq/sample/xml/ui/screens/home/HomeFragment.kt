@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.*
 import co.nimblehq.common.extensions.visibleOrGone
 import co.nimblehq.sample.xml.databinding.FragmentHomeBinding
 import co.nimblehq.sample.xml.extension.provideViewModels
@@ -42,9 +42,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.rvHome.apply {
             itemListAdapter.onItemClicked = { uiModel -> viewModel.navigateToSecond(uiModel) }
             adapter = itemListAdapter
-            addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
+            addItemDecoration(DividerItemDecoration(context, LinearLayout.HORIZONTAL))
+            layoutManager = GridLayoutManager(context, 2, RecyclerView.HORIZONTAL, false)
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    adjustSeekBar()
+
+                    binding.seekbar.progress = computeHorizontalScrollOffset()
+                    Timber.d("Seekbar progress = ${binding.seekbar.progress}")
+                }
+            })
         }
         requestPermissions(ACCESS_FINE_LOCATION, CAMERA)
+    }
+
+    private fun adjustSeekBar() {
+        with(binding.seekbar) {
+            max = binding.rvHome.computeHorizontalScrollRange() - binding.rvHome.computeHorizontalScrollExtent()
+            Timber.d("Seekbar max = $max")
+        }
     }
 
     override fun bindViewModel() {
