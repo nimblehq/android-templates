@@ -1,14 +1,18 @@
 package co.nimblehq.sample.compose.ui
 
 import androidx.navigation.*
+import co.nimblehq.sample.compose.model.UiModel
 
 const val KeyId = "id"
+const val KeyModel = "model"
 
 sealed class AppDestination(val route: String = "") {
 
     open val arguments: List<NamedNavArgument> = emptyList()
 
     open var destination: String = route
+
+    open var parcelableArgument: Pair<String, Any?> = "" to null
 
     object Up : AppDestination()
 
@@ -20,8 +24,14 @@ sealed class AppDestination(val route: String = "") {
             navArgument(KeyId) { type = NavType.StringType }
         )
 
-        fun buildDestination(id: String) = apply {
+        fun createRoute(id: String) = apply {
             destination = "second/$id"
+        }
+    }
+
+    object Third : AppDestination("third") {
+        fun addParcel(value: UiModel) = apply {
+            parcelableArgument = KeyModel to value
         }
     }
 }

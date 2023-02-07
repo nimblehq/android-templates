@@ -7,4 +7,8 @@
 
     <string name="second_title_bar">Second</string>
     <string name="second_id_title">ID: %1$s</string>
+
+    <string name="third_title_bar">Third</string>
+    <string name="third_data_title">Data: %s</string>
+    <string name="third_edit_menu_title">Edit</string>
 </resources>

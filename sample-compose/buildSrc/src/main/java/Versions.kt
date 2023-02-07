@@ -6,7 +6,7 @@ object Versions {
     const val ANDROID_TARGET_SDK_VERSION = 33
 
     const val ANDROID_VERSION_CODE = 1
-    const val ANDROID_VERSION_NAME = "3.16.0"
+    const val ANDROID_VERSION_NAME = "3.17.0"
 
     // Dependencies (Alphabet sorted)
     const val ACCOMPANIST_PERMISSIONS_VERSION = "0.28.0"
@@ -19,7 +19,7 @@ object Versions {
     const val CHUCKER_VERSION = "3.5.2"
     const val COMPOSE_BOM_VERSION = "2022.12.00"
     const val COMPOSE_COMPILER_VERSION = "1.3.2"
-    const val COMPOSE_NAVIGATION_VERSION = "2.5.1"
+    const val COMPOSE_NAVIGATION_VERSION = "2.5.3"
 
     const val HILT_VERSION = "2.44"
     const val HILT_NAVIGATION_COMPOSE_VERSION = "1.0.0"
