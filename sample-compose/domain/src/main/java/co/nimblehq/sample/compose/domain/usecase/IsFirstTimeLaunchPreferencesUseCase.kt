@@ -4,7 +4,7 @@ import co.nimblehq.sample.compose.domain.repository.AppPreferencesRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetFirstTimeLaunchPreferencesUseCase @Inject constructor(
+class IsFirstTimeLaunchPreferencesUseCase @Inject constructor(
     private val appPreferencesRepository: AppPreferencesRepository
 ) {
 

@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getModelsUseCase: GetModelsUseCase,
-    private val getFirstTimeLaunchPreferencesUseCase: GetFirstTimeLaunchPreferencesUseCase,
+    private val isFirstTimeLaunchPreferencesUseCase: IsFirstTimeLaunchPreferencesUseCase,
     private val updateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase,
     dispatchers: DispatchersProvider
 ) : BaseViewModel(dispatchers) {
@@ -22,20 +22,20 @@ class HomeViewModel @Inject constructor(
     val uiModels: StateFlow<List<UiModel>>
         get() = _uiModels
 
-    private val _firstTimeLaunch = MutableStateFlow(false)
-    val firstTimeLaunch: StateFlow<Boolean>
-        get() = _firstTimeLaunch
+    private val _isFirstTimeLaunch = MutableStateFlow(false)
+    val isFirstTimeLaunch: StateFlow<Boolean>
+        get() = _isFirstTimeLaunch
 
     init {
         execute {
             val getModelsFlow = getModelsUseCase()
-            val getFirstTimeLaunchPreferencesFlow = getFirstTimeLaunchPreferencesUseCase()
+            val isFirstTimeLaunchPreferencesFlow = isFirstTimeLaunchPreferencesUseCase()
 
-            getModelsFlow.combine(getFirstTimeLaunchPreferencesFlow) { uiModels, firstTimeLaunch ->
+            getModelsFlow.combine(isFirstTimeLaunchPreferencesFlow) { uiModels, isFirstTimeLaunch ->
                 _uiModels.emit(uiModels.toUiModels())
 
-                _firstTimeLaunch.emit(firstTimeLaunch)
-                if (firstTimeLaunch) {
+                _isFirstTimeLaunch.emit(isFirstTimeLaunch)
+                if (isFirstTimeLaunch) {
                     updateFirstTimeLaunchPreferencesUseCase(false)
                 }
             }.onStart {

@@ -19,16 +19,15 @@ import co.nimblehq.sample.compose.ui.screens.AppBar
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import co.nimblehq.sample.compose.ui.userReadableMessage
 import com.google.accompanist.permissions.*
-import kotlinx.coroutines.delay
 
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigator: (destination: AppDestination) -> Unit
 ) {
-    val showLoading: IsLoading by viewModel.showLoading.collectAsState()
+    val isShowLoading: IsLoading by viewModel.isShowLoading.collectAsState()
     val uiModels: List<UiModel> by viewModel.uiModels.collectAsState()
-    val firstTimeLaunch: Boolean by viewModel.firstTimeLaunch.collectAsState()
+    val isFirstTimeLaunch: Boolean by viewModel.isFirstTimeLaunch.collectAsState()
 
     val context = LocalContext.current
     LaunchedEffect(viewModel.error) {
@@ -37,9 +36,8 @@ fun HomeScreen(
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         }
     }
-    LaunchedEffect(firstTimeLaunch) {
-        delay(1000)
-        if (firstTimeLaunch) {
+    LaunchedEffect(isFirstTimeLaunch) {
+        if (isFirstTimeLaunch) {
             Toast.makeText(context, "This is the first time launch", Toast.LENGTH_SHORT).show()
         }
     }
@@ -51,7 +49,7 @@ fun HomeScreen(
 
     HomeScreenContent(
         uiModels = uiModels,
-        showLoading = showLoading,
+        showLoading = isShowLoading,
         onItemClick = viewModel::navigateToSecond
     )
 }
