@@ -2,7 +2,7 @@
 name: "Chore"
 about: "Open a Chore for minor update."
 title: "Update "
-labels: "type : chore"
+labels: "type : chore, priority : normal, status : need voting"
 ---
 
 ## Why
