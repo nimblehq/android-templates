@@ -19,17 +19,14 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bump version script
-        id: set_version
         run: |
           perl -i -pe 's/^(templateScriptVersion=(.*))$/"templateScriptVersion=${{ github.event.inputs.newVersion }}"/e' version.properties
 
       - name: Bump version XML
-        id: set_version_xml
         run: |
           perl -i -pe 's/ANDROID_VERSION_NAME =(.*)$/ANDROID_VERSION_NAME = "${{ github.event.inputs.newVersion }}"/g' sample-xml/buildSrc/src/main/java/Versions.kt
 
       - name: Bump version Compose
-        id: set_version_compose
         run: |
           perl -i -pe 's/ANDROID_VERSION_NAME =(.*)$/ANDROID_VERSION_NAME = "${{ github.event.inputs.newVersion }}"/g' sample-compose/buildSrc/src/main/java/Versions.kt
 
