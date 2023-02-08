@@ -26,7 +26,7 @@ class HomeScreenTest {
     }
 
     @Test
-    fun when_entering_the_Home_screen__it_shows_UI_correctly() {
+    fun When_entering_the_Home_screen__it_shows_UI_correctly() {
         composeRule.run {
             onNodeWithText(activity.getString(R.string.app_name)).assertIsDisplayed()
         }

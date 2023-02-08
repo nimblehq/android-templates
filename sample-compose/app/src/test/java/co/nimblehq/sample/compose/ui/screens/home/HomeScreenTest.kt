@@ -53,19 +53,19 @@ class HomeScreenTest {
     }
 
     @Test
-    fun `when entering the Home screen, it shows UI correctly`() = initComposable {
+    fun `When entering the Home screen, it shows UI correctly`() = initComposable {
         onNodeWithText("Home").assertIsDisplayed()
     }
 
     @Test
-    fun `when loading list item successfully, it shows the list item correctly`() = initComposable {
+    fun `When loading list item successfully, it shows the list item correctly`() = initComposable {
         onNodeWithText("1").assertIsDisplayed()
         onNodeWithText("2").assertIsDisplayed()
         onNodeWithText("3").assertIsDisplayed()
     }
 
     @Test
-    fun `when clicking on a list item, it navigates to Second screen`() = initComposable {
+    fun `When clicking on a list item, it navigates to Second screen`() = initComposable {
         onNodeWithText("1").performClick()
 
         assertEquals(expectedAppDestination, AppDestination.Second)
