@@ -9,6 +9,6 @@ class IsFirstTimeLaunchPreferencesUseCase @Inject constructor(
 ) {
 
     operator fun invoke(): Flow<Boolean> {
-        return appPreferencesRepository.isFirstTimeLaunchPreferences()
+        return appPreferencesRepository.isFirstTimeLaunch()
     }
 }

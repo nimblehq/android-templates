@@ -21,10 +21,12 @@ class PreferencesRepositoryModule {
 
     @Provides
     @Singleton
-    fun provideAppPreferencesDataStore(@ApplicationContext applicationContext: Context)
-        : DataStore<Preferences> = applicationContext.appPreferencesDataStore
+    fun provideAppPreferencesDataStore(
+        @ApplicationContext applicationContext: Context
+    ): DataStore<Preferences> = applicationContext.appPreferencesDataStore
 
     @Provides
-    fun provideAppPreferencesRepository(appPreferencesDataStore: DataStore<Preferences>)
-        : AppPreferencesRepository = AppPreferencesRepositoryImpl(appPreferencesDataStore)
+    fun provideAppPreferencesRepository(
+        appPreferencesDataStore: DataStore<Preferences>
+    ): AppPreferencesRepository = AppPreferencesRepositoryImpl(appPreferencesDataStore)
 }

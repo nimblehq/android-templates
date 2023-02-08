@@ -25,7 +25,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigator: (destination: AppDestination) -> Unit
 ) {
-    val isShowLoading: IsLoading by viewModel.isShowLoading.collectAsState()
+    val isLoading: IsLoading by viewModel.isLoading.collectAsState()
     val uiModels: List<UiModel> by viewModel.uiModels.collectAsState()
     val isFirstTimeLaunch: Boolean by viewModel.isFirstTimeLaunch.collectAsState()
 
@@ -49,7 +49,7 @@ fun HomeScreen(
 
     HomeScreenContent(
         uiModels = uiModels,
-        showLoading = isShowLoading,
+        showLoading = isLoading,
         onItemClick = viewModel::navigateToSecond,
         onItemLongClick = viewModel::navigateToThird
     )

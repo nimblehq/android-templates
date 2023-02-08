@@ -8,6 +8,6 @@ class UpdateFirstTimeLaunchPreferencesUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(isFirstTimeLaunch: Boolean) {
-        appPreferencesRepository.updateFirstTimeLaunchPreferences(isFirstTimeLaunch)
+        appPreferencesRepository.updateFirstTimeLaunch(isFirstTimeLaunch)
     }
 }

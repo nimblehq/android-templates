@@ -28,23 +28,28 @@ class HomeViewModel @Inject constructor(
 
     init {
         execute {
-            val getModelsFlow = getModelsUseCase()
-            val isFirstTimeLaunchPreferencesFlow = isFirstTimeLaunchPreferencesUseCase()
-
-            getModelsFlow.combine(isFirstTimeLaunchPreferencesFlow) { uiModels, isFirstTimeLaunch ->
-                _uiModels.emit(uiModels.toUiModels())
-
-                _isFirstTimeLaunch.emit(isFirstTimeLaunch)
-                if (isFirstTimeLaunch) {
-                    updateFirstTimeLaunchPreferencesUseCase(false)
+            showLoading()
+            getModelsUseCase()
+                .catch {
+                    _error.emit(it)
                 }
-            }.onStart {
-                showLoading()
-            }.onCompletion {
-                hideLoading()
-            }.catch {
-                _error.emit(it)
-            }.collect()
+                .collect { result ->
+                    val uiModels = result.toUiModels()
+                    _uiModels.emit(uiModels)
+                }
+            hideLoading()
+        }
+
+        execute {
+            val isFirstTimeLaunch = isFirstTimeLaunchPreferencesUseCase()
+                .catch {
+                    _error.emit(it)
+                }.first()
+
+            _isFirstTimeLaunch.emit(isFirstTimeLaunch)
+            if (isFirstTimeLaunch) {
+                updateFirstTimeLaunchPreferencesUseCase(false)
+            }
         }
     }
 
