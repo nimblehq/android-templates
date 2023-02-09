@@ -19,21 +19,16 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bump version script
-        id: set_version
         run: |
           perl -i -pe 's/^(templateScriptVersion=(.*))$/"templateScriptVersion=${{ github.event.inputs.newVersion }}"/e' version.properties
 
       - name: Bump version XML
-        uses: chkfung/android-version-actions@v1.2.1
-        with:
-          gradlePath: sample-xml/app/build.gradle.kts
-          versionName: ${{ github.event.inputs.newVersion }}
+        run: |
+          perl -i -pe 's/ANDROID_VERSION_NAME =(.*)$/ANDROID_VERSION_NAME = "${{ github.event.inputs.newVersion }}"/g' sample-xml/buildSrc/src/main/java/Versions.kt
 
       - name: Bump version Compose
-        uses: chkfung/android-version-actions@v1.2.1
-        with:
-          gradlePath: sample-compose/app/build.gradle.kts
-          versionName: ${{ github.event.inputs.newVersion }}
+        run: |
+          perl -i -pe 's/ANDROID_VERSION_NAME =(.*)$/ANDROID_VERSION_NAME = "${{ github.event.inputs.newVersion }}"/g' sample-compose/buildSrc/src/main/java/Versions.kt
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v4
