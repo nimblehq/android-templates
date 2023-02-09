@@ -49,7 +49,7 @@ fun HomeScreen(
 
     HomeScreenContent(
         uiModels = uiModels,
-        showLoading = isLoading,
+        isLoading = isLoading,
         onItemClick = viewModel::navigateToSecond,
         onItemLongClick = viewModel::navigateToThird
     )
@@ -93,7 +93,7 @@ private fun CameraPermission() {
 @Composable
 private fun HomeScreenContent(
     uiModels: List<UiModel>,
-    showLoading: IsLoading,
+    isLoading: IsLoading,
     onItemClick: (UiModel) -> Unit,
     onItemLongClick: (UiModel) -> Unit
 ) {
@@ -105,7 +105,7 @@ private fun HomeScreenContent(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            if (showLoading) {
+            if (isLoading) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             } else {
                 ItemList(
@@ -124,7 +124,7 @@ private fun HomeScreenPreview() {
     ComposeTheme {
         HomeScreenContent(
             uiModels = listOf(UiModel("1"), UiModel("2"), UiModel("3")),
-            showLoading = false,
+            isLoading = false,
             onItemClick = {},
             onItemLongClick = {}
         )
