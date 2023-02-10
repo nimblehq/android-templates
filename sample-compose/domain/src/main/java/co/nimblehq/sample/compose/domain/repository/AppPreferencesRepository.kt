@@ -8,4 +8,3 @@ interface AppPreferencesRepository {
 
     suspend fun updateFirstTimeLaunch(isFirstTimeLaunch: Boolean)
 }
-
