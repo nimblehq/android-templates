@@ -48,19 +48,19 @@ class HomeScreenTest {
     }
 
     @Test
-    fun When_entering_the_Home_screen__it_shows_UI_correctly() = initComposable {
+    fun when_entering_the_Home_screen__it_shows_UI_correctly() = initComposable {
         onNodeWithText("Home").assertIsDisplayed()
     }
 
     @Test
-    fun When_loading_list_item_successfully__it_shows_the_list_item_correctly() = initComposable {
+    fun when_loading_list_item_successfully__it_shows_the_list_item_correctly() = initComposable {
         onNodeWithText("1").assertIsDisplayed()
         onNodeWithText("2").assertIsDisplayed()
         onNodeWithText("3").assertIsDisplayed()
     }
 
     @Test
-    fun When_clicking_on_a_list_item__it_navigates_to_Second_screen() = initComposable {
+    fun when_clicking_on_a_list_item__it_navigates_to_Second_screen() = initComposable {
         onNodeWithText("1").performClick()
 
         assertEquals(expectedAppDestination, AppDestination.Second)
