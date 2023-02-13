@@ -1,12 +1,13 @@
 package co.nimblehq.template.compose.ui.screens.home
 
 import androidx.activity.compose.setContent
-import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.*
+import androidx.compose.ui.test.junit4.*
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import co.nimblehq.template.compose.R
 import co.nimblehq.template.compose.ui.AppDestination
 import co.nimblehq.template.compose.ui.screens.MainActivity
+import co.nimblehq.template.compose.ui.theme.ComposeTheme
 import org.junit.*
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -21,17 +22,24 @@ class HomeScreenTest {
 
     @Before
     fun setUp() {
-        composeRule.activity.setContent {
-            HomeScreen(
-                navigator = { destination -> expectedAppDestination = destination }
-            )
-        }
+        // TODO more setup logic here
     }
 
     @Test
-    fun `When entering the Home screen, it shows UI correctly`() {
-        composeRule.run {
-            onNodeWithText(activity.getString(R.string.app_name)).assertIsDisplayed()
+    fun `When entering the Home screen, it shows UI correctly`() = initComposable {
+        onNodeWithText(activity.getString(R.string.app_name)).assertIsDisplayed()
+    }
+
+    private fun initComposable(
+        testBody: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>.() -> Unit
+    ) {
+        composeRule.activity.setContent {
+            ComposeTheme {
+                HomeScreen(
+                    navigator = { destination -> expectedAppDestination = destination }
+                )
+            }
         }
+        testBody(composeRule)
     }
 }

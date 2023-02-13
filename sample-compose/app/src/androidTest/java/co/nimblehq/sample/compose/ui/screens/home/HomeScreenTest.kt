@@ -2,8 +2,9 @@ package co.nimblehq.sample.compose.ui.screens.home
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.*
-import androidx.compose.ui.test.junit4.ComposeContentTestRule
+import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.rule.GrantPermissionRule
 import co.nimblehq.sample.compose.domain.model.Model
 import co.nimblehq.sample.compose.domain.usecase.UseCase
@@ -66,7 +67,9 @@ class HomeScreenTest {
         assertEquals(expectedAppDestination, AppDestination.Second)
     }
 
-    private fun initComposable(testBody: ComposeContentTestRule.() -> Unit) {
+    private fun initComposable(
+        testBody: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>.() -> Unit
+    ) {
         composeRule.activity.setContent {
             ComposeTheme {
                 HomeScreen(
