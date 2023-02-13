@@ -156,7 +156,7 @@ dependencies {
     testImplementation("io.kotest:kotest-assertions-core:${Versions.TEST_KOTEST_VERSION}")
     testImplementation("junit:junit:${Versions.TEST_JUNIT_VERSION}")
     testImplementation("io.mockk:mockk:${Versions.TEST_MOCKK_VERSION}")
-    testImplementation("app.cash.turbine:turbine:${Versions.TEST_TURBINE}")
+    testImplementation("app.cash.turbine:turbine:${Versions.TEST_TURBINE_VERSION}")
 
     // Instrument test
     androidTestImplementation(platform("androidx.compose:compose-bom:${Versions.COMPOSE_BOM_VERSION}"))
