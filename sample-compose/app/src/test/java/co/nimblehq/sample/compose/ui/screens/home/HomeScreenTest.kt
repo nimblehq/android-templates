@@ -41,7 +41,7 @@ class HomeScreenTest {
     private var expectedAppDestination: AppDestination? = null
 
     @Before
-    fun setup() {
+    fun setUp() {
         every { mockUseCase() } returns flowOf(
             listOf(Model(1), Model(2), Model(3))
         )
