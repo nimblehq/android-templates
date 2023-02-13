@@ -23,7 +23,7 @@ class RepositoryTest {
     private val response = Response(id = 1)
 
     @Before
-    fun setup() {
+    fun setUp() {
         mockService = mockk()
         repository = RepositoryImpl(mockService)
     }

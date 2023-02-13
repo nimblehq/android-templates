@@ -10,9 +10,9 @@ import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
-import kotlinx.coroutines.test.runTest
 
 @ExperimentalCoroutinesApi
 class RepositoryTest {
@@ -23,7 +23,7 @@ class RepositoryTest {
     private val response = Response(id = 1)
 
     @Before
-    fun setup() {
+    fun setUp() {
         mockService = mockk()
         repository = RepositoryImpl(mockService)
     }

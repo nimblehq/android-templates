@@ -18,7 +18,7 @@ class HomeScreenTest {
     private var expectedAppDestination: AppDestination? = null
 
     @Before
-    fun setup() {
+    fun setUp() {
         composeRule.activity.setContent {
             HomeScreen(
                 navigator = { destination -> expectedAppDestination = destination }
