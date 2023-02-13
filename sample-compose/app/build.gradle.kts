@@ -162,14 +162,13 @@ dependencies {
     testImplementation("io.mockk:mockk:${Versions.TEST_MOCKK_VERSION}")
     testImplementation("app.cash.turbine:turbine:${Versions.TEST_TURBINE_VERSION}")
 
-    // Instrument test with Robolectric
-    // Need to have BOM for testImplementation https://github.com/gradle/gradle/issues/23347
+    // UI test with Robolectric
     testImplementation(platform("androidx.compose:compose-bom:${Versions.COMPOSE_BOM_VERSION}"))
     testImplementation("androidx.compose.ui:ui-test-junit4")
     testImplementation("androidx.test:rules:${Versions.TEST_RULES_VERSION}")
     testImplementation("org.robolectric:robolectric:${Versions.TEST_ROBOLECTRIC_VERSION}")
 
-    // Instrument test
+    // UI test
     androidTestImplementation(platform("androidx.compose:compose-bom:${Versions.COMPOSE_BOM_VERSION}"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation("androidx.test:rules:${Versions.TEST_RULES_VERSION}")

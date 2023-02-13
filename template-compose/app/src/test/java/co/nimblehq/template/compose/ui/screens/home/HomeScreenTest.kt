@@ -8,7 +8,10 @@ import co.nimblehq.template.compose.R
 import co.nimblehq.template.compose.ui.AppDestination
 import co.nimblehq.template.compose.ui.screens.MainActivity
 import org.junit.*
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
+@RunWith(RobolectricTestRunner::class)
 class HomeScreenTest {
 
     @get:Rule
@@ -26,7 +29,7 @@ class HomeScreenTest {
     }
 
     @Test
-    fun when_entering_the_Home_screen__it_shows_UI_correctly() {
+    fun `When entering the Home screen, it shows UI correctly`() {
         composeRule.run {
             onNodeWithText(activity.getString(R.string.app_name)).assertIsDisplayed()
         }
