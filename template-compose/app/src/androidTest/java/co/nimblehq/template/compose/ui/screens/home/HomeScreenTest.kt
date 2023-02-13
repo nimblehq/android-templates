@@ -10,8 +10,6 @@ import co.nimblehq.template.compose.ui.screens.MainActivity
 import org.junit.*
 import org.junit.runner.RunWith
 
-@ExperimentalTestApi
-@RunWith(AndroidJUnit4::class)
 class HomeScreenTest {
 
     @get:Rule

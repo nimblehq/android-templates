@@ -89,10 +89,8 @@ android {
     }
 
     packagingOptions {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1,*.md}"
-        }
         jniLibs {
+            // Resolve "libmockkjvmtiagent.so" https://github.com/mockk/mockk/issues/297#issuecomment-901924678
             useLegacyPackaging = true
         }
     }
@@ -111,7 +109,8 @@ android {
                 }
             }
         }
-        animationsDisabled = true
+        // Disable device's animation for instrument testing
+        // animationsDisabled = true
     }
 }
 
@@ -160,10 +159,8 @@ dependencies {
     testImplementation("app.cash.turbine:turbine:${Versions.TEST_TURBINE}")
 
     // Instrument test
-    // Need to have BOM for androidTestImplementation https://github.com/gradle/gradle/issues/23347
     androidTestImplementation(platform("androidx.compose:compose-bom:${Versions.COMPOSE_BOM_VERSION}"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation("androidx.test:rules:${Versions.TEST_RULES_VERSION}")
     androidTestImplementation("io.mockk:mockk-android:${Versions.TEST_MOCKK_VERSION}")
-    androidTestImplementation("io.mockk:mockk-agent-android:${Versions.TEST_MOCKK_VERSION}")
 }

@@ -102,7 +102,8 @@ android {
                 }
             }
         }
-        animationsDisabled = true
+        // Disable device's animation for instrument testing
+        // animationsDisabled = true
     }
 }
 
@@ -143,14 +144,14 @@ dependencies {
     debugImplementation("com.github.chuckerteam.chucker:library:${Versions.CHUCKER_VERSION}")
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:${Versions.CHUCKER_VERSION}")
 
-    // Testing
+    // Unit test
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.KOTLINX_COROUTINES_VERSION}")
     testImplementation("io.kotest:kotest-assertions-core:${Versions.TEST_KOTEST_VERSION}")
     testImplementation("junit:junit:${Versions.TEST_JUNIT_VERSION}")
     testImplementation("io.mockk:mockk:${Versions.TEST_MOCKK_VERSION}")
     testImplementation("app.cash.turbine:turbine:${Versions.TEST_TURBINE}")
 
-    // Need to have BOM for androidTestImplementation https://github.com/gradle/gradle/issues/23347
+    // Instrument test
     androidTestImplementation(platform("androidx.compose:compose-bom:${Versions.COMPOSE_BOM_VERSION}"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
 }

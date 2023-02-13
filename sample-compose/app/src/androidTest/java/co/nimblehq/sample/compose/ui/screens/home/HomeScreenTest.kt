@@ -19,8 +19,6 @@ import org.junit.*
 import org.junit.Assert.assertEquals
 import org.junit.runner.RunWith
 
-@ExperimentalTestApi
-@RunWith(AndroidJUnit4::class)
 class HomeScreenTest {
 
     private val coroutinesRule = CoroutineTestRule()
