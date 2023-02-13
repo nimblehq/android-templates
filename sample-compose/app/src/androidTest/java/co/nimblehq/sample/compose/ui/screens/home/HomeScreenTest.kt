@@ -4,11 +4,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
 import co.nimblehq.sample.compose.domain.model.Model
 import co.nimblehq.sample.compose.domain.usecase.UseCase
-import co.nimblehq.sample.compose.test.CoroutineTestRule
+import co.nimblehq.sample.compose.test.TestDispatchersProvider
 import co.nimblehq.sample.compose.ui.AppDestination
 import co.nimblehq.sample.compose.ui.screens.MainActivity
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
@@ -17,11 +16,8 @@ import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import org.junit.*
 import org.junit.Assert.assertEquals
-import org.junit.runner.RunWith
 
 class HomeScreenTest {
-
-    private val coroutinesRule = CoroutineTestRule()
 
     @get:Rule
     val composeRule = createAndroidComposeRule<MainActivity>()
@@ -47,7 +43,7 @@ class HomeScreenTest {
 
         viewModel = HomeViewModel(
             mockUseCase,
-            coroutinesRule.testDispatcherProvider
+            TestDispatchersProvider
         )
     }
 
