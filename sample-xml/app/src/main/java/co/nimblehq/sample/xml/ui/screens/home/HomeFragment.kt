@@ -52,6 +52,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         viewModel.error bindTo ::displayError
         viewModel.navigator bindTo navigator::navigate
         viewModel.showLoading bindTo ::showLoading
+        viewModel.isFirstTimeLaunch bindTo ::displayFirstTimeLaunchToast
+    }
+
+    private fun displayFirstTimeLaunchToast(isFirstTimeLaunch: Boolean) {
+        if (isFirstTimeLaunch) {
+            toaster.display("This is the first time launch")
+        }
     }
 
     private fun showLoading(isShow: IsLoading) {
