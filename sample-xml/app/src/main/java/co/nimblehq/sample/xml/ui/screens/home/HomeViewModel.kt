@@ -1,6 +1,6 @@
 package co.nimblehq.sample.xml.ui.screens.home
 
-import co.nimblehq.sample.xml.domain.usecase.UseCase
+import co.nimblehq.sample.xml.domain.usecase.GetModelsUseCase
 import co.nimblehq.sample.xml.model.UiModel
 import co.nimblehq.sample.xml.model.toUiModels
 import co.nimblehq.sample.xml.ui.base.BaseViewModel
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val useCase: UseCase,
+    private val getModelsUseCase: GetModelsUseCase,
     dispatchers: DispatchersProvider
 ) : BaseViewModel(dispatchers) {
 
@@ -23,7 +23,7 @@ class HomeViewModel @Inject constructor(
     init {
         execute {
             showLoading()
-            useCase()
+            getModelsUseCase()
                 .catch {
                     _error.emit(it)
                 }

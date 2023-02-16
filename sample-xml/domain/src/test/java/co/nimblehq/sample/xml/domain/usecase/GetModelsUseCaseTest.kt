@@ -12,17 +12,17 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class UseCaseTest {
+class GetModelsUseCaseTest {
 
     private lateinit var mockRepository: Repository
-    private lateinit var useCase: UseCase
+    private lateinit var getModelsUseCase: GetModelsUseCase
 
     private val model = Model(id = 1)
 
     @Before
     fun setup() {
         mockRepository = mockk()
-        useCase = UseCase(mockRepository)
+        getModelsUseCase = GetModelsUseCase(mockRepository)
     }
 
     @Test
@@ -30,7 +30,7 @@ class UseCaseTest {
         val expected = listOf(model)
         every { mockRepository.getModels() } returns flowOf(expected)
 
-        useCase().collect {
+        getModelsUseCase().collect {
             it shouldBe expected
         }
     }
@@ -40,7 +40,7 @@ class UseCaseTest {
         val expected = Exception()
         every { mockRepository.getModels() } returns flow { throw expected }
 
-        useCase().catch {
+        getModelsUseCase().catch {
             it shouldBe expected
         }.collect()
     }
