@@ -2,7 +2,7 @@ package co.nimblehq.template.compose.ui.screens.home
 
 import co.nimblehq.template.compose.domain.usecase.UseCase
 import co.nimblehq.template.compose.model.UiModel
-import co.nimblehq.template.compose.model.toUiModels
+import co.nimblehq.template.compose.model.toUiModel
 import co.nimblehq.template.compose.ui.base.BaseViewModel
 import co.nimblehq.template.compose.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,7 +27,7 @@ class HomeViewModel @Inject constructor(
                     _error.emit(it)
                 }
                 .collect { result ->
-                    val uiModels = result.toUiModels()
+                    val uiModels = result.map { it.toUiModel() }
                     _uiModels.emit(uiModels)
                 }
             hideLoading()

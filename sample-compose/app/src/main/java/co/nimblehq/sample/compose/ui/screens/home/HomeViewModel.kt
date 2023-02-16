@@ -2,7 +2,7 @@ package co.nimblehq.sample.compose.ui.screens.home
 
 import co.nimblehq.sample.compose.domain.usecase.UseCase
 import co.nimblehq.sample.compose.model.UiModel
-import co.nimblehq.sample.compose.model.toUiModels
+import co.nimblehq.sample.compose.model.toUiModel
 import co.nimblehq.sample.compose.ui.AppDestination
 import co.nimblehq.sample.compose.ui.base.BaseViewModel
 import co.nimblehq.sample.compose.util.DispatchersProvider
@@ -28,7 +28,7 @@ class HomeViewModel @Inject constructor(
                     _error.emit(it)
                 }
                 .collect { result ->
-                    val uiModels = result.toUiModels()
+                    val uiModels = result.map { it.toUiModel() }
                     _uiModels.emit(uiModels)
                 }
             hideLoading()

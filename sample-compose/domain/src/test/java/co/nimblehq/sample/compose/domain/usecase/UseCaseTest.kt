@@ -3,7 +3,8 @@ package co.nimblehq.sample.compose.domain.usecase
 import co.nimblehq.sample.compose.domain.model.Model
 import co.nimblehq.sample.compose.domain.repository.Repository
 import io.kotest.matchers.shouldBe
-import io.mockk.*
+import io.mockk.every
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.test.runTest
@@ -19,7 +20,7 @@ class UseCaseTest {
     private val model = Model(id = 1)
 
     @Before
-    fun setup() {
+    fun setUp() {
         mockRepository = mockk()
         useCase = UseCase(mockRepository)
     }

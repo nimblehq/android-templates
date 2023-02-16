@@ -19,7 +19,7 @@ class UseCaseTest {
     private val model = Model(id = 1)
 
     @Before
-    fun setup() {
+    fun setUp() {
         mockRepository = mockk()
         useCase = UseCase(mockRepository)
     }
