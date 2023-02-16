@@ -19,6 +19,7 @@ import co.nimblehq.sample.compose.ui.screens.AppBar
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import co.nimblehq.sample.compose.ui.userReadableMessage
 import com.google.accompanist.permissions.*
+import kotlinx.coroutines.flow.*
 
 @Composable
 fun HomeScreen(
@@ -26,11 +27,9 @@ fun HomeScreen(
     navigator: (destination: AppDestination) -> Unit
 ) {
     val context = LocalContext.current
-    LaunchedEffect(viewModel.error) {
-        viewModel.error.collect { error ->
-            val message = error.userReadableMessage(context)
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-        }
+    val error: Throwable? by viewModel.error.collectAsState()
+    error?.let {
+        Toast.makeText(context, it.userReadableMessage(context), Toast.LENGTH_SHORT).show()
     }
     LaunchedEffect(viewModel.navigator) {
         viewModel.navigator.collect { destination -> navigator(destination) }
