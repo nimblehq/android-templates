@@ -25,6 +25,10 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigator: (destination: AppDestination) -> Unit
 ) {
+    val isLoading: IsLoading by viewModel.isLoading.collectAsState()
+    val uiModels: List<UiModel> by viewModel.uiModels.collectAsState()
+    val isFirstTimeLaunch: Boolean by viewModel.isFirstTimeLaunch.collectAsState()
+
     val context = LocalContext.current
     LaunchedEffect(viewModel.error) {
         viewModel.error.collect { error ->
@@ -32,18 +36,20 @@ fun HomeScreen(
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         }
     }
+    LaunchedEffect(isFirstTimeLaunch) {
+        if (isFirstTimeLaunch) {
+            Toast.makeText(context, "This is the first time launch", Toast.LENGTH_SHORT).show()
+        }
+    }
     LaunchedEffect(viewModel.navigator) {
         viewModel.navigator.collect { destination -> navigator(destination) }
     }
-
-    val showLoading: IsLoading by viewModel.showLoading.collectAsState()
-    val uiModels: List<UiModel> by viewModel.uiModels.collectAsState()
 
     CameraPermission()
 
     HomeScreenContent(
         uiModels = uiModels,
-        showLoading = showLoading,
+        isLoading = isLoading,
         onItemClick = viewModel::navigateToSecond,
         onItemLongClick = viewModel::navigateToThird
     )
@@ -58,10 +64,18 @@ private fun CameraPermission() {
     val context = LocalContext.current
     val cameraPermissionState = rememberPermissionState(CAMERA)
     if (cameraPermissionState.status.isGranted) {
-        Toast.makeText(context, "${cameraPermissionState.permission} granted", Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            context,
+            "${cameraPermissionState.permission} granted",
+            Toast.LENGTH_SHORT
+        ).show()
     } else {
         if (cameraPermissionState.status.shouldShowRationale) {
-            Toast.makeText(context, "${cameraPermissionState.permission} needs rationale", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                "${cameraPermissionState.permission} needs rationale",
+                Toast.LENGTH_SHORT
+            ).show()
         } else {
             Toast.makeText(
                 context,
@@ -79,7 +93,7 @@ private fun CameraPermission() {
 @Composable
 private fun HomeScreenContent(
     uiModels: List<UiModel>,
-    showLoading: IsLoading,
+    isLoading: IsLoading,
     onItemClick: (UiModel) -> Unit,
     onItemLongClick: (UiModel) -> Unit
 ) {
@@ -91,7 +105,7 @@ private fun HomeScreenContent(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            if (showLoading) {
+            if (isLoading) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             } else {
                 ItemList(
@@ -110,7 +124,7 @@ private fun HomeScreenPreview() {
     ComposeTheme {
         HomeScreenContent(
             uiModels = listOf(UiModel("1"), UiModel("2"), UiModel("3")),
-            showLoading = false,
+            isLoading = false,
             onItemClick = {},
             onItemLongClick = {}
         )

@@ -1,6 +1,6 @@
 package co.nimblehq.sample.compose.ui.screens.home
 
-import co.nimblehq.sample.compose.domain.usecase.UseCase
+import co.nimblehq.sample.compose.domain.usecase.*
 import co.nimblehq.sample.compose.model.UiModel
 import co.nimblehq.sample.compose.model.toUiModel
 import co.nimblehq.sample.compose.ui.AppDestination
@@ -12,7 +12,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val useCase: UseCase,
+    private val getModelsUseCase: GetModelsUseCase,
+    private val isFirstTimeLaunchPreferencesUseCase: IsFirstTimeLaunchPreferencesUseCase,
+    private val updateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase,
     dispatchers: DispatchersProvider
 ) : BaseViewModel(dispatchers) {
 
@@ -20,10 +22,14 @@ class HomeViewModel @Inject constructor(
     val uiModels: StateFlow<List<UiModel>>
         get() = _uiModels
 
+    private val _isFirstTimeLaunch = MutableStateFlow(false)
+    val isFirstTimeLaunch: StateFlow<Boolean>
+        get() = _isFirstTimeLaunch
+
     init {
         execute {
             showLoading()
-            useCase()
+            getModelsUseCase()
                 .catch {
                     _error.emit(it)
                 }
@@ -32,6 +38,18 @@ class HomeViewModel @Inject constructor(
                     _uiModels.emit(uiModels)
                 }
             hideLoading()
+        }
+
+        execute {
+            val isFirstTimeLaunch = isFirstTimeLaunchPreferencesUseCase()
+                .catch {
+                    _error.emit(it)
+                }.first()
+
+            _isFirstTimeLaunch.emit(isFirstTimeLaunch)
+            if (isFirstTimeLaunch) {
+                updateFirstTimeLaunchPreferencesUseCase(false)
+            }
         }
     }
 
