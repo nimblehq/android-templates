@@ -58,6 +58,7 @@ dependencies {
     implementation(project(Module.DOMAIN))
 
     implementation("androidx.core:core-ktx:${Versions.ANDROIDX_CORE_KTX_VERSION}")
+    implementation("androidx.datastore:datastore-preferences:${Versions.ANDROIDX_DATASTORE_PREFERENCES_VERSION}")
     implementation("androidx.security:security-crypto:${Versions.ANDROID_CRYPTO_VERSION}")
     implementation("com.google.dagger:hilt-android:${Versions.HILT_VERSION}")
     implementation("com.squareup.moshi:moshi:${Versions.MOSHI_VERSION}")
