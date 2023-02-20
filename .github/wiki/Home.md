@@ -38,7 +38,6 @@ Before an issue can be worked on, it must go through our voting process.
 
 How do we vote on an issue? 🗳
 
-- It is the responsibility of the RFC creator to label their proposed change with `status : need voting`.
 - If we agree with the RFC, we must react with 👍. 
   - If there are 3 x 👍, then the issue is approved and the `status : approved` label is added.
 - If we disagree with the RFC, we must react with 👎 and leave a comment explaining why. 
