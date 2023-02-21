@@ -1,17 +1,12 @@
-Link to the milestone on Github e.g. https://github.com/nimblehq/git-templates/milestone/41?closed=1
-or
-Link to the project management tool for the release
+Link to the milestone on Github, example: https://github.com/nimblehq/android-templates/milestone/1?closed=1
 
 ## Features
-
-Provide the ID and title of the issue in the section for each type (feature, chore and bug). The link is optional.
-
-- [ch1234] As a user, I can log in
-  or
-- [[ch1234](https://github.com/nimblehq/git-templates/issues/1234)] As a user, I can log in
+Provide the IDs of the issues in each section (feature, chore and bug), example:
+- #410
+- #415
 
 ## Chores
-- Same structure as in  ## Feature
+Same structure as ## Features
 
 ## Bugs
-- Same structure as in  ## Feature
+Same structure as ## Features
