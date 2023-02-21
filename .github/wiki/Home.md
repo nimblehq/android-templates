@@ -38,10 +38,14 @@ Before an issue can be worked on, it must go through our voting process.
 
 How do we vote on an issue? 🗳
 
-- If we agree with the RFC, we must react with 👍. 
-  - If there are 3 x 👍, then the issue is approved and the `status : approved` label is added.
-- If we disagree with the RFC, we must react with 👎 and leave a comment explaining why. 
-  - If there are 3 x 👎, then the issue is rejected and the `status : rejected` label is added.
+- If we agree with the proposed issue, we must react with 👍. 
+- If we disagree with the proposed issue, we must react with 👎 and leave a comment explaining why. 
 - If there are differing opinions, then the repository maintainer must resolve it.
+
+When is an issue approved/rejected? 🕐 
+
+  - If at least half of the team members react with 👍, then the issue is approved and the `status : approved` label is added.
+  - If at least half of the team members react with 👎, then the issue is rejected and the `status : rejected` label is added.
+  - If the vote is tied, then the repository maintainer must resolve it.
 
 Still unsure where your future contribution belongs? Let's discuss! 🚀
