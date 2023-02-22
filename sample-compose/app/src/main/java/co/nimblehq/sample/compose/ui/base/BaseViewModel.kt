@@ -18,8 +18,8 @@ abstract class BaseViewModel(private val dispatchersProvider: DispatchersProvide
     val isLoading: StateFlow<IsLoading>
         get() = _isLoading
 
-    protected val _error = MutableSharedFlow<Throwable>()
-    val error: SharedFlow<Throwable>
+    protected val _error = MutableStateFlow<Throwable?>(null)
+    val error: StateFlow<Throwable?>
         get() = _error
 
     protected val _navigator = MutableSharedFlow<AppDestination>()
