@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import co.nimblehq.sample.xml.data.storage.EncryptedSharedPreferences
-import co.nimblehq.sample.xml.data.storage.NormalSharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,11 +23,5 @@ abstract class StorageModule {
         @Provides
         fun provideSecuredLocalStorage(@ApplicationContext context: Context) =
             EncryptedSharedPreferences(context)
-
-        @Provides
-        fun provideNormalLocalStorage(
-            @ApplicationContext context: Context,
-            defaultSharedPreferences: SharedPreferences
-        ) = NormalSharedPreferences(context, defaultSharedPreferences)
     }
 }

@@ -51,7 +51,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         viewModel.uiModels bindTo ::displayUiModels
         viewModel.error bindTo ::displayError
         viewModel.navigator bindTo navigator::navigate
-        viewModel.showLoading bindTo ::showLoading
+        viewModel.isLoading bindTo ::isLoading
         viewModel.isFirstTimeLaunch bindTo ::displayFirstTimeLaunchToast
     }
 
@@ -61,8 +61,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-    private fun showLoading(isShow: IsLoading) {
-        binding.pbHome.visibleOrGone(isShow)
+    private fun isLoading(isLoading: IsLoading) {
+        binding.pbHome.visibleOrGone(isLoading)
     }
 
     private fun displayUiModels(uiModels: List<UiModel>) {
