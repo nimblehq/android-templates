@@ -22,8 +22,8 @@ class HomeViewModel @Inject constructor(
     val uiModels: StateFlow<List<UiModel>>
         get() = _uiModels
 
-    private val _isFirstTimeLaunch = MutableStateFlow(false)
-    val isFirstTimeLaunch: StateFlow<Boolean>
+    private val _isFirstTimeLaunch = MutableSharedFlow<Boolean>()
+    val isFirstTimeLaunch: SharedFlow<Boolean>
         get() = _isFirstTimeLaunch
 
     init {
