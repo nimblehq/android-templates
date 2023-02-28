@@ -18,17 +18,7 @@ abstract class StorageModule {
     companion object {
 
         @Provides
-        fun provideDefaultSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
-            PreferenceManager.getDefaultSharedPreferences(context)
-
-        @Provides
         fun provideSecuredLocalStorage(@ApplicationContext context: Context) =
             EncryptedSharedPreferences(context)
-
-        @Provides
-        fun provideNormalLocalStorage(
-            @ApplicationContext context: Context,
-            defaultSharedPreferences: SharedPreferences
-        ) = NormalSharedPreferences(context, defaultSharedPreferences)
     }
 }
