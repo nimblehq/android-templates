@@ -85,7 +85,7 @@ class AppPreferencesRepositoryImplTest {
         runTest {
             repository = AppPreferencesRepositoryImpl(testDataStore)
 
-            val expected = MockUtil.appPrefencesValue
+            val expected = false
 
             repository.updateAppPreferences(expected)
 
