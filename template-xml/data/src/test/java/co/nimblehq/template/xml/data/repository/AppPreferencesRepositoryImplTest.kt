@@ -1,4 +1,4 @@
-package co.nimblehq.template.compose.data.repository
+package co.nimblehq.template.xml.data.repository
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -6,7 +6,7 @@ import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
-import co.nimblehq.template.compose.domain.repository.AppPreferencesRepository
+import co.nimblehq.template.xml.domain.repository.AppPreferencesRepository
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
