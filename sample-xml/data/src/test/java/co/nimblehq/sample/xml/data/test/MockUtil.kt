@@ -29,6 +29,4 @@ object MockUtil {
     val errorResponse = ErrorResponse(
         message = "message"
     )
-
-    val isFirstTimeLaunch = false
 }

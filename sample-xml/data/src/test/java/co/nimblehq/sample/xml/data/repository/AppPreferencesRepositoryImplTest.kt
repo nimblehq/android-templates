@@ -6,7 +6,6 @@ import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
-import co.nimblehq.sample.xml.data.test.MockUtil
 import co.nimblehq.sample.xml.domain.repository.AppPreferencesRepository
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -85,7 +84,7 @@ class AppPreferencesRepositoryImplTest {
         runTest {
             repository = AppPreferencesRepositoryImpl(testDataStore)
 
-            val expected = MockUtil.isFirstTimeLaunch
+            val expected = false
 
             repository.updateFirstTimeLaunch(expected)
 
