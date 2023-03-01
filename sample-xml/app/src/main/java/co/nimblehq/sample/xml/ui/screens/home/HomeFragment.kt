@@ -51,11 +51,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         viewModel.uiModels bindTo ::displayUiModels
         viewModel.error bindTo ::displayError
         viewModel.navigator bindTo navigator::navigate
-        viewModel.showLoading bindTo ::showLoading
+        viewModel.isLoading bindTo ::isLoading
+        viewModel.isFirstTimeLaunch bindTo ::displayFirstTimeLaunchToast
     }
 
-    private fun showLoading(isShow: IsLoading) {
-        binding.pbHome.visibleOrGone(isShow)
+    private fun displayFirstTimeLaunchToast(isFirstTimeLaunch: Boolean) {
+        if (isFirstTimeLaunch) {
+            toaster.display("This is the first time launch")
+        }
+    }
+
+    private fun isLoading(isLoading: IsLoading) {
+        binding.pbHome.visibleOrGone(isLoading)
     }
 
     private fun displayUiModels(uiModels: List<UiModel>) {

@@ -15,6 +15,7 @@ object Versions {
     const val ANDROIDX_CORE_KTX_VERSION = "1.9.0"
     const val ANDROIDX_DATASTORE_PREFERENCES_VERSION = "1.0.0"
     const val ANDROIDX_LIFECYCLE_VERSION = "2.5.1"
+    const val ANDROIDX_TEST_CORE_VERSION = "1.4.0"
 
     const val CHUCKER_VERSION = "3.5.2"
     const val COMPOSE_BOM_VERSION = "2022.12.00"
@@ -47,5 +48,6 @@ object Versions {
     const val TEST_MOCKK_VERSION = "1.12.3"
     const val TEST_ROBOLECTRIC_VERSION = "4.9.2"
     const val TEST_RULES_VERSION = "1.5.0"
+    const val TEST_ROBOLECTRIC_VERSION = "4.8.2"
     const val TEST_TURBINE_VERSION = "0.12.1"
 }
