@@ -13,10 +13,10 @@ class AppPreferencesRepositoryImpl @Inject constructor(
 ) : AppPreferencesRepository {
 
     private object PreferencesKeys {
-        val APP_PREFERENCES = booleanPreferencesKey("APP_PREFERENCES")
+        val APP_PREFERENCE = booleanPreferencesKey("APP_PREFERENCE")
     }
 
-    override fun getAppPreferences(): Flow<Boolean> = appPreferencesDataStore.data
+    override fun getAppPreference(): Flow<Boolean> = appPreferencesDataStore.data
         .catch { exception ->
             if (exception is IOException) {
                 Log.i(
@@ -29,12 +29,12 @@ class AppPreferencesRepositoryImpl @Inject constructor(
                 throw exception
             }
         }.map { preferences ->
-            preferences[PreferencesKeys.APP_PREFERENCES] ?: true
+            preferences[PreferencesKeys.APP_PREFERENCE] ?: true
         }
 
-    override suspend fun updateAppPreferences(appPreferencesValue: Boolean) {
+    override suspend fun updateAppPreference(appPreferenceValue: Boolean) {
         appPreferencesDataStore.edit { preferences ->
-            preferences[PreferencesKeys.APP_PREFERENCES] = appPreferencesValue
+            preferences[PreferencesKeys.APP_PREFERENCE] = appPreferenceValue
         }
     }
 }

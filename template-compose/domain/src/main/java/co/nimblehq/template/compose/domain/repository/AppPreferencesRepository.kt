@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface AppPreferencesRepository {
 
-    fun getAppPreferences(): Flow<Boolean>
+    fun getAppPreference(): Flow<Boolean>
 
-    suspend fun updateAppPreferences(appPreferencesValue: Boolean)
+    suspend fun updateAppPreference(appPreferencesValue: Boolean)
 }

@@ -44,34 +44,34 @@ class AppPreferencesRepositoryImplTest {
     }
 
     @Test
-    fun `When calling isFirstTimeLaunch request successfully, it returns correct response`() =
+    fun `When getting app preference successfully, it returns correct response`() =
         runTest {
             val mockPreferences = mockk<Preferences>()
-            every { mockPreferences[booleanPreferencesKey("APP_PREFERENCES")] } returns false
+            every { mockPreferences[booleanPreferencesKey("APP_PREFERENCE")] } returns false
             every { mockDataStore.data } returns flowOf(mockPreferences)
 
-            repository.getAppPreferences().collect {
+            repository.getAppPreference().collect {
                 it shouldBe false
             }
         }
 
     @Test
-    fun `When calling isFirstTimeLaunch request failed with IOException, it returns true by default`() =
+    fun `When getting app preference failed with IOException, it returns true by default`() =
         runTest {
             every { mockDataStore.data } returns flow { throw IOException() }
 
-            repository.getAppPreferences().collect {
+            repository.getAppPreference().collect {
                 it shouldBe true
             }
         }
 
     @Test
-    fun `When calling isFirstTimeLaunch request failed with other exceptions, it returns wrapped error`() =
+    fun `When getting app preference failed with other exceptions, it returns wrapped error`() =
         runTest {
             val expected = Exception()
             every { mockDataStore.data } returns flow { throw expected }
 
-            repository.getAppPreferences().test {
+            repository.getAppPreference().test {
                 awaitError() shouldBe expected
             }
         }
@@ -80,15 +80,15 @@ class AppPreferencesRepositoryImplTest {
      * FIXME Can't use MockK to mock DataStore.edit or DataStore.updateData, switch to use a test DataStore.
      */
     @Test
-    fun `When calling updateFirstTimeLaunch, it updates ItSupportInfo into DataStore`() =
+    fun `When updating app preference, it updates preference into DataStore`() =
         runTest {
             repository = AppPreferencesRepositoryImpl(testDataStore)
 
             val expected = false
 
-            repository.updateAppPreferences(expected)
+            repository.updateAppPreference(expected)
 
-            repository.getAppPreferences().test {
+            repository.getAppPreference().test {
                 expectMostRecentItem() shouldBe expected
             }
         }
