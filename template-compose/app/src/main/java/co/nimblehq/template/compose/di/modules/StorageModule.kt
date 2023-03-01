@@ -1,10 +1,7 @@
 package co.nimblehq.template.compose.di.modules
 
 import android.content.Context
-import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import co.nimblehq.template.compose.data.storage.EncryptedSharedPreferences
-import co.nimblehq.template.compose.data.storage.NormalSharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
