@@ -130,6 +130,8 @@ dependencies {
     implementation("androidx.compose.foundation:foundation")
     implementation("androidx.compose.material:material")
 
+    implementation("androidx.datastore:datastore-preferences:${Versions.ANDROIDX_DATASTORE_PREFERENCES_VERSION}")
+
     implementation("androidx.navigation:navigation-compose:${Versions.COMPOSE_NAVIGATION_VERSION}")
     implementation("com.google.accompanist:accompanist-permissions:${Versions.ACCOMPANIST_PERMISSIONS_VERSION}")
 

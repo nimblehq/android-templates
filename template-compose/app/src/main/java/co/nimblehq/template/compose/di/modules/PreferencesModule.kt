@@ -1,11 +1,11 @@
-package co.nimblehq.sample.compose.di.modules
+package co.nimblehq.template.compose.di.modules
 
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import co.nimblehq.sample.compose.data.repository.AppPreferencesRepositoryImpl
-import co.nimblehq.sample.compose.domain.repository.AppPreferencesRepository
+import co.nimblehq.template.compose.data.repository.AppPreferencesRepositoryImpl
+import co.nimblehq.template.compose.domain.repository.AppPreferencesRepository
 import dagger.*
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext

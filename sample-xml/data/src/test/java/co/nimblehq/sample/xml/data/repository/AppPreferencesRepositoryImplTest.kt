@@ -44,7 +44,7 @@ class AppPreferencesRepositoryImplTest {
     }
 
     @Test
-    fun `When calling isFirstTimeLaunch request successfully, it returns correct response`() =
+    fun `When getting isFirstTimeLaunch successfully, it returns correct response`() =
         runTest {
             val mockPreferences = mockk<Preferences>()
             every { mockPreferences[booleanPreferencesKey("FIRST_TIME_LAUNCH")] } returns false
@@ -56,7 +56,7 @@ class AppPreferencesRepositoryImplTest {
         }
 
     @Test
-    fun `When calling isFirstTimeLaunch request failed with IOException, it returns true by default`() =
+    fun `When getting isFirstTimeLaunch failed with IOException, it returns true by default`() =
         runTest {
             every { mockDataStore.data } returns flow { throw IOException() }
 
@@ -66,7 +66,7 @@ class AppPreferencesRepositoryImplTest {
         }
 
     @Test
-    fun `When calling isFirstTimeLaunch request failed with other exceptions, it returns wrapped error`() =
+    fun `When getting isFirstTimeLaunch failed with other exceptions, it returns wrapped error`() =
         runTest {
             val expected = Exception()
             every { mockDataStore.data } returns flow { throw expected }
@@ -80,7 +80,7 @@ class AppPreferencesRepositoryImplTest {
      * FIXME Can't use MockK to mock DataStore.edit or DataStore.updateData, switch to use a test DataStore.
      */
     @Test
-    fun `When calling updateFirstTimeLaunch, it updates ItSupportInfo into DataStore`() =
+    fun `When calling updateFirstTimeLaunch, it updates preference into DataStore`() =
         runTest {
             repository = AppPreferencesRepositoryImpl(testDataStore)
 
