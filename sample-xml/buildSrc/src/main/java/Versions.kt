@@ -6,19 +6,20 @@ object Versions {
     const val ANDROID_TARGET_SDK_VERSION = 33
 
     const val ANDROID_VERSION_CODE = 1
-    const val ANDROID_VERSION_NAME = "3.16.0"
+    const val ANDROID_VERSION_NAME = "3.17.0"
 
     // Dependencies (Alphabet sorted)
     const val ANDROID_COMMON_KTX_VERSION = "0.1.1"
     const val ANDROID_CRYPTO_VERSION = "1.0.0"
     const val ANDROIDX_ACTIVITY_KTX_VERSION = "1.6.0"
     const val ANDROIDX_CORE_KTX_VERSION = "1.9.0"
-    const val ANDROIDX_TEST_CORE_VERSION = "1.4.0"
+    const val ANDROIDX_DATASTORE_PREFERENCES_VERSION = "1.0.0"
     const val ANDROIDX_FRAGMENT_VERSION = "1.4.0"
     const val ANDROIDX_FRAGMENT_KTX_VERSION = "1.5.3"
     const val ANDROIDX_LIFECYCLE_VERSION = "2.5.1"
     const val ANDROIDX_NAVIGATION_VERSION = "2.3.4"
     const val ANDROIDX_SUPPORT_VERSION = "1.5.1"
+    const val ANDROIDX_TEST_CORE_VERSION = "1.4.0"
 
     const val CHUCKER_VERSION = "3.5.2"
     const val CONSTRAINT_LAYOUT_VERSION = "2.1.4"
@@ -52,4 +53,5 @@ object Versions {
     const val TEST_MOCKK_VERSION = "1.10.6"
     const val TEST_ROBOLECTRIC_VERSION = "4.8.2"
     const val TEST_RUNNER_VERSION = "1.4.0"
+    const val TEST_TURBINE_VERSION = "0.12.1"
 }

@@ -58,6 +58,7 @@ dependencies {
     implementation(project(Module.DOMAIN))
 
     implementation("androidx.core:core-ktx:${Versions.ANDROIDX_CORE_KTX_VERSION}")
+    implementation("androidx.datastore:datastore-preferences:${Versions.ANDROIDX_DATASTORE_PREFERENCES_VERSION}")
     implementation("androidx.security:security-crypto:${Versions.ANDROID_CRYPTO_VERSION}")
     implementation("com.google.dagger:hilt-android:${Versions.HILT_VERSION}")
     implementation("com.squareup.moshi:moshi:${Versions.MOSHI_VERSION}")
@@ -80,4 +81,7 @@ dependencies {
     testImplementation("io.mockk:mockk:${Versions.TEST_MOCKK_VERSION}")
     testImplementation("io.kotest:kotest-assertions-core:${Versions.TEST_KOTEST_VERSION}")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.KOTLINX_COROUTINES_VERSION}")
+    testImplementation("androidx.test:core:${Versions.ANDROIDX_TEST_CORE_VERSION}")
+    testImplementation("org.robolectric:robolectric:${Versions.TEST_ROBOLECTRIC_VERSION}")
+    testImplementation("app.cash.turbine:turbine:${Versions.TEST_TURBINE_VERSION}")
 }

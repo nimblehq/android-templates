@@ -1,7 +1,6 @@
 package co.nimblehq.template.compose.ui.theme
 
 import androidx.compose.material.Shapes
-import androidx.compose.material.Typography
 import androidx.compose.runtime.staticCompositionLocalOf
 
 private val Shapes = Shapes(

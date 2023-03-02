@@ -37,6 +37,7 @@ android {
         targetSdk = Versions.ANDROID_TARGET_SDK_VERSION
         versionCode = Versions.ANDROID_VERSION_CODE
         versionName = Versions.ANDROID_VERSION_NAME
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -87,6 +88,13 @@ android {
         compose = true
     }
 
+    packagingOptions {
+        jniLibs {
+            // Resolve "libmockkjvmtiagent.so" https://github.com/mockk/mockk/issues/297#issuecomment-901924678
+            useLegacyPackaging = true
+        }
+    }
+
     lint {
         checkDependencies = true
         xmlReport = true
@@ -94,6 +102,10 @@ android {
     }
 
     testOptions {
+        unitTests {
+            // Robolectric resource processing/loading https://github.com/robolectric/robolectric/pull/4736
+            isIncludeAndroidResources = true
+        }
         unitTests.all {
             if (it.name != "testStagingDebugUnitTest") {
                 it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
@@ -101,6 +113,8 @@ android {
                 }
             }
         }
+        // Disable device's animation for instrument testing
+        // animationsDisabled = true
     }
 }
 
@@ -126,6 +140,8 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:${Versions.COMPOSE_NAVIGATION_VERSION}")
     implementation("com.google.accompanist:accompanist-permissions:${Versions.ACCOMPANIST_PERMISSIONS_VERSION}")
 
+    implementation("androidx.datastore:datastore-preferences:${Versions.ANDROIDX_DATASTORE_PREFERENCES_VERSION}")
+
     implementation("com.google.dagger:hilt-android:${Versions.HILT_VERSION}")
     implementation("androidx.hilt:hilt-navigation-compose:${Versions.HILT_NAVIGATION_COMPOSE_VERSION}")
 
@@ -141,17 +157,22 @@ dependencies {
     debugImplementation("com.github.chuckerteam.chucker:library:${Versions.CHUCKER_VERSION}")
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:${Versions.CHUCKER_VERSION}")
 
-    // Testing
+    // Unit test
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.KOTLINX_COROUTINES_VERSION}")
     testImplementation("io.kotest:kotest-assertions-core:${Versions.TEST_KOTEST_VERSION}")
     testImplementation("junit:junit:${Versions.TEST_JUNIT_VERSION}")
-    testImplementation("androidx.test:core:${Versions.TEST_ANDROIDX_CORE_VERSION}")
-    testImplementation("androidx.test:runner:${Versions.TEST_RUNNER_VERSION}")
-    testImplementation("androidx.test:rules:${Versions.TEST_RUNNER_VERSION}")
-    testImplementation("androidx.test.ext:junit-ktx:${Versions.TEST_JUNIT_ANDROIDX_EXT_VERSION}")
-    testImplementation("com.google.dagger:hilt-android-testing:${Versions.HILT_VERSION}")
-    testImplementation("org.jetbrains.kotlin:kotlin-reflect:${Versions.KOTLIN_REFLECT_VERSION}")
     testImplementation("io.mockk:mockk:${Versions.TEST_MOCKK_VERSION}")
+    testImplementation("app.cash.turbine:turbine:${Versions.TEST_TURBINE_VERSION}")
 
-    kaptTest("com.google.dagger:hilt-android-compiler:${Versions.HILT_VERSION}")
-    testAnnotationProcessor("com.google.dagger:hilt-android-compiler:${Versions.HILT_VERSION}")
+    // UI test with Robolectric
+    testImplementation(platform("androidx.compose:compose-bom:${Versions.COMPOSE_BOM_VERSION}"))
+    testImplementation("androidx.compose.ui:ui-test-junit4")
+    testImplementation("androidx.test:rules:${Versions.TEST_RULES_VERSION}")
+    testImplementation("org.robolectric:robolectric:${Versions.TEST_ROBOLECTRIC_VERSION}")
+
+    // UI test
+    androidTestImplementation(platform("androidx.compose:compose-bom:${Versions.COMPOSE_BOM_VERSION}"))
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    androidTestImplementation("androidx.test:rules:${Versions.TEST_RULES_VERSION}")
+    androidTestImplementation("io.mockk:mockk-android:${Versions.TEST_MOCKK_VERSION}")
 }

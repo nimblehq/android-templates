@@ -9,6 +9,4 @@ data class UiModel(
     val id: String
 ) : Parcelable
 
-private fun Model.toUiModel() = UiModel(id.toString())
-
-fun List<Model>.toUiModels() = this.map { it.toUiModel() }
+fun Model.toUiModel() = UiModel(id.toString())

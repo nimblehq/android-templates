@@ -2,7 +2,7 @@
 name: "Bug Report"
 about: "You found something that is not working. Report it so that it can be fixed. 👷‍"
 title: "Fix: "
-labels: "type : bug"
+labels: "type : bug, priority : normal, status : need voting"
 ---
 
 ## Issue
