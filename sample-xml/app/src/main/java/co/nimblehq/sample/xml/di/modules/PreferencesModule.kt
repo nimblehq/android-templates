@@ -18,7 +18,7 @@ abstract class PreferencesModule {
 
     @Binds
     abstract fun bindAppPreferencesRepository(
-        pppPreferencesRepositoryImpl: AppPreferencesRepositoryImpl
+        appPreferencesRepositoryImpl: AppPreferencesRepositoryImpl
     ): AppPreferencesRepository
 
     companion object {
