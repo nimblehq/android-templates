@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.lib.IsLoading
 import co.nimblehq.sample.compose.model.UiModel
@@ -26,12 +27,12 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigator: (destination: AppDestination) -> Unit
 ) {
-    val isLoading: IsLoading by viewModel.isLoading.collectAsState()
-    val uiModels: List<UiModel> by viewModel.uiModels.collectAsState()
-    val isFirstTimeLaunch: Boolean by viewModel.isFirstTimeLaunch.collectAsState()
+    val isLoading: IsLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val uiModels: List<UiModel> by viewModel.uiModels.collectAsStateWithLifecycle()
+    val isFirstTimeLaunch: Boolean by viewModel.isFirstTimeLaunch.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
-    val error: Throwable? by viewModel.error.collectAsState()
+    val error: Throwable? by viewModel.error.collectAsStateWithLifecycle()
     error?.let {
         Toast.makeText(context, it.userReadableMessage(context), Toast.LENGTH_SHORT).show()
     }

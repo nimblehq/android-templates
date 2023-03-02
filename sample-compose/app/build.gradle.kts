@@ -130,6 +130,7 @@ dependencies {
 
     implementation("androidx.core:core-ktx:${Versions.ANDROIDX_CORE_KTX_VERSION}")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.ANDROIDX_LIFECYCLE_VERSION}")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:${Versions.ANDROIDX_LIFECYCLE_VERSION}")
 
     implementation(platform("androidx.compose:compose-bom:${Versions.COMPOSE_BOM_VERSION}"))
     implementation("androidx.compose.ui:ui")
