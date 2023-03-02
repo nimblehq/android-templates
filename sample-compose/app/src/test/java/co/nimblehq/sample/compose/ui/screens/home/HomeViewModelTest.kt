@@ -36,14 +36,14 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `when loading models successfully, it shows the model list`() = runTest {
+    fun `When loading models successfully, it shows the model list`() = runTest {
         viewModel.uiModels.test {
             expectMostRecentItem() shouldBe models.map { it.toUiModel() }
         }
     }
 
     @Test
-    fun `when loading models failed, it shows the corresponding error`() = runTest {
+    fun `When loading models failed, it shows the corresponding error`() = runTest {
         val error = Exception()
         every { mockUseCase() } returns flow { throw error }
         initViewModel(dispatchers = CoroutineTestRule(StandardTestDispatcher()).testDispatcherProvider)
@@ -67,7 +67,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `when calling navigate to Second, it navigates to Second screen`() = runTest {
+    fun `When calling navigate to Second, it navigates to Second screen`() = runTest {
         viewModel.navigator.test {
             viewModel.navigateToSecond(models[0].toUiModel())
 

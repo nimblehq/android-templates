@@ -95,6 +95,10 @@ android {
     }
 
     testOptions {
+        unitTests {
+            // Robolectric resource processing/loading https://github.com/robolectric/robolectric/pull/4736
+            isIncludeAndroidResources = true
+        }
         unitTests.all {
             if (it.name != "testStagingDebugUnitTest") {
                 it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
@@ -153,7 +157,8 @@ dependencies {
     testImplementation("io.mockk:mockk:${Versions.TEST_MOCKK_VERSION}")
     testImplementation("app.cash.turbine:turbine:${Versions.TEST_TURBINE_VERSION}")
 
-    // Instrument test
-    androidTestImplementation(platform("androidx.compose:compose-bom:${Versions.COMPOSE_BOM_VERSION}"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    // UI test with Robolectric
+    testImplementation(platform("androidx.compose:compose-bom:${Versions.COMPOSE_BOM_VERSION}"))
+    testImplementation("androidx.compose.ui:ui-test-junit4")
+    testImplementation("org.robolectric:robolectric:${Versions.TEST_ROBOLECTRIC_VERSION}")
 }

@@ -6,19 +6,29 @@ import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.rule.GrantPermissionRule
+import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.domain.model.Model
 import co.nimblehq.sample.compose.domain.usecase.UseCase
-import co.nimblehq.sample.compose.test.TestDispatchersProvider
+import co.nimblehq.sample.compose.test.CoroutineTestRule
 import co.nimblehq.sample.compose.ui.AppDestination
 import co.nimblehq.sample.compose.ui.screens.MainActivity
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.*
 import org.junit.*
 import org.junit.Assert.assertEquals
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.shadows.ShadowToast
 
+@RunWith(RobolectricTestRunner::class)
 class HomeScreenTest {
+
+    private val coroutinesRule = CoroutineTestRule()
 
     @get:Rule
     val composeRule = createAndroidComposeRule<MainActivity>()
@@ -42,26 +52,34 @@ class HomeScreenTest {
             listOf(Model(1), Model(2), Model(3))
         )
 
-        viewModel = HomeViewModel(
-            mockUseCase,
-            TestDispatchersProvider
-        )
+        initViewModel()
     }
 
     @Test
-    fun when_entering_the_Home_screen__it_shows_UI_correctly() = initComposable {
-        onNodeWithText("Home").assertIsDisplayed()
+    fun `When entering the Home screen and loading the list item successfully, it shows the list item correctly`() =
+        initComposable {
+            onNodeWithText("Home").assertIsDisplayed()
+
+            onNodeWithText("1").assertIsDisplayed()
+            onNodeWithText("2").assertIsDisplayed()
+            onNodeWithText("3").assertIsDisplayed()
+        }
+
+    @Test
+    fun `When entering the Home screen and loading the list item failure, it shows the corresponding error`() {
+        val error = Exception()
+        every { mockUseCase() } returns flow { throw error }
+        initViewModel()
+
+        initComposable {
+            onNodeWithText("Home").assertIsDisplayed()
+
+            ShadowToast.showedToast(activity.getString(R.string.error_generic)) shouldBe true
+        }
     }
 
     @Test
-    fun when_loading_list_item_successfully__it_shows_the_list_item_correctly() = initComposable {
-        onNodeWithText("1").assertIsDisplayed()
-        onNodeWithText("2").assertIsDisplayed()
-        onNodeWithText("3").assertIsDisplayed()
-    }
-
-    @Test
-    fun when_clicking_on_a_list_item__it_navigates_to_Second_screen() = initComposable {
+    fun `When clicking on a list item, it navigates to Second screen`() = initComposable {
         onNodeWithText("1").performClick()
 
         assertEquals(expectedAppDestination, AppDestination.Second)
@@ -79,5 +97,12 @@ class HomeScreenTest {
             }
         }
         testBody(composeRule)
+    }
+
+    private fun initViewModel() {
+        viewModel = HomeViewModel(
+            mockUseCase,
+            coroutinesRule.testDispatcherProvider
+        )
     }
 }
