@@ -2,12 +2,14 @@ package co.nimblehq.template.compose.ui.screens.home
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.nimblehq.template.compose.R
 import co.nimblehq.template.compose.model.UiModel
 import co.nimblehq.template.compose.ui.AppDestination
@@ -20,7 +22,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigator: (destination: AppDestination) -> Unit
 ) {
-    val uiModels: List<UiModel> by viewModel.uiModels.collectAsState()
+    val uiModels: List<UiModel> by viewModel.uiModels.collectAsStateWithLifecycle()
 
     HomeScreenContent(
         title = stringResource(id = R.string.app_name),
