@@ -15,15 +15,11 @@ import java.io.InterruptedIOException
 import java.net.UnknownHostException
 import kotlin.experimental.ExperimentalTypeInference
 
-@Suppress("TooGenericExceptionCaught")
 @OptIn(ExperimentalTypeInference::class)
 fun <T> flowTransform(@BuilderInference block: suspend FlowCollector<T>.() -> T) = flow {
-    val result = try {
-        block()
-    } catch (exception: Exception) {
-        throw exception.mapError()
-    }
-    emit(result)
+    runCatching { block() }
+        .onSuccess { result -> emit(result) }
+        .onFailure { exception -> throw exception.mapError() }
 }
 
 private fun Throwable.mapError(): Throwable {
