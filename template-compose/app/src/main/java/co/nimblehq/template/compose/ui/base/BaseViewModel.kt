@@ -4,34 +4,29 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.nimblehq.template.compose.lib.IsLoading
 import co.nimblehq.template.compose.ui.AppDestination
-import co.nimblehq.template.compose.util.DispatchersProvider
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 @Suppress("PropertyName")
-abstract class BaseViewModel(private val dispatchersProvider: DispatchersProvider) : ViewModel() {
+abstract class BaseViewModel : ViewModel() {
 
     private var loadingCount: Int = 0
 
-    private val _showLoading = MutableStateFlow(false)
-    val showLoading: StateFlow<IsLoading>
-        get() = _showLoading
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<IsLoading> = _isLoading
 
     protected val _error = MutableSharedFlow<Throwable>()
-    val error: SharedFlow<Throwable>
-        get() = _error
+    val error: SharedFlow<Throwable> = _error
 
     protected val _navigator = MutableSharedFlow<AppDestination>()
-    val navigator: SharedFlow<AppDestination>
-        get() = _navigator
+    val navigator: SharedFlow<AppDestination> = _navigator
 
     /**
      * To show loading manually, should call `hideLoading` after
      */
     protected fun showLoading() {
         if (loadingCount == 0) {
-            _showLoading.value = true
+            _isLoading.value = true
         }
         loadingCount++
     }
@@ -42,12 +37,16 @@ abstract class BaseViewModel(private val dispatchersProvider: DispatchersProvide
     protected fun hideLoading() {
         loadingCount--
         if (loadingCount == 0) {
-            _showLoading.value = false
+            _isLoading.value = false
         }
     }
 
-    fun execute(coroutineDispatcher: CoroutineDispatcher = dispatchersProvider.io, job: suspend () -> Unit) =
-        viewModelScope.launch(coroutineDispatcher) {
+    protected fun launch(job: suspend () -> Unit) =
+        viewModelScope.launch {
             job.invoke()
         }
+
+    protected fun <T> Flow<T>.injectLoading(): Flow<T> = this
+        .onStart { showLoading() }
+        .onCompletion { hideLoading() }
 }

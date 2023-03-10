@@ -4,27 +4,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.nimblehq.sample.compose.lib.IsLoading
 import co.nimblehq.sample.compose.ui.AppDestination
-import co.nimblehq.sample.compose.util.DispatchersProvider
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 @Suppress("PropertyName")
-abstract class BaseViewModel(private val dispatchersProvider: DispatchersProvider) : ViewModel() {
+abstract class BaseViewModel : ViewModel() {
 
     private var loadingCount: Int = 0
 
     private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<IsLoading>
-        get() = _isLoading
+    val isLoading: StateFlow<IsLoading> = _isLoading
 
     protected val _error = MutableStateFlow<Throwable?>(null)
-    val error: StateFlow<Throwable?>
-        get() = _error
+    val error: StateFlow<Throwable?> = _error
 
     protected val _navigator = MutableSharedFlow<AppDestination>()
-    val navigator: SharedFlow<AppDestination>
-        get() = _navigator
+    val navigator: SharedFlow<AppDestination> = _navigator
 
     /**
      * To show loading manually, should call `hideLoading` after
@@ -46,8 +41,12 @@ abstract class BaseViewModel(private val dispatchersProvider: DispatchersProvide
         }
     }
 
-    fun execute(coroutineDispatcher: CoroutineDispatcher = dispatchersProvider.io, job: suspend () -> Unit) =
-        viewModelScope.launch(coroutineDispatcher) {
+    protected fun launch(job: suspend () -> Unit) =
+        viewModelScope.launch {
             job.invoke()
         }
+
+    protected fun <T> Flow<T>.injectLoading(): Flow<T> = this
+        .onStart { showLoading() }
+        .onCompletion { hideLoading() }
 }
