@@ -10,7 +10,7 @@ How do we decide if a feature is **approved**? 👍
 
 - It is always implemented in the projects we've worked on.
 - It allows developers to avoid boilerplate setup, maintain the code quality and have good experience for themselves.
-- It is a Google recommended component.
+- It is a Google-recommended component.
 
 How do we decide if a feature is **rejected**? 👎
 
@@ -36,16 +36,23 @@ Please note that the above examples are not definitive as new and existing libra
 
 Before an issue can be worked on, it must go through our voting process. 
 
+How do we create an issue? 💭 
+
+- For feature and chores, we must create an RFC with GitHub Discussions.
+- For bugs, we must create an issue directly.
+
 How do we vote on an issue? 🗳
 
-- If we agree with the proposed issue, we must react with 👍. 
-- If we disagree with the proposed issue, we must react with 👎 and leave a comment explaining why. 
+- If we agree with one of the poll options, we must vote for that option.
+- If we do not agree with any of the options, we must leave a comment explaining why. 
 - If there are differing opinions, then the repository maintainer must resolve it.
+- To allow sufficient time for everyone to participate, at least one week is allowed for voting.
 
 When is an issue approved/rejected? 🕐 
 
-  - If at least half of the team members react with 👍, then the issue is approved and the `status : approved` label is added.
-  - If at least half of the team members react with 👎, then the issue is rejected and the `status : rejected` label is added.
-  - If the vote is tied, then the repository maintainer must resolve it.
+- A conclusion is reached if at least half of the team members cast their vote.
+- if the majority vote to work on the issue, then the discussion is locked and an issue is created.
+- If the majority vote to reject the issue, then the discussion is locked and no issue is created.
+- If the vote is tied, then the repository maintainer must resolve it.
 
 Still unsure where your future contribution belongs? Let's discuss! 🚀
