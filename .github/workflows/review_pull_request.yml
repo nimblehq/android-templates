@@ -30,6 +30,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      # template-xml
+
       - name: Run Detekt on template-xml
         working-directory: ./template-xml
         run: ./gradlew detekt
@@ -41,6 +43,8 @@ jobs:
       - name: Run unit tests with Kover on template-xml
         working-directory: ./template-xml
         run: ./gradlew koverMergedXmlReport
+
+      # template-compose
 
       - name: Run Detekt on template-compose
         working-directory: ./template-compose

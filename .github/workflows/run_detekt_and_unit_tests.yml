@@ -28,6 +28,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      # template-xml
+
       - name: Run Detekt on template-xml
         working-directory: ./template-xml
         run: ./gradlew detekt
@@ -48,6 +50,8 @@ jobs:
           name: CodeCoverageReportsTemplateXML
           path: template-xml/build/reports/kover/merged/
 
+      # template-compose
+
       - name: Run Detekt on template-compose
         working-directory: ./template-compose
         run: ./gradlew detekt
@@ -67,3 +71,47 @@ jobs:
         with:
           name: CodeCoverageReportsTemplateCompose
           path: template-compose/build/reports/kover/merged/
+
+      # sample-xml
+
+      - name: Run Detekt on sample-xml
+        working-directory: ./sample-xml
+        run: ./gradlew detekt
+
+      - name: Archive Detekt reports on sample-xml
+        uses: actions/upload-artifact@v2
+        with:
+          name: DetektReportsTemplateXML
+          path: sample-xml/build/reports/detekt/
+
+      - name: Run unit tests with Kover on sample-xml
+        working-directory: ./sample-xml
+        run: ./gradlew koverMergedHtmlReport
+
+      - name: Archive code coverage reports on sample-xml
+        uses: actions/upload-artifact@v2
+        with:
+          name: CodeCoverageReportsTemplateXML
+          path: sample-xml/build/reports/kover/merged/
+
+      # sample-compose
+
+      - name: Run Detekt on sample-compose
+        working-directory: ./sample-compose
+        run: ./gradlew detekt
+
+      - name: Archive Detekt reports on sample-compose
+        uses: actions/upload-artifact@v2
+        with:
+          name: DetektReportsTemplateCompose
+          path: sample-compose/build/reports/detekt/
+
+      - name: Run unit tests with Kover on sample-compose
+        working-directory: ./sample-compose
+        run: ./gradlew koverMergedHtmlReport
+
+      - name: Archive code coverage reports on sample-compose
+        uses: actions/upload-artifact@v2
+        with:
+          name: CodeCoverageReportsTemplateCompose
+          path: sample-compose/build/reports/kover/merged/
