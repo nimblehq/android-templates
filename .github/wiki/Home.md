@@ -51,7 +51,7 @@ Before an issue can be worked on, it must go through our voting process.
 3. Conclusion for approved/rejected issues? 🕐 
 
 - A conclusion is reached if at least half of the team members cast their vote.
-- if the majority vote to work on the issue, then the discussion is locked and an issue is created.
+- If the majority vote to work on the issue, then the discussion is locked and an issue is created.
 - If the majority vote to reject the issue, then the discussion is locked and no issue is created.
 - If the vote is tied, then the repository maintainer must resolve it.
 
