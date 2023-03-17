@@ -36,19 +36,19 @@ Please note that the above examples are not definitive as new and existing libra
 
 Before an issue can be worked on, it must go through our voting process. 
 
-How do we create an issue? 💭 
+1. Create an issue 💭 
 
-- For feature and chores, we must create an RFC with GitHub Discussions.
+- For features and chores, we must create an RFC with GitHub Discussions.
 - For bugs, we must create an issue directly.
 
-How do we vote on an issue? 🗳
+2. Vote on an issue? 🗳
 
 - If we agree with one of the poll options, we must vote for that option.
 - If we do not agree with any of the options, we must leave a comment explaining why. 
 - If there are differing opinions, then the repository maintainer must resolve it.
 - To allow sufficient time for everyone to participate, at least one week is allowed for voting.
 
-When is an issue approved/rejected? 🕐 
+3. Conclusion for approved/rejected issues? 🕐 
 
 - A conclusion is reached if at least half of the team members cast their vote.
 - if the majority vote to work on the issue, then the discussion is locked and an issue is created.
