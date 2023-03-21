@@ -2,7 +2,7 @@ package co.nimblehq.sample.compose.ui.screens.home
 
 import app.cash.turbine.test
 import co.nimblehq.sample.compose.domain.model.Model
-import co.nimblehq.sample.compose.domain.usecase.UseCase
+import co.nimblehq.sample.compose.domain.usecase.*
 import co.nimblehq.sample.compose.model.toUiModel
 import co.nimblehq.sample.compose.test.CoroutineTestRule
 import co.nimblehq.sample.compose.ui.AppDestination
@@ -22,7 +22,9 @@ class HomeViewModelTest {
     @get:Rule
     val coroutinesRule = CoroutineTestRule()
 
-    private val mockUseCase: UseCase = mockk()
+    private val mockGetModelsUseCase: GetModelsUseCase = mockk()
+    private val mockIsFirstTimeLaunchPreferencesUseCase: IsFirstTimeLaunchPreferencesUseCase = mockk()
+    private val mockUpdateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase = mockk()
 
     private lateinit var viewModel: HomeViewModel
 
@@ -30,7 +32,8 @@ class HomeViewModelTest {
 
     @Before
     fun setUp() {
-        every { mockUseCase() } returns flowOf(models)
+        every { mockGetModelsUseCase() } returns flowOf(models)
+        every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flowOf(false)
 
         initViewModel()
     }
@@ -45,7 +48,7 @@ class HomeViewModelTest {
     @Test
     fun `When loading models failed, it shows the corresponding error`() = runTest {
         val error = Exception()
-        every { mockUseCase() } returns flow { throw error }
+        every { mockGetModelsUseCase() } returns flow { throw error }
         initViewModel(dispatchers = CoroutineTestRule(StandardTestDispatcher()).testDispatcherProvider)
 
         viewModel.error.test {
@@ -59,7 +62,7 @@ class HomeViewModelTest {
     fun `When loading models, it shows and hides loading correctly`() = runTest {
         initViewModel(dispatchers = CoroutineTestRule(StandardTestDispatcher()).testDispatcherProvider)
 
-        viewModel.showLoading.test {
+        viewModel.isLoading.test {
             awaitItem() shouldBe false
             awaitItem() shouldBe true
             awaitItem() shouldBe false
@@ -77,7 +80,9 @@ class HomeViewModelTest {
 
     private fun initViewModel(dispatchers: DispatchersProvider = coroutinesRule.testDispatcherProvider) {
         viewModel = HomeViewModel(
-            mockUseCase,
+            mockGetModelsUseCase,
+            mockIsFirstTimeLaunchPreferencesUseCase,
+            mockUpdateFirstTimeLaunchPreferencesUseCase,
             dispatchers
         )
     }

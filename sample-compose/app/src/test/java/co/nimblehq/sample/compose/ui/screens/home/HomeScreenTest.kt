@@ -8,7 +8,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.rule.GrantPermissionRule
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.domain.model.Model
-import co.nimblehq.sample.compose.domain.usecase.UseCase
+import co.nimblehq.sample.compose.domain.usecase.*
 import co.nimblehq.sample.compose.test.CoroutineTestRule
 import co.nimblehq.sample.compose.ui.AppDestination
 import co.nimblehq.sample.compose.ui.screens.MainActivity
@@ -41,16 +41,19 @@ class HomeScreenTest {
         android.Manifest.permission.CAMERA
     )
 
-    private val mockUseCase: UseCase = mockk()
+    private val mockGetModelsUseCase: GetModelsUseCase = mockk()
+    private val mockIsFirstTimeLaunchPreferencesUseCase: IsFirstTimeLaunchPreferencesUseCase = mockk()
+    private val mockUpdateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase = mockk()
 
     private lateinit var viewModel: HomeViewModel
     private var expectedAppDestination: AppDestination? = null
 
     @Before
     fun setUp() {
-        every { mockUseCase() } returns flowOf(
+        every { mockGetModelsUseCase() } returns flowOf(
             listOf(Model(1), Model(2), Model(3))
         )
+        every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flowOf(false)
 
         initViewModel()
     }
@@ -68,7 +71,7 @@ class HomeScreenTest {
     @Test
     fun `When entering the Home screen and loading the list item failure, it shows the corresponding error`() {
         val error = Exception()
-        every { mockUseCase() } returns flow { throw error }
+        every { mockGetModelsUseCase() } returns flow { throw error }
         initViewModel()
 
         initComposable {
@@ -101,7 +104,9 @@ class HomeScreenTest {
 
     private fun initViewModel() {
         viewModel = HomeViewModel(
-            mockUseCase,
+            mockGetModelsUseCase,
+            mockIsFirstTimeLaunchPreferencesUseCase,
+            mockUpdateFirstTimeLaunchPreferencesUseCase,
             coroutinesRule.testDispatcherProvider
         )
     }

@@ -7,7 +7,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.rule.GrantPermissionRule
 import co.nimblehq.sample.compose.domain.model.Model
-import co.nimblehq.sample.compose.domain.usecase.UseCase
+import co.nimblehq.sample.compose.domain.usecase.*
 import co.nimblehq.sample.compose.test.TestDispatchersProvider
 import co.nimblehq.sample.compose.ui.AppDestination
 import co.nimblehq.sample.compose.ui.screens.MainActivity
@@ -31,19 +31,24 @@ class HomeScreenTest {
         android.Manifest.permission.CAMERA
     )
 
-    private val mockUseCase: UseCase = mockk()
+    private val mockGetModelsUseCase: GetModelsUseCase = mockk()
+    private val mockIsFirstTimeLaunchPreferencesUseCase: IsFirstTimeLaunchPreferencesUseCase = mockk()
+    private val mockUpdateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase = mockk()
 
     private lateinit var viewModel: HomeViewModel
     private var expectedAppDestination: AppDestination? = null
 
     @Before
     fun setUp() {
-        every { mockUseCase() } returns flowOf(
+        every { mockGetModelsUseCase() } returns flowOf(
             listOf(Model(1), Model(2), Model(3))
         )
+        every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flowOf(false)
 
         viewModel = HomeViewModel(
-            mockUseCase,
+            mockGetModelsUseCase,
+            mockIsFirstTimeLaunchPreferencesUseCase,
+            mockUpdateFirstTimeLaunchPreferencesUseCase,
             TestDispatchersProvider
         )
     }
