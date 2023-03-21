@@ -34,17 +34,17 @@ Keep in mind, the features are based on _our team's_ requirements. In case the c
 
 Please note that the above examples are not definitive as new and existing libraries keep on emerging and evolving.
 
-Before an issue can be worked on, it must go through our voting process. 
+Before an issue can be worked on, it should go through our voting process. 
 
 1. Create an issue 💭 
 
-- For features and chores, we must create an RFC with GitHub Discussions.
-- For bugs, we must create an issue directly.
+- For features and chores, we should create an RFC with GitHub Discussions.
+- For bugs, we should create an issue directly.
 
 2. Vote on an issue? 🗳
 
-- If we agree with one of the poll options, we must vote for that option.
-- If we do not agree with any of the options, we must leave a comment explaining why. 
+- If we agree with one of the poll options, we should vote for that option.
+- If we do not agree with any of the options, we should leave a comment explaining why. 
 - If there are differing opinions, then the repository maintainer must resolve it.
 - To allow sufficient time for everyone to participate, at least one week is allowed for voting.
 
