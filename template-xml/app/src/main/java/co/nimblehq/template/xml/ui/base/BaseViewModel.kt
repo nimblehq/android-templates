@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import co.nimblehq.template.xml.lib.IsLoading
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 
 @Suppress("PropertyName")
 abstract class BaseViewModel : ViewModel() {
@@ -40,8 +42,8 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 
-    protected fun launch(job: suspend () -> Unit) =
-        viewModelScope.launch {
+    protected fun launch(context: CoroutineContext = EmptyCoroutineContext, job: suspend () -> Unit) =
+        viewModelScope.launch(context) {
             job.invoke()
         }
 

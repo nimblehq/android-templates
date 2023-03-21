@@ -6,12 +6,14 @@ import co.nimblehq.sample.xml.model.UiModel
 import co.nimblehq.sample.xml.model.toUiModel
 import co.nimblehq.sample.xml.ui.base.BaseViewModel
 import co.nimblehq.sample.xml.ui.base.NavigationEvent
+import co.nimblehq.sample.xml.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    dispatchers: DispatchersProvider,
     getModelsUseCase: GetModelsUseCase,
     private val isFirstTimeLaunchPreferencesUseCase: IsFirstTimeLaunchPreferencesUseCase,
     private val updateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase
@@ -30,10 +32,11 @@ class HomeViewModel @Inject constructor(
                 val uiModels = result.map { it.toUiModel() }
                 _uiModels.emit(uiModels)
             }
+            .flowOn(dispatchers.io)
             .catch { e -> _error.emit(e) }
             .launchIn(viewModelScope)
 
-        launch {
+        launch(dispatchers.io) {
             val isFirstTimeLaunch = isFirstTimeLaunchPreferencesUseCase()
                 .catch { e -> _error.emit(e) }
                 .first()

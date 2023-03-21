@@ -67,8 +67,8 @@ class HomeViewModelTest {
 
     private fun initViewModel(dispatchers: DispatchersProvider = coroutinesRule.testDispatcherProvider) {
         viewModel = HomeViewModel(
-            mockUseCase,
-            dispatchers
+            dispatchers,
+            mockUseCase
         )
     }
 }

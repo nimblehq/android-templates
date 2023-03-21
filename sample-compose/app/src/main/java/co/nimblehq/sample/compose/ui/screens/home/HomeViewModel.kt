@@ -6,17 +6,18 @@ import co.nimblehq.sample.compose.model.UiModel
 import co.nimblehq.sample.compose.model.toUiModel
 import co.nimblehq.sample.compose.ui.AppDestination
 import co.nimblehq.sample.compose.ui.base.BaseViewModel
+import co.nimblehq.sample.compose.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getModelsUseCase: GetModelsUseCase,
+    dispatchers: DispatchersProvider,
+    getModelsUseCase: GetModelsUseCase,
     private val isFirstTimeLaunchPreferencesUseCase: IsFirstTimeLaunchPreferencesUseCase,
-    private val updateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase,
-    dispatchers: DispatchersProvider
-) : BaseViewModel(dispatchers) {
+    private val updateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase
+) : BaseViewModel() {
 
     private val _uiModels = MutableStateFlow<List<UiModel>>(emptyList())
     val uiModels: StateFlow<List<UiModel>> = _uiModels
@@ -31,10 +32,11 @@ class HomeViewModel @Inject constructor(
                 val uiModels = result.map { it.toUiModel() }
                 _uiModels.emit(uiModels)
             }
+            .flowOn(dispatchers.io)
             .catch { e -> _error.emit(e) }
             .launchIn(viewModelScope)
 
-        launch {
+        launch(dispatchers.io) {
             val isFirstTimeLaunch = isFirstTimeLaunchPreferencesUseCase()
                 .catch { e -> _error.emit(e) }
                 .first()
