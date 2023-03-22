@@ -1,5 +1,9 @@
 name: Review pull request
 
+permissions:
+  contents: read
+  pull-requests: write
+
 on:
   pull_request:
     types: [ opened, edited, reopened, synchronize ]
@@ -85,3 +89,12 @@ jobs:
         env:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: bundle exec danger
+      
+      - name: Run ChatGPT Code Review
+        uses: anc95/ChatGPT-CodeReview@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          MODEL: gpt-3.5-turbo
+          top_p: 1
+          temperature: 1 
