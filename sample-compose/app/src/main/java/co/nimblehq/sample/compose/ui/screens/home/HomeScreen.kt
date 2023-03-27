@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.nimblehq.sample.compose.R
+import co.nimblehq.sample.compose.extensions.collectAsEffect
 import co.nimblehq.sample.compose.lib.IsLoading
 import co.nimblehq.sample.compose.model.UiModel
 import co.nimblehq.sample.compose.ui.AppDestination
@@ -27,6 +28,8 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigator: (destination: AppDestination) -> Unit
 ) {
+    viewModel.navigator.collectAsEffect { destination -> navigator(destination) }
+
     val isLoading: IsLoading by viewModel.isLoading.collectAsStateWithLifecycle()
     val uiModels: List<UiModel> by viewModel.uiModels.collectAsStateWithLifecycle()
     val isFirstTimeLaunch: Boolean by viewModel.isFirstTimeLaunch.collectAsStateWithLifecycle()
@@ -40,9 +43,6 @@ fun HomeScreen(
         if (isFirstTimeLaunch) {
             Toast.makeText(context, "This is the first time launch", Toast.LENGTH_SHORT).show()
         }
-    }
-    LaunchedEffect(viewModel.navigator) {
-        viewModel.navigator.collect { destination -> navigator(destination) }
     }
 
     CameraPermission()
