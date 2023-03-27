@@ -1,7 +1,9 @@
 package co.nimblehq.sample.compose.ui.screens.home
 
 import androidx.lifecycle.viewModelScope
-import co.nimblehq.sample.compose.domain.usecase.*
+import co.nimblehq.sample.compose.domain.usecase.GetModelsUseCase
+import co.nimblehq.sample.compose.domain.usecase.IsFirstTimeLaunchPreferencesUseCase
+import co.nimblehq.sample.compose.domain.usecase.UpdateFirstTimeLaunchPreferencesUseCase
 import co.nimblehq.sample.compose.model.UiModel
 import co.nimblehq.sample.compose.model.toUiModel
 import co.nimblehq.sample.compose.ui.AppDestination
@@ -13,10 +15,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    dispatchers: DispatchersProvider,
+    dispatchersProvider: DispatchersProvider,
     getModelsUseCase: GetModelsUseCase,
-    private val isFirstTimeLaunchPreferencesUseCase: IsFirstTimeLaunchPreferencesUseCase,
-    private val updateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase
+    isFirstTimeLaunchPreferencesUseCase: IsFirstTimeLaunchPreferencesUseCase,
+    updateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase,
 ) : BaseViewModel() {
 
     private val _uiModels = MutableStateFlow<List<UiModel>>(emptyList())
@@ -32,11 +34,11 @@ class HomeViewModel @Inject constructor(
                 val uiModels = result.map { it.toUiModel() }
                 _uiModels.emit(uiModels)
             }
-            .flowOn(dispatchers.io)
+            .flowOn(dispatchersProvider.io)
             .catch { e -> _error.emit(e) }
             .launchIn(viewModelScope)
 
-        launch(dispatchers.io) {
+        launch(dispatchersProvider.io) {
             val isFirstTimeLaunch = isFirstTimeLaunchPreferencesUseCase()
                 .catch { e -> _error.emit(e) }
                 .first()

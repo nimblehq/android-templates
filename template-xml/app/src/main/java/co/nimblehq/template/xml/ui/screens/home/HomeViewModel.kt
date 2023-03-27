@@ -12,8 +12,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    dispatchers: DispatchersProvider,
-    useCase: UseCase
+    dispatchersProvider: DispatchersProvider,
+    useCase: UseCase,
 ) : BaseViewModel() {
 
     private val _uiModels = MutableStateFlow<List<UiModel>>(emptyList())
@@ -26,7 +26,7 @@ class HomeViewModel @Inject constructor(
                 val uiModels = result.map { it.toUiModel() }
                 _uiModels.emit(uiModels)
             }
-            .flowOn(dispatchers.io)
+            .flowOn(dispatchersProvider.io)
             .catch { e -> _error.emit(e) }
             .launchIn(viewModelScope)
     }
