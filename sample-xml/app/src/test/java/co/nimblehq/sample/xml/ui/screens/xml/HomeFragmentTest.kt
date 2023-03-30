@@ -67,7 +67,7 @@ class HomeFragmentTest : BaseFragmentTest<HomeFragment, FragmentHomeBinding>() {
         every { mockViewModel.uiModels } returns MutableStateFlow(items)
 
         launchFragment()
-        fragment.binding.rvHome.adapter?.itemCount shouldBe 3
+        fragment.binding.rvHome.adapter?.itemCount shouldBe items.size
     }
 
     @Test
