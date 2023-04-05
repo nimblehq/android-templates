@@ -6,6 +6,7 @@ on:
       - .github/wiki/**
     branches:
       - main
+      - bug/455-fix-publish-wiki-workflow
 
 jobs:
   publish_docs_to_wiki:
@@ -13,6 +14,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.8.0
+        with:
+          access_token: ${{ github.token }}
+
+      - name: Checkout the repository
+        uses: actions/checkout@v2.3.2
+        with:
+          ref: ${{ github.head_ref }}
+
       - name: Publish Github Wiki
         uses: nimblehq/publish-github-wiki-action@v1.0
         with:
