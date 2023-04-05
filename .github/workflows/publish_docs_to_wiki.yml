@@ -8,6 +8,12 @@ on:
       - main
       - bug/455-fix-publish-wiki-workflow
 
+  pull_request:
+    paths:
+      - .github/wiki/**
+    types: [ opened, reopened, synchronize, edited ]
+    branches: [ bug/455-fix-publish-wiki-workflow ]
+
 jobs:
   publish_docs_to_wiki:
     name: Publish docs to Wiki
@@ -24,7 +30,7 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: Publish Github Wiki
+      - name: Publish Github Wiki Documentation
         uses: nimblehq/publish-github-wiki-action@v1.0
         with:
           user_name: team-nimblehq
