@@ -58,7 +58,7 @@ class HomeViewModelTest {
     fun `When loading models, it shows and hides loading correctly`() = runTest {
         initViewModel(dispatchers = CoroutineTestRule(StandardTestDispatcher()).testDispatcherProvider)
 
-        viewModel.showLoading.test {
+        viewModel.isLoading.test {
             awaitItem() shouldBe false
             awaitItem() shouldBe true
             awaitItem() shouldBe false
@@ -67,8 +67,8 @@ class HomeViewModelTest {
 
     private fun initViewModel(dispatchers: DispatchersProvider = coroutinesRule.testDispatcherProvider) {
         viewModel = HomeViewModel(
-            mockUseCase,
-            dispatchers
+            dispatchers,
+            mockUseCase
         )
     }
 }

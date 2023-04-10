@@ -46,10 +46,10 @@ class HomeScreenTest {
         every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flowOf(false)
 
         viewModel = HomeViewModel(
+            TestDispatchersProvider,
             mockGetModelsUseCase,
             mockIsFirstTimeLaunchPreferencesUseCase,
-            mockUpdateFirstTimeLaunchPreferencesUseCase,
-            TestDispatchersProvider
+            mockUpdateFirstTimeLaunchPreferencesUseCase
         )
     }
 
