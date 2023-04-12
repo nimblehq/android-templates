@@ -36,13 +36,13 @@ class HomeFragmentTest : BaseFragmentTest<HomeFragment, FragmentHomeBinding>() {
     }
 
     @Test
-    fun `When initializing fragment, it displays the recycler view`() {
+    fun `When launching fragment, it displays the recycler view`() {
         launchFragment()
         fragment.binding.rvHome.isVisible.shouldBeTrue()
     }
 
     @Test
-    fun `When initializing fragment and view model emits loading, it displays the progress bar`() {
+    fun `When launching fragment and view model emits loading, it displays the progress bar`() {
         every { mockViewModel.isLoading } returns MutableStateFlow(true)
 
         launchFragment()
@@ -50,7 +50,7 @@ class HomeFragmentTest : BaseFragmentTest<HomeFragment, FragmentHomeBinding>() {
     }
 
     @Test
-    fun `When initializing fragment and view model does not emit loading, it does not display the progress bar`() {
+    fun `When launching fragment and view model does not emit loading, it does not display the progress bar`() {
         every { mockViewModel.isLoading } returns MutableStateFlow(false)
 
         launchFragment()
@@ -58,7 +58,7 @@ class HomeFragmentTest : BaseFragmentTest<HomeFragment, FragmentHomeBinding>() {
     }
 
     @Test
-    fun `When initializing fragment and view model emits list of item, it displays the recycler view with items`() {
+    fun `When launching fragment and view model emits list of item, it displays the recycler view with items`() {
         val items = arrayListOf(
             UiModel(UUID.randomUUID().toString()),
             UiModel(UUID.randomUUID().toString()),
@@ -71,7 +71,7 @@ class HomeFragmentTest : BaseFragmentTest<HomeFragment, FragmentHomeBinding>() {
     }
 
     @Test
-    fun `When initializing fragment and view model emits first time launch, it displays a toast message`() {
+    fun `When launching fragment and view model emits first time launch, it displays a toast message`() {
         every { mockViewModel.isFirstTimeLaunch } returns MutableStateFlow(true)
 
         launchFragment()

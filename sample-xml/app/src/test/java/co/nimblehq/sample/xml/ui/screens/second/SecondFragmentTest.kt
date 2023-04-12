@@ -36,13 +36,13 @@ class SecondFragmentTest : BaseFragmentTest<SecondFragment, FragmentSecondBindin
     }
 
     @Test
-    fun `When initializing fragment, it displays the text view`() {
+    fun `When launching fragment, it displays the text view`() {
         launchFragment()
         fragment.binding.tvSecondId.isVisible.shouldBeTrue()
     }
 
     @Test
-    fun `When initializing fragment and view model with id, it displays the text view with id content`() {
+    fun `When launching fragment and view model with id, it displays the text view with id content`() {
         every { mockViewModel.id } returns MutableStateFlow(uiModel.id)
 
         launchFragment()
