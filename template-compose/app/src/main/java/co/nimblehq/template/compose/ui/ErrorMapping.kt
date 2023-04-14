@@ -1,9 +1,9 @@
 package co.nimblehq.template.compose.ui
 
 import android.content.Context
-import android.widget.Toast
 import co.nimblehq.template.compose.R
 import co.nimblehq.template.compose.domain.exceptions.ApiException
+import co.nimblehq.template.compose.extensions.showToast
 
 fun Throwable.userReadableMessage(context: Context): String {
     return when (this) {
@@ -13,4 +13,4 @@ fun Throwable.userReadableMessage(context: Context): String {
 }
 
 fun Throwable.showToast(context: Context) =
-    Toast.makeText(context, userReadableMessage(context), Toast.LENGTH_SHORT).show()
+    context.showToast(userReadableMessage(context))
