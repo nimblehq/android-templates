@@ -79,6 +79,14 @@ class HomeFragmentTest : BaseFragmentTest<HomeFragment, FragmentHomeBinding>() {
     }
 
     @Test
+    fun `When launching fragment and view model does not emit first time launch, it does not display a toast message`() {
+        every { mockViewModel.isFirstTimeLaunch } returns MutableStateFlow(false)
+
+        launchFragment()
+        ShadowToast.getTextOfLatestToast() shouldBe null
+    }
+
+    @Test
     fun `When view model emits navigation event to second fragment, it should navigate to second screen`() {
         val uiModel = UiModel(UUID.randomUUID().toString())
         every { mockViewModel.navigator } returns MutableStateFlow(NavigationEvent.Second(uiModel))
