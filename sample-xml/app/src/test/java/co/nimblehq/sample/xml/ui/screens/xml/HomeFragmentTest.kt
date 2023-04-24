@@ -31,7 +31,7 @@ class HomeFragmentTest : BaseFragmentTest<HomeFragment, FragmentHomeBinding>() {
     var hiltRule = HiltAndroidRule(this)
 
     @Before
-    fun setup() {
+    fun setUp() {
         hiltRule.inject()
     }
 
@@ -79,7 +79,7 @@ class HomeFragmentTest : BaseFragmentTest<HomeFragment, FragmentHomeBinding>() {
     }
 
     @Test
-    fun `When view model emits navigation to second fragment, it should navigate to second screen`() {
+    fun `When view model emits navigation event to second fragment, it should navigate to second screen`() {
         val uiModel = UiModel(UUID.randomUUID().toString())
         every { mockViewModel.navigator } returns MutableStateFlow(NavigationEvent.Second(uiModel))
         every { mockMainNavigator.navigate(any()) } returns Unit

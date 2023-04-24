@@ -29,7 +29,7 @@ class SecondFragmentTest : BaseFragmentTest<SecondFragment, FragmentSecondBindin
     var hiltRule = HiltAndroidRule(this)
 
     @Before
-    fun setup() {
+    fun setUp() {
         hiltRule.inject()
 
         every { mockArgs.uiModel } returns uiModel
