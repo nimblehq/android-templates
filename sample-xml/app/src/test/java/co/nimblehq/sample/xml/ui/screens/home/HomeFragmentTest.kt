@@ -1,4 +1,4 @@
-package co.nimblehq.sample.xml.ui.screens.xml
+package co.nimblehq.sample.xml.ui.screens.home
 
 import androidx.core.view.isVisible
 import co.nimblehq.sample.xml.databinding.FragmentHomeBinding
@@ -8,8 +8,6 @@ import co.nimblehq.sample.xml.test.getPrivateProperty
 import co.nimblehq.sample.xml.test.replace
 import co.nimblehq.sample.xml.ui.BaseFragmentTest
 import co.nimblehq.sample.xml.ui.base.NavigationEvent
-import co.nimblehq.sample.xml.ui.screens.home.HomeFragment
-import co.nimblehq.sample.xml.ui.screens.home.HomeViewModel
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.kotest.matchers.booleans.shouldBeFalse
