@@ -104,10 +104,10 @@ class HomeScreenTest {
 
     private fun initViewModel() {
         viewModel = HomeViewModel(
+            coroutinesRule.testDispatcherProvider,
             mockGetModelsUseCase,
             mockIsFirstTimeLaunchPreferencesUseCase,
-            mockUpdateFirstTimeLaunchPreferencesUseCase,
-            coroutinesRule.testDispatcherProvider
+            mockUpdateFirstTimeLaunchPreferencesUseCase
         )
     }
 }

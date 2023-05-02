@@ -1,8 +1,9 @@
 package co.nimblehq.template.xml.ui.screens.home
 
+import androidx.lifecycle.viewModelScope
 import co.nimblehq.template.xml.domain.usecase.UseCase
 import co.nimblehq.template.xml.model.UiModel
-import co.nimblehq.template.xml.model.toUiModels
+import co.nimblehq.template.xml.model.toUiModel
 import co.nimblehq.template.xml.ui.base.BaseViewModel
 import co.nimblehq.template.xml.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,26 +12,22 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val useCase: UseCase,
-    dispatchers: DispatchersProvider
-) : BaseViewModel(dispatchers) {
+    dispatchersProvider: DispatchersProvider,
+    useCase: UseCase,
+) : BaseViewModel() {
 
     private val _uiModels = MutableStateFlow<List<UiModel>>(emptyList())
-    val uiModels: StateFlow<List<UiModel>>
-        get() = _uiModels
+    val uiModels: StateFlow<List<UiModel>> = _uiModels
 
     init {
-        execute {
-            showLoading()
-            useCase()
-                .catch {
-                    _error.emit(it)
-                }
-                .collect { result ->
-                    val uiModels = result.toUiModels()
-                    _uiModels.emit(uiModels)
-                }
-            hideLoading()
-        }
+        useCase()
+            .injectLoading()
+            .onEach { result ->
+                val uiModels = result.map { it.toUiModel() }
+                _uiModels.emit(uiModels)
+            }
+            .flowOn(dispatchersProvider.io)
+            .catch { e -> _error.emit(e) }
+            .launchIn(viewModelScope)
     }
 }
