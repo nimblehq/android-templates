@@ -26,7 +26,7 @@ class HomeFragmentTest : BaseFragmentTest<HomeFragment, FragmentHomeBinding>() {
     }
 
     @Test
-    fun `When initializing fragment, it displays the title correctly`() {
+    fun `When launching fragment, it displays the title correctly`() {
         launchFragment()
         fragment.binding.tvTitle.text.toString() shouldBe fragment.resources.getString(R.string.app_name)
     }
