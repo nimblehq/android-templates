@@ -55,4 +55,4 @@ Before an issue can be worked on, it should go through our voting process.
 - If the majority vote to reject the issue, then the discussion is locked and no issue is created.
 - If the vote is tied, then the repository maintainer must resolve it.
 
-Still unsure where your future contribution belongs? Let's discuss! 🚀
+Still unsure where your future contribution belongs? Let's discuss! 🚀 
