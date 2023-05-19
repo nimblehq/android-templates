@@ -383,7 +383,23 @@ object NewProject {
         isError: Boolean = false,
     ) {
         println("\n${if (isError) "❌ " else ""}${message}\n")
-        if (exitAfterMessage) System.exit(exitValue)
+        if (exitAfterMessage) {
+            if (isError) {
+                exitWithError(exitValue)
+            } else {
+                System.exit(exitValue)
+            }
+        }
+    }
+
+    private fun exitWithError(exitValue: Int = 0) {
+        if (!forceProjectCreation && projectFolderName.isNotBlank()) {
+            val file = File(projectPath)
+            if (file.exists()) {
+                file.deleteRecursively()
+            }
+        }
+        System.exit(exitValue)
     }
 
     private fun String.uppercaseEveryFirstCharacter(): String {
