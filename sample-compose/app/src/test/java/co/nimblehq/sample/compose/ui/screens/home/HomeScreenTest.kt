@@ -42,8 +42,10 @@ class HomeScreenTest {
     )
 
     private val mockGetModelsUseCase: GetModelsUseCase = mockk()
-    private val mockIsFirstTimeLaunchPreferencesUseCase: IsFirstTimeLaunchPreferencesUseCase = mockk()
-    private val mockUpdateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase = mockk()
+    private val mockIsFirstTimeLaunchPreferencesUseCase: IsFirstTimeLaunchPreferencesUseCase =
+        mockk()
+    private val mockUpdateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase =
+        mockk()
 
     private lateinit var viewModel: HomeViewModel
     private var expectedAppDestination: AppDestination? = null
@@ -70,12 +72,15 @@ class HomeScreenTest {
 
     @Test
     fun `When entering the Home screen and loading the list item failure, it shows the corresponding error`() {
+        coroutinesRule.testDispatcher = StandardTestDispatcher()
+
         val error = Exception()
         every { mockGetModelsUseCase() } returns flow { throw error }
         initViewModel()
 
         initComposable {
-            onNodeWithText("Home").assertIsDisplayed()
+            composeRule.waitForIdle()
+            coroutinesRule.testDispatcher.scheduler.advanceUntilIdle()
 
             ShadowToast.showedToast(activity.getString(R.string.error_generic)) shouldBe true
         }
@@ -89,13 +94,13 @@ class HomeScreenTest {
     }
 
     private fun initComposable(
-        testBody: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>.() -> Unit
+        testBody: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>.() -> Unit,
     ) {
         composeRule.activity.setContent {
             ComposeTheme {
                 HomeScreen(
                     viewModel = viewModel,
-                    navigator = { destination -> expectedAppDestination = destination }
+                    navigator = { destination -> expectedAppDestination = destination },
                 )
             }
         }
