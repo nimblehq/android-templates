@@ -9,8 +9,8 @@ import androidx.test.rule.GrantPermissionRule
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.domain.model.Model
 import co.nimblehq.sample.compose.domain.usecase.*
-import co.nimblehq.sample.compose.test.CoroutineTestRule
 import co.nimblehq.sample.compose.ui.AppDestination
+import co.nimblehq.sample.compose.ui.screens.BaseScreenTest
 import co.nimblehq.sample.compose.ui.screens.MainActivity
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import io.kotest.matchers.shouldBe
@@ -26,9 +26,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowToast
 
 @RunWith(RobolectricTestRunner::class)
-class HomeScreenTest {
-
-    private val coroutinesRule = CoroutineTestRule()
+class HomeScreenTest : BaseScreenTest() {
 
     @get:Rule
     val composeRule = createAndroidComposeRule<MainActivity>()
@@ -56,8 +54,6 @@ class HomeScreenTest {
             listOf(Model(1), Model(2), Model(3))
         )
         every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flowOf(false)
-
-        initViewModel()
     }
 
     @Test
@@ -72,15 +68,14 @@ class HomeScreenTest {
 
     @Test
     fun `When entering the Home screen and loading the list item failure, it shows the corresponding error`() {
-        coroutinesRule.testDispatcher = StandardTestDispatcher()
+        setStandardTestDispatcher()
 
         val error = Exception()
         every { mockGetModelsUseCase() } returns flow { throw error }
-        initViewModel()
 
         initComposable {
             composeRule.waitForIdle()
-            coroutinesRule.testDispatcher.scheduler.advanceUntilIdle()
+            advanceUntilIdle()
 
             ShadowToast.showedToast(activity.getString(R.string.error_generic)) shouldBe true
         }
@@ -96,6 +91,8 @@ class HomeScreenTest {
     private fun initComposable(
         testBody: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>.() -> Unit,
     ) {
+        initViewModel()
+
         composeRule.activity.setContent {
             ComposeTheme {
                 HomeScreen(
