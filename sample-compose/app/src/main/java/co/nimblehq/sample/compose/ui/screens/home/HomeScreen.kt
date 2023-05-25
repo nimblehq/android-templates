@@ -28,15 +28,14 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigator: (destination: AppDestination) -> Unit,
 ) {
+    val context = LocalContext.current
+    viewModel.error.collectAsEffect { e -> e.showToast(context) }
     viewModel.navigator.collectAsEffect { destination -> navigator(destination) }
 
     val isLoading: IsLoading by viewModel.isLoading.collectAsStateWithLifecycle()
     val uiModels: List<UiModel> by viewModel.uiModels.collectAsStateWithLifecycle()
     val isFirstTimeLaunch: Boolean by viewModel.isFirstTimeLaunch.collectAsStateWithLifecycle()
 
-    val context = LocalContext.current
-    val error: Throwable? by viewModel.error.collectAsStateWithLifecycle()
-    error?.showToast(context)
     LaunchedEffect(isFirstTimeLaunch) {
         if (isFirstTimeLaunch) {
             context.showToast("This is the first time launch")
