@@ -17,8 +17,8 @@ abstract class BaseViewModel : ViewModel() {
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<IsLoading> = _isLoading
 
-    protected val _error = MutableStateFlow<Throwable?>(null)
-    val error: StateFlow<Throwable?> = _error
+    protected val _error = MutableSharedFlow<Throwable>()
+    val error: SharedFlow<Throwable> = _error
 
     protected val _navigator = MutableSharedFlow<AppDestination>()
     val navigator: SharedFlow<AppDestination> = _navigator

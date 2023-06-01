@@ -8,7 +8,7 @@ import org.junit.runner.Description
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class CoroutineTestRule(
-    private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
+    var testDispatcher: TestDispatcher = UnconfinedTestDispatcher(),
 ) : TestWatcher() {
 
     val testDispatcherProvider = object : DispatchersProvider {

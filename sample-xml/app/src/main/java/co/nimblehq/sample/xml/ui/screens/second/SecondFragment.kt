@@ -3,9 +3,9 @@ package co.nimblehq.sample.xml.ui.screens.second
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.fragment.navArgs
 import co.nimblehq.sample.xml.R
 import co.nimblehq.sample.xml.databinding.FragmentSecondBinding
+import co.nimblehq.sample.xml.extension.provideNavArgs
 import co.nimblehq.sample.xml.extension.provideViewModels
 import co.nimblehq.sample.xml.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class SecondFragment : BaseFragment<FragmentSecondBinding>() {
 
     private val viewModel: SecondViewModel by provideViewModels()
-    private val args: SecondFragmentArgs by navArgs()
+    private val args: SecondFragmentArgs by provideNavArgs()
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSecondBinding
         get() = { inflater, container, attachToParent ->

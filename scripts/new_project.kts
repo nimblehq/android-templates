@@ -144,7 +144,8 @@ object NewProject {
                 else -> {
                     showMessage(
                         message = "ERROR: Invalid argument name: $arg \n$helpMessage",
-                        exitAfterMessage = true
+                        exitAfterMessage = true,
+                        isError = true,
                     )
                 }
             }
@@ -152,15 +153,18 @@ object NewProject {
         when {
             !hasAppName -> showMessage(
                 message = "ERROR: No app name has been provided \n$helpMessage",
-                exitAfterMessage = true
+                exitAfterMessage = true,
+                isError = true,
             )
             !hasPackageName -> showMessage(
                 message = "ERROR: No package name has been provided \n$helpMessage",
-                exitAfterMessage = true
+                exitAfterMessage = true,
+                isError = true,
             )
             !hasTemplate -> showMessage(
                 message = "ERROR: No template has been provided \n$helpMessage",
-                exitAfterMessage = true
+                exitAfterMessage = true,
+                isError = true,
             )
         }
     }
@@ -171,7 +175,8 @@ object NewProject {
         } else {
             showMessage(
                 message = "ERROR: Invalid App Name: $value (needs to follow standard pattern {MyProject} or {My Project}) or {my-project} \n$helpMessage",
-                exitAfterMessage = true
+                exitAfterMessage = true,
+                isError = true,
             )
         }
     }
@@ -181,8 +186,9 @@ object NewProject {
             packageName = value.trim()
         } else {
             showMessage(
-                message = "ERROR: Invalid Package Name: $value (needs to follow standard pattern {com.example.package}) \n$helpMessage",
-                exitAfterMessage = true
+                message = "Error: Invalid Package Name: $value (needs to follow standard pattern {com.example.package}) \n$helpMessage",
+                exitAfterMessage = true,
+                isError = true,
             )
         }
     }
@@ -192,8 +198,9 @@ object NewProject {
             template = value.trim()
         } else {
             showMessage(
-                message = "ERROR: Invalid Template: $value (can either be $TEMPLATE_XML or $TEMPLATE_COMPOSE) \n$helpMessage",
-                exitAfterMessage = true
+                message = "Error: Invalid Template: $value (can either be $TEMPLATE_XML or $TEMPLATE_COMPOSE) \n$helpMessage",
+                exitAfterMessage = true,
+                isError = true,
             )
         }
     }
@@ -305,7 +312,10 @@ object NewProject {
         val targetFolder = File(toPath)
         val sourceFolder = File(fromPath)
         sourceFolder.copyRecursively(targetFolder, true) { file, exception ->
-            showMessage(exception?.message ?: "Error copying files")
+            showMessage(
+                message = "${exception?.message ?: "Error copying files"}",
+                isError = true,
+            )
             return@copyRecursively OnErrorAction.TERMINATE
         }
     }
@@ -329,9 +339,10 @@ object NewProject {
         val exitValue = process.waitFor()
         if (exitValue != 0) {
             showMessage(
-                message = "❌ Something went wrong! when executing command: ${command.joinToString(" ")}",
+                message = "Something went wrong! when executing command: ${command.joinToString(" ")}",
                 exitAfterMessage = true,
-                exitValue = exitValue
+                exitValue = exitValue,
+                isError = true,
             )
         }
     }
@@ -360,9 +371,10 @@ object NewProject {
     private fun showMessage(
         message: String,
         exitAfterMessage: Boolean = false,
-        exitValue: Int = 0
+        exitValue: Int = 0,
+        isError: Boolean = false,
     ) {
-        println("\n${message}\n")
+        println("\n${if (isError) "❌ " else ""}${message}\n")
         if (exitAfterMessage) System.exit(exitValue)
     }
 
