@@ -6,4 +6,4 @@ The `.github` contains all the required setup for Github Action to trigger. Simp
 Here are the current Secrets we need to add to the Project Settings - Secret:
 
 - `FIREBASE_APP_ID_STAGING` - your application id on Firebase.
-- `FIREBASE_TOKEN` - your Firebase access/refresh token. Follow this [Guideline](https://firebase.google.com/docs/cli#cli-ci-systems) to get one for your project.
+- `FIREBASE_SERVICE_ACCOUNT_CREDENTIAL_FILE_CONTENT` - your Firebase service account credential file. Follow this [Guideline](https://github.com/wzieba/Firebase-Distribution-Github-Action/wiki/FIREBASE_TOKEN-migration#guide-2---the-same-but-with-screenshots) to get one for your project.
