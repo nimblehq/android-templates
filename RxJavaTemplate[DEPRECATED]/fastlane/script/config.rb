@@ -39,7 +39,7 @@ module Config
     errors = []
     errors << verify_slack_config unless verify_slack_config.nil?
     errors << verify_workspace_config unless verify_workspace_config.nil?
-    errors << verify_firebase_token unless verify_firebase_token.nil?
+    errors << verify_service_account unless verify_service_account.nil?
     throw errors unless errors.empty?
   end
 
@@ -55,9 +55,9 @@ module Config
     'Missing env.WORKSPACE, please set it accordingly and retry'
   end
 
-  def verify_firebase_token
-    return unless ENV['FIREBASE_TOKEN'].nil?
+  def verify_service_account
+    return unless ENV['FIREBASE_SERVICE_ACCOUNT_CREDENTIAL_FILE_CONTENT'].nil?
 
-    'Missing env.FIREBASE_TOKEN for Firebase, please set it accordingly and retry'
+    'Missing env.FIREBASE_SERVICE_ACCOUNT_CREDENTIAL_FILE_CONTENT for Firebase App Distribution, please set it accordingly and retry'
   end
 end
