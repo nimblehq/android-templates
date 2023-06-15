@@ -4,6 +4,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import co.nimblehq.sample.compose.model.UiModel
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
@@ -12,9 +13,10 @@ import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 fun ItemList(
     uiModels: List<UiModel>,
     onItemClick: (UiModel) -> Unit,
-    onItemLongClick: (UiModel) -> Unit
+    onItemLongClick: (UiModel) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    LazyColumn {
+    LazyColumn(modifier) {
         items(uiModels) { uiModel ->
             Item(
                 uiModel = uiModel,
