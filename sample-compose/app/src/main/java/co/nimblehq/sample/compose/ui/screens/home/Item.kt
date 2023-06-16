@@ -17,12 +17,13 @@ import co.nimblehq.sample.compose.ui.theme.AppTheme.dimensions
 fun Item(
     uiModel: UiModel,
     onClick: (UiModel) -> Unit,
-    onLongClick: (UiModel) -> Unit
+    onLongClick: (UiModel) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     var expanded by remember { mutableStateOf(false) }
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .combinedClickable(
                 onClick = { onClick(uiModel) },
