@@ -6,6 +6,7 @@ object NewProject {
     private const val DELIMITER_ARGUMENT = "="
 
     private const val KEY_APP_NAME = "app-name"
+    private const val KEY_FORCE = "force"
     private const val KEY_HELP = "--help"
     private const val KEY_PACKAGE_NAME = "package-name"
     private const val KEY_TEMPLATE = "template"
@@ -36,10 +37,11 @@ object NewProject {
             $KEY_PACKAGE_NAME=   New package name (i.e., com.example.package)
             $KEY_APP_NAME=       New app name (i.e., MyApp, "My App", "my-app")
             $KEY_TEMPLATE=       Template (i.e., $TEMPLATE_XML, $TEMPLATE_COMPOSE)
+            $KEY_FORCE=          Force project creation even if the script fails (default: false)
         
         Examples:
             kscript new_project.kts $KEY_PACKAGE_NAME=co.myxmlproject.example $KEY_APP_NAME="My XML Project" $KEY_TEMPLATE=$TEMPLATE_XML
-            kscript scripts/new_project.kts $KEY_PACKAGE_NAME=co.myxmlproject.example $KEY_APP_NAME="My XML Project" $KEY_TEMPLATE=$TEMPLATE_XML
+            kscript scripts/new_project.kts $KEY_PACKAGE_NAME=co.myxmlproject.example $KEY_APP_NAME="My XML Project" $KEY_TEMPLATE=$TEMPLATE_XML $KEY_FORCE=true
     """.trimIndent()
 
     private val modules = listOf("app", "data", "domain")
@@ -57,6 +59,8 @@ object NewProject {
                 }
             }
         }
+
+    private var forceProjectCreation = false
 
     private var packageName = ""
 
@@ -140,6 +144,10 @@ object NewProject {
                     val (key, value) = arg.split(DELIMITER_ARGUMENT)
                     validateTemplate(value)
                     hasTemplate = true
+                }
+                arg.startsWith("$KEY_FORCE$DELIMITER_ARGUMENT") -> {
+                    val (key, value) = arg.split(DELIMITER_ARGUMENT)
+                    forceProjectCreation = value.toBoolean()
                 }
                 else -> {
                     showMessage(
@@ -375,7 +383,23 @@ object NewProject {
         isError: Boolean = false,
     ) {
         println("\n${if (isError) "❌ " else ""}${message}\n")
-        if (exitAfterMessage) System.exit(exitValue)
+        if (exitAfterMessage) {
+            if (isError) {
+                exitWithError(exitValue)
+            } else {
+                System.exit(exitValue)
+            }
+        }
+    }
+
+    private fun exitWithError(exitValue: Int = 0) {
+        if (!forceProjectCreation && projectFolderName.isNotBlank()) {
+            val file = File(projectPath)
+            if (file.exists()) {
+                file.deleteRecursively()
+            }
+        }
+        System.exit(exitValue)
     }
 
     private fun String.uppercaseEveryFirstCharacter(): String {

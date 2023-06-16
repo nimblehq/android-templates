@@ -27,6 +27,7 @@ A collection of our Android templates:
     package-name=                      New package name (i.e., com.example.package)
     app-name=                          New app name (i.e., MyApp, "My App", "my-app")
     template=                          Template (i.e., xml, compose)
+    force=                             Force project creation even if the script fails (default: false)
   ```
 
   Examples: 
