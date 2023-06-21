@@ -15,10 +15,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    dispatchersProvider: DispatchersProvider,
     getModelsUseCase: GetModelsUseCase,
     isFirstTimeLaunchPreferencesUseCase: IsFirstTimeLaunchPreferencesUseCase,
-    updateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase,
+    private val updateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase,
+    private val dispatchersProvider: DispatchersProvider,
 ) : BaseViewModel() {
 
     private val _uiModels = MutableStateFlow<List<UiModel>>(emptyList())
@@ -44,9 +44,13 @@ class HomeViewModel @Inject constructor(
                 .first()
 
             _isFirstTimeLaunch.emit(isFirstTimeLaunch)
-            if (isFirstTimeLaunch) {
-                updateFirstTimeLaunchPreferencesUseCase(false)
-            }
+        }
+    }
+
+    fun onFirstTimeLaunch() {
+        launch(dispatchersProvider.io) {
+            updateFirstTimeLaunchPreferencesUseCase(false)
+            _isFirstTimeLaunch.emit(false)
         }
     }
 
