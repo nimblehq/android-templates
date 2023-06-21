@@ -8,11 +8,9 @@ import co.nimblehq.sample.compose.test.CoroutineTestRule
 import co.nimblehq.sample.compose.ui.AppDestination
 import co.nimblehq.sample.compose.util.DispatchersProvider
 import io.kotest.matchers.shouldBe
-import io.mockk.every
-import io.mockk.mockk
+import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.test.*
 import org.junit.*
 
@@ -34,6 +32,7 @@ class HomeViewModelTest {
     fun setUp() {
         every { mockGetModelsUseCase() } returns flowOf(models)
         every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flowOf(false)
+        coEvery { mockUpdateFirstTimeLaunchPreferencesUseCase(any()) } just Runs
 
         initViewModel()
     }
@@ -78,12 +77,23 @@ class HomeViewModelTest {
         }
     }
 
+    @Test
+    fun `When launching the app for the first time, it executes the use case and emits value accordingly`() =
+        runTest {
+            viewModel.onFirstTimeLaunch()
+
+            coVerify(exactly = 1) {
+                mockUpdateFirstTimeLaunchPreferencesUseCase(false)
+            }
+            viewModel.isFirstTimeLaunch.first() shouldBe false
+        }
+
     private fun initViewModel(dispatchers: DispatchersProvider = coroutinesRule.testDispatcherProvider) {
         viewModel = HomeViewModel(
-            dispatchers,
             mockGetModelsUseCase,
             mockIsFirstTimeLaunchPreferencesUseCase,
-            mockUpdateFirstTimeLaunchPreferencesUseCase
+            mockUpdateFirstTimeLaunchPreferencesUseCase,
+            dispatchers
         )
     }
 }
