@@ -27,11 +27,12 @@ class HomeViewModelTest {
     private lateinit var viewModel: HomeViewModel
 
     private val models = listOf(Model(1), Model(2), Model(3))
+    private val isFirstTimeLaunch = false
 
     @Before
     fun setUp() {
         every { mockGetModelsUseCase() } returns flowOf(models)
-        every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flowOf(false)
+        every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flowOf(isFirstTimeLaunch)
         coEvery { mockUpdateFirstTimeLaunchPreferencesUseCase(any()) } just Runs
 
         initViewModel()
@@ -76,6 +77,12 @@ class HomeViewModelTest {
             expectMostRecentItem() shouldBe AppDestination.Second
         }
     }
+
+    @Test
+    fun `When initializing the ViewModel, it emits whether the app is launched for the first time accordingly`() =
+        runTest {
+            viewModel.isFirstTimeLaunch.first() shouldBe isFirstTimeLaunch
+        }
 
     @Test
     fun `When launching the app for the first time, it executes the use case and emits value accordingly`() =

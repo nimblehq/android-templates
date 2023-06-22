@@ -38,13 +38,13 @@ class HomeViewModel @Inject constructor(
             .catch { e -> _error.emit(e) }
             .launchIn(viewModelScope)
 
-        launch(dispatchersProvider.io) {
-            val isFirstTimeLaunch = isFirstTimeLaunchPreferencesUseCase()
-                .catch { e -> _error.emit(e) }
-                .first()
-
-            _isFirstTimeLaunch.emit(isFirstTimeLaunch)
-        }
+        isFirstTimeLaunchPreferencesUseCase()
+            .onEach { isFirstTimeLaunch ->
+                _isFirstTimeLaunch.emit(isFirstTimeLaunch)
+            }
+            .flowOn(dispatchersProvider.io)
+            .catch { e -> _error.emit(e) }
+            .launchIn(viewModelScope)
     }
 
     fun onFirstTimeLaunch() {
