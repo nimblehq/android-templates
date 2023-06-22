@@ -85,6 +85,21 @@ class HomeViewModelTest {
         }
 
     @Test
+    fun `When initializing the ViewModel and isFirstTimeLaunchPreferencesUseCase returns error, it shows the corresponding error`() =
+        runTest {
+            val error = Exception()
+            every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flow { throw error }
+
+            initViewModel(dispatchers = CoroutineTestRule(StandardTestDispatcher()).testDispatcherProvider)
+
+            viewModel.error.test {
+                advanceUntilIdle()
+
+                expectMostRecentItem() shouldBe error
+            }
+        }
+
+    @Test
     fun `When launching the app for the first time, it executes the use case and emits value accordingly`() =
         runTest {
             viewModel.onFirstTimeLaunch()
