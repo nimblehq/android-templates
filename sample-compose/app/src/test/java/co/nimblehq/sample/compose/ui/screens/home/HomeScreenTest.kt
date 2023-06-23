@@ -14,8 +14,7 @@ import co.nimblehq.sample.compose.ui.screens.BaseScreenTest
 import co.nimblehq.sample.compose.ui.screens.MainActivity
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import io.kotest.matchers.shouldBe
-import io.mockk.every
-import io.mockk.mockk
+import io.mockk.*
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.*
@@ -54,6 +53,29 @@ class HomeScreenTest : BaseScreenTest() {
             listOf(Model(1), Model(2), Model(3))
         )
         every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flowOf(false)
+        coEvery { mockUpdateFirstTimeLaunchPreferencesUseCase(any()) } just Runs
+    }
+
+    @Test
+    fun `When entering the Home screen for the first time, it shows a toast confirming that`() {
+        every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flowOf(true)
+
+        initComposable {
+            composeRule.waitForIdle()
+            advanceUntilIdle()
+
+            ShadowToast.showedToast(activity.getString(R.string.message_first_time_launch)) shouldBe true
+        }
+    }
+
+    @Test
+    fun `When entering the Home screen NOT for the first time, it doesn't show the toast confirming that`() {
+        initComposable {
+            composeRule.waitForIdle()
+            advanceUntilIdle()
+
+            ShadowToast.showedToast(activity.getString(R.string.message_first_time_launch)) shouldBe false
+        }
     }
 
     @Test
