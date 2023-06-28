@@ -1,5 +1,5 @@
 object Versions {
-    const val BUILD_GRADLE_VERSION = "7.3.0"
+    const val BUILD_GRADLE_VERSION = "7.4.2"
 
     const val ANDROID_COMPILE_SDK_VERSION = 33
     const val ANDROID_MIN_SDK_VERSION = 24
