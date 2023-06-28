@@ -1,18 +1,24 @@
 package co.nimblehq.sample.compose.ui.screens.home
 
 import app.cash.turbine.test
-import co.nimblehq.sample.compose.domain.model.Model
-import co.nimblehq.sample.compose.domain.usecase.*
+import co.nimblehq.sample.compose.domain.usecase.GetModelsUseCase
+import co.nimblehq.sample.compose.domain.usecase.IsFirstTimeLaunchPreferencesUseCase
+import co.nimblehq.sample.compose.domain.usecase.UpdateFirstTimeLaunchPreferencesUseCase
 import co.nimblehq.sample.compose.model.toUiModel
 import co.nimblehq.sample.compose.test.CoroutineTestRule
+import co.nimblehq.sample.compose.test.MockUtil
 import co.nimblehq.sample.compose.ui.AppDestination
 import co.nimblehq.sample.compose.util.DispatchersProvider
 import io.kotest.matchers.shouldBe
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.test.*
-import org.junit.*
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class HomeViewModelTest {
@@ -26,12 +32,11 @@ class HomeViewModelTest {
 
     private lateinit var viewModel: HomeViewModel
 
-    private val models = listOf(Model(1), Model(2), Model(3))
     private val isFirstTimeLaunch = false
 
     @Before
     fun setUp() {
-        every { mockGetModelsUseCase() } returns flowOf(models)
+        every { mockGetModelsUseCase() } returns flowOf(MockUtil.models)
         every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flowOf(isFirstTimeLaunch)
         coEvery { mockUpdateFirstTimeLaunchPreferencesUseCase(any()) } just Runs
 
@@ -41,7 +46,7 @@ class HomeViewModelTest {
     @Test
     fun `When loading models successfully, it shows the model list`() = runTest {
         viewModel.uiModels.test {
-            expectMostRecentItem() shouldBe models.map { it.toUiModel() }
+            expectMostRecentItem() shouldBe MockUtil.models.map { it.toUiModel() }
         }
     }
 
@@ -72,7 +77,7 @@ class HomeViewModelTest {
     @Test
     fun `When calling navigate to Second, it navigates to Second screen`() = runTest {
         viewModel.navigator.test {
-            viewModel.navigateToSecond(models[0].toUiModel())
+            viewModel.navigateToSecond(MockUtil.models[0].toUiModel())
 
             expectMostRecentItem() shouldBe AppDestination.Second
         }

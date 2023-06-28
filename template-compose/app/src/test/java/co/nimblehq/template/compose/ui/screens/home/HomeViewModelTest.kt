@@ -1,10 +1,10 @@
 package co.nimblehq.template.compose.ui.screens.home
 
 import app.cash.turbine.test
-import co.nimblehq.template.compose.domain.model.Model
 import co.nimblehq.template.compose.domain.usecase.UseCase
 import co.nimblehq.template.compose.model.toUiModel
 import co.nimblehq.template.compose.test.CoroutineTestRule
+import co.nimblehq.template.compose.test.MockUtil
 import co.nimblehq.template.compose.util.DispatchersProvider
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -25,11 +25,9 @@ class HomeViewModelTest {
 
     private lateinit var viewModel: HomeViewModel
 
-    private val models = listOf(Model(1), Model(2), Model(3))
-
     @Before
     fun setUp() {
-        every { mockUseCase() } returns flowOf(models)
+        every { mockUseCase() } returns flowOf(MockUtil.models)
 
         initViewModel()
     }
@@ -37,7 +35,7 @@ class HomeViewModelTest {
     @Test
     fun `When loading models successfully, it shows the model list`() = runTest {
         viewModel.uiModels.test {
-            expectMostRecentItem() shouldBe models.map { it.toUiModel() }
+            expectMostRecentItem() shouldBe MockUtil.models.map { it.toUiModel() }
         }
     }
 

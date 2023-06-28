@@ -1,12 +1,15 @@
 package co.nimblehq.sample.compose.domain.usecase
 
-import co.nimblehq.sample.compose.domain.model.Model
 import co.nimblehq.sample.compose.domain.repository.Repository
+import co.nimblehq.sample.compose.domain.test.MockUtil
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -17,8 +20,6 @@ class GetModelsUseCaseTest {
     private lateinit var mockRepository: Repository
     private lateinit var getModelsUseCase: GetModelsUseCase
 
-    private val model = Model(id = 1)
-
     @Before
     fun setUp() {
         mockRepository = mockk()
@@ -27,7 +28,7 @@ class GetModelsUseCaseTest {
 
     @Test
     fun `When request successful, it returns success`() = runTest {
-        val expected = listOf(model)
+        val expected = MockUtil.models
         every { mockRepository.getModels() } returns flowOf(expected)
 
         getModelsUseCase().collect {

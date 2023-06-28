@@ -1,8 +1,8 @@
 package co.nimblehq.template.compose.data.repository
 
-import co.nimblehq.template.compose.data.response.Response
 import co.nimblehq.template.compose.data.response.toModels
 import co.nimblehq.template.compose.data.service.ApiService
+import co.nimblehq.template.compose.data.test.MockUtil
 import co.nimblehq.template.compose.domain.repository.Repository
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
@@ -20,8 +20,6 @@ class RepositoryTest {
     private lateinit var mockService: ApiService
     private lateinit var repository: Repository
 
-    private val response = Response(id = 1)
-
     @Before
     fun setUp() {
         mockService = mockk()
@@ -30,7 +28,7 @@ class RepositoryTest {
 
     @Test
     fun `When request successful, it returns success`() = runTest {
-        val expected = listOf(response)
+        val expected = MockUtil.responses
         coEvery { mockService.getResponses() } returns expected
 
         repository.getModels().collect {
