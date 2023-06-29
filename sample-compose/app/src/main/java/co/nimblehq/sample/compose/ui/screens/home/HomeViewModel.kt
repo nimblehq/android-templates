@@ -15,10 +15,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    dispatchersProvider: DispatchersProvider,
     getModelsUseCase: GetModelsUseCase,
     isFirstTimeLaunchPreferencesUseCase: IsFirstTimeLaunchPreferencesUseCase,
-    updateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase,
+    private val updateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase,
+    private val dispatchersProvider: DispatchersProvider,
 ) : BaseViewModel() {
 
     private val _uiModels = MutableStateFlow<List<UiModel>>(emptyList())
@@ -38,15 +38,19 @@ class HomeViewModel @Inject constructor(
             .catch { e -> _error.emit(e) }
             .launchIn(viewModelScope)
 
-        launch(dispatchersProvider.io) {
-            val isFirstTimeLaunch = isFirstTimeLaunchPreferencesUseCase()
-                .catch { e -> _error.emit(e) }
-                .first()
-
-            _isFirstTimeLaunch.emit(isFirstTimeLaunch)
-            if (isFirstTimeLaunch) {
-                updateFirstTimeLaunchPreferencesUseCase(false)
+        isFirstTimeLaunchPreferencesUseCase()
+            .onEach { isFirstTimeLaunch ->
+                _isFirstTimeLaunch.emit(isFirstTimeLaunch)
             }
+            .flowOn(dispatchersProvider.io)
+            .catch { e -> _error.emit(e) }
+            .launchIn(viewModelScope)
+    }
+
+    fun onFirstTimeLaunch() {
+        launch(dispatchersProvider.io) {
+            updateFirstTimeLaunchPreferencesUseCase(false)
+            _isFirstTimeLaunch.emit(false)
         }
     }
 
