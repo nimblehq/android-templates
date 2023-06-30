@@ -6,6 +6,7 @@ object NewProject {
     private const val DELIMITER_ARGUMENT = "="
 
     private const val KEY_APP_NAME = "app-name"
+    private const val KEY_DESTINATION = "destination"
     private const val KEY_FORCE = "force"
     private const val KEY_HELP = "--help"
     private const val KEY_PACKAGE_NAME = "package-name"
@@ -38,10 +39,12 @@ object NewProject {
             $KEY_APP_NAME=       New app name (i.e., MyApp, "My App", "my-app")
             $KEY_TEMPLATE=       Template (i.e., $TEMPLATE_XML, $TEMPLATE_COMPOSE)
             $KEY_FORCE=          Force project creation even if the script fails (default: false)
+            $KEY_DESTINATION=    Set the output location where the project should be generated (i.e., /Users/johndoe/documents/projectfolder)
         
         Examples:
             kscript new_project.kts $KEY_PACKAGE_NAME=co.myxmlproject.example $KEY_APP_NAME="My XML Project" $KEY_TEMPLATE=$TEMPLATE_XML
             kscript scripts/new_project.kts $KEY_PACKAGE_NAME=co.myxmlproject.example $KEY_APP_NAME="My XML Project" $KEY_TEMPLATE=$TEMPLATE_XML $KEY_FORCE=true
+            kscript scripts/new_project.kts $KEY_PACKAGE_NAME=co.myxmlproject.example $KEY_APP_NAME="My XML Project" $KEY_TEMPLATE=$TEMPLATE_XML $KEY_FORCE=true $KEY_DESTINATION=/Users/johndoe/documents/projectfolder
     """.trimIndent()
 
     private val modules = listOf("app", "data", "domain")
@@ -64,10 +67,12 @@ object NewProject {
 
     private var packageName = ""
 
+    private var destination = rootPath
+
     private var projectFolderName: String = ""
 
     private val projectPath: String
-        get() = rootPath + projectFolderName
+        get() = destination + projectFolderName
 
     private val rootPath: String
         get() = System.getProperty("user.dir").let { userDir ->
@@ -149,6 +154,10 @@ object NewProject {
                     val (key, value) = arg.split(DELIMITER_ARGUMENT)
                     forceProjectCreation = value.toBoolean()
                 }
+                arg.startsWith("$KEY_DESTINATION$DELIMITER_ARGUMENT") -> {
+                    val (key, value) = arg.split(DELIMITER_ARGUMENT)
+                    validateDestination(value)
+                }
                 else -> {
                     showMessage(
                         message = "ERROR: Invalid argument name: $arg \n$helpMessage",
@@ -207,6 +216,18 @@ object NewProject {
         } else {
             showMessage(
                 message = "Error: Invalid Template: $value (can either be $TEMPLATE_XML or $TEMPLATE_COMPOSE) \n$helpMessage",
+                exitAfterMessage = true,
+                isError = true,
+            )
+        }
+    }
+
+    private fun validateDestination(value: String) {
+        if (value.isNotBlank()) {
+            destination = "${value.trim()}$SEPARATOR_SLASH"
+        } else {
+            showMessage(
+                message = "Error: Invalid Destination: destination cannot be blank \n$helpMessage",
                 exitAfterMessage = true,
                 isError = true,
             )
