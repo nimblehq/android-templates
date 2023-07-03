@@ -65,45 +65,28 @@ tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
 koverMerged {
     enable()
 
-    val generatedFiles = setOf(
-        "*.R.class",
-        "*.R\$*.class",
-        "*.*\$ViewBinder*.*",
-        "*.*\$InjectAdapter*.*",
-        "*.*Injector*.*",
+    val excludedFiles = listOf(
         "*.BuildConfig.*",
         "*.BuildConfig",
-        "*.Manifest*.*",
-        "*.*_ViewBinding*.*",
-        "*.*Adapter*.*",
-        "*.*Test*.*",
         // Enum
         "*.*\$Creator*",
-        // Nav Component
-        "*.*_Factory*",
-        "*.*FragmentArgs*",
-        "*.*FragmentDirections*",
-        "*.FragmentNavArgsLazy.kt",
-        "*.*Fragment*navArgs*",
-        "*.*ModuleDeps*.*",
-        "*.*NavGraphDirections*",
+        // DI
+        "*.di.*",
         // Hilt
         "*.*_ComponentTreeDeps*",
         "*.*_HiltComponents*",
         "*.*_HiltModules*",
         "*.*_MembersInjector*",
-        "*.Hilt_*"
-    )
-
-    val excludedPackages = setOf(
-        "com.bumptech.glide.*",
+        "*.*_Factory*",
+        "*.Hilt_*",
         "dagger.hilt.internal.*",
         "hilt_aggregated_deps.*",
-        "co.nimblehq.template.compose.databinding.*",
-        "co.nimblehq.template.compose.di.*"
+        // Jetpack Compose
+        "*.ComposableSingletons*",
+        "*.*\$*Preview\$*",
+        "*.ui.preview.*",
     )
 
-    val excludedFiles = generatedFiles + excludedPackages
     filters {
         classes {
             excludes += excludedFiles

@@ -8,11 +8,9 @@ import co.nimblehq.sample.compose.test.CoroutineTestRule
 import co.nimblehq.sample.compose.ui.AppDestination
 import co.nimblehq.sample.compose.util.DispatchersProvider
 import io.kotest.matchers.shouldBe
-import io.mockk.every
-import io.mockk.mockk
+import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.test.*
 import org.junit.*
 
@@ -29,11 +27,13 @@ class HomeViewModelTest {
     private lateinit var viewModel: HomeViewModel
 
     private val models = listOf(Model(1), Model(2), Model(3))
+    private val isFirstTimeLaunch = false
 
     @Before
     fun setUp() {
         every { mockGetModelsUseCase() } returns flowOf(models)
-        every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flowOf(false)
+        every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flowOf(isFirstTimeLaunch)
+        coEvery { mockUpdateFirstTimeLaunchPreferencesUseCase(any()) } just Runs
 
         initViewModel()
     }
@@ -78,12 +78,44 @@ class HomeViewModelTest {
         }
     }
 
+    @Test
+    fun `When initializing the ViewModel, it emits whether the app is launched for the first time accordingly`() =
+        runTest {
+            viewModel.isFirstTimeLaunch.first() shouldBe isFirstTimeLaunch
+        }
+
+    @Test
+    fun `When initializing the ViewModel and isFirstTimeLaunchPreferencesUseCase returns error, it shows the corresponding error`() =
+        runTest {
+            val error = Exception()
+            every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flow { throw error }
+
+            initViewModel(dispatchers = CoroutineTestRule(StandardTestDispatcher()).testDispatcherProvider)
+
+            viewModel.error.test {
+                advanceUntilIdle()
+
+                expectMostRecentItem() shouldBe error
+            }
+        }
+
+    @Test
+    fun `When launching the app for the first time, it executes the use case and emits value accordingly`() =
+        runTest {
+            viewModel.onFirstTimeLaunch()
+
+            coVerify(exactly = 1) {
+                mockUpdateFirstTimeLaunchPreferencesUseCase(false)
+            }
+            viewModel.isFirstTimeLaunch.first() shouldBe false
+        }
+
     private fun initViewModel(dispatchers: DispatchersProvider = coroutinesRule.testDispatcherProvider) {
         viewModel = HomeViewModel(
-            dispatchers,
             mockGetModelsUseCase,
             mockIsFirstTimeLaunchPreferencesUseCase,
-            mockUpdateFirstTimeLaunchPreferencesUseCase
+            mockUpdateFirstTimeLaunchPreferencesUseCase,
+            dispatchers
         )
     }
 }

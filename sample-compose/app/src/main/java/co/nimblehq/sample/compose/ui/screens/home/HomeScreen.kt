@@ -38,7 +38,8 @@ fun HomeScreen(
 
     LaunchedEffect(isFirstTimeLaunch) {
         if (isFirstTimeLaunch) {
-            context.showToast("This is the first time launch")
+            context.showToast(context.getString(R.string.message_first_time_launch))
+            viewModel.onFirstTimeLaunch()
         }
     }
 

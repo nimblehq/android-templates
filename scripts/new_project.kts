@@ -6,6 +6,8 @@ object NewProject {
     private const val DELIMITER_ARGUMENT = "="
 
     private const val KEY_APP_NAME = "app-name"
+    private const val KEY_DESTINATION = "destination"
+    private const val KEY_FORCE = "force"
     private const val KEY_HELP = "--help"
     private const val KEY_PACKAGE_NAME = "package-name"
     private const val KEY_TEMPLATE = "template"
@@ -36,10 +38,13 @@ object NewProject {
             $KEY_PACKAGE_NAME=   New package name (i.e., com.example.package)
             $KEY_APP_NAME=       New app name (i.e., MyApp, "My App", "my-app")
             $KEY_TEMPLATE=       Template (i.e., $TEMPLATE_XML, $TEMPLATE_COMPOSE)
+            $KEY_FORCE=          Force project creation even if the script fails (default: false)
+            $KEY_DESTINATION=    Set the output location where the project should be generated (i.e., /Users/johndoe/documents/projectfolder)
         
         Examples:
             kscript new_project.kts $KEY_PACKAGE_NAME=co.myxmlproject.example $KEY_APP_NAME="My XML Project" $KEY_TEMPLATE=$TEMPLATE_XML
-            kscript scripts/new_project.kts $KEY_PACKAGE_NAME=co.myxmlproject.example $KEY_APP_NAME="My XML Project" $KEY_TEMPLATE=$TEMPLATE_XML
+            kscript scripts/new_project.kts $KEY_PACKAGE_NAME=co.myxmlproject.example $KEY_APP_NAME="My XML Project" $KEY_TEMPLATE=$TEMPLATE_XML $KEY_FORCE=true
+            kscript scripts/new_project.kts $KEY_PACKAGE_NAME=co.myxmlproject.example $KEY_APP_NAME="My XML Project" $KEY_TEMPLATE=$TEMPLATE_XML $KEY_FORCE=true $KEY_DESTINATION=/Users/johndoe/documents/projectfolder
     """.trimIndent()
 
     private val modules = listOf("app", "data", "domain")
@@ -58,12 +63,16 @@ object NewProject {
             }
         }
 
+    private var forceProjectCreation = false
+
     private var packageName = ""
+
+    private var destination = rootPath
 
     private var projectFolderName: String = ""
 
     private val projectPath: String
-        get() = rootPath + projectFolderName
+        get() = destination + projectFolderName
 
     private val rootPath: String
         get() = System.getProperty("user.dir").let { userDir ->
@@ -141,6 +150,14 @@ object NewProject {
                     validateTemplate(value)
                     hasTemplate = true
                 }
+                arg.startsWith("$KEY_FORCE$DELIMITER_ARGUMENT") -> {
+                    val (key, value) = arg.split(DELIMITER_ARGUMENT)
+                    forceProjectCreation = value.toBoolean()
+                }
+                arg.startsWith("$KEY_DESTINATION$DELIMITER_ARGUMENT") -> {
+                    val (key, value) = arg.split(DELIMITER_ARGUMENT)
+                    validateDestination(value)
+                }
                 else -> {
                     showMessage(
                         message = "ERROR: Invalid argument name: $arg \n$helpMessage",
@@ -199,6 +216,18 @@ object NewProject {
         } else {
             showMessage(
                 message = "Error: Invalid Template: $value (can either be $TEMPLATE_XML or $TEMPLATE_COMPOSE) \n$helpMessage",
+                exitAfterMessage = true,
+                isError = true,
+            )
+        }
+    }
+
+    private fun validateDestination(value: String) {
+        if (value.isNotBlank()) {
+            destination = "${value.trim()}$SEPARATOR_SLASH"
+        } else {
+            showMessage(
+                message = "Error: Invalid Destination: destination cannot be blank \n$helpMessage",
                 exitAfterMessage = true,
                 isError = true,
             )
@@ -375,7 +404,23 @@ object NewProject {
         isError: Boolean = false,
     ) {
         println("\n${if (isError) "❌ " else ""}${message}\n")
-        if (exitAfterMessage) System.exit(exitValue)
+        if (exitAfterMessage) {
+            if (isError) {
+                exitWithError(exitValue)
+            } else {
+                System.exit(exitValue)
+            }
+        }
+    }
+
+    private fun exitWithError(exitValue: Int = 0) {
+        if (!forceProjectCreation && projectFolderName.isNotBlank()) {
+            val file = File(projectPath)
+            if (file.exists()) {
+                file.deleteRecursively()
+            }
+        }
+        System.exit(exitValue)
     }
 
     private fun String.uppercaseEveryFirstCharacter(): String {
