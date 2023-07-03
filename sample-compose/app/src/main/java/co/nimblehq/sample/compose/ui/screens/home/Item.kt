@@ -41,7 +41,7 @@ fun Item(
                 modifier = Modifier
                     .padding(dimensions.spacingNormal)
                     .weight(2f),
-                text = uiModel.userName
+                text = uiModel.username
             )
         }
 

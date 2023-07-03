@@ -7,10 +7,10 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class UiModel(
     val id: String,
-    val userName: String,
+    val username: String,
 ) : Parcelable
 
 fun Model.toUiModel() = UiModel(
     id.toString(),
-    userName.orEmpty(),
+    username.orEmpty(),
 )

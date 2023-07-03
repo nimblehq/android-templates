@@ -7,7 +7,7 @@ object MockUtil {
     val models = listOf(
         Model(
             id = 1,
-            userName = "name1",
+            username = "name1",
         )
     )
 }
