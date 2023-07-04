@@ -7,8 +7,8 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.rule.GrantPermissionRule
 import co.nimblehq.sample.compose.R
-import co.nimblehq.sample.compose.domain.model.Model
 import co.nimblehq.sample.compose.domain.usecase.*
+import co.nimblehq.sample.compose.test.MockUtil
 import co.nimblehq.sample.compose.ui.AppDestination
 import co.nimblehq.sample.compose.ui.screens.BaseScreenTest
 import co.nimblehq.sample.compose.ui.screens.MainActivity
@@ -49,9 +49,7 @@ class HomeScreenTest : BaseScreenTest() {
 
     @Before
     fun setUp() {
-        every { mockGetModelsUseCase() } returns flowOf(
-            listOf(Model(1), Model(2), Model(3))
-        )
+        every { mockGetModelsUseCase() } returns flowOf(MockUtil.models)
         every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flowOf(false)
         coEvery { mockUpdateFirstTimeLaunchPreferencesUseCase(any()) } just Runs
     }

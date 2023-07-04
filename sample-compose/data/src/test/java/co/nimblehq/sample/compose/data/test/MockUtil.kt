@@ -29,4 +29,11 @@ object MockUtil {
     val errorResponse = ErrorResponse(
         message = "message"
     )
+
+    val responses = listOf(
+        co.nimblehq.sample.compose.data.response.Response(
+            id = 1,
+            userName = "name1",
+        )
+    )
 }

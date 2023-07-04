@@ -5,8 +5,8 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import co.nimblehq.template.compose.R
-import co.nimblehq.template.compose.domain.model.Model
 import co.nimblehq.template.compose.domain.usecase.UseCase
+import co.nimblehq.template.compose.test.MockUtil
 import co.nimblehq.template.compose.ui.AppDestination
 import co.nimblehq.template.compose.ui.screens.BaseScreenTest
 import co.nimblehq.template.compose.ui.screens.MainActivity
@@ -35,9 +35,7 @@ class HomeScreenTest : BaseScreenTest() {
 
     @Before
     fun setUp() {
-        every { mockUseCase() } returns flowOf(
-            listOf(Model(1), Model(2), Model(3))
-        )
+        every { mockUseCase() } returns flowOf(MockUtil.models)
     }
 
     @Test
