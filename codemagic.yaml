@@ -10,27 +10,57 @@ definitions:
       name: Run detekt static code analysis
       script: ./gradlew detekt
       ignore_failure: true
-    - &unit-test
+    - &detekt_on_template_compose
+      name: Run detekt on template-compose
+      working_directory: ./template-compose
+      script: *detekt
+    - &detekt_on_template_xml
+      name: Run detekt on template-xml
+      working_directory: ./template-xml
+      script: *detekt
+    - &unit_test
       name: Run unit tests and generate coverage report using Kover
       script: ./gradlew koverMergedReport
-  artifacts: &artifacts
-    artifacts:
-      - app/build/reports/jacoco/jacocoTestReport/
+    - &unit_test_on_template_compose
+      name: Run unit tests on template-compose
+      working_directory: ./template-compose
+      script: *unit_test
+    - &unit_test_on_template_xml
+      name: Run unit tests on template-xml
+      working_directory: ./template-xml
+      script: *unit_test
+  artifacts:
+    - &artifacts_template_compose template-compose/build/reports/kover/merged/
+    - &artifacts_template_xml template-xml/build/reports/kover/merged/
 workflows:
-  unit-test-on-pr:
-    name: Unit test on PR
+  unit-test-on-pr-for-template-compose:
+    name: Unit test on PR for template-compose
     <<: *configure_environment
     triggering:
       events:
         - pull_request
       cancel_previous_builds: true
     scripts:
-      - *detekt
-      - *unit-test
-    <<: *artifacts
+      - *detekt_on_template_compose
+      - *unit_test_on_template_compose
+    artifacts:
+      - *artifacts_template_compose
 
-  unit-test-on-push:
-    name: Unit test on push
+  unit-test-on-pr-for-template-xml:
+    name: Unit test on PR for template-xml
+    <<: *configure_environment
+    triggering:
+      events:
+        - pull_request
+      cancel_previous_builds: true
+    scripts:
+      - *detekt_on_template_xml
+      - *unit_test_on_template_xml
+    artifacts:
+      - *artifacts_template_xml
+
+  unit-test-on-push-for-template-compose:
+    name: Unit test on push for template-compose
     <<: *configure_environment
     triggering:
       events:
@@ -47,6 +77,30 @@ workflows:
           include: false
       cancel_previous_builds: true
     scripts:
-      - *detekt
-      - *unit-test
-    <<: *artifacts
+      - *detekt_on_template_compose
+      - *unit_test_on_template_compose
+    artifacts:
+      - *artifacts_template_compose
+
+  unit-test-on-push-for-template-xml:
+    name: Unit test on push for template-xml
+    <<: *configure_environment
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: '*'
+        - pattern: develop
+          include: false
+        - pattern: 'release/**'
+          include: false
+        - pattern: 'hotfix/**'
+          include: false
+        - pattern: master
+          include: false
+      cancel_previous_builds: true
+    scripts:
+      - *detekt_on_template_xml
+      - *unit_test_on_template_xml
+    artifacts:
+      - *artifacts_template_xml
