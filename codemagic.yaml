@@ -6,29 +6,24 @@ definitions:
       cache_paths:
         - $HOME/.gradle/caches
   scripts:
-    - &detekt
-      name: Run detekt static code analysis
-      script: ./gradlew detekt
-      ignore_failure: true
     - &detekt_on_template_compose
       name: Run detekt on template-compose
       working_directory: ./template-compose
-      script: *detekt
+      script: ./gradlew detekt
+      ignore_failure: true
     - &detekt_on_template_xml
       name: Run detekt on template-xml
       working_directory: ./template-xml
-      script: *detekt
-    - &unit_test
-      name: Run unit tests and generate coverage report using Kover
-      script: ./gradlew koverMergedReport
+      script: ./gradlew detekt
+      ignore_failure: true
     - &unit_test_on_template_compose
       name: Run unit tests on template-compose
       working_directory: ./template-compose
-      script: *unit_test
+      script: ./gradlew koverMergedReport
     - &unit_test_on_template_xml
       name: Run unit tests on template-xml
       working_directory: ./template-xml
-      script: *unit_test
+      script: ./gradlew koverMergedReport
   artifacts:
     - &artifacts_template_compose template-compose/build/reports/kover/merged/
     - &artifacts_template_xml template-xml/build/reports/kover/merged/
