@@ -13,6 +13,13 @@ plugins {
 }
 
 val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
+val getVersionCode: () -> Int = {
+    if (project.hasProperty("versionCode")) {
+        (project.property("versionCode") as String).toInt()
+    } else {
+        Versions.ANDROID_VERSION_CODE
+    }
+}
 
 android {
     signingConfigs {
@@ -37,7 +44,7 @@ android {
         applicationId = "co.nimblehq.template.compose"
         minSdk = Versions.ANDROID_MIN_SDK_VERSION
         targetSdk = Versions.ANDROID_TARGET_SDK_VERSION
-        versionCode = Versions.ANDROID_VERSION_CODE
+        versionCode = getVersionCode()
         versionName = Versions.ANDROID_VERSION_NAME
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

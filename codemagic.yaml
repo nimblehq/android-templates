@@ -22,14 +22,6 @@ definitions:
       name: Run unit tests on template-xml
       working_directory: ./template-xml
       script: ./gradlew koverMergedReport
-    - &build_apk_staging_on_template_compose
-      name: Build APK for staging
-      working_directory: ./template-compose
-      script: ./gradlew assembleStagingDebug
-    - &build_apk_production_on_template_compose
-      name: Build APK for production
-      working_directory: ./template-compose
-      script: ./gradlew assembleProductionDebug
   artifacts:
     - &artifacts_template_compose template-compose/build/reports/kover/merged/
     - &artifacts_template_xml template-xml/build/reports/kover/merged/
@@ -86,6 +78,7 @@ workflows:
     environment:
       groups:
         - firebase_credentials
+        - build_configure
     triggering:
       events:
         - push
@@ -95,13 +88,16 @@ workflows:
     scripts:
       - *detekt_on_template_compose
       - *unit_test_on_template_compose
-      - *build_apk_staging_on_template_compose
+      - name: Build APK for staging
+        working_directory: ./template-compose
+        script: |
+          ./gradlew assembleStagingDebug -PversionCode=$BUILD_NUMBER
     artifacts:
-      - *artifacts_template_xml
+      - *artifacts_template_compose
       - *artifacts_staging_apk
     publishing:
       firebase:
-        firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
+        firebase_service_account: $FIREBASE_SERVICE_ACCOUNT_CREDENTIALS
         android:
           app_id: 1:215362241811:android:51e902760fcff1243446e6
           groups:
@@ -114,6 +110,7 @@ workflows:
     environment:
       groups:
         - firebase_credentials
+        - build_configure
     triggering:
       events:
         - push
@@ -123,13 +120,16 @@ workflows:
     scripts:
       - *detekt_on_template_compose
       - *unit_test_on_template_compose
-      - *build_apk_production_on_template_compose
+      - name: Build APK for production
+        working_directory: ./template-compose
+        script: |
+          ./gradlew assembleProductionDebug -PversionCode=$BUILD_NUMBER
     artifacts:
-      - *artifacts_template_xml
+      - *artifacts_template_compose
       - *artifacts_production_apk
     publishing:
       firebase:
-        firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
+        firebase_service_account: $FIREBASE_SERVICE_ACCOUNT_CREDENTIALS
         android:
           app_id: 1:215362241811:android:f4f209cd4a5f3d5b3446e6
           groups:
