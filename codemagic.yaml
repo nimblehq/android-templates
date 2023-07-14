@@ -10,12 +10,10 @@ definitions:
       name: Run detekt on template-compose
       working_directory: ./template-compose
       script: ./gradlew detekt
-      ignore_failure: true
     - &detekt_on_template_xml
       name: Run detekt on template-xml
       working_directory: ./template-xml
       script: ./gradlew detekt
-      ignore_failure: true
     - &unit_test_on_template_compose
       name: Run unit tests on template-compose
       working_directory: ./template-compose
