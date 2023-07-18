@@ -1,7 +1,7 @@
 definitions:
   configure_environment: &configure_environment
     instance_type: mac_mini_m1
-    max_build_duration: 60
+    max_build_duration: 30
     cache:
       cache_paths:
         - $HOME/.gradle/caches
@@ -31,7 +31,16 @@ workflows:
     <<: *configure_environment
     triggering:
       events:
+        # run when a pull request is opened or updated
         - pull_request
+      branch_patterns:
+        # review changes BEFORE they’re merged into any branches
+        - pattern: '*'
+          source: false
+        # review changes AFTER they have been merged into develop branch
+        - pattern: 'develop'
+        # review changes AFTER they have been merged into main branch
+        - pattern: 'main'
       cancel_previous_builds: true
     scripts:
       - *detekt_on_template_compose
@@ -44,53 +53,16 @@ workflows:
     <<: *configure_environment
     triggering:
       events:
+        # run when a pull request is opened or updated
         - pull_request
-      cancel_previous_builds: true
-    scripts:
-      - *detekt_on_template_xml
-      - *unit_test_on_template_xml
-    artifacts:
-      - *artifacts_template_xml
-
-  unit-test-on-push-for-template-compose:
-    name: Unit test on push for template-compose
-    <<: *configure_environment
-    triggering:
-      events:
-        - push
       branch_patterns:
+        # review changes BEFORE they’re merged into any branches
         - pattern: '*'
-        - pattern: develop
-          include: false
-        - pattern: 'release/**'
-          include: false
-        - pattern: 'hotfix/**'
-          include: false
-        - pattern: master
-          include: false
-      cancel_previous_builds: true
-    scripts:
-      - *detekt_on_template_compose
-      - *unit_test_on_template_compose
-    artifacts:
-      - *artifacts_template_compose
-
-  unit-test-on-push-for-template-xml:
-    name: Unit test on push for template-xml
-    <<: *configure_environment
-    triggering:
-      events:
-        - push
-      branch_patterns:
-        - pattern: '*'
-        - pattern: develop
-          include: false
-        - pattern: 'release/**'
-          include: false
-        - pattern: 'hotfix/**'
-          include: false
-        - pattern: master
-          include: false
+          source: false
+        # review changes AFTER they have been merged into develop branch
+        - pattern: 'develop'
+        # review changes AFTER they have been merged into main branch
+        - pattern: 'main'
       cancel_previous_builds: true
     scripts:
       - *detekt_on_template_xml
