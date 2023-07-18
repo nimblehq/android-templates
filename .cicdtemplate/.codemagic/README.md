@@ -21,14 +21,14 @@ to [this document](https://docs.codemagic.io/yaml-basic-configuration/configurin
    at `Authenticating via service account` which is recommended.
 3. Update the script on `app_id` and tester `groups` in `codemagic.yaml` file:
 
-```yaml
-  publishing:
-  firebase:
-     firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
-     android:
-        app_id: x:xxxxxxxxxxxx:android:xxxxxxxxxxxxxxxxxxxxxx
-        groups:
-           - androidTesters
-           - ...
-        artifact_type: 'apk' # Replace with 'aab' to only publish the Android app bundle
-```
+   ```yaml
+     publishing:
+     firebase:
+        firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
+        android:
+           app_id: x:xxxxxxxxxxxx:android:xxxxxxxxxxxxxxxxxxxxxx
+           groups:
+              - androidTesters
+              - ...
+           artifact_type: 'apk' # Replace with 'aab' to only publish the Android app bundle
+   ```
