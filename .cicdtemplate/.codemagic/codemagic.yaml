@@ -39,10 +39,12 @@ workflows:
         # review changes BEFORE they’re merged into any branches
         - pattern: '*'
           source: false
-        # review changes AFTER they have been merged into develop branch
+        # will not run on develop branch as it is already covered by build-and-deploy-template-compose-staging
         - pattern: 'develop'
-        # review changes AFTER they have been merged into main branch
+          include: false
+        # # will not run on main branch as it is already covered by build-and-deploy-template-compose-production
         - pattern: 'main'
+          include: false
       cancel_previous_builds: true
     scripts:
       - *detekt_on_template_compose
@@ -61,10 +63,12 @@ workflows:
         # review changes BEFORE they’re merged into any branches
         - pattern: '*'
           source: false
-        # review changes AFTER they have been merged into develop branch
+        # will not run on develop branch as it is already covered by build-and-deploy-template-compose-staging
         - pattern: 'develop'
-        # review changes AFTER they have been merged into main branch
+          include: false
+        # # will not run on main branch as it is already covered by build-and-deploy-template-compose-production
         - pattern: 'main'
+          include: false
       cancel_previous_builds: true
     scripts:
       - *detekt_on_template_xml
@@ -84,7 +88,6 @@ workflows:
         - push
       branch_patterns:
         - pattern: develop
-        - pattern: main
     scripts:
       - *detekt_on_template_compose
       - *unit_test_on_template_compose
@@ -115,7 +118,6 @@ workflows:
       events:
         - push
       branch_patterns:
-        - pattern: develop
         - pattern: main
     scripts:
       - *detekt_on_template_compose
