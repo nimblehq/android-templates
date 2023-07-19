@@ -44,8 +44,8 @@ jobs:
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
           GOOGLE_SERVICES_JSON_STAGING: ${{ secrets.GOOGLE_SERVICES_JSON_STAGING }}
         run: |
-          mkdir -p template-compose/app
-          echo $GOOGLE_SERVICES_JSON > template-compose/app/google-services.json
+          mkdir -p template-compose/app/src/production
+          echo $GOOGLE_SERVICES_JSON > template-compose/app/src/production/google-services.json
           mkdir -p template-compose/app/src/staging
           echo $GOOGLE_SERVICES_JSON_STAGING > template-compose/app/src/staging/google-services.json
 

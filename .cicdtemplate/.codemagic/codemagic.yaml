@@ -3,6 +3,9 @@ definitions:
     # This running machine can be changed depends on the billing plan: https://docs.codemagic.io/knowledge-codemagic/machine-type/
     instance_type: mac_mini_m1
     max_build_duration: 30
+    environment:
+      groups:
+        - firebase_credentials
     cache:
       cache_paths:
         - $HOME/.gradle/caches
@@ -10,8 +13,8 @@ definitions:
     - &set_up_google_services_files_from_environment_variables
       name: Set up google-services.json on template-compose
       script: |
-        mkdir -p template-compose/app/
-        echo $GOOGLE_SERVICES_JSON > template-compose/app/google-services.json
+        mkdir -p template-compose/app/src/production
+        echo $GOOGLE_SERVICES_JSON > template-compose/app/src/production/google-services.json
         mkdir -p template-compose/app/src/staging
         echo $GOOGLE_SERVICES_JSON_STAGING > template-compose/app/src/staging/google-services.json
     - &detekt_on_template_compose
@@ -88,9 +91,6 @@ workflows:
   build-and-deploy-template-compose-staging:
     name: Build and deploy template-compose staging to Firebase App Distribution
     <<: *configure_environment
-    environment:
-      groups:
-        - firebase_credentials
     triggering:
       events:
         - push
@@ -111,7 +111,7 @@ workflows:
       firebase:
         firebase_service_account: $FIREBASE_SERVICE_ACCOUNT_CREDENTIALS
         android:
-          app_id: 1:215362241811:android:51e902760fcff1243446e6
+          app_id: $FIREBASE_APP_ID_STAGING
           groups:
             - android-chapter
           artifact_type: 'apk'
@@ -119,9 +119,6 @@ workflows:
   build-and-deploy-template-compose-production:
     name: Build and deploy template-compose production to Firebase App Distribution
     <<: *configure_environment
-    environment:
-      groups:
-        - firebase_credentials
     triggering:
       events:
         - push
@@ -142,7 +139,7 @@ workflows:
       firebase:
         firebase_service_account: $FIREBASE_SERVICE_ACCOUNT_CREDENTIALS
         android:
-          app_id: 1:215362241811:android:f4f209cd4a5f3d5b3446e6
+          app_id: $FIREBASE_APP_ID_PRODUCTION
           groups:
             - android-chapter
           artifact_type: 'apk'

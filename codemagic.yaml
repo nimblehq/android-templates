@@ -13,8 +13,8 @@ definitions:
     - &set_up_google_services_files_from_environment_variables
       name: Set up google-services.json on template-compose
       script: |
-        mkdir -p template-compose/app/
-        echo $GOOGLE_SERVICES_JSON > template-compose/app/google-services.json
+        mkdir -p template-compose/app/src/production
+        echo $GOOGLE_SERVICES_JSON > template-compose/app/src/production/google-services.json
         mkdir -p template-compose/app/src/staging
         echo $GOOGLE_SERVICES_JSON_STAGING > template-compose/app/src/staging/google-services.json
     - &detekt_on_template_compose
@@ -111,7 +111,7 @@ workflows:
       firebase:
         firebase_service_account: $FIREBASE_SERVICE_ACCOUNT_CREDENTIALS
         android:
-          app_id: 1:215362241811:android:51e902760fcff1243446e6
+          app_id: $FIREBASE_APP_ID_STAGING
           groups:
             - android-chapter
           artifact_type: 'apk'
@@ -139,7 +139,7 @@ workflows:
       firebase:
         firebase_service_account: $FIREBASE_SERVICE_ACCOUNT_CREDENTIALS
         android:
-          app_id: 1:215362241811:android:f4f209cd4a5f3d5b3446e6
+          app_id: $FIREBASE_APP_ID_PRODUCTION
           groups:
             - android-chapter
           artifact_type: 'apk'
