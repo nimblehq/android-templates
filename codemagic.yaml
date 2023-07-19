@@ -3,6 +3,9 @@ definitions:
     # This running machine can be changed depends on the billing plan: https://docs.codemagic.io/knowledge-codemagic/machine-type/
     instance_type: mac_mini_m1
     max_build_duration: 30
+    environment:
+      groups:
+        - firebase_credentials
     cache:
       cache_paths:
         - $HOME/.gradle/caches
@@ -88,9 +91,6 @@ workflows:
   build-and-deploy-template-compose-staging:
     name: Build and deploy template-compose staging to Firebase App Distribution
     <<: *configure_environment
-    environment:
-      groups:
-        - firebase_credentials
     triggering:
       events:
         - push
@@ -119,9 +119,6 @@ workflows:
   build-and-deploy-template-compose-production:
     name: Build and deploy template-compose production to Firebase App Distribution
     <<: *configure_environment
-    environment:
-      groups:
-        - firebase_credentials
     triggering:
       events:
         - push
