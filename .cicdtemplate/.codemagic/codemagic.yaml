@@ -11,36 +11,25 @@ definitions:
         - $HOME/.gradle/caches
   scripts:
     - &set_up_google_services_files_from_environment_variables
-      name: Set up google-services.json on template-compose
+      name: Set up google-services.json files
       script: |
-        mkdir -p template-compose/app/src/production
-        echo $GOOGLE_SERVICES_JSON > template-compose/app/src/production/google-services.json
-        mkdir -p template-compose/app/src/staging
-        echo $GOOGLE_SERVICES_JSON_STAGING > template-compose/app/src/staging/google-services.json
-    - &detekt_on_template_compose
-      name: Run detekt on template-compose
-      working_directory: ./template-compose
+        mkdir -p app/src/production
+        echo $GOOGLE_SERVICES_JSON > app/src/production/google-services.json
+        mkdir -p app/src/staging
+        echo $GOOGLE_SERVICES_JSON_STAGING > app/src/staging/google-services.json
+    - &detekt
+      name: Run detekt
       script: ./gradlew detekt
-    - &detekt_on_template_xml
-      name: Run detekt on template-xml
-      working_directory: ./template-xml
-      script: ./gradlew detekt
-    - &unit_test_on_template_compose
-      name: Run unit tests on template-compose
-      working_directory: ./template-compose
-      script: ./gradlew koverMergedReport
-    - &unit_test_on_template_xml
-      name: Run unit tests on template-xml
-      working_directory: ./template-xml
+    - &unit_test
+      name: Run unit tests
       script: ./gradlew koverMergedReport
   artifacts:
-    - &artifacts_template_compose template-compose/build/reports/kover/merged/
-    - &artifacts_template_xml template-xml/build/reports/kover/merged/
-    - &artifacts_staging_apk template-compose/app/build/outputs/apk/staging/debug/app-staging-debug.apk
-    - &artifacts_production_apk template-compose/app/build/outputs/apk/production/debug/app-production-debug.apk
+    - &artifacts_test_report build/reports/kover/merged/
+    - &artifacts_staging_apk app/build/outputs/apk/staging/debug/app-staging-debug.apk
+    - &artifacts_production_apk app/build/outputs/apk/production/debug/app-production-debug.apk
 workflows:
-  unit-test-on-pr-for-template-compose:
-    name: Unit test on PR for template-compose
+  unit-test-on-pr:
+    name: Unit test on PR
     <<: *configure_environment
     triggering:
       events:
@@ -59,37 +48,13 @@ workflows:
       cancel_previous_builds: true
     scripts:
       - *set_up_google_services_files_from_environment_variables
-      - *detekt_on_template_compose
-      - *unit_test_on_template_compose
+      - *detekt
+      - *unit_test
     artifacts:
-      - *artifacts_template_compose
+      - *artifacts_test_report
 
-  unit-test-on-pr-for-template-xml:
-    name: Unit test on PR for template-xml
-    <<: *configure_environment
-    triggering:
-      events:
-        # Run when a pull request is opened or updated
-        - pull_request
-      branch_patterns:
-        # Review changes BEFORE they’re merged into any branches
-        - pattern: '*'
-          source: false
-        # Will not run on develop branch as it is already covered by build-and-deploy-template-compose-staging
-        - pattern: 'develop'
-          include: false
-        # Will not run on main branch as it is already covered by build-and-deploy-template-compose-production
-        - pattern: 'main'
-          include: false
-      cancel_previous_builds: true
-    scripts:
-      - *detekt_on_template_xml
-      - *unit_test_on_template_xml
-    artifacts:
-      - *artifacts_template_xml
-
-  build-and-deploy-template-compose-staging:
-    name: Build and deploy template-compose staging to Firebase App Distribution
+  build-and-deploy-staging:
+    name: Build and deploy staging to Firebase App Distribution
     <<: *configure_environment
     triggering:
       events:
@@ -98,14 +63,13 @@ workflows:
         - pattern: develop
     scripts:
       - *set_up_google_services_files_from_environment_variables
-      - *detekt_on_template_compose
-      - *unit_test_on_template_compose
+      - *detekt
+      - *unit_test
       - name: Build APK for staging
-        working_directory: ./template-compose
         script: |
           ./gradlew assembleStagingDebug -PversionCode=$BUILD_NUMBER
     artifacts:
-      - *artifacts_template_compose
+      - *artifacts_test_report
       - *artifacts_staging_apk
     publishing:
       firebase:
@@ -116,8 +80,8 @@ workflows:
             - android-chapter
           artifact_type: 'apk'
 
-  build-and-deploy-template-compose-production:
-    name: Build and deploy template-compose production to Firebase App Distribution
+  build-and-deploy-production:
+    name: Build and deploy production to Firebase App Distribution
     <<: *configure_environment
     triggering:
       events:
@@ -126,14 +90,13 @@ workflows:
         - pattern: main
     scripts:
       - *set_up_google_services_files_from_environment_variables
-      - *detekt_on_template_compose
-      - *unit_test_on_template_compose
+      - *detekt
+      - *unit_test
       - name: Build APK for production
-        working_directory: ./template-compose
         script: |
           ./gradlew assembleProductionDebug -PversionCode=$BUILD_NUMBER
     artifacts:
-      - *artifacts_template_compose
+      - *artifacts_test_report
       - *artifacts_production_apk
     publishing:
       firebase:
