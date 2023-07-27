@@ -9,6 +9,7 @@ jobs:
     name: Review pull request
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    environment: template-compose
     steps:
       - name: Set up JDK 11
         uses: actions/setup-java@v2
@@ -45,6 +46,16 @@ jobs:
         run: ./gradlew koverMergedXmlReport
 
       # template-compose
+
+      - name: Set up google-services.json on template-compose
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+          GOOGLE_SERVICES_JSON_STAGING: ${{ secrets.GOOGLE_SERVICES_JSON_STAGING }}
+        run: |
+          mkdir -p template-compose/app/src/production
+          echo $GOOGLE_SERVICES_JSON > template-compose/app/src/production/google-services.json
+          mkdir -p template-compose/app/src/staging
+          echo $GOOGLE_SERVICES_JSON_STAGING > template-compose/app/src/staging/google-services.json
 
       - name: Run Detekt on template-compose
         working-directory: ./template-compose
