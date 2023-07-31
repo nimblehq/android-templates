@@ -1,8 +1,6 @@
 plugins {
     id("com.android.application")
 
-    id("com.google.gms.google-services")
-
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-parcelize")
@@ -141,8 +139,6 @@ dependencies {
     implementation("androidx.compose.material:material")
 
     implementation("androidx.datastore:datastore-preferences:${Versions.ANDROIDX_DATASTORE_PREFERENCES_VERSION}")
-
-    implementation(platform("com.google.firebase:firebase-bom:${Versions.FIREBASE_BOM_VERSION}"))
 
     implementation("androidx.navigation:navigation-compose:${Versions.COMPOSE_NAVIGATION_VERSION}")
     implementation("com.google.accompanist:accompanist-permissions:${Versions.ACCOMPANIST_PERMISSIONS_VERSION}")
