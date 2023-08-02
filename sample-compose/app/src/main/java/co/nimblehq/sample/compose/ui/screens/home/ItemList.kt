@@ -33,7 +33,7 @@ fun ItemList(
 private fun ItemListPreview() {
     ComposeTheme {
         ItemList(
-            uiModels = listOf(UiModel("1"), UiModel("2"), UiModel("3")),
+            uiModels = listOf(UiModel("1", "name1"), UiModel("2", "name2"), UiModel("3", "name3")),
             onItemClick = {},
             onItemLongClick = {}
         )

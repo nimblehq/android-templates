@@ -10,6 +10,7 @@
 ---
 
 A collection of our Android templates:
+
 - XML template: **[template-xml](https://github.com/nimblehq/android-templates/tree/develop/template-xml)**
 - Compose template: **[template-compose](https://github.com/nimblehq/android-templates/tree/develop/template-compose)**
 
@@ -23,6 +24,7 @@ A collection of our Android templates:
 1. Clone or download this repository to your local machine, then extract and open the folder
 2. Run `cd scripts` to get into the scripts directory
 3. Run `kscript new_project.kts` to create a new project with the following arguments:
+
   ```   
     package-name=                      New package name (i.e., com.example.package)
     app-name=                          New app name (i.e., MyApp, "My App", "my-app")
@@ -31,10 +33,19 @@ A collection of our Android templates:
     destination=                       Set the output location where the project should be generated (i.e., /Users/johndoe/documents/projectfolder)
   ```
 
-  Examples: 
-    `kscript new_project.kts package-name=co.myxmlproject.example app-name="My XML Project" template=xml`
-    `kscript scripts/new_project.kts package-name=co.myxmlproject.example app-name="My XML Project" template=xml`
-    `kscript new_project.kts package-name=co.myxmlproject.example app-name="My XML Project" template=xml destination=/Users/johndoe/documents/projectfolder`
+Examples:
+
+```
+  kscript new_project.kts package-name=co.myxmlproject.example app-name="My XML Project" template=xml
+```
+
+```
+  kscript scripts/new_project.kts package-name=co.myxmlproject.example app-name="My XML Project" template=xml
+```
+
+```
+  kscript new_project.kts package-name=co.myxmlproject.example app-name="My XML Project" template=xml destination=/Users/johndoe/documents/projectfolder
+```
 
 4. Update `android_version_code` and `android_version_name` in `template/build.gradle`
 
@@ -49,6 +60,7 @@ This project is Copyright (c) 2014 and onwards Nimble. It is free software and m
 [LICENSE]: /LICENSE
 
 ## About
+
 <a href="https://nimblehq.co/">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://assets.nimblehq.co/logo/dark/logo-dark-text-160.png">

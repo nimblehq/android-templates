@@ -1,0 +1,108 @@
+definitions:
+  configure_environment: &configure_environment
+    # This running machine can be changed depends on the billing plan: https://docs.codemagic.io/knowledge-codemagic/machine-type/
+    instance_type: mac_mini_m1
+    max_build_duration: 30
+    environment:
+      groups:
+        - firebase_credentials
+    cache:
+      cache_paths:
+        - $HOME/.gradle/caches
+  scripts:
+    - &set_up_google_services_files_from_environment_variables
+      name: Set up google-services.json files
+      script: |
+        mkdir -p app/src/production
+        echo $GOOGLE_SERVICES_JSON > app/src/production/google-services.json
+        mkdir -p app/src/staging
+        echo $GOOGLE_SERVICES_JSON_STAGING > app/src/staging/google-services.json
+    - &detekt
+      name: Run detekt
+      script: ./gradlew detekt
+    - &unit_test
+      name: Run unit tests
+      script: ./gradlew koverMergedReport
+  artifacts:
+    - &artifacts_test_report build/reports/kover/merged/
+    - &artifacts_staging_apk app/build/outputs/apk/staging/debug/app-staging-debug.apk
+    - &artifacts_production_apk app/build/outputs/apk/production/debug/app-production-debug.apk
+workflows:
+  unit-test-on-pr:
+    name: Unit test on PR
+    <<: *configure_environment
+    triggering:
+      events:
+        # Run when a pull request is opened or updated
+        - pull_request
+      branch_patterns:
+        # Review changes BEFORE they’re merged into any branches
+        - pattern: '*'
+          source: false
+        # Will not run on develop branch as it is already covered by build-and-deploy-template-compose-staging
+        - pattern: 'develop'
+          include: false
+        # Will not run on main branch as it is already covered by build-and-deploy-template-compose-production
+        - pattern: 'main'
+          include: false
+      cancel_previous_builds: true
+    scripts:
+      - *set_up_google_services_files_from_environment_variables
+      - *detekt
+      - *unit_test
+    artifacts:
+      - *artifacts_test_report
+
+  build-and-deploy-staging:
+    name: Build and deploy staging to Firebase App Distribution
+    <<: *configure_environment
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: develop
+    scripts:
+      - *set_up_google_services_files_from_environment_variables
+      - *detekt
+      - *unit_test
+      - name: Build APK for staging
+        script: |
+          ./gradlew assembleStagingDebug -PversionCode=$BUILD_NUMBER
+    artifacts:
+      - *artifacts_test_report
+      - *artifacts_staging_apk
+    publishing:
+      firebase:
+        firebase_service_account: $FIREBASE_SERVICE_ACCOUNT_CREDENTIALS
+        android:
+          app_id: $FIREBASE_APP_ID_STAGING
+          groups:
+            - android-chapter
+          artifact_type: 'apk'
+
+  build-and-deploy-production:
+    name: Build and deploy production to Firebase App Distribution
+    <<: *configure_environment
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+    scripts:
+      - *set_up_google_services_files_from_environment_variables
+      - *detekt
+      - *unit_test
+      - name: Build APK for production
+        script: |
+          ./gradlew assembleProductionDebug -PversionCode=$BUILD_NUMBER
+    artifacts:
+      - *artifacts_test_report
+      - *artifacts_production_apk
+    publishing:
+      firebase:
+        firebase_service_account: $FIREBASE_SERVICE_ACCOUNT_CREDENTIALS
+        android:
+          app_id: $FIREBASE_APP_ID_PRODUCTION
+          groups:
+            - android-chapter
+          artifact_type: 'apk'

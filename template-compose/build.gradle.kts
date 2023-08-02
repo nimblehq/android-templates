@@ -9,6 +9,7 @@ buildscript {
         classpath("com.android.tools.build:gradle:${Versions.BUILD_GRADLE_VERSION}")
         classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.HILT_VERSION}")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN_VERSION}")
+        classpath("com.google.gms:google-services:${Versions.GOOGLE_SERVICES_VERSION}")
     }
 }
 
@@ -20,8 +21,8 @@ plugins {
 allprojects {
     repositories {
         google()
-        maven(url = "https://jitpack.io")
         mavenCentral()
+        maven { url = uri("https://www.jitpack.io") }
     }
 }
 

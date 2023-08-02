@@ -109,7 +109,7 @@ private fun HomeScreenContent(
 private fun HomeScreenPreview() {
     ComposeTheme {
         HomeScreenContent(
-            uiModels = listOf(UiModel("1"), UiModel("2"), UiModel("3")),
+            uiModels = listOf(UiModel("1", "name1"), UiModel("2", "name2"), UiModel("3", "name3")),
             isLoading = false,
             onItemClick = {},
             onItemLongClick = {}

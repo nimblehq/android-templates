@@ -38,6 +38,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: Set up google-services.json files
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+          GOOGLE_SERVICES_JSON_STAGING: ${{ secrets.GOOGLE_SERVICES_JSON_STAGING }}
+        run: |
+          mkdir -p app/src/production
+          echo $GOOGLE_SERVICES_JSON > app/src/production/google-services.json
+          mkdir -p app/src/staging
+          echo $GOOGLE_SERVICES_JSON_STAGING > app/src/staging/google-services.json
+
       - name: Run Detekt
         run: ./gradlew detekt
 

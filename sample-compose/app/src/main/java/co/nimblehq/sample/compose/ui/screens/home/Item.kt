@@ -30,12 +30,21 @@ fun Item(
                 onLongClick = { expanded = true }
             )
     ) {
-        Text(
-            modifier = Modifier
-                .padding(dimensions.spacingNormal)
-                .fillMaxWidth(0.8f),
-            text = uiModel.id
-        )
+        Row {
+            Text(
+                modifier = Modifier
+                    .padding(dimensions.spacingNormal)
+                    .weight(1f),
+                text = uiModel.id
+            )
+            Text(
+                modifier = Modifier
+                    .padding(dimensions.spacingNormal)
+                    .weight(2f),
+                text = uiModel.username
+            )
+        }
+
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }
@@ -52,7 +61,7 @@ fun Item(
 private fun ItemPreview() {
     ComposeTheme {
         Item(
-            uiModel = UiModel("1"),
+            uiModel = UiModel("1", "name1"),
             onClick = {},
             onLongClick = {}
         )

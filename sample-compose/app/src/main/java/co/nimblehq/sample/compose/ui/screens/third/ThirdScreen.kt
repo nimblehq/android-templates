@@ -1,6 +1,8 @@
 package co.nimblehq.sample.compose.ui.screens.third
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +22,7 @@ import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 fun ThirdScreen(
     viewModel: ThirdViewModel = hiltViewModel(),
     navigator: (destination: AppDestination) -> Unit,
-    model: UiModel?
+    model: UiModel?,
 ) {
     ThirdScreenContent(data = model)
 }
@@ -50,6 +52,6 @@ fun ThirdScreenContent(data: UiModel?) {
 @Composable
 fun ThirdScreenPreview() {
     ComposeTheme {
-        ThirdScreenContent(data = UiModel("1"))
+        ThirdScreenContent(data = UiModel("1", "name1"))
     }
 }

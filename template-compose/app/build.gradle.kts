@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
 
+    id("com.google.gms.google-services")
+
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-parcelize")
@@ -11,6 +13,13 @@ plugins {
 }
 
 val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
+val getVersionCode: () -> Int = {
+    if (project.hasProperty("versionCode")) {
+        (project.property("versionCode") as String).toInt()
+    } else {
+        Versions.ANDROID_VERSION_CODE
+    }
+}
 
 android {
     signingConfigs {
@@ -35,7 +44,7 @@ android {
         applicationId = "co.nimblehq.template.compose"
         minSdk = Versions.ANDROID_MIN_SDK_VERSION
         targetSdk = Versions.ANDROID_TARGET_SDK_VERSION
-        versionCode = Versions.ANDROID_VERSION_CODE
+        versionCode = getVersionCode()
         versionName = Versions.ANDROID_VERSION_NAME
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -132,6 +141,8 @@ dependencies {
     implementation("androidx.compose.material:material")
 
     implementation("androidx.datastore:datastore-preferences:${Versions.ANDROIDX_DATASTORE_PREFERENCES_VERSION}")
+
+    implementation(platform("com.google.firebase:firebase-bom:${Versions.FIREBASE_BOM_VERSION}"))
 
     implementation("androidx.navigation:navigation-compose:${Versions.COMPOSE_NAVIGATION_VERSION}")
     implementation("com.google.accompanist:accompanist-permissions:${Versions.ACCOMPANIST_PERMISSIONS_VERSION}")

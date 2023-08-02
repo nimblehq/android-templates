@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="co.nimblehq.sample.xml">
+    package="co.nimblehq.sample.compose">
 
     <!--For Chucker in debug build only-->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
-    <application>
-        <activity
-            android:name=".EmptyHiltActivity"
-            android:exported="false" />
-    </application>
 
 </manifest>
