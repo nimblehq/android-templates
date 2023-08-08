@@ -2,7 +2,7 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
 
-    id("kover")
+    id("org.jetbrains.kotlinx.kover")
 }
 
 android {
@@ -46,8 +46,10 @@ android {
     testOptions {
         unitTests.all {
             if (it.name != "testDebugUnitTest") {
-                it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
-                    isDisabled.set(true)
+                kover {
+                    excludeTests {
+                        tasks(it.name)
+                    }
                 }
             }
         }

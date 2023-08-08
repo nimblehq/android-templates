@@ -48,7 +48,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: CodeCoverageReportsTemplateXML
-          path: template-xml/build/reports/kover/merged/
+          path: template-xml/app/build/reports/kover/
 
       # template-compose
 
@@ -70,7 +70,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: CodeCoverageReportsTemplateCompose
-          path: template-compose/build/reports/kover/merged/
+          path: template-compose/app/build/reports/kover/
 
       # sample-xml
 
@@ -92,7 +92,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: CodeCoverageReportsTemplateXML
-          path: sample-xml/build/reports/kover/merged/
+          path: sample-xml/app/build/reports/kover/
 
       # sample-compose
 
@@ -114,4 +114,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: CodeCoverageReportsTemplateCompose
-          path: sample-compose/build/reports/kover/merged/
+          path: sample-compose/app/build/reports/kover/

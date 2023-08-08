@@ -7,8 +7,7 @@ plugins {
 
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
-
-    id("kover")
+    id("org.jetbrains.kotlinx.kover")
 }
 
 val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
@@ -98,8 +97,10 @@ android {
         }
         unitTests.all {
             if (it.name != "testStagingDebugUnitTest") {
-                it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
-                    isDisabled.set(true)
+                kover {
+                    excludeTests {
+                        tasks(it.name)
+                    }
                 }
             }
         }
@@ -161,4 +162,65 @@ dependencies {
 
     kaptTest("com.google.dagger:hilt-android-compiler:${Versions.HILT_VERSION}")
     testAnnotationProcessor("com.google.dagger:hilt-android-compiler:${Versions.HILT_VERSION}")
+}
+
+/*
+ * Kover configs
+ */
+
+dependencies {
+    kover(project(":data"))
+    kover(project(":domain"))
+}
+
+koverReport {
+    defaults {
+        mergeWith("stagingDebug")
+        mergeWith("stagingRelease")
+        filters {
+            val generatedFiles = setOf(
+                "*.R.class",
+                "*.R\$*.class",
+                "*.*\$ViewBinder*.*",
+                "*.*\$InjectAdapter*.*",
+                "*.*Injector*.*",
+                "*.BuildConfig.*",
+                "*.BuildConfig",
+                "*.Manifest*.*",
+                "*.*_ViewBinding*.*",
+                "*.*Adapter*.*",
+                "*.*Test*.*",
+                // Enum
+                "*.*\$Creator*",
+                // Nav Component
+                "*.*_Factory*",
+                "*.*FragmentArgs*",
+                "*.*FragmentDirections*",
+                "*.FragmentNavArgsLazy.kt",
+                "*.*Fragment*navArgs*",
+                "*.*ModuleDeps*.*",
+                "*.*NavGraphDirections*",
+                // Hilt
+                "*.*_ComponentTreeDeps*",
+                "*.*_HiltComponents*",
+                "*.*_HiltModules*",
+                "*.*_MembersInjector*",
+                "*.Hilt_*"
+            )
+
+            val excludedPackages = setOf(
+                "com.bumptech.glide.*",
+                "dagger.hilt.internal.*",
+                "hilt_aggregated_deps.*",
+                "co.nimblehq.sample.xml.databinding.*",
+                "co.nimblehq.sample.xml.di.*"
+            )
+
+            val excludedFiles = generatedFiles + excludedPackages
+
+            excludes {
+                classes(excludedFiles)
+            }
+        }
+    }
 }

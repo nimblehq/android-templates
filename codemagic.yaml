@@ -27,8 +27,8 @@ definitions:
       working_directory: ./template-xml
       script: ./gradlew koverMergedReport
   artifacts:
-    - &artifacts_template_compose template-compose/build/reports/kover/merged/
-    - &artifacts_template_xml template-xml/build/reports/kover/merged/
+    - &artifacts_template_compose template-compose/app/build/reports/kover/
+    - &artifacts_template_xml template-xml/app/build/reports/kover/
     - &artifacts_staging_apk template-compose/app/build/outputs/apk/staging/debug/app-staging-debug.apk
     - &artifacts_production_apk template-compose/app/build/outputs/apk/production/debug/app-production-debug.apk
 workflows:

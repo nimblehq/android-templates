@@ -65,4 +65,4 @@ jobs:
         if: always()
         with:
           name: CodeCoverageReports
-          path: build/reports/kover/merged/
+          path: app/build/reports/kover/

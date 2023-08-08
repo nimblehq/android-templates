@@ -7,7 +7,7 @@ plugins {
 
     id("dagger.hilt.android.plugin")
 
-    id("kover")
+    id("org.jetbrains.kotlinx.kover")
 }
 
 val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
@@ -108,8 +108,10 @@ android {
         }
         unitTests.all {
             if (it.name != "testStagingDebugUnitTest") {
-                it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
-                    isDisabled.set(true)
+                kover {
+                    excludeTests {
+                        tasks(it.name)
+                    }
                 }
             }
         }
@@ -176,4 +178,47 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation("androidx.test:rules:${Versions.TEST_RULES_VERSION}")
     androidTestImplementation("io.mockk:mockk-android:${Versions.TEST_MOCKK_VERSION}")
+}
+
+/*
+ * Kover configs
+ */
+
+dependencies {
+    kover(project(":data"))
+    kover(project(":domain"))
+}
+
+koverReport {
+    defaults {
+        mergeWith("stagingDebug")
+        mergeWith("stagingRelease")
+        filters {
+            val excludedFiles = listOf(
+                "*.BuildConfig.*",
+                "*.BuildConfig",
+                // Enum
+                "*.*\$Creator*",
+                // DI
+                "*.di.*",
+                // Hilt
+                "*.*_ComponentTreeDeps*",
+                "*.*_HiltComponents*",
+                "*.*_HiltModules*",
+                "*.*_MembersInjector*",
+                "*.*_Factory*",
+                "*.Hilt_*",
+                "dagger.hilt.internal.*",
+                "hilt_aggregated_deps.*",
+                // Jetpack Compose
+                "*.ComposableSingletons*",
+                "*.*\$*Preview\$*",
+                "*.ui.preview.*",
+            )
+
+            excludes {
+                classes(excludedFiles)
+            }
+        }
+    }
 }
