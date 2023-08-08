@@ -49,7 +49,7 @@ workflows:
       # Execute UnitTest
       - android-unit-test@1:
           inputs:
-            - arguments: koverMergedHtmlReport
+            - arguments: koverHtmlReport
             - variant: "$VARIANT"
             - module: "$MODULE"
             - report_path_pattern: '*build/reports'

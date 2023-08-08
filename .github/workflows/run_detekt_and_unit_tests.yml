@@ -42,7 +42,7 @@ jobs:
 
       - name: Run unit tests with Kover on template-xml
         working-directory: ./template-xml
-        run: ./gradlew koverMergedHtmlReport
+        run: ./gradlew koverHtmlReport
 
       - name: Archive code coverage reports on template-xml
         uses: actions/upload-artifact@v2
@@ -64,7 +64,7 @@ jobs:
 
       - name: Run unit tests with Kover on template-compose
         working-directory: ./template-compose
-        run: ./gradlew koverMergedHtmlReport
+        run: ./gradlew koverHtmlReport
 
       - name: Archive code coverage reports on template-compose
         uses: actions/upload-artifact@v2
@@ -86,7 +86,7 @@ jobs:
 
       - name: Run unit tests with Kover on sample-xml
         working-directory: ./sample-xml
-        run: ./gradlew koverMergedHtmlReport
+        run: ./gradlew koverHtmlReport
 
       - name: Archive code coverage reports on sample-xml
         uses: actions/upload-artifact@v2
@@ -108,7 +108,7 @@ jobs:
 
       - name: Run unit tests with Kover on sample-compose
         working-directory: ./sample-compose
-        run: ./gradlew koverMergedHtmlReport
+        run: ./gradlew koverHtmlReport
 
       - name: Archive code coverage reports on sample-compose
         uses: actions/upload-artifact@v2
