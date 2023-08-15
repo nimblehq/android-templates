@@ -87,7 +87,7 @@ workflows:
       events:
         - push
       branch_patterns:
-        - pattern: chore/poc-distribute-app-without-firebase-integration
+        - pattern: develop
     scripts:
       - *detekt_on_template_compose
       - *unit_test_on_template_compose
