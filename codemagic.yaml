@@ -21,15 +21,11 @@ definitions:
     - &unit_test_on_template_compose
       name: Run unit tests on template-compose
       working_directory: ./template-compose
-      script: |
-        ./gradlew koverHtmlReport
-        ./gradlew koverXmlReport
+      script: ./gradlew koverHtmlReport
     - &unit_test_on_template_xml
       name: Run unit tests on template-xml
       working_directory: ./template-xml
-      script: |
-        ./gradlew koverHtmlReport
-        ./gradlew koverXmlReport
+      script: ./gradlew koverHtmlReport
   artifacts:
     - &artifacts_template_compose template-compose/app/build/reports/kover/
     - &artifacts_template_xml template-xml/app/build/reports/kover/

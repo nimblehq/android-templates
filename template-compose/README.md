@@ -41,7 +41,7 @@ $ ./gradlew domain:test
 $ ./gradlew koverHtmlReport
 ```
 
-Report is located at: `.app/build/reports/kover/`
+Report is located at: `app/build/reports/kover/`
 
 ## Build and deploy
 

@@ -95,15 +95,6 @@ android {
             isIncludeAndroidResources = true
             isReturnDefaultValues = true
         }
-        unitTests.all {
-            if (it.name != "testStagingDebugUnitTest") {
-                kover {
-                    excludeTests {
-                        tasks(it.name)
-                    }
-                }
-            }
-        }
     }
 }
 
@@ -168,7 +159,6 @@ dependencies {
 /*
  * Kover configs
  */
-
 dependencies {
     kover(project(":data"))
     kover(project(":domain"))
@@ -177,7 +167,6 @@ dependencies {
 koverReport {
     defaults {
         mergeWith("stagingDebug")
-        mergeWith("stagingRelease")
         filters {
             val generatedFiles = setOf(
                 "*.R.class",

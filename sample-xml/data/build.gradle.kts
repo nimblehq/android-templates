@@ -42,18 +42,6 @@ android {
         xmlReport = true
         xmlOutput = file("build/reports/lint/lint-result.xml")
     }
-
-    testOptions {
-        unitTests.all {
-            if (it.name != "testDebugUnitTest") {
-                kover {
-                    excludeTests {
-                        tasks(it.name)
-                    }
-                }
-            }
-        }
-    }
 }
 
 dependencies {

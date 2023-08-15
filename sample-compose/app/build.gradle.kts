@@ -106,15 +106,6 @@ android {
             // Robolectric resource processing/loading https://github.com/robolectric/robolectric/pull/4736
             isIncludeAndroidResources = true
         }
-        unitTests.all {
-            if (it.name != "testStagingDebugUnitTest") {
-                kover {
-                    excludeTests {
-                        tasks(it.name)
-                    }
-                }
-            }
-        }
         // Disable device's animation for instrument testing
         // animationsDisabled = true
     }
@@ -183,7 +174,6 @@ dependencies {
 /*
  * Kover configs
  */
-
 dependencies {
     kover(project(":data"))
     kover(project(":domain"))
@@ -192,7 +182,6 @@ dependencies {
 koverReport {
     defaults {
         mergeWith("stagingDebug")
-        mergeWith("stagingRelease")
         filters {
             val excludedFiles = listOf(
                 "*.BuildConfig.*",
