@@ -42,13 +42,13 @@ jobs:
 
       - name: Run unit tests with Kover on template-xml
         working-directory: ./template-xml
-        run: ./gradlew koverMergedHtmlReport
+        run: ./gradlew koverHtmlReport
 
       - name: Archive code coverage reports on template-xml
         uses: actions/upload-artifact@v2
         with:
           name: CodeCoverageReportsTemplateXML
-          path: template-xml/build/reports/kover/merged/
+          path: template-xml/app/build/reports/kover/
 
       # template-compose
 
@@ -64,13 +64,13 @@ jobs:
 
       - name: Run unit tests with Kover on template-compose
         working-directory: ./template-compose
-        run: ./gradlew koverMergedHtmlReport
+        run: ./gradlew koverHtmlReport
 
       - name: Archive code coverage reports on template-compose
         uses: actions/upload-artifact@v2
         with:
           name: CodeCoverageReportsTemplateCompose
-          path: template-compose/build/reports/kover/merged/
+          path: template-compose/app/build/reports/kover/
 
       # sample-xml
 
@@ -86,13 +86,13 @@ jobs:
 
       - name: Run unit tests with Kover on sample-xml
         working-directory: ./sample-xml
-        run: ./gradlew koverMergedHtmlReport
+        run: ./gradlew koverHtmlReport
 
       - name: Archive code coverage reports on sample-xml
         uses: actions/upload-artifact@v2
         with:
           name: CodeCoverageReportsTemplateXML
-          path: sample-xml/build/reports/kover/merged/
+          path: sample-xml/app/build/reports/kover/
 
       # sample-compose
 
@@ -108,10 +108,10 @@ jobs:
 
       - name: Run unit tests with Kover on sample-compose
         working-directory: ./sample-compose
-        run: ./gradlew koverMergedHtmlReport
+        run: ./gradlew koverHtmlReport
 
       - name: Archive code coverage reports on sample-compose
         uses: actions/upload-artifact@v2
         with:
           name: CodeCoverageReportsTemplateCompose
-          path: sample-compose/build/reports/kover/merged/
+          path: sample-compose/app/build/reports/kover/

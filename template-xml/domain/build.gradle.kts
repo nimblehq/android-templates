@@ -2,7 +2,7 @@ plugins {
     id("java-library")
     id("kotlin")
 
-    id("kover")
+    id("org.jetbrains.kotlinx.kover")
 }
 
 java {

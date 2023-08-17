@@ -48,13 +48,13 @@ jobs:
           path: build/reports/detekt/
 
       - name: Run unit tests with Kover
-        run: ./gradlew koverMergedHtmlReport
+        run: ./gradlew koverHtmlReport
 
       - name: Archive code coverage reports
         uses: actions/upload-artifact@v2
         with:
           name: CodeCoverageReports
-          path: build/reports/kover/merged/
+          path: app/build/reports/kover/
 
       - name: Build staging APK
         run: ./gradlew assembleStagingDebug

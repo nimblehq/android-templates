@@ -43,7 +43,7 @@ jobs:
 
       - name: Run unit tests with Kover on template-xml
         working-directory: ./template-xml
-        run: ./gradlew koverMergedXmlReport
+        run: ./gradlew koverXmlReport
 
       # template-compose
 
@@ -57,7 +57,7 @@ jobs:
 
       - name: Run unit tests with Kover on template-compose
         working-directory: ./template-compose
-        run: ./gradlew koverMergedXmlReport
+        run: ./gradlew koverXmlReport
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1

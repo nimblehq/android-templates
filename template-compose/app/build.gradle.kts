@@ -6,8 +6,7 @@ plugins {
     id("kotlin-parcelize")
 
     id("dagger.hilt.android.plugin")
-
-    id("kover")
+    id("org.jetbrains.kotlinx.kover")
 }
 
 val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
@@ -106,13 +105,6 @@ android {
             // Robolectric resource processing/loading https://github.com/robolectric/robolectric/pull/4736
             isIncludeAndroidResources = true
         }
-        unitTests.all {
-            if (it.name != "testStagingDebugUnitTest") {
-                it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
-                    isDisabled.set(true)
-                }
-            }
-        }
         // Disable device's animation for instrument testing
         // animationsDisabled = true
     }
@@ -169,4 +161,45 @@ dependencies {
     testImplementation(platform("androidx.compose:compose-bom:${Versions.COMPOSE_BOM_VERSION}"))
     testImplementation("androidx.compose.ui:ui-test-junit4")
     testImplementation("org.robolectric:robolectric:${Versions.TEST_ROBOLECTRIC_VERSION}")
+}
+
+/*
+ * Kover configs
+ */
+dependencies {
+    kover(project(":data"))
+    kover(project(":domain"))
+}
+
+koverReport {
+    defaults {
+        mergeWith("stagingDebug")
+        filters {
+            val excludedFiles = listOf(
+                "*.BuildConfig.*",
+                "*.BuildConfig",
+                // Enum
+                "*.*\$Creator*",
+                // DI
+                "*.di.*",
+                // Hilt
+                "*.*_ComponentTreeDeps*",
+                "*.*_HiltComponents*",
+                "*.*_HiltModules*",
+                "*.*_MembersInjector*",
+                "*.*_Factory*",
+                "*.Hilt_*",
+                "dagger.hilt.internal.*",
+                "hilt_aggregated_deps.*",
+                // Jetpack Compose
+                "*.ComposableSingletons*",
+                "*.*\$*Preview\$*",
+                "*.ui.preview.*",
+            )
+
+            excludes {
+                classes(excludedFiles)
+            }
+        }
+    }
 }

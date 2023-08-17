@@ -21,14 +21,14 @@ definitions:
     - &unit_test_on_template_compose
       name: Run unit tests on template-compose
       working_directory: ./template-compose
-      script: ./gradlew koverMergedReport
+      script: ./gradlew koverHtmlReport
     - &unit_test_on_template_xml
       name: Run unit tests on template-xml
       working_directory: ./template-xml
-      script: ./gradlew koverMergedReport
+      script: ./gradlew koverHtmlReport
   artifacts:
-    - &artifacts_template_compose template-compose/build/reports/kover/merged/
-    - &artifacts_template_xml template-xml/build/reports/kover/merged/
+    - &artifacts_template_compose template-compose/app/build/reports/kover/
+    - &artifacts_template_xml template-xml/app/build/reports/kover/
     - &artifacts_staging_apk template-compose/app/build/outputs/apk/staging/debug/app-staging-debug.apk
     - &artifacts_production_apk template-compose/app/build/outputs/apk/production/debug/app-production-debug.apk
 workflows:

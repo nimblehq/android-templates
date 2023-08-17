@@ -15,9 +15,9 @@ definitions:
       script: ./gradlew detekt
     - &unit_test
       name: Run unit tests
-      script: ./gradlew koverMergedReport
+      script: ./gradlew koverHtmlReport
   artifacts:
-    - &artifacts_test_report build/reports/kover/merged/
+    - &artifacts_test_report app/build/reports/kover/
     - &artifacts_staging_apk app/build/outputs/apk/staging/debug/app-staging-debug.apk
     - &artifacts_production_apk app/build/outputs/apk/production/debug/app-production-debug.apk
 workflows:

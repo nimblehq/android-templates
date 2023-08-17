@@ -61,35 +61,3 @@ tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
         }
     }
 }
-
-koverMerged {
-    enable()
-
-    val excludedFiles = listOf(
-        "*.BuildConfig.*",
-        "*.BuildConfig",
-        // Enum
-        "*.*\$Creator*",
-        // DI
-        "*.di.*",
-        // Hilt
-        "*.*_ComponentTreeDeps*",
-        "*.*_HiltComponents*",
-        "*.*_HiltModules*",
-        "*.*_MembersInjector*",
-        "*.*_Factory*",
-        "*.Hilt_*",
-        "dagger.hilt.internal.*",
-        "hilt_aggregated_deps.*",
-        // Jetpack Compose
-        "*.ComposableSingletons*",
-        "*.*\$*Preview\$*",
-        "*.ui.preview.*",
-    )
-
-    filters {
-        classes {
-            excludes += excludedFiles
-        }
-    }
-}
