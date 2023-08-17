@@ -10,13 +10,6 @@ definitions:
       cache_paths:
         - $HOME/.gradle/caches
   scripts:
-    - &set_up_google_services_files_from_environment_variables
-      name: Set up google-services.json on template-compose
-      script: |
-        mkdir -p template-compose/app/src/production
-        echo $GOOGLE_SERVICES_JSON > template-compose/app/src/production/google-services.json
-        mkdir -p template-compose/app/src/staging
-        echo $GOOGLE_SERVICES_JSON_STAGING > template-compose/app/src/staging/google-services.json
     - &detekt_on_template_compose
       name: Run detekt on template-compose
       working_directory: ./template-compose
@@ -58,7 +51,6 @@ workflows:
           include: false
       cancel_previous_builds: true
     scripts:
-      - *set_up_google_services_files_from_environment_variables
       - *detekt_on_template_compose
       - *unit_test_on_template_compose
     artifacts:
@@ -97,7 +89,6 @@ workflows:
       branch_patterns:
         - pattern: develop
     scripts:
-      - *set_up_google_services_files_from_environment_variables
       - *detekt_on_template_compose
       - *unit_test_on_template_compose
       - name: Build APK for staging
@@ -125,7 +116,6 @@ workflows:
       branch_patterns:
         - pattern: main
     scripts:
-      - *set_up_google_services_files_from_environment_variables
       - *detekt_on_template_compose
       - *unit_test_on_template_compose
       - name: Build APK for production
