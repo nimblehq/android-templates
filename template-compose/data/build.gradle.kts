@@ -1,8 +1,8 @@
 plugins {
-    id("com.android.library")
+    id(Plugins.ANDROID_LIBRARY)
     id("kotlin-android")
 
-    id("org.jetbrains.kotlinx.kover")
+    id(Plugins.KOVER)
 }
 
 android {
@@ -46,31 +46,35 @@ android {
 dependencies {
     implementation(project(Modules.DOMAIN))
 
-    implementation("androidx.core:core-ktx:${Versions.ANDROIDX_CORE_KTX_VERSION}")
-    implementation("androidx.datastore:datastore-preferences:${Versions.ANDROIDX_DATASTORE_PREFERENCES_VERSION}")
-    implementation("androidx.security:security-crypto:${Versions.ANDROID_CRYPTO_VERSION}")
-    implementation("com.google.dagger:hilt-android:${Versions.HILT_VERSION}")
-    implementation("com.squareup.moshi:moshi:${Versions.MOSHI_VERSION}")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:${Versions.KOTLIN_VERSION}")
-    implementation("javax.inject:javax.inject:${Versions.JAVAX_INJECT_VERSION}")
+    with(Dependencies.AndroidX) {
+        implementation(CORE_KTX)
+        implementation(DATASTORE_PREFERENCES)
+        implementation(SECURITY_CRYPTO)
+    }
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLINX_COROUTINES_VERSION}")
+    with(Dependencies.Hilt) {
+        implementation(JAVAX_INJECT)
+    }
 
-    api("com.squareup.retrofit2:converter-moshi:${Versions.RETROFIT_VERSION}")
-    api("com.squareup.retrofit2:retrofit:${Versions.RETROFIT_VERSION}")
+    with(Dependencies.Network) {
+        api(RETROFIT)
+        api(RETROFIT_CONVERTER_MOSHI)
 
-    api("com.squareup.moshi:moshi-adapters:${Versions.MOSHI_VERSION}")
-    api("com.squareup.moshi:moshi-kotlin:${Versions.MOSHI_VERSION}")
+        api(OKHTTP)
+        api(OKHTTP_LOGGING_INTERCEPTOR)
 
-    api("com.squareup.okhttp3:okhttp:${Versions.OKHTTP_VERSION}")
-    api("com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP_VERSION}")
+        api(MOSHI)
+        implementation(MOSHI_ADAPTERS)
+        implementation(MOSHI_KOTLIN)
+    }
 
-    // Testing
-    testImplementation("junit:junit:${Versions.TEST_JUNIT_VERSION}")
-    testImplementation("io.mockk:mockk:${Versions.TEST_MOCKK_VERSION}")
-    testImplementation("io.kotest:kotest-assertions-core:${Versions.TEST_KOTEST_VERSION}")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.KOTLINX_COROUTINES_VERSION}")
-    testImplementation("androidx.test:core:${Versions.TEST_ANDROIDX_CORE_VERSION}")
-    testImplementation("org.robolectric:robolectric:${Versions.TEST_ROBOLECTRIC_VERSION}")
-    testImplementation("app.cash.turbine:turbine:${Versions.TEST_TURBINE_VERSION}")
+    with(Dependencies.Test) {
+        testImplementation(ANDROIX_TEST_CORE)
+        testImplementation(COROUTINES)
+        testImplementation(JUNIT)
+        testImplementation(KOTEST)
+        testImplementation(MOCKK)
+        testImplementation(ROBOLECTRIC)
+        testImplementation(TURBINE)
+    }
 }

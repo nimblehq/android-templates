@@ -1,12 +1,12 @@
 plugins {
-    id("com.android.application")
+    id(Plugins.ANDROID_APPLICATION)
 
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-parcelize")
 
     id("dagger.hilt.android.plugin")
-    id("org.jetbrains.kotlinx.kover")
+    id(Plugins.KOVER)
 }
 
 val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
@@ -120,55 +120,62 @@ dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    implementation("androidx.core:core-ktx:${Versions.ANDROIDX_CORE_KTX_VERSION}")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.ANDROIDX_LIFECYCLE_VERSION}")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:${Versions.ANDROIDX_LIFECYCLE_VERSION}")
+    with(Dependencies.AndroidX) {
+        implementation(CORE_KTX)
+        implementation(LIFECYCLE_RUNTIME_KTX)
+        implementation(LIFECYCLE_RUNTIME_COMPOSE)
+        implementation(DATASTORE_PREFERENCES)
+    }
 
-    implementation(platform("androidx.compose:compose-bom:${Versions.COMPOSE_BOM_VERSION}"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-tooling")
-    implementation("androidx.compose.foundation:foundation")
-    implementation("androidx.compose.material:material")
+    with(Dependencies.Compose) {
+        implementation(platform(BOM))
+        implementation(UI)
+        implementation(UI_TOOLING)
+        implementation(MATERIAL)
+        implementation(NAVIGATION)
 
-    implementation("androidx.datastore:datastore-preferences:${Versions.ANDROIDX_DATASTORE_PREFERENCES_VERSION}")
+        implementation(ACCOMPANIST_PERMISSIONS)
+    }
 
-    implementation("androidx.navigation:navigation-compose:${Versions.COMPOSE_NAVIGATION_VERSION}")
-    implementation("com.google.accompanist:accompanist-permissions:${Versions.ACCOMPANIST_PERMISSIONS_VERSION}")
+    with(Dependencies.Hilt) {
+        implementation(ANDROID)
+        implementation(NAVIGATION_COMPOSE)
+        kapt(COMPILER)
+    }
 
-    implementation("com.google.dagger:hilt-android:${Versions.HILT_VERSION}")
-    implementation("androidx.hilt:hilt-navigation-compose:${Versions.HILT_NAVIGATION_COMPOSE_VERSION}")
+    with(Dependencies.Log) {
+        implementation(TIMBER)
 
-    implementation("com.jakewharton.timber:timber:${Versions.TIMBER_LOG_VERSION}")
+        debugImplementation(CHUCKER)
+        releaseImplementation(CHUCKER_NO_OP)
+    }
 
-    implementation("com.github.nimblehq:android-common-ktx:${Versions.ANDROID_COMMON_KTX_VERSION}")
+    with(Dependencies.Util) {
+        implementation(ANDROID_COMMON_KTX)
+    }
 
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:${Versions.KOTLIN_VERSION}")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLINX_COROUTINES_VERSION}")
+    with(Dependencies.Test) {
+        // Unit test
+        testImplementation(COROUTINES)
+        testImplementation(JUNIT)
+        testImplementation(KOTEST)
+        testImplementation(MOCKK)
+        testImplementation(TURBINE)
 
-    kapt("com.google.dagger:hilt-compiler:${Versions.HILT_VERSION}")
+        // UI test with Robolectric
+        testImplementation(platform(Dependencies.Compose.BOM))
+        testImplementation(COMPOSE_UI_TEST_JUNIT)
+        testImplementation(ROBOLECTRIC)
+    }
 
-    debugImplementation("com.github.chuckerteam.chucker:library:${Versions.CHUCKER_VERSION}")
-    releaseImplementation("com.github.chuckerteam.chucker:library-no-op:${Versions.CHUCKER_VERSION}")
-
-    // Unit test
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.KOTLINX_COROUTINES_VERSION}")
-    testImplementation("io.kotest:kotest-assertions-core:${Versions.TEST_KOTEST_VERSION}")
-    testImplementation("junit:junit:${Versions.TEST_JUNIT_VERSION}")
-    testImplementation("io.mockk:mockk:${Versions.TEST_MOCKK_VERSION}")
-    testImplementation("app.cash.turbine:turbine:${Versions.TEST_TURBINE_VERSION}")
-
-    // UI test with Robolectric
-    testImplementation(platform("androidx.compose:compose-bom:${Versions.COMPOSE_BOM_VERSION}"))
-    testImplementation("androidx.compose.ui:ui-test-junit4")
-    testImplementation("org.robolectric:robolectric:${Versions.TEST_ROBOLECTRIC_VERSION}")
 }
 
 /*
  * Kover configs
  */
 dependencies {
-    kover(project(":data"))
-    kover(project(":domain"))
+    kover(project(Modules.DATA))
+    kover(project(Modules.DOMAIN))
 }
 
 koverReport {

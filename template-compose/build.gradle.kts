@@ -7,14 +7,14 @@ buildscript {
 
     dependencies {
         classpath("com.android.tools.build:gradle:${Versions.BUILD_GRADLE_VERSION}")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.HILT_VERSION}")
+        classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.HILT}")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN_VERSION}")
     }
 }
 
 plugins {
-    id("io.gitlab.arturbosch.detekt").version(Versions.DETEKT_VERSION)
-    id("org.jetbrains.kotlinx.kover").version(Versions.KOVER_VERSION)
+    id(Plugins.DETEKT).version(Versions.DETEKT_VERSION)
+    id(Plugins.KOVER).version(Versions.KOVER_VERSION)
 }
 
 allprojects {
