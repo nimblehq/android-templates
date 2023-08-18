@@ -20,7 +20,7 @@ val getVersionCode: () -> Int = {
 
 android {
     signingConfigs {
-        create(BuildType.RELEASE) {
+        create(BuildTypes.RELEASE) {
             // Remember to edit signing.properties to have the correct info for release build.
             storeFile = file("../config/release.keystore")
             storePassword = keystoreProperties.getProperty("KEYSTORE_PASSWORD") as String
@@ -28,7 +28,7 @@ android {
             keyAlias = keystoreProperties.getProperty("KEY_ALIAS") as String
         }
 
-        getByName(BuildType.DEBUG) {
+        getByName(BuildTypes.DEBUG) {
             storeFile = file("../config/debug.keystore")
             storePassword = "oQ4mL1jY2uX7wD8q"
             keyAlias = "debug-key-alias"
@@ -47,30 +47,30 @@ android {
     }
 
     buildTypes {
-        getByName(BuildType.RELEASE) {
+        getByName(BuildTypes.RELEASE) {
             isMinifyEnabled = true
             isDebuggable = false
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-            signingConfig = signingConfigs[BuildType.RELEASE]
+            signingConfig = signingConfigs[BuildTypes.RELEASE]
             buildConfigField("String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\"")
         }
 
-        getByName(BuildType.DEBUG) {
+        getByName(BuildTypes.DEBUG) {
             // For quickly testing build with proguard, enable this
             isMinifyEnabled = false
-            signingConfig = signingConfigs[BuildType.DEBUG]
+            signingConfig = signingConfigs[BuildTypes.DEBUG]
             buildConfigField("String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\"")
         }
     }
 
-    flavorDimensions += Flavor.DIMENSION_VERSION
+    flavorDimensions += Flavors.DIMENSION_VERSION
     productFlavors {
-        create(Flavor.STAGING) {
+        create(Flavors.STAGING) {
             applicationIdSuffix = ".staging"
         }
 
-        create(Flavor.PRODUCTION) {}
+        create(Flavors.PRODUCTION) {}
     }
 
     sourceSets["test"].resources {
@@ -115,8 +115,8 @@ kapt {
 }
 
 dependencies {
-    implementation(project(Module.DATA))
-    implementation(project(Module.DOMAIN))
+    implementation(project(Modules.DATA))
+    implementation(project(Modules.DOMAIN))
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 

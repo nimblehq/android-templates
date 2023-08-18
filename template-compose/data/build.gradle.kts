@@ -15,14 +15,14 @@ android {
     }
 
     buildTypes {
-        getByName(BuildType.RELEASE) {
+        getByName(BuildTypes.RELEASE) {
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             )
         }
 
-        getByName(BuildType.DEBUG) {
+        getByName(BuildTypes.DEBUG) {
             isMinifyEnabled = false
         }
     }
@@ -44,7 +44,7 @@ android {
 }
 
 dependencies {
-    implementation(project(Module.DOMAIN))
+    implementation(project(Modules.DOMAIN))
 
     implementation("androidx.core:core-ktx:${Versions.ANDROIDX_CORE_KTX_VERSION}")
     implementation("androidx.datastore:datastore-preferences:${Versions.ANDROIDX_DATASTORE_PREFERENCES_VERSION}")

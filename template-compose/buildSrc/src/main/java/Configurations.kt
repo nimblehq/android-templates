@@ -1,15 +1,15 @@
-object Flavor {
+object Flavors {
     const val PRODUCTION = "production"
     const val STAGING = "staging"
     const val DIMENSION_VERSION = "version"
 }
 
-object BuildType {
+object BuildTypes {
     const val DEBUG = "debug"
     const val RELEASE = "release"
 }
 
-object Module {
+object Modules {
     const val DATA = ":data"
     const val DOMAIN = ":domain"
 }
