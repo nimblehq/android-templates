@@ -1,11 +1,9 @@
 plugins {
     id(Plugins.ANDROID_APPLICATION)
-
-    id("kotlin-android")
-    id("kotlin-kapt")
-    id("kotlin-parcelize")
-
-    id("dagger.hilt.android.plugin")
+    id(Plugins.KOTLIN_ANDROID)
+    id(Plugins.KOTLIN_KAPT)
+    id(Plugins.KOTLIN_PARCELIZE)
+    id(Plugins.HILT_ANDROID)
     id(Plugins.KOVER)
 }
 
@@ -167,7 +165,6 @@ dependencies {
         testImplementation(COMPOSE_UI_TEST_JUNIT)
         testImplementation(ROBOLECTRIC)
     }
-
 }
 
 /*

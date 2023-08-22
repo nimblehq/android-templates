@@ -1,7 +1,6 @@
 plugins {
     id(Plugins.ANDROID_LIBRARY)
-    id("kotlin-android")
-
+    id(Plugins.KOTLIN_ANDROID)
     id(Plugins.KOVER)
 }
 

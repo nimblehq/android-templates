@@ -1,7 +1,6 @@
 plugins {
     id(Plugins.JAVA_LIBRARY)
-    id("kotlin")
-
+    id(Plugins.KOTLIN)
     id(Plugins.KOVER)
 }
 

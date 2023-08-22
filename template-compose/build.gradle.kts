@@ -46,8 +46,8 @@ detekt {
     debug = false
     ignoreFailures = false
 
-    ignoredBuildTypes = listOf("release")
-    ignoredFlavors = listOf("production")
+    ignoredBuildTypes = listOf(BuildTypes.RELEASE)
+    ignoredFlavors = listOf(Flavors.PRODUCTION)
 }
 
 tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
