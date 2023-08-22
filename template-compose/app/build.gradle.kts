@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.konan.properties.loadProperties
+
 plugins {
     id(Plugins.ANDROID_APPLICATION)
     id(Plugins.KOTLIN_ANDROID)
@@ -7,7 +9,7 @@ plugins {
     id(Plugins.KOVER)
 }
 
-val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
+val signingProperties = loadProperties("$rootDir/signing.properties")
 val getVersionCode: () -> Int = {
     if (project.hasProperty("versionCode")) {
         (project.property("versionCode") as String).toInt()
@@ -33,9 +35,9 @@ android {
         create(BuildTypes.RELEASE) {
             // Remember to edit signing.properties to have the correct info for release build.
             storeFile = file("../config/release.keystore")
-            storePassword = keystoreProperties.getProperty("KEYSTORE_PASSWORD") as String
-            keyPassword = keystoreProperties.getProperty("KEY_PASSWORD") as String
-            keyAlias = keystoreProperties.getProperty("KEY_ALIAS") as String
+            storePassword = signingProperties.getProperty("KEYSTORE_PASSWORD") as String
+            keyPassword = signingProperties.getProperty("KEY_PASSWORD") as String
+            keyAlias = signingProperties.getProperty("KEY_ALIAS") as String
         }
 
         getByName(BuildTypes.DEBUG) {
