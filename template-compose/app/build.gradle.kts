@@ -17,6 +17,18 @@ val getVersionCode: () -> Int = {
 }
 
 android {
+    namespace = "co.nimblehq.template.compose"
+    compileSdk = Versions.ANDROID_COMPILE_SDK
+
+    defaultConfig {
+        applicationId = "co.nimblehq.template.compose"
+        minSdk = Versions.ANDROID_MIN_SDK
+        targetSdk = Versions.ANDROID_TARGET_SDK
+        versionCode = getVersionCode()
+        versionName = Versions.ANDROID_VERSION_NAME
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
     signingConfigs {
         create(BuildTypes.RELEASE) {
             // Remember to edit signing.properties to have the correct info for release build.
@@ -32,16 +44,6 @@ android {
             keyAlias = "debug-key-alias"
             keyPassword = "oQ4mL1jY2uX7wD8q"
         }
-    }
-
-    compileSdk = Versions.ANDROID_COMPILE_SDK
-    defaultConfig {
-        applicationId = "co.nimblehq.template.compose"
-        minSdk = Versions.ANDROID_MIN_SDK
-        targetSdk = Versions.ANDROID_TARGET_SDK
-        versionCode = getVersionCode()
-        versionName = Versions.ANDROID_VERSION_NAME
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -76,12 +78,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     composeOptions {

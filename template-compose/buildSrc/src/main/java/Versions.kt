@@ -19,7 +19,7 @@ object Versions {
     const val DATASTORE_PREFERENCES = "1.0.0"
     const val DETEKT = "1.21.0"
 
-    const val GRADLE = "7.4.2"
+    const val GRADLE = "8.1.0"
 
     const val HILT = "2.44"
     const val HILT_NAVIGATION_COMPOSE = "1.0.0"
