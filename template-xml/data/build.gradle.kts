@@ -5,6 +5,7 @@ plugins {
 }
 
 android {
+    namespace = "co.nimblehq.template.xml.data"
     compileSdk = Versions.ANDROID_COMPILE_SDK_VERSION
     defaultConfig {
         minSdk = Versions.ANDROID_MIN_SDK_VERSION

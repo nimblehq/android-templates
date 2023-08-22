@@ -6,5 +6,5 @@ interface AppPreferencesRepository {
 
     fun getAppPreference(): Flow<Boolean>
 
-    suspend fun updateAppPreference(appPreferencesValue: Boolean)
+    suspend fun updateAppPreference(appPreferenceValue: Boolean)
 }

@@ -13,6 +13,8 @@ plugins {
 val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
 
 android {
+    namespace = "co.nimblehq.template.xml"
+
     signingConfigs {
         create(BuildType.RELEASE) {
             // Remember to edit signing.properties to have the correct info for release build.
