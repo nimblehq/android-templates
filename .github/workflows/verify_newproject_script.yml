@@ -44,6 +44,12 @@ jobs:
         working-directory: scripts
         run: kscript new_project.kts package-name=co.myxmlproject.example app-name="My XML Project" template=xml
 
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       - name: Verify generating new project from template-compose
         working-directory: scripts
         run: kscript new_project.kts package-name=co.mycomposeproject.example app-name="My Compose Project" template=compose
