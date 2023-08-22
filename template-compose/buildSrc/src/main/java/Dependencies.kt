@@ -11,15 +11,12 @@ object Plugins {
 
 object Dependencies {
     object AndroidX {
-        const val CORE_KTX = "androidx.core:core-ktx:${Versions.ANDROIDX_CORE_KTX}"
-        const val LIFECYCLE_RUNTIME_KTX =
-            "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.ANDROIDX_LIFECYCLE}"
-        const val LIFECYCLE_RUNTIME_COMPOSE =
-            "androidx.lifecycle:lifecycle-runtime-compose:${Versions.ANDROIDX_LIFECYCLE}"
+        const val CORE_KTX = "androidx.core:core-ktx:${Versions.CORE_KTX}"
+        const val LIFECYCLE_RUNTIME_KTX = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.LIFECYCLE}"
+        const val LIFECYCLE_RUNTIME_COMPOSE = "androidx.lifecycle:lifecycle-runtime-compose:${Versions.LIFECYCLE}"
 
-        const val DATASTORE_PREFERENCES =
-            "androidx.datastore:datastore-preferences:${Versions.ANDROIDX_DATASTORE_PREFERENCES}"
-        const val SECURITY_CRYPTO = "androidx.security:security-crypto:${Versions.ANDROID_CRYPTO}"
+        const val DATASTORE_PREFERENCES = "androidx.datastore:datastore-preferences:${Versions.DATASTORE_PREFERENCES}"
+        const val SECURITY_CRYPTO = "androidx.security:security-crypto:${Versions.SECURITY_CRYPTO}"
     }
 
     object Compose {
@@ -65,22 +62,21 @@ object Dependencies {
     }
 
     object Util {
-        const val ANDROID_COMMON_KTX = "com.github.nimblehq:android-common-ktx:${Versions.ANDROID_COMMON_KTX}"
+        const val COMMON_KTX = "com.github.nimblehq:android-common-ktx:${Versions.COMMON_KTX}"
     }
 
     object Test {
-        const val ANDROIX_TEST_CORE = "androidx.test:core:${Versions.TEST_ANDROIDX_CORE_VERSION}"
-
         const val COMPOSE_UI_TEST_JUNIT = "androidx.compose.ui:ui-test-junit4"
         const val COROUTINES = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.KOTLIN_COROUTINES}"
 
         const val JUNIT = "junit:junit:${Versions.JUNIT}"
 
-        const val KOTEST = "io.kotest:kotest-assertions-core:${Versions.TEST_KOTEST}"
-        const val MOCKK = "io.mockk:mockk:${Versions.TEST_MOCKK}"
+        const val KOTEST = "io.kotest:kotest-assertions-core:${Versions.KOTEST}"
+        const val MOCKK = "io.mockk:mockk:${Versions.MOCKK}"
 
-        const val ROBOLECTRIC = "org.robolectric:robolectric:${Versions.TEST_ROBOLECTRIC}"
+        const val ROBOLECTRIC = "org.robolectric:robolectric:${Versions.ROBOLECTRIC}"
 
-        const val TURBINE = "app.cash.turbine:turbine:${Versions.TEST_TURBINE}"
+        const val TEST_CORE = "androidx.test:core:${Versions.CORE}"
+        const val TURBINE = "app.cash.turbine:turbine:${Versions.TURBINE}"
     }
 }

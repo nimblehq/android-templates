@@ -36,11 +36,11 @@ android {
         }
     }
 
-    compileSdk = Versions.ANDROID_COMPILE_SDK_VERSION
+    compileSdk = Versions.ANDROID_COMPILE_SDK
     defaultConfig {
         applicationId = "co.nimblehq.template.compose"
-        minSdk = Versions.ANDROID_MIN_SDK_VERSION
-        targetSdk = Versions.ANDROID_TARGET_SDK_VERSION
+        minSdk = Versions.ANDROID_MIN_SDK
+        targetSdk = Versions.ANDROID_TARGET_SDK
         versionCode = getVersionCode()
         versionName = Versions.ANDROID_VERSION_NAME
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -87,7 +87,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.COMPOSE_COMPILER_VERSION
+        kotlinCompilerExtensionVersion = Versions.COMPOSE_COMPILER
     }
 
     buildFeatures {
@@ -151,7 +151,7 @@ dependencies {
     }
 
     with(Dependencies.Util) {
-        implementation(ANDROID_COMMON_KTX)
+        implementation(COMMON_KTX)
     }
 
     with(Dependencies.Test) {

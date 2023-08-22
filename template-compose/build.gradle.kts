@@ -6,15 +6,15 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:${Versions.BUILD_GRADLE_VERSION}")
+        classpath("com.android.tools.build:gradle:${Versions.GRADLE}")
         classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.HILT}")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN_VERSION}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}")
     }
 }
 
 plugins {
-    id(Plugins.DETEKT).version(Versions.DETEKT_VERSION)
-    id(Plugins.KOVER).version(Versions.KOVER_VERSION)
+    id(Plugins.DETEKT).version(Versions.DETEKT)
+    id(Plugins.KOVER).version(Versions.KOVER)
 }
 
 allprojects {
@@ -30,7 +30,7 @@ tasks.register("clean", Delete::class) {
 }
 
 detekt {
-    toolVersion = Versions.DETEKT_VERSION
+    toolVersion = Versions.DETEKT
 
     source = files(
         "app/src/main/java",

@@ -6,10 +6,10 @@ plugins {
 }
 
 android {
-    compileSdk = Versions.ANDROID_COMPILE_SDK_VERSION
+    compileSdk = Versions.ANDROID_COMPILE_SDK
     defaultConfig {
-        minSdk = Versions.ANDROID_MIN_SDK_VERSION
-        targetSdk = Versions.ANDROID_TARGET_SDK_VERSION
+        minSdk = Versions.ANDROID_MIN_SDK
+        targetSdk = Versions.ANDROID_TARGET_SDK
 
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -69,12 +69,12 @@ dependencies {
     }
 
     with(Dependencies.Test) {
-        testImplementation(ANDROIX_TEST_CORE)
         testImplementation(COROUTINES)
         testImplementation(JUNIT)
         testImplementation(KOTEST)
         testImplementation(MOCKK)
         testImplementation(ROBOLECTRIC)
+        testImplementation(TEST_CORE)
         testImplementation(TURBINE)
     }
 }
