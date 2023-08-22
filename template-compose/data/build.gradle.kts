@@ -10,20 +10,19 @@ android {
 
     defaultConfig {
         minSdk = Versions.ANDROID_MIN_SDK
-        targetSdk = Versions.ANDROID_TARGET_SDK
 
         consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
-        getByName(BuildTypes.RELEASE) {
+        release {
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             )
         }
 
-        getByName(BuildTypes.DEBUG) {
+        debug {
             isMinifyEnabled = false
         }
     }

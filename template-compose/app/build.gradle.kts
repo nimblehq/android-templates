@@ -47,7 +47,7 @@ android {
     }
 
     buildTypes {
-        getByName(BuildTypes.RELEASE) {
+        release {
             isMinifyEnabled = true
             isDebuggable = false
             isShrinkResources = true
@@ -56,7 +56,7 @@ android {
             buildConfigField("String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\"")
         }
 
-        getByName(BuildTypes.DEBUG) {
+        debug {
             // For quickly testing build with proguard, enable this
             isMinifyEnabled = false
             signingConfig = signingConfigs[BuildTypes.DEBUG]
@@ -86,12 +86,18 @@ android {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
+    buildFeatures {
+        compose = true
+    }
+
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.COMPOSE_COMPILER
     }
 
-    buildFeatures {
-        compose = true
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 
     lint {
