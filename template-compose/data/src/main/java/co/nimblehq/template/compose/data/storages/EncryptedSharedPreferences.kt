@@ -3,12 +3,12 @@ package co.nimblehq.template.compose.data.storages
 import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
-import javax.inject.Inject
 
 private const val APP_SECRET_SHARED_PREFS = "app_secret_shared_prefs"
 
-class EncryptedSharedPreferences @Inject constructor(applicationContext: Context) :
-    BaseSharedPreferences() {
+class EncryptedSharedPreferences(
+    applicationContext: Context,
+) : BaseSharedPreferences() {
 
     init {
         val masterKey = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)

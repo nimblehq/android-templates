@@ -5,7 +5,6 @@ plugins {
     id(Plugins.KOTLIN_ANDROID)
     id(Plugins.KOTLIN_KAPT)
     id(Plugins.KOTLIN_PARCELIZE)
-    id(Plugins.HILT_ANDROID)
     id(Plugins.KOVER)
 }
 
@@ -150,10 +149,10 @@ dependencies {
         implementation(ACCOMPANIST_PERMISSIONS)
     }
 
-    with(Dependencies.Hilt) {
+    with(Dependencies.Koin) {
+        implementation(CORE)
         implementation(ANDROID)
-        implementation(NAVIGATION_COMPOSE)
-        kapt(COMPILER)
+        implementation(COMPOSE)
     }
 
     with(Dependencies.Log) {

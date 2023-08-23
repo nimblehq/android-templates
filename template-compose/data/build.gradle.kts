@@ -52,8 +52,8 @@ dependencies {
         implementation(SECURITY_CRYPTO)
     }
 
-    with(Dependencies.Hilt) {
-        implementation(JAVAX_INJECT)
+    with(Dependencies.Koin) {
+        implementation(CORE)
     }
 
     with(Dependencies.Network) {

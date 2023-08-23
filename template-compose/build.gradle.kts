@@ -4,7 +4,6 @@ plugins {
     id(Plugins.ANDROID_LIBRARY) version Versions.GRADLE apply false
     id(Plugins.KOTLIN_JVM) version Versions.KOTLIN apply false
     id(Plugins.KOTLIN_ANDROID) version Versions.KOTLIN apply false
-    id(Plugins.HILT_ANDROID) version Versions.HILT apply false
     id(Plugins.DETEKT) version Versions.DETEKT
     id(Plugins.KOVER) version Versions.KOVER
 }

@@ -6,12 +6,9 @@ import co.nimblehq.template.compose.ui.base.BaseViewModel
 import co.nimblehq.template.compose.ui.models.UiModel
 import co.nimblehq.template.compose.ui.models.toUiModel
 import co.nimblehq.template.compose.util.DispatchersProvider
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
-import javax.inject.Inject
 
-@HiltViewModel
-class HomeViewModel @Inject constructor(
+class HomeViewModel(
     dispatchersProvider: DispatchersProvider,
     useCase: UseCase,
 ) : BaseViewModel() {
