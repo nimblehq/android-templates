@@ -19,3 +19,6 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Suppress: Missing classes detected while running R8 https://qiita.com/Nabe1216/items/05c9981fd12eb2fa1df0
+-dontwarn java.lang.invoke.StringConcatFactory

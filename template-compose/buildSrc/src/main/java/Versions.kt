@@ -37,7 +37,7 @@ object Versions {
     const val MOCKK = "1.13.5"
     const val MOSHI = "1.12.0"
 
-    const val OKHTTP = "4.9.1"
+    const val OKHTTP = "4.11.0"
 
     const val RETROFIT = "2.9.0"
     const val ROBOLECTRIC = "4.10.2"
