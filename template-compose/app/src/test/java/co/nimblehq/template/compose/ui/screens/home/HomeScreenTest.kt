@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.*
 import org.junit.*
 import org.junit.runner.RunWith
+import org.koin.core.context.stopKoin
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowToast
 
@@ -36,6 +37,11 @@ class HomeScreenTest : BaseScreenTest() {
     @Before
     fun setUp() {
         every { mockUseCase() } returns flowOf(MockUtil.models)
+    }
+
+    @After
+    fun tearDown() {
+        stopKoin()
     }
 
     @Test

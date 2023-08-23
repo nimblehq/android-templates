@@ -200,15 +200,6 @@ koverReport {
                 "*.*\$Creator*",
                 // DI
                 "*.di.*",
-                // Hilt
-                "*.*_ComponentTreeDeps*",
-                "*.*_HiltComponents*",
-                "*.*_HiltModules*",
-                "*.*_MembersInjector*",
-                "*.*_Factory*",
-                "*.Hilt_*",
-                "dagger.hilt.internal.*",
-                "hilt_aggregated_deps.*",
                 // Jetpack Compose
                 "*.ComposableSingletons*",
                 "*.*\$*Preview\$*",
