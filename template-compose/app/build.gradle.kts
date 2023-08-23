@@ -28,7 +28,11 @@ android {
         targetSdk = Versions.ANDROID_TARGET_SDK
         versionCode = getVersionCode()
         versionName = Versions.ANDROID_VERSION_NAME
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     signingConfigs {
