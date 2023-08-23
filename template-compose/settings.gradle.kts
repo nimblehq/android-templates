@@ -14,7 +14,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Compose Template"
+rootProject.name = "Template Compose"
 include(":app")
 include(":data")
 include(":domain")
