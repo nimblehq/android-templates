@@ -157,9 +157,6 @@ dependencies {
 
     with(Dependencies.Log) {
         implementation(TIMBER)
-
-        debugImplementation(CHUCKER)
-        releaseImplementation(CHUCKER_NO_OP)
     }
 
     with(Dependencies.Util) {

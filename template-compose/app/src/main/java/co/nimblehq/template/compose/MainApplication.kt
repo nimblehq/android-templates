@@ -14,7 +14,7 @@ class MainApplication : Application() {
         initKoin {
             androidLogger()
             androidContext(applicationContext)
-            modules(appModule + localModule + httpClientModule + viewModelModule)
+            modules(appModule + localModule + viewModelModule)
         }
         setupLogging()
     }

@@ -31,9 +31,6 @@ object Dependencies {
 
     object Log {
         const val TIMBER = "com.jakewharton.timber:timber:${Versions.TIMBER}"
-
-        const val CHUCKER = "com.github.chuckerteam.chucker:library:${Versions.CHUCKER}"
-        const val CHUCKER_NO_OP = "com.github.chuckerteam.chucker:library-no-op:${Versions.CHUCKER}"
     }
 
     object Network {
@@ -46,6 +43,9 @@ object Dependencies {
         const val MOSHI = "com.squareup.moshi:moshi:${Versions.MOSHI}"
         const val MOSHI_ADAPTERS = "com.squareup.moshi:moshi-adapters:${Versions.MOSHI}"
         const val MOSHI_KOTLIN = "com.squareup.moshi:moshi-kotlin:${Versions.MOSHI}"
+
+        const val CHUCKER = "com.github.chuckerteam.chucker:library:${Versions.CHUCKER}"
+        const val CHUCKER_NO_OP = "com.github.chuckerteam.chucker:library-no-op:${Versions.CHUCKER}"
     }
 
     object Util {

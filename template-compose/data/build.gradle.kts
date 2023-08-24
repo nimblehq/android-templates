@@ -27,6 +27,10 @@ android {
         }
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -66,6 +70,9 @@ dependencies {
         api(MOSHI)
         implementation(MOSHI_ADAPTERS)
         implementation(MOSHI_KOTLIN)
+
+        debugImplementation(CHUCKER)
+        releaseImplementation(CHUCKER_NO_OP)
     }
 
     with(Dependencies.Test) {
