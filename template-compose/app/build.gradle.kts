@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.konan.properties.loadProperties
 plugins {
     id(Plugins.ANDROID_APPLICATION)
     id(Plugins.KOTLIN_ANDROID)
-    id(Plugins.KOTLIN_KAPT)
     id(Plugins.KOTLIN_PARCELIZE)
     id(Plugins.KOVER)
 }
@@ -120,10 +119,6 @@ android {
         // Disable device's animation for instrument testing
         // animationsDisabled = true
     }
-}
-
-kapt {
-    correctErrorTypes = true
 }
 
 dependencies {
