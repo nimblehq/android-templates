@@ -1,7 +1,7 @@
 package co.nimblehq.template.compose.data.di.modules
 
 import co.nimblehq.template.compose.data.BuildConfig
-import co.nimblehq.template.compose.data.service.providers.*
+import co.nimblehq.template.compose.data.services.providers.*
 import com.chuckerteam.chucker.api.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
