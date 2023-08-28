@@ -1,8 +1,8 @@
 package co.nimblehq.template.compose.di.modules
 
-import co.nimblehq.template.compose.data.repository.RepositoryImpl
-import co.nimblehq.template.compose.data.service.ApiService
-import co.nimblehq.template.compose.domain.repository.Repository
+import co.nimblehq.template.compose.data.repositories.RepositoryImpl
+import co.nimblehq.template.compose.data.services.ApiService
+import co.nimblehq.template.compose.domain.repositories.Repository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
