@@ -131,7 +131,6 @@ dependencies {
         implementation(CORE_KTX)
         implementation(LIFECYCLE_RUNTIME_KTX)
         implementation(LIFECYCLE_RUNTIME_COMPOSE)
-        implementation(DATASTORE_PREFERENCES)
     }
 
     with(Dependencies.Compose) {

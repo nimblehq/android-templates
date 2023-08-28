@@ -1,11 +1,11 @@
-package co.nimblehq.template.compose.di.modules
+package co.nimblehq.template.compose.data.di.modules
 
+import android.content.Context
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.preferencesDataStoreFile
-import co.nimblehq.template.compose.data.repository.AppPreferencesRepositoryImpl
-import co.nimblehq.template.compose.data.storage.EncryptedSharedPreferences
-import co.nimblehq.template.compose.domain.repository.AppPreferencesRepository
-import org.koin.android.ext.koin.androidContext
+import co.nimblehq.template.compose.data.repositories.AppPreferencesRepositoryImpl
+import co.nimblehq.template.compose.data.storages.EncryptedSharedPreferences
+import co.nimblehq.template.compose.domain.repositories.AppPreferencesRepository
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -16,10 +16,10 @@ val localModule = module {
     singleOf(::AppPreferencesRepositoryImpl) bind AppPreferencesRepository::class
     single {
         PreferenceDataStoreFactory.create(
-            produceFile = { androidContext().preferencesDataStoreFile(APP_PREFERENCES) }
+            produceFile = { get<Context>().preferencesDataStoreFile(APP_PREFERENCES) }
         )
     }
     single {
-        EncryptedSharedPreferences(androidContext())
+        EncryptedSharedPreferences(get())
     }
 }
