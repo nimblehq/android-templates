@@ -13,8 +13,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.nimblehq.template.compose.R
 import co.nimblehq.template.compose.extensions.collectAsEffect
-import co.nimblehq.template.compose.model.UiModel
 import co.nimblehq.template.compose.ui.AppDestination
+import co.nimblehq.template.compose.ui.models.UiModel
 import co.nimblehq.template.compose.ui.showToast
 import co.nimblehq.template.compose.ui.theme.AppTheme.dimensions
 import co.nimblehq.template.compose.ui.theme.ComposeTheme
