@@ -41,13 +41,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Set up google-services.json
-        env:
-          GOOGLE_SERVICES_JSON_STAGING: ${{ secrets.GOOGLE_SERVICES_JSON_STAGING }}
-        run: |
-          mkdir -p app/src/staging
-          echo $GOOGLE_SERVICES_JSON_STAGING > app/src/staging/google-services.json
-
       - name: Run Detekt
         run: ./gradlew detekt
 
@@ -58,11 +51,11 @@ jobs:
           path: build/reports/detekt/
 
       - name: Run unit tests with Kover
-        run: ./gradlew koverMergedHtmlReport
+        run: ./gradlew koverHtmlReport
 
       - name: Archive code coverage reports
         uses: actions/upload-artifact@v2
         if: always()
         with:
           name: CodeCoverageReports
-          path: build/reports/kover/merged/
+          path: app/build/reports/kover/

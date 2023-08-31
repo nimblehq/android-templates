@@ -21,9 +21,6 @@ object Versions {
     const val COMPOSE_COMPILER_VERSION = "1.4.7"
     const val COMPOSE_NAVIGATION_VERSION = "2.5.3"
 
-    const val FIREBASE_BOM_VERSION = "32.1.1"
-    const val GOOGLE_SERVICES_VERSION = "4.3.15"
-
     const val HILT_VERSION = "2.44"
     const val HILT_NAVIGATION_COMPOSE_VERSION = "1.0.0"
 
@@ -31,7 +28,7 @@ object Versions {
 
     const val KOTLIN_VERSION = "1.8.21"
     const val KOTLINX_COROUTINES_VERSION = "1.7.1"
-    const val KOVER_VERSION = "0.6.0"
+    const val KOVER_VERSION = "0.7.3"
 
     const val MOSHI_VERSION = "1.12.0"
 

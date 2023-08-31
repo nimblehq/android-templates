@@ -10,21 +10,14 @@ definitions:
       cache_paths:
         - $HOME/.gradle/caches
   scripts:
-    - &set_up_google_services_files_from_environment_variables
-      name: Set up google-services.json files
-      script: |
-        mkdir -p app/src/production
-        echo $GOOGLE_SERVICES_JSON > app/src/production/google-services.json
-        mkdir -p app/src/staging
-        echo $GOOGLE_SERVICES_JSON_STAGING > app/src/staging/google-services.json
     - &detekt
       name: Run detekt
       script: ./gradlew detekt
     - &unit_test
       name: Run unit tests
-      script: ./gradlew koverMergedReport
+      script: ./gradlew koverHtmlReport
   artifacts:
-    - &artifacts_test_report build/reports/kover/merged/
+    - &artifacts_test_report app/build/reports/kover/
     - &artifacts_staging_apk app/build/outputs/apk/staging/debug/app-staging-debug.apk
     - &artifacts_production_apk app/build/outputs/apk/production/debug/app-production-debug.apk
 workflows:
@@ -47,7 +40,6 @@ workflows:
           include: false
       cancel_previous_builds: true
     scripts:
-      - *set_up_google_services_files_from_environment_variables
       - *detekt
       - *unit_test
     artifacts:
@@ -62,7 +54,6 @@ workflows:
       branch_patterns:
         - pattern: develop
     scripts:
-      - *set_up_google_services_files_from_environment_variables
       - *detekt
       - *unit_test
       - name: Build APK for staging
@@ -89,7 +80,6 @@ workflows:
       branch_patterns:
         - pattern: main
     scripts:
-      - *set_up_google_services_files_from_environment_variables
       - *detekt
       - *unit_test
       - name: Build APK for production
