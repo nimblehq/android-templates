@@ -11,7 +11,7 @@
 
 A collection of our Android templates:
 
-- [Deprecated] XML template: **[template-xml](https://github.com/nimblehq/android-templates/tree/develop/template-xml)**
+- [Deprecated] XML template: **[template-xml](https://github.com/nimblehq/android-templates/tree/develop/deprecated/template-xml)**
 - Compose template: **[template-compose](https://github.com/nimblehq/android-templates/tree/develop/template-compose)**
 
 ## Prerequisites
