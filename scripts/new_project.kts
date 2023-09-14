@@ -28,7 +28,7 @@ object NewProject {
     private const val TEMPLATE_PACKAGE_NAME_COMPOSE = "co.nimblehq.template.compose"
     private const val TEMPLATE_XML = "xml"
     private const val TEMPLATE_COMPOSE = "compose"
-    private const val TEMPLATE_FOLDER_NAME_XML = "template-xml"
+    private const val TEMPLATE_FOLDER_NAME_XML = "deprecated/template-xml"
     private const val TEMPLATE_FOLDER_NAME_COMPOSE = "template-compose"
 
     private const val VERSION_FILE_NAME = "version.properties"
