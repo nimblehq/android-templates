@@ -5,8 +5,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import co.nimblehq.template.compose.data.repository.AppPreferencesRepositoryImpl
-import co.nimblehq.template.compose.domain.repository.AppPreferencesRepository
+import co.nimblehq.template.compose.data.repositories.AppPreferencesRepositoryImpl
+import co.nimblehq.template.compose.domain.repositories.AppPreferencesRepository
 import dagger.*
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext

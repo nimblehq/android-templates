@@ -1,6 +1,6 @@
 package co.nimblehq.template.compose.di.modules
 
-import co.nimblehq.template.compose.data.service.providers.MoshiBuilderProvider
+import co.nimblehq.template.compose.data.services.providers.MoshiBuilderProvider
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides

@@ -1,6 +1,6 @@
 package co.nimblehq.template.compose.domain.exceptions
 
-import co.nimblehq.template.compose.domain.model.Error
+import co.nimblehq.template.compose.domain.models.Error
 
 object NoConnectivityException : RuntimeException()
 
