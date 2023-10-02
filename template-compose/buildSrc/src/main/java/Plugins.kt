@@ -7,8 +7,8 @@ object Plugins {
 
     const val HILT_ANDROID = "com.google.dagger.hilt.android"
 
-    const val KOTLIN = "kotlin" // or a longer alias "org.jetbrains.kotlin.jvm"
-    const val KOTLIN_ANDROID = "kotlin-android" // or a longer alias "org.jetbrains.kotlin.android"
+    const val KOTLIN_JVM = "org.jetbrains.kotlin.jvm"
+    const val KOTLIN_ANDROID = "org.jetbrains.kotlin.android"
     const val KOTLIN_KAPT = "kotlin-kapt"
     const val KOTLIN_PARCELIZE = "kotlin-parcelize"
 

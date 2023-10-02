@@ -388,6 +388,16 @@ object NewProject {
                     newValue = appName
                 )
             }
+        File(projectPath)
+            .walk()
+            .filter { it.name == "settings.gradle.kts" }
+            .forEach { filePath ->
+                rename(
+                    sourcePath = filePath.toString(),
+                    oldValue = templateAppName,
+                    newValue = appName
+                )
+            }
     }
 
     private fun rename(sourcePath: String, oldValue: String, newValue: String) {

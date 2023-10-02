@@ -1,28 +1,12 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath("com.android.tools.build:gradle:${Versions.GRADLE}")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.HILT}")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}")
-    }
-}
-
 plugins {
-    id(Plugins.DETEKT).version(Versions.DETEKT)
-    id(Plugins.KOVER).version(Versions.KOVER)
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven { url = uri("https://www.jitpack.io") }
-    }
+    id(Plugins.ANDROID_APPLICATION) version Versions.GRADLE apply false
+    id(Plugins.ANDROID_LIBRARY) version Versions.GRADLE apply false
+    id(Plugins.KOTLIN_JVM) version Versions.KOTLIN apply false
+    id(Plugins.KOTLIN_ANDROID) version Versions.KOTLIN apply false
+    id(Plugins.HILT_ANDROID) version Versions.HILT apply false
+    id(Plugins.DETEKT) version Versions.DETEKT
+    id(Plugins.KOVER) version Versions.KOVER
 }
 
 tasks.register("clean", Delete::class) {
@@ -51,7 +35,7 @@ detekt {
 }
 
 tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
-    jvmTarget = JavaVersion.VERSION_11.toString()
+    jvmTarget = JavaVersion.VERSION_17.toString()
     reports {
         xml {
             outputLocation.set(file("build/reports/detekt/detekt.xml"))

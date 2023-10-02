@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.konan.properties.loadProperties
+
 plugins {
     id(Plugins.ANDROID_APPLICATION)
     id(Plugins.KOTLIN_ANDROID)
@@ -7,7 +9,7 @@ plugins {
     id(Plugins.KOVER)
 }
 
-val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
+val signingProperties = loadProperties("$rootDir/signing.properties")
 val getVersionCode: () -> Int = {
     if (project.hasProperty("versionCode")) {
         (project.property("versionCode") as String).toInt()
@@ -17,13 +19,29 @@ val getVersionCode: () -> Int = {
 }
 
 android {
+    namespace = "co.nimblehq.template.compose"
+    compileSdk = Versions.ANDROID_COMPILE_SDK
+
+    defaultConfig {
+        applicationId = "co.nimblehq.template.compose"
+        minSdk = Versions.ANDROID_MIN_SDK
+        targetSdk = Versions.ANDROID_TARGET_SDK
+        versionCode = getVersionCode()
+        versionName = Versions.ANDROID_VERSION_NAME
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+    }
+
     signingConfigs {
         create(BuildTypes.RELEASE) {
             // Remember to edit signing.properties to have the correct info for release build.
             storeFile = file("../config/release.keystore")
-            storePassword = keystoreProperties.getProperty("KEYSTORE_PASSWORD") as String
-            keyPassword = keystoreProperties.getProperty("KEY_PASSWORD") as String
-            keyAlias = keystoreProperties.getProperty("KEY_ALIAS") as String
+            storePassword = signingProperties.getProperty("KEYSTORE_PASSWORD") as String
+            keyPassword = signingProperties.getProperty("KEY_PASSWORD") as String
+            keyAlias = signingProperties.getProperty("KEY_ALIAS") as String
         }
 
         getByName(BuildTypes.DEBUG) {
@@ -34,18 +52,8 @@ android {
         }
     }
 
-    compileSdk = Versions.ANDROID_COMPILE_SDK
-    defaultConfig {
-        applicationId = "co.nimblehq.template.compose"
-        minSdk = Versions.ANDROID_MIN_SDK
-        targetSdk = Versions.ANDROID_TARGET_SDK
-        versionCode = getVersionCode()
-        versionName = Versions.ANDROID_VERSION_NAME
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
     buildTypes {
-        getByName(BuildTypes.RELEASE) {
+        release {
             isMinifyEnabled = true
             isDebuggable = false
             isShrinkResources = true
@@ -54,7 +62,7 @@ android {
             buildConfigField("String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\"")
         }
 
-        getByName(BuildTypes.DEBUG) {
+        debug {
             // For quickly testing build with proguard, enable this
             isMinifyEnabled = false
             signingConfig = signingConfigs[BuildTypes.DEBUG]
@@ -76,20 +84,27 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
+    }
+
+    buildFeatures {
+        compose = true
+        buildConfig = true
     }
 
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.COMPOSE_COMPILER
     }
 
-    buildFeatures {
-        compose = true
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 
     lint {
