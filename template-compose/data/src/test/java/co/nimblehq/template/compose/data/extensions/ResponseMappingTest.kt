@@ -1,10 +1,10 @@
 package co.nimblehq.template.compose.data.extensions
 
-import co.nimblehq.template.compose.data.response.toModel
+import co.nimblehq.template.compose.data.responses.toModel
 import co.nimblehq.template.compose.data.test.MockUtil
 import co.nimblehq.template.compose.domain.exceptions.ApiException
 import co.nimblehq.template.compose.domain.exceptions.NoConnectivityException
-import co.nimblehq.template.compose.domain.model.Model
+import co.nimblehq.template.compose.domain.models.Model
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
