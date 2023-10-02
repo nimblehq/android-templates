@@ -1,8 +1,7 @@
 plugins {
-    id("java-library")
-    id("kotlin")
-
-    id("org.jetbrains.kotlinx.kover")
+    id(Plugins.JAVA_LIBRARY)
+    id(Plugins.KOTLIN)
+    id(Plugins.KOVER)
 }
 
 java {
@@ -11,12 +10,18 @@ java {
 }
 
 dependencies {
-    implementation("javax.inject:javax.inject:${Versions.JAVAX_INJECT_VERSION}")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLINX_COROUTINES_VERSION}")
+    with(Dependencies.Kotlin) {
+        implementation(COROUTINES_CORE)
+    }
 
-    // Testing
-    testImplementation("junit:junit:${Versions.TEST_JUNIT_VERSION}")
-    testImplementation("io.mockk:mockk:${Versions.TEST_MOCKK_VERSION}")
-    testImplementation("io.kotest:kotest-assertions-core:${Versions.TEST_KOTEST_VERSION}")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.KOTLINX_COROUTINES_VERSION}")
+    with(Dependencies.Hilt) {
+        implementation(JAVAX_INJECT)
+    }
+
+    with(Dependencies.Test) {
+        testImplementation(COROUTINES)
+        testImplementation(JUNIT)
+        testImplementation(KOTEST)
+        testImplementation(MOCKK)
+    }
 }

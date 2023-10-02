@@ -6,15 +6,15 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:${Versions.BUILD_GRADLE_VERSION}")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.HILT_VERSION}")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN_VERSION}")
+        classpath("com.android.tools.build:gradle:${Versions.GRADLE}")
+        classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.HILT}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}")
     }
 }
 
 plugins {
-    id("io.gitlab.arturbosch.detekt").version(Versions.DETEKT_VERSION)
-    id("org.jetbrains.kotlinx.kover").version(Versions.KOVER_VERSION)
+    id(Plugins.DETEKT).version(Versions.DETEKT)
+    id(Plugins.KOVER).version(Versions.KOVER)
 }
 
 allprojects {
@@ -30,7 +30,7 @@ tasks.register("clean", Delete::class) {
 }
 
 detekt {
-    toolVersion = Versions.DETEKT_VERSION
+    toolVersion = Versions.DETEKT
 
     source = files(
         "app/src/main/java",
@@ -46,8 +46,8 @@ detekt {
     debug = false
     ignoreFailures = false
 
-    ignoredBuildTypes = listOf("release")
-    ignoredFlavors = listOf("production")
+    ignoredBuildTypes = listOf(BuildTypes.RELEASE)
+    ignoredFlavors = listOf(Flavors.PRODUCTION)
 }
 
 tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
