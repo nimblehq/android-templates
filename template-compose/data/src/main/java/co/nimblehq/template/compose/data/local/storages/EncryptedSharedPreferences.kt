@@ -1,4 +1,4 @@
-package co.nimblehq.template.compose.data.storages
+package co.nimblehq.template.compose.data.local.storages
 
 import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
