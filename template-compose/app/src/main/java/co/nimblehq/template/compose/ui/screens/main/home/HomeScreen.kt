@@ -1,4 +1,4 @@
-package co.nimblehq.template.compose.ui.screens.home
+package co.nimblehq.template.compose.ui.screens.main.home
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text

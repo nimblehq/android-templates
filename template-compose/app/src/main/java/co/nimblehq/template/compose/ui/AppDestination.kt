@@ -1,6 +1,6 @@
 package co.nimblehq.template.compose.ui
 
-import androidx.navigation.*
+import androidx.navigation.NamedNavArgument
 
 sealed class AppDestination(val route: String = "") {
 
@@ -9,6 +9,10 @@ sealed class AppDestination(val route: String = "") {
     open var destination: String = route
 
     object Up : AppDestination()
+
+    object RootNavGraph : AppDestination("rootNavGraph")
+
+    object MainNavGraph : AppDestination("mainNavGraph")
 
     object Home : AppDestination("home")
 }

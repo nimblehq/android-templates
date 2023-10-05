@@ -1,4 +1,4 @@
-package co.nimblehq.template.compose.ui.screens.home
+package co.nimblehq.template.compose.ui.screens.main.home
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.*

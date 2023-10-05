@@ -1,4 +1,4 @@
-package co.nimblehq.template.compose.ui.screens.home
+package co.nimblehq.template.compose.ui.screens.main.home
 
 import app.cash.turbine.test
 import co.nimblehq.template.compose.domain.usecases.UseCase

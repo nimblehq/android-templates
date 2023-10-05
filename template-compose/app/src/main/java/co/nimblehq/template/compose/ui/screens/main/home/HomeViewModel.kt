@@ -1,4 +1,4 @@
-package co.nimblehq.template.compose.ui.screens.home
+package co.nimblehq.template.compose.ui.screens.main.home
 
 import androidx.lifecycle.viewModelScope
 import co.nimblehq.template.compose.domain.usecases.UseCase
