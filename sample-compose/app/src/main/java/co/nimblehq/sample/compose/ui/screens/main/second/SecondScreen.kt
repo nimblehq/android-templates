@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.ui.base.BaseDestination
+import co.nimblehq.sample.compose.ui.base.BaseScreen
 import co.nimblehq.sample.compose.ui.base.KeyResultOk
 import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.theme.AppTheme.dimensions
@@ -25,6 +26,8 @@ fun SecondScreen(
     viewModel: SecondViewModel = hiltViewModel(),
     navigator: (destination: BaseDestination) -> Unit,
     id: String,
+) = BaseScreen(
+    isDarkStatusBarIcons = false,
 ) {
     SecondScreenContent(
         id = id,
