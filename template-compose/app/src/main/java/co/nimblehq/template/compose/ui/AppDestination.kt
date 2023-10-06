@@ -8,7 +8,7 @@ sealed class AppDestination(val route: String = "") {
 
     open var destination: String = route
 
-    object Up : AppDestination()
+    data class Up(val results: List<Result> = emptyList()) : AppDestination()
 
     object RootNavGraph : AppDestination("rootNavGraph")
 
@@ -16,3 +16,8 @@ sealed class AppDestination(val route: String = "") {
 
     object Home : AppDestination("home")
 }
+
+data class Result(
+    val key: String,
+    val value: Any,
+)

@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
-import co.nimblehq.sample.compose.ui.AppNavigation
+import co.nimblehq.sample.compose.ui.AppNavGraph
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeTheme {
-                AppNavigation(navController = rememberNavController())
+                AppNavGraph(navController = rememberNavController())
             }
         }
     }

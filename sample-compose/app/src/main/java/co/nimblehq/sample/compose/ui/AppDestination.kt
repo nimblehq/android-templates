@@ -7,6 +7,7 @@ import co.nimblehq.sample.compose.model.UiModel
 
 const val KeyId = "id"
 const val KeyModel = "model"
+const val KeyResultOk = "keyResultOk"
 
 sealed class AppDestination(val route: String = "") {
 
@@ -16,7 +17,7 @@ sealed class AppDestination(val route: String = "") {
 
     open var parcelableArgument: Pair<String, Any?> = "" to null
 
-    object Up : AppDestination()
+    data class Up(val results: List<Result> = emptyList()) : AppDestination()
 
     object RootNavGraph : AppDestination("rootNavGraph")
 
@@ -41,3 +42,8 @@ sealed class AppDestination(val route: String = "") {
         }
     }
 }
+
+data class Result(
+    val key: String,
+    val value: Any,
+)

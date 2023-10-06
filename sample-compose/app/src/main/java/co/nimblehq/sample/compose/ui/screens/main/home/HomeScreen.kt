@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.*
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigator: (destination: AppDestination) -> Unit,
+    isResultOk: Boolean = false,
 ) {
     val context = LocalContext.current
     viewModel.error.collectAsEffect { e -> e.showToast(context) }
@@ -40,6 +41,12 @@ fun HomeScreen(
         if (isFirstTimeLaunch) {
             context.showToast(context.getString(R.string.message_first_time_launch))
             viewModel.onFirstTimeLaunch()
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        if (isResultOk) {
+            context.showToast(context.getString(R.string.message_updated))
         }
     }
 

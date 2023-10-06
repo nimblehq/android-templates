@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import co.nimblehq.template.compose.ui.screens.main.mainNavGraph
 
 @Composable
-fun AppNavigation(
+fun AppNavGraph(
     navController: NavHostController,
 ) {
     NavHost(
@@ -34,7 +34,12 @@ fun NavGraphBuilder.composable(
 
 fun NavHostController.navigate(appDestination: AppDestination) {
     when (appDestination) {
-        is AppDestination.Up -> navigateUp()
+        is AppDestination.Up -> {
+            appDestination.results.forEach { (key, value) ->
+                previousBackStackEntry?.savedStateHandle?.set(key, value)
+            }
+            navigateUp()
+        }
         else -> navigate(route = appDestination.destination)
     }
 }
