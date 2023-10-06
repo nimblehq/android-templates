@@ -21,8 +21,8 @@ object Dependencies {
 
     object Koin {
         const val CORE = "io.insert-koin:koin-core:${Versions.KOIN}"
-        const val ANDROID = "io.insert-koin:koin-android:${Versions.KOIN_ANDROID}"
-        const val COMPOSE = "io.insert-koin:koin-androidx-compose:${Versions.KOIN_ANDROIDX_COMPOSE}"
+        const val ANDROID = "io.insert-koin:koin-android:${Versions.KOIN}"
+        const val COMPOSE = "io.insert-koin:koin-androidx-compose:${Versions.KOIN}"
     }
 
     object Kotlin {

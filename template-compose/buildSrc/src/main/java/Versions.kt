@@ -23,9 +23,7 @@ object Versions {
 
     const val JUNIT = "4.13.2"
 
-    const val KOIN = "3.3.2"
-    const val KOIN_ANDROID = "3.3.2"
-    const val KOIN_ANDROIDX_COMPOSE = "3.4.1"
+    const val KOIN = "3.5.0"
     const val KOTEST = "5.6.2"
     const val KOTLIN = "1.9.10"
     const val KOTLIN_COROUTINES = "1.7.1"
