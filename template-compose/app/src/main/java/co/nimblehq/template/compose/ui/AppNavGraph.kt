@@ -21,13 +21,12 @@ fun AppNavGraph(
 
 fun NavGraphBuilder.composable(
     destination: AppDestination,
-    deepLinks: List<NavDeepLink> = emptyList(),
     content: @Composable (NavBackStackEntry) -> Unit,
 ) {
     composable(
         route = destination.route,
         arguments = destination.arguments,
-        deepLinks = deepLinks,
+        deepLinks = destination.deepLinks,
         content = content
     )
 }
