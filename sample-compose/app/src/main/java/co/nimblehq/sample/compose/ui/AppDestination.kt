@@ -1,10 +1,8 @@
 package co.nimblehq.sample.compose.ui
 
 import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavDeepLink
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import androidx.navigation.navDeepLink
 import co.nimblehq.sample.compose.model.UiModel
 
 const val KeyId = "id"
@@ -15,13 +13,9 @@ sealed class AppDestination(val route: String = "") {
 
     open val arguments: List<NamedNavArgument> = emptyList()
 
-    open val deepLinks: List<NavDeepLink> = listOf(
-        navDeepLink {
-            uriPattern = "https://android.nimblehq.co/$route"
-        },
-        navDeepLink {
-            uriPattern = "android://$route"
-        }
+    open val deepLinks: List<String> = listOf(
+        "https://android.nimblehq.co/$route",
+        "android://$route",
     )
 
     open var destination: String = route

@@ -26,7 +26,11 @@ fun NavGraphBuilder.composable(
     composable(
         route = destination.route,
         arguments = destination.arguments,
-        deepLinks = destination.deepLinks,
+        deepLinks = destination.deepLinks.map {
+            navDeepLink {
+                uriPattern = it
+            }
+        },
         content = content
     )
 }
