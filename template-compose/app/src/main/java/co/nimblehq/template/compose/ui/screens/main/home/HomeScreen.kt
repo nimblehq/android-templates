@@ -18,6 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.nimblehq.template.compose.R
 import co.nimblehq.template.compose.extensions.collectAsEffect
 import co.nimblehq.template.compose.ui.base.BaseDestination
+import co.nimblehq.template.compose.ui.base.BaseScreen
 import co.nimblehq.template.compose.ui.models.UiModel
 import co.nimblehq.template.compose.ui.showToast
 import co.nimblehq.template.compose.ui.theme.AppTheme.dimensions
@@ -28,7 +29,7 @@ import timber.log.Timber
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigator: (destination: BaseDestination) -> Unit,
-) {
+) = BaseScreen {
     val context = LocalContext.current
     viewModel.error.collectAsEffect { e -> e.showToast(context) }
     viewModel.navigator.collectAsEffect { destination -> navigator(destination) }
