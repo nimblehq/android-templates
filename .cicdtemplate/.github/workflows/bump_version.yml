@@ -19,10 +19,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bump version name
-        uses: chkfung/android-version-actions@v1.2.1
-        with:
-          gradlePath: app/build.gradle.kts
-          versionName: ${{ github.event.inputs.newVersion }}
+        run: |
+          perl -i -pe 's/ANDROID_VERSION_NAME =(.*)$/ANDROID_VERSION_NAME = "${{ github.event.inputs.newVersion }}"/g' buildSrc/src/main/java/Versions.kt
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v4
