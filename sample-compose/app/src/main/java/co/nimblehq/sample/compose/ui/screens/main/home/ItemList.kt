@@ -1,4 +1,4 @@
-package co.nimblehq.sample.compose.ui.screens.home
+package co.nimblehq.sample.compose.ui.screens.main.home
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items

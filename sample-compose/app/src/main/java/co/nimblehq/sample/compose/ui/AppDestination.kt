@@ -1,6 +1,8 @@
 package co.nimblehq.sample.compose.ui
 
-import androidx.navigation.*
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import co.nimblehq.sample.compose.model.UiModel
 
 const val KeyId = "id"
@@ -15,6 +17,10 @@ sealed class AppDestination(val route: String = "") {
     open var parcelableArgument: Pair<String, Any?> = "" to null
 
     object Up : AppDestination()
+
+    object RootNavGraph : AppDestination("rootNavGraph")
+
+    object MainNavGraph : AppDestination("mainNavGraph")
 
     object Home : AppDestination("home")
 

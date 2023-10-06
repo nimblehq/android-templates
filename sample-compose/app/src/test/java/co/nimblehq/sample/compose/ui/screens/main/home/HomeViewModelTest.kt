@@ -1,4 +1,4 @@
-package co.nimblehq.sample.compose.ui.screens.home
+package co.nimblehq.sample.compose.ui.screens.main.home
 
 import app.cash.turbine.test
 import co.nimblehq.sample.compose.domain.usecase.GetModelsUseCase
@@ -10,9 +10,16 @@ import co.nimblehq.sample.compose.test.MockUtil
 import co.nimblehq.sample.compose.ui.AppDestination
 import co.nimblehq.sample.compose.util.DispatchersProvider
 import io.kotest.matchers.shouldBe
-import io.mockk.*
+import io.mockk.Runs
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest

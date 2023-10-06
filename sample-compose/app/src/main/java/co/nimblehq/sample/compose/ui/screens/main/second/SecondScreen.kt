@@ -1,6 +1,8 @@
-package co.nimblehq.sample.compose.ui.screens.second
+package co.nimblehq.sample.compose.ui.screens.main.second
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -11,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.ui.AppDestination
-import co.nimblehq.sample.compose.ui.screens.AppBar
+import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 
 @Composable

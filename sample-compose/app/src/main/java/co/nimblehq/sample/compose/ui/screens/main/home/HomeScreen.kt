@@ -1,4 +1,4 @@
-package co.nimblehq.sample.compose.ui.screens.home
+package co.nimblehq.sample.compose.ui.screens.main.home
 
 import android.Manifest.permission.*
 import androidx.compose.foundation.layout.*
@@ -17,7 +17,7 @@ import co.nimblehq.sample.compose.extensions.showToast
 import co.nimblehq.sample.compose.lib.IsLoading
 import co.nimblehq.sample.compose.model.UiModel
 import co.nimblehq.sample.compose.ui.AppDestination
-import co.nimblehq.sample.compose.ui.screens.AppBar
+import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.showToast
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import com.google.accompanist.permissions.*

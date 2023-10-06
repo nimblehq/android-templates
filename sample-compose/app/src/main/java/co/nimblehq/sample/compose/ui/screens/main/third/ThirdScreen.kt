@@ -1,4 +1,4 @@
-package co.nimblehq.sample.compose.ui.screens.third
+package co.nimblehq.sample.compose.ui.screens.main.third
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,7 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.model.UiModel
 import co.nimblehq.sample.compose.ui.AppDestination
-import co.nimblehq.sample.compose.ui.screens.AppBar
+import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 
 @Composable
