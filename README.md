@@ -28,7 +28,7 @@ A collection of our Android templates:
   ```   
     package-name=                      New package name (i.e., com.example.package)
     app-name=                          New app name (i.e., MyApp, "My App", "my-app")
-    template=                          Template (i.e., compose, xml)
+    template=                          Template (i.e., compose)
     force=                             Force project creation even if the script fails (default: false)
     destination=                       Set the output location where the project should be generated (i.e., /Users/johndoe/documents/projectfolder)
   ```
