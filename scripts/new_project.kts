@@ -22,13 +22,9 @@ object NewProject {
     private const val SEPARATOR_SLASH = "/"
     private const val SEPARATOR_SPACE = " "
 
-    private const val TEMPLATE_APP_NAME_XML = "Template XML"
     private const val TEMPLATE_APP_NAME_COMPOSE = "Template Compose"
-    private const val TEMPLATE_PACKAGE_NAME_XML = "co.nimblehq.template.xml"
     private const val TEMPLATE_PACKAGE_NAME_COMPOSE = "co.nimblehq.template.compose"
-    private const val TEMPLATE_XML = "xml"
     private const val TEMPLATE_COMPOSE = "compose"
-    private const val TEMPLATE_FOLDER_NAME_XML = "deprecated/template-xml"
     private const val TEMPLATE_FOLDER_NAME_COMPOSE = "template-compose"
 
     private const val VERSION_FILE_NAME = "version.properties"
@@ -37,14 +33,18 @@ object NewProject {
         Run kscript new_project.kts to create a new project with the following arguments:
             $KEY_PACKAGE_NAME=   New package name (i.e., com.example.package)
             $KEY_APP_NAME=       New app name (i.e., MyApp, "My App", "my-app")
-            $KEY_TEMPLATE=       Template (i.e., $TEMPLATE_XML, $TEMPLATE_COMPOSE)
+            $KEY_TEMPLATE=       Template (i.e. $TEMPLATE_COMPOSE)
             $KEY_FORCE=          Force project creation even if the script fails (default: false)
             $KEY_DESTINATION=    Set the output location where the project should be generated (i.e., /Users/johndoe/documents/projectfolder)
         
         Examples:
-            kscript new_project.kts $KEY_PACKAGE_NAME=co.myxmlproject.example $KEY_APP_NAME="My XML Project" $KEY_TEMPLATE=$TEMPLATE_XML
-            kscript scripts/new_project.kts $KEY_PACKAGE_NAME=co.myxmlproject.example $KEY_APP_NAME="My XML Project" $KEY_TEMPLATE=$TEMPLATE_XML $KEY_FORCE=true
-            kscript scripts/new_project.kts $KEY_PACKAGE_NAME=co.myxmlproject.example $KEY_APP_NAME="My XML Project" $KEY_TEMPLATE=$TEMPLATE_XML $KEY_FORCE=true $KEY_DESTINATION=/Users/johndoe/documents/projectfolder
+            kscript new_project.kts $KEY_PACKAGE_NAME=co.mycomposeproject.example $KEY_APP_NAME="My Compose Project" 
+            $KEY_TEMPLATE=$TEMPLATE_COMPOSE
+            kscript scripts/new_project.kts $KEY_PACKAGE_NAME=co.mycomposeproject.example $KEY_APP_NAME="My Compose 
+            Project" $KEY_TEMPLATE=$TEMPLATE_COMPOSE $KEY_FORCE=true
+            kscript scripts/new_project.kts $KEY_PACKAGE_NAME=co.mycomposeproject.example $KEY_APP_NAME="My Compose 
+            Project" $KEY_TEMPLATE=$TEMPLATE_COMPOSE $KEY_FORCE=true 
+            $KEY_DESTINATION=/Users/johndoe/documents/projectfolder
     """.trimIndent()
 
     private val modules = listOf("app", "data", "domain")
@@ -86,25 +86,13 @@ object NewProject {
     private var template: String = ""
 
     private val templatePackageName
-        get() = if (template == TEMPLATE_XML) {
-            TEMPLATE_PACKAGE_NAME_XML
-        } else {
-            TEMPLATE_PACKAGE_NAME_COMPOSE
-        }
+        get() = TEMPLATE_PACKAGE_NAME_COMPOSE
 
     private val templateFolderName
-        get() = if (template == TEMPLATE_XML) {
-            TEMPLATE_FOLDER_NAME_XML
-        } else {
-            TEMPLATE_FOLDER_NAME_COMPOSE
-        }
+        get() = TEMPLATE_FOLDER_NAME_COMPOSE
 
     private val templateAppName
-        get() = if (template == TEMPLATE_XML) {
-            TEMPLATE_APP_NAME_XML
-        } else {
-            TEMPLATE_APP_NAME_COMPOSE
-        }
+        get() = TEMPLATE_APP_NAME_COMPOSE
 
     fun generate(args: Array<String>) {
         showScriptVersion()
@@ -135,29 +123,35 @@ object NewProject {
                         exitAfterMessage = true
                     )
                 }
+
                 arg.startsWith("$KEY_APP_NAME$DELIMITER_ARGUMENT") -> {
                     val (key, value) = arg.split(DELIMITER_ARGUMENT)
                     validateAppName(value)
                     hasAppName = true
                 }
+
                 arg.startsWith("$KEY_PACKAGE_NAME$DELIMITER_ARGUMENT") -> {
                     val (key, value) = arg.split(DELIMITER_ARGUMENT)
                     validatePackageName(value)
                     hasPackageName = true
                 }
+
                 arg.startsWith("$KEY_TEMPLATE$DELIMITER_ARGUMENT") -> {
                     val (key, value) = arg.split(DELIMITER_ARGUMENT)
                     validateTemplate(value)
                     hasTemplate = true
                 }
+
                 arg.startsWith("$KEY_FORCE$DELIMITER_ARGUMENT") -> {
                     val (key, value) = arg.split(DELIMITER_ARGUMENT)
                     forceProjectCreation = value.toBoolean()
                 }
+
                 arg.startsWith("$KEY_DESTINATION$DELIMITER_ARGUMENT") -> {
                     val (key, value) = arg.split(DELIMITER_ARGUMENT)
                     validateDestination(value)
                 }
+
                 else -> {
                     showMessage(
                         message = "ERROR: Invalid argument name: $arg \n$helpMessage",
@@ -173,11 +167,13 @@ object NewProject {
                 exitAfterMessage = true,
                 isError = true,
             )
+
             !hasPackageName -> showMessage(
                 message = "ERROR: No package name has been provided \n$helpMessage",
                 exitAfterMessage = true,
                 isError = true,
             )
+
             !hasTemplate -> showMessage(
                 message = "ERROR: No template has been provided \n$helpMessage",
                 exitAfterMessage = true,
@@ -211,11 +207,11 @@ object NewProject {
     }
 
     private fun validateTemplate(value: String) {
-        if (value == TEMPLATE_XML || value == TEMPLATE_COMPOSE) {
+        if (value == TEMPLATE_COMPOSE) {
             template = value.trim()
         } else {
             showMessage(
-                message = "Error: Invalid Template: $value (can either be $TEMPLATE_XML or $TEMPLATE_COMPOSE) \n$helpMessage",
+                message = "Error: Invalid Template: $value (can be $TEMPLATE_COMPOSE) \n$helpMessage",
                 exitAfterMessage = true,
                 isError = true,
             )
