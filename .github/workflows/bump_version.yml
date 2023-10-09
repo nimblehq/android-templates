@@ -20,10 +20,6 @@ jobs:
         run: |
           perl -i -pe 's/^(templateScriptVersion=(.*))$/"templateScriptVersion=${{ github.event.inputs.newVersion }}"/e' version.properties
 
-      - name: Bump version XML
-        run: |
-          perl -i -pe 's/ANDROID_VERSION_NAME =(.*)$/ANDROID_VERSION_NAME = "${{ github.event.inputs.newVersion }}"/g' sample-xml/buildSrc/src/main/java/Versions.kt
-
       - name: Bump version Compose
         run: |
           perl -i -pe 's/ANDROID_VERSION_NAME =(.*)$/ANDROID_VERSION_NAME = "${{ github.event.inputs.newVersion }}"/g' sample-compose/buildSrc/src/main/java/Versions.kt
