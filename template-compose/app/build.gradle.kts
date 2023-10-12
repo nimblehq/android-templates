@@ -3,9 +3,7 @@ import org.jetbrains.kotlin.konan.properties.loadProperties
 plugins {
     id(Plugins.ANDROID_APPLICATION)
     id(Plugins.KOTLIN_ANDROID)
-    id(Plugins.KOTLIN_KAPT)
     id(Plugins.KOTLIN_PARCELIZE)
-    id(Plugins.HILT_ANDROID)
     id(Plugins.KOVER)
 }
 
@@ -123,10 +121,6 @@ android {
     }
 }
 
-kapt {
-    correctErrorTypes = true
-}
-
 dependencies {
     implementation(project(Modules.DATA))
     implementation(project(Modules.DOMAIN))
@@ -137,7 +131,6 @@ dependencies {
         implementation(CORE_KTX)
         implementation(LIFECYCLE_RUNTIME_KTX)
         implementation(LIFECYCLE_RUNTIME_COMPOSE)
-        implementation(DATASTORE_PREFERENCES)
     }
 
     with(Dependencies.Compose) {
@@ -150,17 +143,14 @@ dependencies {
         implementation(ACCOMPANIST_PERMISSIONS)
     }
 
-    with(Dependencies.Hilt) {
+    with(Dependencies.Koin) {
+        implementation(CORE)
         implementation(ANDROID)
-        implementation(NAVIGATION_COMPOSE)
-        kapt(COMPILER)
+        implementation(COMPOSE)
     }
 
     with(Dependencies.Log) {
         implementation(TIMBER)
-
-        debugImplementation(CHUCKER)
-        releaseImplementation(CHUCKER_NO_OP)
     }
 
     with(Dependencies.Util) {
@@ -201,15 +191,6 @@ koverReport {
                 "*.*\$Creator*",
                 // DI
                 "*.di.*",
-                // Hilt
-                "*.*_ComponentTreeDeps*",
-                "*.*_HiltComponents*",
-                "*.*_HiltModules*",
-                "*.*_MembersInjector*",
-                "*.*_Factory*",
-                "*.Hilt_*",
-                "dagger.hilt.internal.*",
-                "hilt_aggregated_deps.*",
                 // Jetpack Compose
                 "*.ComposableSingletons*",
                 "*.*\$*Preview\$*",

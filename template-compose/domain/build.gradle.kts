@@ -14,8 +14,8 @@ dependencies {
         implementation(COROUTINES_CORE)
     }
 
-    with(Dependencies.Hilt) {
-        implementation(JAVAX_INJECT)
+    with(Dependencies.Koin) {
+        implementation(CORE)
     }
 
     with(Dependencies.Test) {

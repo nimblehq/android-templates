@@ -6,10 +6,9 @@ import androidx.datastore.preferences.core.*
 import co.nimblehq.template.compose.domain.repositories.AppPreferencesRepository
 import kotlinx.coroutines.flow.*
 import java.io.IOException
-import javax.inject.Inject
 
-class AppPreferencesRepositoryImpl @Inject constructor(
-    private val appPreferencesDataStore: DataStore<Preferences>
+class AppPreferencesRepositoryImpl(
+    private val appPreferencesDataStore: DataStore<Preferences>,
 ) : AppPreferencesRepository {
 
     private object PreferencesKeys {

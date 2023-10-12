@@ -21,12 +21,9 @@ object Versions {
 
     const val GRADLE = "8.1.2"
 
-    const val HILT = "2.48"
-    const val HILT_NAVIGATION_COMPOSE = "1.0.0"
-
-    const val JAVAX_INJECT = "1"
     const val JUNIT = "4.13.2"
 
+    const val KOIN = "3.5.0"
     const val KOTEST = "5.6.2"
     const val KOTLIN = "1.9.10"
     const val KOTLIN_COROUTINES = "1.7.1"
