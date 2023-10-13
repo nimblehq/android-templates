@@ -33,7 +33,7 @@ object NewProject {
         Run kscript new_project.kts to create a new project with the following arguments:
             $KEY_PACKAGE_NAME=   New package name (i.e., com.example.package)
             $KEY_APP_NAME=       New app name (i.e., MyApp, "My App", "my-app")
-            $KEY_TEMPLATE=       Template (i.e. $TEMPLATE_COMPOSE)
+            $KEY_TEMPLATE=       Template (i.e. $TEMPLATE_COMPOSE) (optional, default: $TEMPLATE_COMPOSE)
             $KEY_FORCE=          Force project creation even if the script fails (default: false)
             $KEY_DESTINATION=    Set the output location where the project should be generated (i.e., /Users/johndoe/documents/projectfolder)
         
@@ -83,7 +83,7 @@ object NewProject {
             }
         }
 
-    private var template: String = ""
+    private var template: String = TEMPLATE_COMPOSE
 
     private val templatePackageName
         get() = TEMPLATE_PACKAGE_NAME_COMPOSE
@@ -114,7 +114,6 @@ object NewProject {
     private fun handleArguments(args: Array<String>) {
         var hasAppName = false
         var hasPackageName = false
-        var hasTemplate = false
         args.forEach { arg ->
             when {
                 arg == KEY_HELP -> {
@@ -139,7 +138,6 @@ object NewProject {
                 arg.startsWith("$KEY_TEMPLATE$DELIMITER_ARGUMENT") -> {
                     val (key, value) = arg.split(DELIMITER_ARGUMENT)
                     validateTemplate(value)
-                    hasTemplate = true
                 }
 
                 arg.startsWith("$KEY_FORCE$DELIMITER_ARGUMENT") -> {
@@ -170,12 +168,6 @@ object NewProject {
 
             !hasPackageName -> showMessage(
                 message = "ERROR: No package name has been provided \n$helpMessage",
-                exitAfterMessage = true,
-                isError = true,
-            )
-
-            !hasTemplate -> showMessage(
-                message = "ERROR: No template has been provided \n$helpMessage",
                 exitAfterMessage = true,
                 isError = true,
             )
