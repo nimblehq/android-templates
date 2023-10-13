@@ -36,7 +36,7 @@ A collection of our Android templates:
 Examples:
 
 ```
-  kscript new_project.kts package-name=co.mycomposeproject.example app-name="My Compose Project" template=compose
+  kscript new_project.kts package-name=co.mycomposeproject.example app-name="My Compose Project"
 ```
 
 ```
