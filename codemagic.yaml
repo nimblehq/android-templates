@@ -14,21 +14,12 @@ definitions:
       name: Run detekt on template-compose
       working_directory: ./template-compose
       script: ./gradlew detekt
-    - &detekt_on_template_xml
-      name: Run detekt on template-xml
-      working_directory: ./template-xml
-      script: ./gradlew detekt
     - &unit_test_on_template_compose
       name: Run unit tests on template-compose
       working_directory: ./template-compose
       script: ./gradlew koverHtmlReport
-    - &unit_test_on_template_xml
-      name: Run unit tests on template-xml
-      working_directory: ./template-xml
-      script: ./gradlew koverHtmlReport
   artifacts:
     - &artifacts_template_compose template-compose/app/build/reports/kover/
-    - &artifacts_template_xml template-xml/app/build/reports/kover/
     - &artifacts_staging_apk template-compose/app/build/outputs/apk/staging/debug/app-staging-debug.apk
     - &artifacts_production_apk template-compose/app/build/outputs/apk/production/debug/app-production-debug.apk
 workflows:
@@ -55,30 +46,6 @@ workflows:
       - *unit_test_on_template_compose
     artifacts:
       - *artifacts_template_compose
-
-  unit-test-on-pr-for-template-xml:
-    name: Unit test on PR for template-xml
-    <<: *configure_environment
-    triggering:
-      events:
-        # Run when a pull request is opened or updated
-        - pull_request
-      branch_patterns:
-        # Review changes BEFORE they’re merged into any branches
-        - pattern: '*'
-          source: false
-        # Will not run on develop branch as it is already covered by build-and-deploy-template-compose-staging
-        - pattern: 'develop'
-          include: false
-        # Will not run on main branch as it is already covered by build-and-deploy-template-compose-production
-        - pattern: 'main'
-          include: false
-      cancel_previous_builds: true
-    scripts:
-      - *detekt_on_template_xml
-      - *unit_test_on_template_xml
-    artifacts:
-      - *artifacts_template_xml
 
   build-and-deploy-template-compose-staging:
     name: Build and deploy template-compose staging to Firebase App Distribution
