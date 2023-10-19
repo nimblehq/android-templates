@@ -22,10 +22,10 @@ class HomeViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val _uiModels = MutableStateFlow<List<UiModel>>(emptyList())
-    val uiModels: StateFlow<List<UiModel>> = _uiModels
+    val uiModels = _uiModels.asStateFlow()
 
     private val _isFirstTimeLaunch = MutableStateFlow(false)
-    val isFirstTimeLaunch: StateFlow<Boolean> = _isFirstTimeLaunch
+    val isFirstTimeLaunch = _isFirstTimeLaunch.asStateFlow()
 
     init {
         getModelsUseCase()
