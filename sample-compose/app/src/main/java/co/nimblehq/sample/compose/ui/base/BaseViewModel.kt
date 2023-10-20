@@ -2,7 +2,6 @@ package co.nimblehq.sample.compose.ui.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import co.nimblehq.sample.compose.lib.IsLoading
 import co.nimblehq.sample.compose.ui.AppDestination
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -15,13 +14,13 @@ abstract class BaseViewModel : ViewModel() {
     private var loadingCount: Int = 0
 
     private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<IsLoading> = _isLoading
+    val isLoading = _isLoading.asStateFlow()
 
     protected val _error = MutableSharedFlow<Throwable>()
-    val error: SharedFlow<Throwable> = _error
+    val error = _error.asSharedFlow()
 
     protected val _navigator = MutableSharedFlow<AppDestination>()
-    val navigator: SharedFlow<AppDestination> = _navigator
+    val navigator = _navigator.asSharedFlow()
 
     /**
      * To show loading manually, should call `hideLoading` after
