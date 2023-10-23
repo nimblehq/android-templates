@@ -5,6 +5,10 @@ on:
     types: [ opened, reopened, synchronize ]
     branches: [ develop ]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   verify_newproject_script:
     name: Verify newproject script
