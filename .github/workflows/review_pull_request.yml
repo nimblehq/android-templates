@@ -4,6 +4,10 @@ on:
   pull_request:
     types: [ opened, edited, reopened, synchronize ]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   review_pull_request:
     name: Review pull request

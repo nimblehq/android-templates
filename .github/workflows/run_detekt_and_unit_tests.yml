@@ -2,6 +2,10 @@ name: Run Detekt and unit tests
 
 on: push
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   run_detekt_and_unit_tests:
     name: Run Detekt and unit tests
