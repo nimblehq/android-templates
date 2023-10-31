@@ -1,6 +1,6 @@
 package co.nimblehq.sample.compose.data.test
 
-import co.nimblehq.sample.compose.data.response.ErrorResponse
+import co.nimblehq.sample.compose.data.responses.ErrorResponse
 import io.mockk.every
 import io.mockk.mockk
 import okhttp3.ResponseBody
@@ -31,7 +31,7 @@ object MockUtil {
     )
 
     val responses = listOf(
-        co.nimblehq.sample.compose.data.response.Response(
+        co.nimblehq.sample.compose.data.responses.Response(
             id = 1,
             userName = "name1",
         )

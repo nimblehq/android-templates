@@ -1,7 +1,9 @@
 package co.nimblehq.sample.compose.ui
 
-import androidx.navigation.*
-import co.nimblehq.sample.compose.model.UiModel
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
+import co.nimblehq.sample.compose.ui.models.UiModel
 
 const val KeyId = "id"
 const val KeyModel = "model"
