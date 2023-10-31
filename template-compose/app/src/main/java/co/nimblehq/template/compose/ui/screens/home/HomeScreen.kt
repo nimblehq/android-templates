@@ -1,4 +1,4 @@
-package co.nimblehq.template.compose.ui.screens.home
+package co.nimblehq.kmm.template.ui.screens.home
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
@@ -10,13 +10,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import co.nimblehq.template.compose.R
-import co.nimblehq.template.compose.extensions.collectAsEffect
-import co.nimblehq.template.compose.ui.AppDestination
-import co.nimblehq.template.compose.ui.models.UiModel
-import co.nimblehq.template.compose.ui.showToast
-import co.nimblehq.template.compose.ui.theme.AppTheme.dimensions
-import co.nimblehq.template.compose.ui.theme.ComposeTheme
+import co.nimblehq.kmm.template.R
+import co.nimblehq.kmm.template.Strings
+import co.nimblehq.kmm.template.extensions.collectAsEffect
+import co.nimblehq.kmm.template.getPlatform
+import co.nimblehq.kmm.template.sharedres.SharedRes
+import co.nimblehq.kmm.template.ui.AppDestination
+import co.nimblehq.kmm.template.ui.models.UiModel
+import co.nimblehq.kmm.template.ui.showToast
+import co.nimblehq.kmm.template.ui.theme.AppTheme.dimensions
+import co.nimblehq.kmm.template.ui.theme.ComposeTheme
 import org.koin.androidx.compose.getViewModel
 import timber.log.Timber
 
@@ -32,7 +35,10 @@ fun HomeScreen(
     val uiModels: List<UiModel> by viewModel.uiModels.collectAsStateWithLifecycle()
 
     HomeScreenContent(
-        title = stringResource(id = R.string.app_name),
+        title = Strings(LocalContext.current).get(
+            id = SharedRes.strings.greeting,
+            args = listOf(getPlatform().name)
+        ),
         uiModels = uiModels
     )
 }
@@ -40,7 +46,7 @@ fun HomeScreen(
 @Composable
 private fun HomeScreenContent(
     title: String,
-    uiModels: List<UiModel>
+    uiModels: List<UiModel>,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
