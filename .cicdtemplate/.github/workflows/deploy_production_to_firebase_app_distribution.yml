@@ -1,11 +1,11 @@
 name: Deploy staging and production to Firebase App Distribution
 
 on:
-  # Trigger the workflow on push action in develop branch.
+  # Trigger the workflow on push action in main branch.
   # So it will trigger when the PR of the feature branch was merged.
   push:
     branches:
-      - develop
+      - main
 
 jobs:
   deploy_staging_and_production_to_firebase_app_distribution:
@@ -56,19 +56,8 @@ jobs:
           name: CodeCoverageReports
           path: app/build/reports/kover/
 
-      - name: Build staging APK
-        run: ./gradlew assembleStagingDebug
-
-      - name: Deploy staging to Firebase
-        uses: wzieba/Firebase-Distribution-Github-Action@v1
-        with:
-          appId: ${{secrets.FIREBASE_APP_ID_STAGING}}
-          serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CREDENTIAL_FILE_CONTENT }}
-          groups: testers
-          file: app/build/outputs/apk/staging/debug/app-staging-debug.apk
-
       - name: Build production APK
-        run: ./gradlew assembleProductionDebug
+        run: ./gradlew assembleProductionRelease
 
       - name: Deploy production to Firebase
         uses: wzieba/Firebase-Distribution-Github-Action@v1
@@ -76,4 +65,4 @@ jobs:
           appId: ${{secrets.FIREBASE_APP_ID_PRODUCTION}}
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CREDENTIAL_FILE_CONTENT }}
           groups: testers
-          file: app/build/outputs/apk/production/debug/app-production-debug.apk
+          file: app/build/outputs/apk/production/debug/app-production-release.apk
