@@ -5,20 +5,24 @@ on:
     types: [ opened, reopened, synchronize ]
     branches: [ develop ]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   verify_newproject_script:
     name: Verify newproject script
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - name: Set up JDK 11
+      - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '11'
+          java-version: '17'
 
       - name: Checkout source code
-        uses: actions/checkout@v2.3.2
+        uses: actions/checkout@v4
 
       - name: Cache Gradle
         uses: actions/cache@v2
@@ -39,16 +43,6 @@ jobs:
           sdk install kotlin $kotlinVersion
           sdk install kscript $kscriptVersion
           echo $PATH >> $GITHUB_PATH
-
-      - name: Verify generating new project from template-xml
-        working-directory: scripts
-        run: kscript new_project.kts package-name=co.myxmlproject.example app-name="My XML Project" template=xml
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
 
       - name: Verify generating new project from template-compose
         working-directory: scripts

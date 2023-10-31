@@ -33,13 +33,13 @@ fun Item(
         Row {
             Text(
                 modifier = Modifier
-                    .padding(dimensions.spacingNormal)
+                    .padding(dimensions.spacingMedium)
                     .weight(1f),
                 text = uiModel.id
             )
             Text(
                 modifier = Modifier
-                    .padding(dimensions.spacingNormal)
+                    .padding(dimensions.spacingMedium)
                     .weight(2f),
                 text = uiModel.username
             )

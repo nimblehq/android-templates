@@ -51,7 +51,7 @@ private fun HomeScreenContent(
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(all = dimensions.spacingNormal)
+                .padding(all = dimensions.spacingMedium)
         )
     }
     Timber.d("Result : $uiModels")

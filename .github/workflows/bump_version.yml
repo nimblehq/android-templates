@@ -8,23 +8,21 @@ on:
         required: true
         type: string
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   bump_version:
     name: Bump version
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the latest code
-        uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout source code
+        uses: actions/checkout@v4
 
       - name: Bump version script
         run: |
           perl -i -pe 's/^(templateScriptVersion=(.*))$/"templateScriptVersion=${{ github.event.inputs.newVersion }}"/e' version.properties
-
-      - name: Bump version XML
-        run: |
-          perl -i -pe 's/ANDROID_VERSION_NAME =(.*)$/ANDROID_VERSION_NAME = "${{ github.event.inputs.newVersion }}"/g' sample-xml/buildSrc/src/main/java/Versions.kt
 
       - name: Bump version Compose
         run: |

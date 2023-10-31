@@ -2,6 +2,10 @@ name: Run Detekt and unit tests
 
 on: push
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   run_detekt_and_unit_tests:
     name: Run Detekt and unit tests
@@ -9,7 +13,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v2.3.2
+        uses: actions/checkout@v4
 
       - name: Cache Gradle
         uses: actions/cache@v2
@@ -49,56 +53,6 @@ jobs:
         with:
           name: CodeCoverageReportsTemplateCompose
           path: template-compose/app/build/reports/kover/
-
-      # template-xml
-
-      - name: Set up JDK 11
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '11'
-
-      - name: Run Detekt on template-xml
-        working-directory: ./template-xml
-        run: ./gradlew detekt
-
-      - name: Archive Detekt reports on template-xml
-        uses: actions/upload-artifact@v3
-        with:
-          name: DetektReportsTemplateXML
-          path: template-xml/build/reports/detekt/
-
-      - name: Run unit tests with Kover on template-xml
-        working-directory: ./template-xml
-        run: ./gradlew koverHtmlReport
-
-      - name: Archive code coverage reports on template-xml
-        uses: actions/upload-artifact@v3
-        with:
-          name: CodeCoverageReportsTemplateXML
-          path: template-xml/app/build/reports/kover/
-
-      # sample-xml
-
-      - name: Run Detekt on sample-xml
-        working-directory: ./sample-xml
-        run: ./gradlew detekt
-
-      - name: Archive Detekt reports on sample-xml
-        uses: actions/upload-artifact@v3
-        with:
-          name: DetektReportsTemplateXML
-          path: sample-xml/build/reports/detekt/
-
-      - name: Run unit tests with Kover on sample-xml
-        working-directory: ./sample-xml
-        run: ./gradlew koverHtmlReport
-
-      - name: Archive code coverage reports on sample-xml
-        uses: actions/upload-artifact@v3
-        with:
-          name: CodeCoverageReportsTemplateXML
-          path: sample-xml/app/build/reports/kover/
 
       # sample-compose
 
