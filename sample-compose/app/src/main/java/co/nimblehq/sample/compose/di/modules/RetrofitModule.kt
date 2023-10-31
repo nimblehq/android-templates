@@ -1,10 +1,10 @@
 package co.nimblehq.sample.compose.di.modules
 
 import co.nimblehq.sample.compose.BuildConfig
-import co.nimblehq.sample.compose.data.services.ApiService
-import co.nimblehq.sample.compose.data.services.providers.ApiServiceProvider
-import co.nimblehq.sample.compose.data.services.providers.ConverterFactoryProvider
-import co.nimblehq.sample.compose.data.services.providers.RetrofitProvider
+import co.nimblehq.sample.compose.data.remote.providers.ApiServiceProvider
+import co.nimblehq.sample.compose.data.remote.providers.ConverterFactoryProvider
+import co.nimblehq.sample.compose.data.remote.providers.RetrofitProvider
+import co.nimblehq.sample.compose.data.remote.services.ApiService
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides

@@ -1,6 +1,6 @@
-package co.nimblehq.sample.compose.data.services.providers
+package co.nimblehq.sample.compose.data.remote.providers
 
-import co.nimblehq.sample.compose.data.services.ApiService
+import co.nimblehq.sample.compose.data.remote.services.ApiService
 import retrofit2.Retrofit
 
 object ApiServiceProvider {

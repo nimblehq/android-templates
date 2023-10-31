@@ -1,7 +1,7 @@
 package co.nimblehq.sample.compose.data.repositories
 
-import co.nimblehq.sample.compose.data.responses.toModels
-import co.nimblehq.sample.compose.data.services.ApiService
+import co.nimblehq.sample.compose.data.remote.models.responses.toModels
+import co.nimblehq.sample.compose.data.remote.services.ApiService
 import co.nimblehq.sample.compose.data.test.MockUtil
 import co.nimblehq.sample.compose.domain.repositories.Repository
 import io.kotest.matchers.shouldBe

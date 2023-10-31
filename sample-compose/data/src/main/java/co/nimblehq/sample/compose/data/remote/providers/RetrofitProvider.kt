@@ -1,4 +1,4 @@
-package co.nimblehq.sample.compose.data.services.providers
+package co.nimblehq.sample.compose.data.remote.providers
 
 import okhttp3.OkHttpClient
 import retrofit2.Converter

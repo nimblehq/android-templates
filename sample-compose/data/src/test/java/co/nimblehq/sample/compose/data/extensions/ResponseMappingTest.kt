@@ -1,6 +1,6 @@
 package co.nimblehq.sample.compose.data.extensions
 
-import co.nimblehq.sample.compose.data.responses.toModel
+import co.nimblehq.sample.compose.data.remote.models.responses.toModel
 import co.nimblehq.sample.compose.data.test.MockUtil
 import co.nimblehq.sample.compose.domain.exceptions.ApiException
 import co.nimblehq.sample.compose.domain.exceptions.NoConnectivityException

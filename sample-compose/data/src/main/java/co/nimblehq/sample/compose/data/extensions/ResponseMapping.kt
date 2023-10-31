@@ -1,8 +1,8 @@
 package co.nimblehq.sample.compose.data.extensions
 
-import co.nimblehq.sample.compose.data.responses.ErrorResponse
-import co.nimblehq.sample.compose.data.responses.toModel
-import co.nimblehq.sample.compose.data.services.providers.MoshiBuilderProvider
+import co.nimblehq.sample.compose.data.remote.models.responses.ErrorResponse
+import co.nimblehq.sample.compose.data.remote.models.responses.toModel
+import co.nimblehq.sample.compose.data.remote.providers.MoshiBuilderProvider
 import co.nimblehq.sample.compose.domain.exceptions.ApiException
 import co.nimblehq.sample.compose.domain.exceptions.NoConnectivityException
 import com.squareup.moshi.JsonDataException

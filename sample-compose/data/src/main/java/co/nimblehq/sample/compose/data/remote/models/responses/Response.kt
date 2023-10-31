@@ -1,4 +1,4 @@
-package co.nimblehq.sample.compose.data.responses
+package co.nimblehq.sample.compose.data.remote.models.responses
 
 import co.nimblehq.sample.compose.domain.models.Model
 import com.squareup.moshi.Json

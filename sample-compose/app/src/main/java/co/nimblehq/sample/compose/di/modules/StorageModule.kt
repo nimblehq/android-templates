@@ -1,7 +1,7 @@
 package co.nimblehq.sample.compose.di.modules
 
 import android.content.Context
-import co.nimblehq.sample.compose.data.storages.EncryptedSharedPreferences
+import co.nimblehq.sample.compose.data.local.storages.EncryptedSharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

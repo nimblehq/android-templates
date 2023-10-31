@@ -1,4 +1,4 @@
-package co.nimblehq.sample.compose.data.services.providers
+package co.nimblehq.sample.compose.data.remote.providers
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
