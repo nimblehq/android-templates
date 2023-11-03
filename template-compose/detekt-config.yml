@@ -286,6 +286,7 @@ style:
   MagicNumber:
     active: true
     ignoreNumbers: [ '-1', '0', '1', '2' ]
+    ignoreAnnotated: [ 'Preview' ]
     ignoreHashCodeFunction: false
     ignorePropertyDeclaration: true
     ignoreConstantDeclaration: true
@@ -347,3 +348,48 @@ style:
     active: false
   WildcardImport:
     active: false
+
+Compose:
+  CompositionLocalAllowlist:
+    active: true
+    allowedCompositionLocals: LocalAppColors,LocalAppDimensions,LocalAppShapes,LocalAppStyles,LocalAppTypography
+  ContentEmitterReturningValues:
+    active: true
+  DefaultsVisibility:
+    active: true
+  ModifierClickableOrder:
+    active: true
+  ModifierComposable:
+    active: true
+  ModifierMissing:
+    active: true
+  ModifierNaming:
+    active: true
+  ModifierNotUsedAtRoot:
+    active: true
+  ModifierReused:
+    active: true
+  ModifierWithoutDefault:
+    active: true
+  MultipleEmitters:
+    active: true
+  MutableParams:
+    active: true
+  ComposableNaming:
+    active: true
+  ComposableParamOrder:
+    active: true
+  PreviewAnnotationNaming:
+    active: true
+  PreviewPublic:
+    active: true
+  RememberMissing:
+    active: true
+  RememberContentMissing:
+    active: true
+  UnstableCollections:
+    active: true
+  ViewModelForwarding:
+    active: true
+  ViewModelInjection:
+    active: true

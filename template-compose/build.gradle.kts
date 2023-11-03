@@ -9,6 +9,10 @@ plugins {
     id(Plugins.KOVER) version Versions.KOVER
 }
 
+dependencies {
+    detektPlugins("io.nlopez.compose.rules:detekt:0.3.3")
+}
+
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }

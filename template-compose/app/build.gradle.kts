@@ -156,6 +156,10 @@ dependencies {
         kapt(COMPILER)
     }
 
+    with(Dependencies.Kotlin) {
+        implementation(COLLECTIONS_IMMUTABLE)
+    }
+
     with(Dependencies.Log) {
         implementation(TIMBER)
 
