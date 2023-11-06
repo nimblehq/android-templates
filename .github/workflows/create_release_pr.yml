@@ -1,0 +1,70 @@
+name: Create the Release pull request
+
+on:
+  workflow_dispatch:
+  # testing
+  push:
+    branches:
+      - feature/525-create-release-pr-workflow
+
+jobs:
+  create_release_pr:
+    name: Create the Release pull request
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout the latest code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Read the current version
+        id: version
+        uses: christian-draeger/read-properties@1.1.1
+        with:
+          path: "version.properties"
+          properties: "templateScriptVersion"
+
+      - name: Find HEAD commit
+        id: head
+        run: echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Build changelog
+        id: changelog
+        uses: mikepenz/release-changelog-builder-action@v4
+        with:
+          configuration: ".github/workflows/config/changelog-release.json"
+          # Listing PRs from the last tag to the HEAD commit
+          toTag: ${{ steps.head.outputs.sha }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create the Release pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=${{ steps.version.outputs.templateScriptVersion }}
+          BASE_BRANCH=main
+          HEAD_BRANCH=release/$VERSION
+
+          # Fetch milestone info
+          gh extension install valeriobelli/gh-milestone
+          MILESTONE=$VERSION
+          MILESTONE_URL=$(gh milestone list --query $MILESTONE --json url --jq ".[0].url")
+
+          # Create the release branch
+          git checkout -b $HEAD_BRANCH
+          git push origin $HEAD_BRANCH
+
+          # Create the pull request
+          gh pr create \
+            --base $BASE_BRANCH \
+            --head $HEAD_BRANCH \
+            --assignee "bot-nimble" \
+            --title "Release - $VERSION" \
+            --label 'type : release' \
+            --milestone $MILESTONE \
+            --body "$MILESTONE_URL
+
+            ${{ steps.changelog.outputs.changelog }}" \
