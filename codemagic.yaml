@@ -54,7 +54,7 @@ workflows:
       events:
         - push
       branch_patterns:
-        - pattern: develop
+        - pattern: 'develop'
     scripts:
       - *detekt_on_template_compose
       - *unit_test_on_template_compose
@@ -62,6 +62,10 @@ workflows:
         working_directory: ./template-compose
         script: |
           ./gradlew assembleStagingDebug -PversionCode=$BUILD_NUMBER
+      - name: Generating release notes with the latest git commit
+        script: |
+          RELEASE_NOTE_CONTENT="$((git log -1 --merges | grep "\[") | grep . && echo "" || echo $(git log -1 --merges --format=%B))"
+          echo "$RELEASE_NOTE_CONTENT" | tee release_notes.txt
     artifacts:
       - *artifacts_template_compose
       - *artifacts_staging_apk
@@ -81,7 +85,13 @@ workflows:
       events:
         - push
       branch_patterns:
-        - pattern: main
+        - pattern: 'main'
+    environment:
+      vars:
+        # Increase the clone depth to 50 to cover all commits from the latest tag
+        CM_CLONE_DEPTH: 50
+      groups:
+        - firebase_credentials
     scripts:
       - *detekt_on_template_compose
       - *unit_test_on_template_compose
@@ -89,6 +99,10 @@ workflows:
         working_directory: ./template-compose
         script: |
           ./gradlew assembleProductionDebug -PversionCode=$BUILD_NUMBER
+      - name: Generating release notes with git commits from the latest tag
+        script: |
+          RELEASE_NOTE_CONTENT="$(git log --merges --pretty=%B $(git describe --abbrev=0 --tags)..HEAD | grep "\[")"
+          echo "$RELEASE_NOTE_CONTENT" | tee release_notes.txt
     artifacts:
       - *artifacts_template_compose
       - *artifacts_production_apk
