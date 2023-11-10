@@ -4,9 +4,9 @@ definitions:
     instance_type: mac_mini_m1
     max_build_duration: 30
     environment:
-      java: 17
       groups:
         - firebase_credentials
+      java: 17
     cache:
       cache_paths:
         - $HOME/.gradle/caches
@@ -93,6 +93,7 @@ workflows:
         CM_CLONE_DEPTH: 50
       groups:
         - firebase_credentials
+      java: 17
     scripts:
       - *detekt_on_template_compose
       - *unit_test_on_template_compose
