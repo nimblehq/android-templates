@@ -6,6 +6,7 @@ definitions:
     environment:
       groups:
         - firebase_credentials
+      java: 17
     cache:
       cache_paths:
         - $HOME/.gradle/caches
@@ -89,6 +90,7 @@ workflows:
         CM_CLONE_DEPTH: 50
       groups:
         - firebase_credentials
+      java: 17
     scripts:
       - *detekt
       - *unit_test
