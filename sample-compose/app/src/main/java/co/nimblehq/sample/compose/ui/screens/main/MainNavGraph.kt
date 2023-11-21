@@ -3,7 +3,7 @@ package co.nimblehq.sample.compose.ui.screens.main
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navigation
-import co.nimblehq.sample.compose.extensions.getAndRemove
+import co.nimblehq.sample.compose.extensions.getThenRemove
 import co.nimblehq.sample.compose.model.UiModel
 import co.nimblehq.sample.compose.ui.AppDestination
 import co.nimblehq.sample.compose.ui.KeyId
@@ -24,7 +24,7 @@ fun NavGraphBuilder.mainNavGraph(
     ) {
         composable(destination = AppDestination.Home) { backStackEntry ->
             val isResultOk = backStackEntry.savedStateHandle
-                .getAndRemove<Boolean>(KeyResultOk) ?: false
+                .getThenRemove<Boolean>(KeyResultOk) ?: false
             HomeScreen(
                 navigator = { destination ->
                     navController.navigate(destination, destination.parcelableArgument)
