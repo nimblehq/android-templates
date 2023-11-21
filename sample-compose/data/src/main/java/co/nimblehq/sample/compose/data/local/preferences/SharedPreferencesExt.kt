@@ -1,4 +1,4 @@
-package co.nimblehq.template.compose.data.local.storages
+package co.nimblehq.sample.compose.data.local.preferences
 
 import android.content.SharedPreferences
 
