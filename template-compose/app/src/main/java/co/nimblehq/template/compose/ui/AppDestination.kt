@@ -8,7 +8,12 @@ sealed class AppDestination(val route: String = "") {
 
     open var destination: String = route
 
-    data class Up(val results: List<Result> = emptyList()) : AppDestination()
+    data class Up(val results: HashMap<String, Any> = hashMapOf()) : AppDestination() {
+
+        fun addResult(key: String, value: Any) = apply {
+            results[key] = value
+        }
+    }
 
     object RootNavGraph : AppDestination("rootNavGraph")
 
@@ -16,8 +21,3 @@ sealed class AppDestination(val route: String = "") {
 
     object Home : AppDestination("home")
 }
-
-data class Result(
-    val key: String,
-    val value: Any,
-)

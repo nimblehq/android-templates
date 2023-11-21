@@ -17,7 +17,12 @@ sealed class AppDestination(val route: String = "") {
 
     open var parcelableArgument: Pair<String, Any?> = "" to null
 
-    data class Up(val results: List<Result> = emptyList()) : AppDestination()
+    data class Up(val results: HashMap<String, Any> = hashMapOf()) : AppDestination() {
+
+        fun addResult(key: String, value: Any) = apply {
+            results[key] = value
+        }
+    }
 
     object RootNavGraph : AppDestination("rootNavGraph")
 
@@ -42,8 +47,3 @@ sealed class AppDestination(val route: String = "") {
         }
     }
 }
-
-data class Result(
-    val key: String,
-    val value: Any,
-)

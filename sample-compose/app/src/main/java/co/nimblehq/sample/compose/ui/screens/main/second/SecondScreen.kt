@@ -16,7 +16,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.ui.AppDestination
 import co.nimblehq.sample.compose.ui.KeyResultOk
-import co.nimblehq.sample.compose.ui.Result
 import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.theme.AppTheme.dimensions
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
@@ -30,16 +29,7 @@ fun SecondScreen(
     SecondScreenContent(
         id = id,
         onUpdateClick = {
-            navigator(
-                AppDestination.Up(
-                    listOf(
-                        Result(
-                            key = KeyResultOk,
-                            value = true,
-                        ),
-                    )
-                )
-            )
+            navigator(AppDestination.Up().addResult(KeyResultOk, true))
         },
     )
 }
