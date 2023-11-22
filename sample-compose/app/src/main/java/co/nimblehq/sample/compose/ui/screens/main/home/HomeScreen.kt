@@ -16,7 +16,7 @@ import co.nimblehq.sample.compose.extensions.collectAsEffect
 import co.nimblehq.sample.compose.extensions.showToast
 import co.nimblehq.sample.compose.lib.IsLoading
 import co.nimblehq.sample.compose.model.UiModel
-import co.nimblehq.sample.compose.ui.AppDestination
+import co.nimblehq.sample.compose.ui.base.BaseDestination
 import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.showToast
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.*
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
-    navigator: (destination: AppDestination) -> Unit,
+    navigator: (destination: BaseDestination) -> Unit,
     isResultOk: Boolean = false,
 ) {
     val context = LocalContext.current

@@ -1,9 +1,13 @@
 package co.nimblehq.template.compose.ui
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.*
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navDeepLink
+import co.nimblehq.template.compose.ui.base.BaseDestination
 import co.nimblehq.template.compose.ui.screens.main.mainNavGraph
 
 @Composable
@@ -20,7 +24,7 @@ fun AppNavGraph(
 }
 
 fun NavGraphBuilder.composable(
-    destination: AppDestination,
+    destination: BaseDestination,
     content: @Composable (NavBackStackEntry) -> Unit,
 ) {
     composable(
@@ -35,14 +39,14 @@ fun NavGraphBuilder.composable(
     )
 }
 
-fun NavHostController.navigate(appDestination: AppDestination) {
-    when (appDestination) {
-        is AppDestination.Up -> {
-            appDestination.results.forEach { (key, value) ->
+fun NavHostController.navigate(destination: BaseDestination) {
+    when (destination) {
+        is BaseDestination.Up -> {
+            destination.results.forEach { (key, value) ->
                 previousBackStackEntry?.savedStateHandle?.set(key, value)
             }
             navigateUp()
         }
-        else -> navigate(route = appDestination.destination)
+        else -> navigate(route = destination.destination)
     }
 }
