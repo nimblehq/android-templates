@@ -7,7 +7,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import co.nimblehq.template.compose.R
 import co.nimblehq.template.compose.domain.usecases.UseCase
 import co.nimblehq.template.compose.test.MockUtil
-import co.nimblehq.template.compose.ui.AppDestination
+import co.nimblehq.template.compose.ui.base.BaseDestination
 import co.nimblehq.template.compose.ui.screens.BaseScreenTest
 import co.nimblehq.template.compose.ui.screens.MainActivity
 import co.nimblehq.template.compose.ui.theme.ComposeTheme
@@ -31,7 +31,7 @@ class HomeScreenTest : BaseScreenTest() {
     private val mockUseCase: UseCase = mockk()
 
     private lateinit var viewModel: HomeViewModel
-    private var expectedAppDestination: AppDestination? = null
+    private var expectedDestination: BaseDestination? = null
 
     @Before
     fun setUp() {
@@ -67,7 +67,7 @@ class HomeScreenTest : BaseScreenTest() {
             ComposeTheme {
                 HomeScreen(
                     viewModel = viewModel,
-                    navigator = { destination -> expectedAppDestination = destination }
+                    navigator = { destination -> expectedDestination = destination }
                 )
             }
         }

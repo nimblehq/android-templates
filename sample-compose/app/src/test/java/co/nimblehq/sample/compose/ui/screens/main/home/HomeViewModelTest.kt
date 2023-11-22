@@ -7,7 +7,7 @@ import co.nimblehq.sample.compose.domain.usecase.UpdateFirstTimeLaunchPreference
 import co.nimblehq.sample.compose.model.toUiModel
 import co.nimblehq.sample.compose.test.CoroutineTestRule
 import co.nimblehq.sample.compose.test.MockUtil
-import co.nimblehq.sample.compose.ui.AppDestination
+import co.nimblehq.sample.compose.ui.screens.main.MainDestination
 import co.nimblehq.sample.compose.util.DispatchersProvider
 import io.kotest.matchers.shouldBe
 import io.mockk.Runs
@@ -86,7 +86,7 @@ class HomeViewModelTest {
         viewModel.navigator.test {
             viewModel.navigateToSecond(MockUtil.models[0].toUiModel())
 
-            expectMostRecentItem() shouldBe AppDestination.Second
+            expectMostRecentItem() shouldBe MainDestination.Second
         }
     }
 

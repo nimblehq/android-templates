@@ -6,9 +6,7 @@ import androidx.navigation.navigation
 import co.nimblehq.sample.compose.extensions.getThenRemove
 import co.nimblehq.sample.compose.model.UiModel
 import co.nimblehq.sample.compose.ui.AppDestination
-import co.nimblehq.sample.compose.ui.KeyId
-import co.nimblehq.sample.compose.ui.KeyModel
-import co.nimblehq.sample.compose.ui.KeyResultOk
+import co.nimblehq.sample.compose.ui.base.KeyResultOk
 import co.nimblehq.sample.compose.ui.composable
 import co.nimblehq.sample.compose.ui.navigate
 import co.nimblehq.sample.compose.ui.screens.main.home.HomeScreen
@@ -20,9 +18,9 @@ fun NavGraphBuilder.mainNavGraph(
 ) {
     navigation(
         route = AppDestination.MainNavGraph.route,
-        startDestination = AppDestination.Home.destination
+        startDestination = MainDestination.Home.destination
     ) {
-        composable(destination = AppDestination.Home) { backStackEntry ->
+        composable(destination = MainDestination.Home) { backStackEntry ->
             val isResultOk = backStackEntry.savedStateHandle
                 .getThenRemove<Boolean>(KeyResultOk) ?: false
             HomeScreen(
@@ -33,14 +31,14 @@ fun NavGraphBuilder.mainNavGraph(
             )
         }
 
-        composable(destination = AppDestination.Second) { backStackEntry ->
+        composable(destination = MainDestination.Second) { backStackEntry ->
             SecondScreen(
                 navigator = { destination -> navController.navigate(destination) },
                 id = backStackEntry.arguments?.getString(KeyId).orEmpty()
             )
         }
 
-        composable(destination = AppDestination.Third) {
+        composable(destination = MainDestination.Third) {
             ThirdScreen(
                 navigator = { destination -> navController.navigate(destination) },
                 model = navController.previousBackStackEntry?.savedStateHandle?.get<UiModel>(

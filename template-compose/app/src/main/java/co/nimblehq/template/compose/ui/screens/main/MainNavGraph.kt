@@ -1,7 +1,11 @@
 package co.nimblehq.template.compose.ui.screens.main
 
-import androidx.navigation.*
-import co.nimblehq.template.compose.ui.*
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
+import androidx.navigation.navigation
+import co.nimblehq.template.compose.ui.AppDestination
+import co.nimblehq.template.compose.ui.composable
+import co.nimblehq.template.compose.ui.navigate
 import co.nimblehq.template.compose.ui.screens.main.home.HomeScreen
 
 fun NavGraphBuilder.mainNavGraph(
@@ -9,9 +13,9 @@ fun NavGraphBuilder.mainNavGraph(
 ) {
     navigation(
         route = AppDestination.MainNavGraph.route,
-        startDestination = AppDestination.Home.destination
+        startDestination = MainDestination.Home.destination
     ) {
-        composable(AppDestination.Home) {
+        composable(MainDestination.Home) {
             HomeScreen(
                 navigator = { destination -> navController.navigate(destination) }
             )
