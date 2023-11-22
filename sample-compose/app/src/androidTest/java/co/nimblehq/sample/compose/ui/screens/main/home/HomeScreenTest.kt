@@ -1,22 +1,29 @@
-package co.nimblehq.sample.compose.ui.screens.home
+package co.nimblehq.sample.compose.ui.screens.main.home
 
 import androidx.activity.compose.setContent
-import androidx.compose.ui.test.*
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.rule.GrantPermissionRule
-import co.nimblehq.sample.compose.domain.model.Model
-import co.nimblehq.sample.compose.domain.usecase.*
+import co.nimblehq.sample.compose.domain.usecase.GetModelsUseCase
+import co.nimblehq.sample.compose.domain.usecase.IsFirstTimeLaunchPreferencesUseCase
+import co.nimblehq.sample.compose.domain.usecase.UpdateFirstTimeLaunchPreferencesUseCase
+import co.nimblehq.sample.compose.test.MockUtil
 import co.nimblehq.sample.compose.test.TestDispatchersProvider
-import co.nimblehq.sample.compose.ui.AppDestination
+import co.nimblehq.sample.compose.ui.base.BaseDestination
 import co.nimblehq.sample.compose.ui.screens.MainActivity
+import co.nimblehq.sample.compose.ui.screens.main.MainDestination
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
-import org.junit.*
 import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 
 class HomeScreenTest {
 
@@ -36,13 +43,11 @@ class HomeScreenTest {
     private val mockUpdateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase = mockk()
 
     private lateinit var viewModel: HomeViewModel
-    private var expectedAppDestination: AppDestination? = null
+    private var expectedDestination: BaseDestination? = null
 
     @Before
     fun setUp() {
-        every { mockGetModelsUseCase() } returns flowOf(
-            listOf(Model(1), Model(2), Model(3))
-        )
+        every { mockGetModelsUseCase() } returns flowOf(MockUtil.models)
         every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flowOf(false)
 
         viewModel = HomeViewModel(
@@ -69,7 +74,7 @@ class HomeScreenTest {
     fun when_clicking_on_a_list_item__it_navigates_to_Second_screen() = initComposable {
         onNodeWithText("1").performClick()
 
-        assertEquals(expectedAppDestination, AppDestination.Second)
+        assertEquals(expectedDestination, MainDestination.Second)
     }
 
     private fun initComposable(
@@ -79,7 +84,7 @@ class HomeScreenTest {
             ComposeTheme {
                 HomeScreen(
                     viewModel = viewModel,
-                    navigator = { destination -> expectedAppDestination = destination }
+                    navigator = { destination -> expectedDestination = destination }
                 )
             }
         }
