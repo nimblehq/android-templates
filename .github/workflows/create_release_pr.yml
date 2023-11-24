@@ -2,6 +2,10 @@ name: Create the Release pull request
 
 on:
   workflow_dispatch:
+  # testing
+  push:
+    branches:
+      - feature/525-reuse-release-pr-workflow
 
 jobs:
   create_release_pr:
@@ -16,13 +20,10 @@ jobs:
 
       - name: Read the current version
         id: version
-        uses: christian-draeger/read-properties@1.1.1
-        with:
-          path: "version.properties"
-          properties: "templateScriptVersion"
+        run: echo "version=$(perl -nle 'print $1 if /ANDROID_VERSION_NAME = \"(.*)\"$/' buildSrc/src/main/java/Versions.kt)" >> $GITHUB_OUTPUT
 
       - uses: nimblehq/github-actions-workflows/create_release_pr@0.1.10
         with:
-          version: ${{ steps.version.outputs.templateScriptVersion }}
+          version: ${{ steps.version.outputs.version }}
           changelogConfiguration: ".github/workflows/config/changelog-release.json"
           assignee: bot-nimble
