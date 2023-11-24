@@ -7,7 +7,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.rule.GrantPermissionRule
 import co.nimblehq.sample.compose.R
-import co.nimblehq.sample.compose.domain.usecase.*
+import co.nimblehq.sample.compose.domain.usecases.*
 import co.nimblehq.sample.compose.test.MockUtil
 import co.nimblehq.sample.compose.ui.AppDestination
 import co.nimblehq.sample.compose.ui.screens.BaseScreenTest
