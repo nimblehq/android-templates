@@ -235,14 +235,16 @@ object NewProject {
             "$projectPath${fileSeparator}gradlew",
             "-p",
             "$projectPath",
-            "clean"
+            "clean",
+            "--stacktrace"
         )
         executeCommand(
             "sh",
             "$projectPath${fileSeparator}gradlew",
             "-p",
             "$projectPath${fileSeparator}buildSrc",
-            "clean"
+            "clean",
+            "--stacktrace"
         )
         listOf(".idea", ".gradle", "buildSrc$fileSeparator.gradle", ".git").forEach {
             File("$projectPath$fileSeparator$it")?.let { targetFile ->
@@ -310,7 +312,8 @@ object NewProject {
             "$projectPath${fileSeparator}gradlew",
             "-p",
             "$projectPath",
-            "assembleDebug"
+            "assembleDebug",
+            "--stacktrace"
         )
         showMessage("=> 🚓 Running tests...")
         executeCommand(
@@ -320,7 +323,8 @@ object NewProject {
             "$projectPath",
             ":app:testStagingDebugUnitTest",
             ":data:testDebugUnitTest",
-            ":domain:test"
+            ":domain:test",
+            "--stacktrace"
         )
         showMessage("=> 🚀 Done! The project is ready for development")
     }

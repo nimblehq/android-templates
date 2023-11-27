@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import co.nimblehq.sample.compose.R
-import co.nimblehq.sample.compose.model.UiModel
+import co.nimblehq.sample.compose.ui.models.UiModel
 import co.nimblehq.sample.compose.ui.theme.*
 import co.nimblehq.sample.compose.ui.theme.AppTheme.dimensions
 

@@ -1,8 +1,8 @@
 package co.nimblehq.template.compose.di.modules
 
 import co.nimblehq.template.compose.BuildConfig
-import co.nimblehq.template.compose.data.services.ApiService
-import co.nimblehq.template.compose.data.services.providers.*
+import co.nimblehq.template.compose.data.remote.providers.*
+import co.nimblehq.template.compose.data.remote.services.ApiService
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides

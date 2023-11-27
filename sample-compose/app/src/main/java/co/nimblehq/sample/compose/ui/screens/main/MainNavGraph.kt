@@ -4,10 +4,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navigation
 import co.nimblehq.sample.compose.extensions.getThenRemove
-import co.nimblehq.sample.compose.model.UiModel
 import co.nimblehq.sample.compose.ui.AppDestination
 import co.nimblehq.sample.compose.ui.base.KeyResultOk
 import co.nimblehq.sample.compose.ui.composable
+import co.nimblehq.sample.compose.ui.models.UiModel
 import co.nimblehq.sample.compose.ui.navigate
 import co.nimblehq.sample.compose.ui.screens.main.home.HomeScreen
 import co.nimblehq.sample.compose.ui.screens.main.second.SecondScreen
