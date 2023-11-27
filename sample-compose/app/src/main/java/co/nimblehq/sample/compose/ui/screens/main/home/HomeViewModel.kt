@@ -1,12 +1,12 @@
 package co.nimblehq.sample.compose.ui.screens.main.home
 
 import androidx.lifecycle.viewModelScope
-import co.nimblehq.sample.compose.domain.usecase.GetModelsUseCase
-import co.nimblehq.sample.compose.domain.usecase.IsFirstTimeLaunchPreferencesUseCase
-import co.nimblehq.sample.compose.domain.usecase.UpdateFirstTimeLaunchPreferencesUseCase
-import co.nimblehq.sample.compose.model.UiModel
-import co.nimblehq.sample.compose.model.toUiModel
+import co.nimblehq.sample.compose.domain.usecases.GetModelsUseCase
+import co.nimblehq.sample.compose.domain.usecases.IsFirstTimeLaunchPreferencesUseCase
+import co.nimblehq.sample.compose.domain.usecases.UpdateFirstTimeLaunchPreferencesUseCase
 import co.nimblehq.sample.compose.ui.base.BaseViewModel
+import co.nimblehq.sample.compose.ui.models.UiModel
+import co.nimblehq.sample.compose.ui.models.toUiModel
 import co.nimblehq.sample.compose.ui.screens.main.MainDestination
 import co.nimblehq.sample.compose.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel

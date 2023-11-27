@@ -1,13 +1,13 @@
 package co.nimblehq.sample.compose.ui.screens.main.home
 
 import app.cash.turbine.test
-import co.nimblehq.sample.compose.domain.usecase.GetModelsUseCase
-import co.nimblehq.sample.compose.domain.usecase.IsFirstTimeLaunchPreferencesUseCase
-import co.nimblehq.sample.compose.domain.usecase.UpdateFirstTimeLaunchPreferencesUseCase
-import co.nimblehq.sample.compose.model.toUiModel
+import co.nimblehq.sample.compose.domain.usecases.GetModelsUseCase
+import co.nimblehq.sample.compose.domain.usecases.IsFirstTimeLaunchPreferencesUseCase
+import co.nimblehq.sample.compose.domain.usecases.UpdateFirstTimeLaunchPreferencesUseCase
 import co.nimblehq.sample.compose.test.CoroutineTestRule
 import co.nimblehq.sample.compose.test.MockUtil
 import co.nimblehq.sample.compose.ui.screens.main.MainDestination
+import co.nimblehq.sample.compose.ui.models.toUiModel
 import co.nimblehq.sample.compose.util.DispatchersProvider
 import io.kotest.matchers.shouldBe
 import io.mockk.Runs
