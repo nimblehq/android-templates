@@ -13,8 +13,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import co.nimblehq.sample.compose.R
-import co.nimblehq.sample.compose.model.UiModel
 import co.nimblehq.sample.compose.ui.AppDestination
+import co.nimblehq.sample.compose.ui.models.UiModel
 import co.nimblehq.sample.compose.ui.screens.AppBar
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 

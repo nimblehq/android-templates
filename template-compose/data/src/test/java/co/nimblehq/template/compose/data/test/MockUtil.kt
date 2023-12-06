@@ -1,6 +1,6 @@
 package co.nimblehq.template.compose.data.test
 
-import co.nimblehq.template.compose.data.responses.ErrorResponse
+import co.nimblehq.template.compose.data.remote.models.responses.ErrorResponse
 import io.mockk.every
 import io.mockk.mockk
 import okhttp3.ResponseBody
@@ -31,6 +31,6 @@ object MockUtil {
     )
 
     val responses = listOf(
-        co.nimblehq.template.compose.data.responses.Response(id = 1)
+        co.nimblehq.template.compose.data.remote.models.responses.Response(id = 1)
     )
 }

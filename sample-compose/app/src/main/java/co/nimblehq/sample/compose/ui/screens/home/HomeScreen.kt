@@ -15,8 +15,8 @@ import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.extensions.collectAsEffect
 import co.nimblehq.sample.compose.extensions.showToast
 import co.nimblehq.sample.compose.lib.IsLoading
-import co.nimblehq.sample.compose.model.UiModel
 import co.nimblehq.sample.compose.ui.AppDestination
+import co.nimblehq.sample.compose.ui.models.UiModel
 import co.nimblehq.sample.compose.ui.screens.AppBar
 import co.nimblehq.sample.compose.ui.showToast
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme

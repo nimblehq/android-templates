@@ -1,16 +1,21 @@
 package co.nimblehq.sample.compose.ui.screens.home
 
 import androidx.lifecycle.viewModelScope
-import co.nimblehq.sample.compose.domain.usecase.GetModelsUseCase
-import co.nimblehq.sample.compose.domain.usecase.IsFirstTimeLaunchPreferencesUseCase
-import co.nimblehq.sample.compose.domain.usecase.UpdateFirstTimeLaunchPreferencesUseCase
-import co.nimblehq.sample.compose.model.UiModel
-import co.nimblehq.sample.compose.model.toUiModel
+import co.nimblehq.sample.compose.domain.usecases.GetModelsUseCase
+import co.nimblehq.sample.compose.domain.usecases.IsFirstTimeLaunchPreferencesUseCase
+import co.nimblehq.sample.compose.domain.usecases.UpdateFirstTimeLaunchPreferencesUseCase
 import co.nimblehq.sample.compose.ui.AppDestination
 import co.nimblehq.sample.compose.ui.base.BaseViewModel
+import co.nimblehq.sample.compose.ui.models.UiModel
+import co.nimblehq.sample.compose.ui.models.toUiModel
 import co.nimblehq.sample.compose.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
