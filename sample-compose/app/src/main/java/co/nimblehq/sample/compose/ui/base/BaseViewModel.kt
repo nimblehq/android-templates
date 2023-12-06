@@ -2,7 +2,6 @@ package co.nimblehq.sample.compose.ui.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import co.nimblehq.sample.compose.ui.AppDestination
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import kotlin.coroutines.CoroutineContext
@@ -19,7 +18,7 @@ abstract class BaseViewModel : ViewModel() {
     protected val _error = MutableSharedFlow<Throwable>()
     val error = _error.asSharedFlow()
 
-    protected val _navigator = MutableSharedFlow<AppDestination>()
+    protected val _navigator = MutableSharedFlow<BaseDestination>()
     val navigator = _navigator.asSharedFlow()
 
     /**

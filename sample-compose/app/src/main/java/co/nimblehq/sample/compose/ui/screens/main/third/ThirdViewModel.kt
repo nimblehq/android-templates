@@ -1,8 +1,8 @@
-package co.nimblehq.sample.compose.ui.screens.second
+package co.nimblehq.sample.compose.ui.screens.main.third
 
 import co.nimblehq.sample.compose.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SecondViewModel @Inject constructor() : BaseViewModel()
+class ThirdViewModel @Inject constructor() : BaseViewModel()

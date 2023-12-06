@@ -1,14 +1,10 @@
 package co.nimblehq.template.compose.ui
 
-import androidx.navigation.*
+import co.nimblehq.template.compose.ui.base.BaseDestination
 
-sealed class AppDestination(val route: String = "") {
+sealed class AppDestination {
 
-    open val arguments: List<NamedNavArgument> = emptyList()
+    object RootNavGraph : BaseDestination("rootNavGraph")
 
-    open var destination: String = route
-
-    object Up : AppDestination()
-
-    object Home : AppDestination("home")
+    object MainNavGraph : BaseDestination("mainNavGraph")
 }
