@@ -11,7 +11,7 @@ import co.nimblehq.template.compose.ui.base.BaseDestination
 import co.nimblehq.template.compose.ui.screens.main.mainNavGraph
 
 @Composable
-fun AppNavigation(
+fun AppNavGraph(
     navController: NavHostController,
 ) {
     NavHost(
@@ -38,7 +38,12 @@ fun NavGraphBuilder.composable(
 
 fun NavHostController.navigate(destination: BaseDestination) {
     when (destination) {
-        is BaseDestination.Up -> navigateUp()
+        is BaseDestination.Up -> {
+            destination.results.forEach { (key, value) ->
+                previousBackStackEntry?.savedStateHandle?.set(key, value)
+            }
+            navigateUp()
+        }
         else -> navigate(route = destination.destination)
     }
 }

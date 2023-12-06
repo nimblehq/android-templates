@@ -1,8 +1,10 @@
 package co.nimblehq.sample.compose.ui.screens.main.second
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -13,7 +15,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.ui.base.BaseDestination
+import co.nimblehq.sample.compose.ui.base.KeyResultOk
 import co.nimblehq.sample.compose.ui.common.AppBar
+import co.nimblehq.sample.compose.ui.theme.AppTheme.dimensions
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 
 @Composable
@@ -22,11 +26,19 @@ fun SecondScreen(
     navigator: (destination: BaseDestination) -> Unit,
     id: String,
 ) {
-    SecondScreenContent(id)
+    SecondScreenContent(
+        id = id,
+        onUpdateClick = {
+            navigator(BaseDestination.Up().addResult(KeyResultOk, true))
+        },
+    )
 }
 
 @Composable
-private fun SecondScreenContent(id: String) {
+private fun SecondScreenContent(
+    id: String,
+    onUpdateClick: () -> Unit,
+) {
     Scaffold(topBar = {
         AppBar(R.string.second_title_bar)
     }) { paddingValues ->
@@ -35,10 +47,20 @@ private fun SecondScreenContent(id: String) {
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            Text(
-                text = stringResource(R.string.second_id_title, id),
-                modifier = Modifier.align(Alignment.Center)
-            )
+            Column(modifier = Modifier.align(Alignment.Center)) {
+                Text(
+                    text = stringResource(R.string.second_id_title, id),
+                )
+
+                Button(
+                    onClick = { onUpdateClick() },
+                    modifier = Modifier.padding(dimensions.spacingMedium)
+                ) {
+                    Text(
+                        text = stringResource(R.string.second_update)
+                    )
+                }
+            }
         }
     }
 }
@@ -47,6 +69,9 @@ private fun SecondScreenContent(id: String) {
 @Composable
 private fun SecondScreenPreview() {
     ComposeTheme {
-        SecondScreenContent("1")
+        SecondScreenContent(
+            id = "1",
+            onUpdateClick = {},
+        )
     }
 }

@@ -7,10 +7,12 @@
 
     <string name="second_title_bar">Second</string>
     <string name="second_id_title">ID: %1$s</string>
+    <string name="second_update">Update</string>
 
     <string name="third_title_bar">Third</string>
     <string name="third_data_title">Data: %s</string>
     <string name="third_edit_menu_title">Edit</string>
 
     <string name="message_first_time_launch">This is the first time launch</string>
+    <string name="message_updated">Updated!</string>
 </resources>

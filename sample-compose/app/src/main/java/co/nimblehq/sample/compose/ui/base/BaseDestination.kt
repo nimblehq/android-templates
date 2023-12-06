@@ -2,6 +2,8 @@ package co.nimblehq.sample.compose.ui.base
 
 import androidx.navigation.NamedNavArgument
 
+const val KeyResultOk = "keyResultOk"
+
 abstract class BaseDestination(val route: String = "") {
 
     open val arguments: List<NamedNavArgument> = emptyList()
@@ -10,5 +12,10 @@ abstract class BaseDestination(val route: String = "") {
 
     open var parcelableArgument: Pair<String, Any?> = "" to null
 
-    object Up : BaseDestination()
+    data class Up(val results: HashMap<String, Any> = hashMapOf()) : BaseDestination() {
+
+        fun addResult(key: String, value: Any) = apply {
+            results[key] = value
+        }
+    }
 }
