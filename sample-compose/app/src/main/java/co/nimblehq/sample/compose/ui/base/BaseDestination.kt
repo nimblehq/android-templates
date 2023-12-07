@@ -8,6 +8,11 @@ abstract class BaseDestination(val route: String = "") {
 
     open val arguments: List<NamedNavArgument> = emptyList()
 
+    open val deepLinks: List<String> = listOf(
+        "https://android.nimblehq.co/$route",
+        "android://$route",
+    )
+
     open var destination: String = route
 
     open var parcelableArgument: Pair<String, Any?> = "" to null

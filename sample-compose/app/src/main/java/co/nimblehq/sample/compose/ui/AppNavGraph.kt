@@ -2,11 +2,11 @@ package co.nimblehq.sample.compose.ui
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navDeepLink
 import co.nimblehq.sample.compose.ui.base.BaseDestination
 import co.nimblehq.sample.compose.ui.screens.main.mainNavGraph
 
@@ -25,13 +25,16 @@ fun AppNavGraph(
 
 fun NavGraphBuilder.composable(
     destination: BaseDestination,
-    deepLinks: List<NavDeepLink> = emptyList(),
     content: @Composable (NavBackStackEntry) -> Unit,
 ) {
     composable(
         route = destination.route,
         arguments = destination.arguments,
-        deepLinks = deepLinks,
+        deepLinks = destination.deepLinks.map {
+            navDeepLink {
+                uriPattern = it
+            }
+        },
         content = content
     )
 }

@@ -6,6 +6,8 @@ abstract class BaseDestination(val route: String = "") {
 
     open val arguments: List<NamedNavArgument> = emptyList()
 
+    open val deepLinks: List<String> = emptyList()
+
     open var destination: String = route
 
     data class Up(val results: HashMap<String, Any> = hashMapOf()) : BaseDestination() {
