@@ -10,7 +10,7 @@ plugins {
 }
 
 dependencies {
-    detektPlugins("io.nlopez.compose.rules:detekt:0.3.3")
+    detektPlugins(Plugins.DETEKT_RULES)
 }
 
 tasks.register("clean", Delete::class) {
