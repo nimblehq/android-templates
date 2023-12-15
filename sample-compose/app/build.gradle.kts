@@ -145,6 +145,7 @@ dependencies {
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${Versions.KOTLIN_VERSION}")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLINX_COROUTINES_VERSION}")
+    implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:${Versions.KOTLIN_COLLECTIONS_IMMUTABLE_VERSION}")
 
     kapt("com.google.dagger:hilt-compiler:${Versions.HILT_VERSION}")
 

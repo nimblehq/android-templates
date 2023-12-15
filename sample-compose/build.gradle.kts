@@ -17,6 +17,10 @@ plugins {
     id("org.jetbrains.kotlinx.kover").version(Versions.KOVER_VERSION)
 }
 
+dependencies {
+    detektPlugins("io.nlopez.compose.rules:detekt:0.3.3")
+}
+
 allprojects {
     repositories {
         google()
