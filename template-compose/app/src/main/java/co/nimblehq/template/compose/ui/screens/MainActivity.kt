@@ -3,7 +3,8 @@ package co.nimblehq.template.compose.ui.screens
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import co.nimblehq.template.compose.ui.AppNavigation
+import androidx.navigation.compose.rememberNavController
+import co.nimblehq.template.compose.ui.AppNavGraph
 import co.nimblehq.template.compose.ui.theme.ComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,7 +15,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeTheme {
-                AppNavigation()
+                AppNavGraph(navController = rememberNavController())
             }
         }
     }

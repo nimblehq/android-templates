@@ -1,4 +1,4 @@
-package co.nimblehq.sample.compose.ui.screens
+package co.nimblehq.sample.compose.ui.common
 
 import androidx.annotation.StringRes
 import androidx.compose.material.Text

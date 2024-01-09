@@ -1,4 +1,4 @@
-package co.nimblehq.sample.compose.ui.screens.home
+package co.nimblehq.sample.compose.ui.screens.main.home
 
 import android.Manifest.permission.*
 import androidx.compose.foundation.layout.*
@@ -15,9 +15,9 @@ import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.extensions.collectAsEffect
 import co.nimblehq.sample.compose.extensions.showToast
 import co.nimblehq.sample.compose.lib.IsLoading
-import co.nimblehq.sample.compose.ui.AppDestination
+import co.nimblehq.sample.compose.ui.base.BaseDestination
+import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.models.UiModel
-import co.nimblehq.sample.compose.ui.screens.AppBar
 import co.nimblehq.sample.compose.ui.showToast
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import com.google.accompanist.permissions.*
@@ -26,7 +26,8 @@ import kotlinx.coroutines.flow.*
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
-    navigator: (destination: AppDestination) -> Unit,
+    navigator: (destination: BaseDestination) -> Unit,
+    isResultOk: Boolean = false,
 ) {
     val context = LocalContext.current
     viewModel.error.collectAsEffect { e -> e.showToast(context) }
@@ -40,6 +41,12 @@ fun HomeScreen(
         if (isFirstTimeLaunch) {
             context.showToast(context.getString(R.string.message_first_time_launch))
             viewModel.onFirstTimeLaunch()
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        if (isResultOk) {
+            context.showToast(context.getString(R.string.message_updated))
         }
     }
 

@@ -1,39 +1,10 @@
 package co.nimblehq.sample.compose.ui
 
-import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
-import co.nimblehq.sample.compose.ui.models.UiModel
+import co.nimblehq.sample.compose.ui.base.BaseDestination
 
-const val KeyId = "id"
-const val KeyModel = "model"
+sealed class AppDestination {
 
-sealed class AppDestination(val route: String = "") {
+    object RootNavGraph : BaseDestination("rootNavGraph")
 
-    open val arguments: List<NamedNavArgument> = emptyList()
-
-    open var destination: String = route
-
-    open var parcelableArgument: Pair<String, Any?> = "" to null
-
-    object Up : AppDestination()
-
-    object Home : AppDestination("home")
-
-    object Second : AppDestination("second/{$KeyId}") {
-
-        override val arguments = listOf(
-            navArgument(KeyId) { type = NavType.StringType }
-        )
-
-        fun createRoute(id: String) = apply {
-            destination = "second/$id"
-        }
-    }
-
-    object Third : AppDestination("third") {
-        fun addParcel(value: UiModel) = apply {
-            parcelableArgument = KeyModel to value
-        }
-    }
+    object MainNavGraph : BaseDestination("mainNavGraph")
 }
