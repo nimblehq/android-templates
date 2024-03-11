@@ -97,7 +97,7 @@ workflows:
       - name: Build APK for production
         script: |
           ./gradlew assembleProductionDebug -PversionCode=$BUILD_NUMBER
-      - name: Generating release notes with git commits from the latest tag
+      - name: Generate release notes with git commits from the latest tag
         script: |
           RELEASE_NOTE_CONTENT="$(git log --merges --pretty=%B $(git describe --abbrev=0 --tags)..HEAD | grep "\[")"
           echo "$RELEASE_NOTE_CONTENT" | tee release_notes.txt
