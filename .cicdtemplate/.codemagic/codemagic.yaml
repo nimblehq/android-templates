@@ -60,7 +60,7 @@ workflows:
       - name: Build APK for staging
         script: |
           ./gradlew assembleStagingDebug -PversionCode=$BUILD_NUMBER
-      - name: Generating release notes with the latest git commit
+      - name: Generate release notes with the latest git commit
         script: |
           RELEASE_NOTE_CONTENT="$((git log -1 --merges | grep "\[") | grep . && echo "" || echo $(git log -1 --merges --format=%B))"
           echo "$RELEASE_NOTE_CONTENT" | tee release_notes.txt
