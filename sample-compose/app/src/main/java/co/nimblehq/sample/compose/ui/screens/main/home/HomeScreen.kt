@@ -21,20 +21,22 @@ import co.nimblehq.sample.compose.ui.models.UiModel
 import co.nimblehq.sample.compose.ui.showToast
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import com.google.accompanist.permissions.*
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.*
 
 @Composable
 fun HomeScreen(
+    isResultOk: Boolean = false,
     viewModel: HomeViewModel = hiltViewModel(),
     navigator: (destination: BaseDestination) -> Unit,
-    isResultOk: Boolean = false,
 ) {
     val context = LocalContext.current
     viewModel.error.collectAsEffect { e -> e.showToast(context) }
     viewModel.navigator.collectAsEffect { destination -> navigator(destination) }
 
     val isLoading: IsLoading by viewModel.isLoading.collectAsStateWithLifecycle()
-    val uiModels: List<UiModel> by viewModel.uiModels.collectAsStateWithLifecycle()
+    val uiModels: ImmutableList<UiModel> by viewModel.uiModels.collectAsStateWithLifecycle()
     val isFirstTimeLaunch: Boolean by viewModel.isFirstTimeLaunch.collectAsStateWithLifecycle()
 
     LaunchedEffect(isFirstTimeLaunch) {
@@ -85,7 +87,7 @@ private fun CameraPermission() {
 
 @Composable
 private fun HomeScreenContent(
-    uiModels: List<UiModel>,
+    uiModels: ImmutableList<UiModel>,
     isLoading: IsLoading,
     onItemClick: (UiModel) -> Unit,
     onItemLongClick: (UiModel) -> Unit,
@@ -116,7 +118,7 @@ private fun HomeScreenContent(
 private fun HomeScreenPreview() {
     ComposeTheme {
         HomeScreenContent(
-            uiModels = listOf(UiModel("1", "name1"), UiModel("2", "name2"), UiModel("3", "name3")),
+            uiModels = persistentListOf(UiModel("1", "name1"), UiModel("2", "name2"), UiModel("3", "name3")),
             isLoading = false,
             onItemClick = {},
             onItemLongClick = {}

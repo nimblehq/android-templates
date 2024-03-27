@@ -8,10 +8,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import co.nimblehq.sample.compose.ui.models.UiModel
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun ItemList(
-    uiModels: List<UiModel>,
+    uiModels: ImmutableList<UiModel>,
     onItemClick: (UiModel) -> Unit,
     onItemLongClick: (UiModel) -> Unit,
     modifier: Modifier = Modifier,
@@ -33,7 +35,7 @@ fun ItemList(
 private fun ItemListPreview() {
     ComposeTheme {
         ItemList(
-            uiModels = listOf(UiModel("1", "name1"), UiModel("2", "name2"), UiModel("3", "name3")),
+            uiModels = persistentListOf(UiModel("1", "name1"), UiModel("2", "name2"), UiModel("3", "name3")),
             onItemClick = {},
             onItemLongClick = {}
         )

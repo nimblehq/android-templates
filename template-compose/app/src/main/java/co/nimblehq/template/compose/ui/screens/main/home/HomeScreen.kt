@@ -22,6 +22,7 @@ import co.nimblehq.template.compose.ui.models.UiModel
 import co.nimblehq.template.compose.ui.showToast
 import co.nimblehq.template.compose.ui.theme.AppTheme.dimensions
 import co.nimblehq.template.compose.ui.theme.ComposeTheme
+import kotlinx.collections.immutable.*
 import timber.log.Timber
 
 @Composable
@@ -33,7 +34,7 @@ fun HomeScreen(
     viewModel.error.collectAsEffect { e -> e.showToast(context) }
     viewModel.navigator.collectAsEffect { destination -> navigator(destination) }
 
-    val uiModels: List<UiModel> by viewModel.uiModels.collectAsStateWithLifecycle()
+    val uiModels: ImmutableList<UiModel> by viewModel.uiModels.collectAsStateWithLifecycle()
 
     HomeScreenContent(
         title = stringResource(id = R.string.app_name),
@@ -44,7 +45,7 @@ fun HomeScreen(
 @Composable
 private fun HomeScreenContent(
     title: String,
-    uiModels: List<UiModel>
+    uiModels: ImmutableList<UiModel>
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -67,7 +68,7 @@ private fun HomeScreenPreview() {
     ComposeTheme {
         HomeScreenContent(
             title = stringResource(id = R.string.app_name),
-            uiModels = listOf(UiModel(1), UiModel(2), UiModel(3))
+            uiModels = persistentListOf(UiModel(1), UiModel(2), UiModel(3))
         )
     }
 }

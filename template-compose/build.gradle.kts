@@ -9,6 +9,10 @@ plugins {
     id(Plugins.KOVER) version Versions.KOVER
 }
 
+dependencies {
+    detektPlugins(Plugins.DETEKT_RULES)
+}
+
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }

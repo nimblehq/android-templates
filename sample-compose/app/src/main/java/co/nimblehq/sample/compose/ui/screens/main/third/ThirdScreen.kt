@@ -20,19 +20,23 @@ import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 
 @Composable
 fun ThirdScreen(
+    model: UiModel?,
     viewModel: ThirdViewModel = hiltViewModel(),
     navigator: (destination: BaseDestination) -> Unit,
-    model: UiModel?,
 ) {
     ThirdScreenContent(data = model)
 }
 
 @Composable
-fun ThirdScreenContent(data: UiModel?) {
+fun ThirdScreenContent(
+    data: UiModel?,
+    modifier: Modifier = Modifier,
+) {
     Scaffold(
         topBar = {
             AppBar(title = R.string.third_title_bar)
-        }
+        },
+        modifier = modifier,
     ) { paddingValues ->
         Box(
             modifier = Modifier
@@ -50,7 +54,7 @@ fun ThirdScreenContent(data: UiModel?) {
 
 @Preview
 @Composable
-fun ThirdScreenPreview() {
+private fun ThirdScreenPreview() {
     ComposeTheme {
         ThirdScreenContent(data = UiModel("1", "name1"))
     }

@@ -29,6 +29,7 @@ object Versions {
 
     const val KOTEST = "5.6.2"
     const val KOTLIN = "1.9.10"
+    const val KOTLIN_COLLECTIONS_IMMUTABLE = "0.3.6"
     const val KOTLIN_COROUTINES = "1.7.1"
     const val KOVER = "0.7.3"
 

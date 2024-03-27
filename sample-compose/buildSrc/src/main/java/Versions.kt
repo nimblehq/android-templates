@@ -28,6 +28,7 @@ object Versions {
 
     const val KOTLIN_VERSION = "1.8.21"
     const val KOTLINX_COROUTINES_VERSION = "1.7.1"
+    const val KOTLIN_COLLECTIONS_IMMUTABLE_VERSION = "0.3.6"
     const val KOVER_VERSION = "0.7.3"
 
     const val MOSHI_VERSION = "1.12.0"

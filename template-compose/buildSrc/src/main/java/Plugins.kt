@@ -4,6 +4,7 @@ object Plugins {
     const val JAVA_LIBRARY = "java-library"
 
     const val DETEKT = "io.gitlab.arturbosch.detekt"
+    const val DETEKT_RULES = "io.nlopez.compose.rules:detekt:0.3.3"
 
     const val HILT_ANDROID = "com.google.dagger.hilt.android"
 

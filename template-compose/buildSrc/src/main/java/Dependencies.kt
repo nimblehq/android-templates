@@ -29,6 +29,8 @@ object Dependencies {
 
     object Kotlin {
         const val COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KOTLIN_COROUTINES}"
+        const val COLLECTIONS_IMMUTABLE =
+            "org.jetbrains.kotlinx:kotlinx-collections-immutable:${Versions.KOTLIN_COLLECTIONS_IMMUTABLE}"
     }
 
     object Log {
