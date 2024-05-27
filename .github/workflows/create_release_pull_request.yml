@@ -4,15 +4,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  create_release_pr:
+  create_release_pull_request:
     name: Create the Release pull request
     runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
     steps:
-      - name: Checkout the latest code
-        uses: actions/checkout@v3
+      - name: Check out the latest code
+        uses: actions/checkout@v4
 
       - name: Read the current version
         id: version
@@ -21,8 +21,8 @@ jobs:
           path: "version.properties"
           properties: "templateScriptVersion"
 
-      - uses: nimblehq/github-actions-workflows/create_release_pr@0.1.10
+      - uses: nimblehq/github-actions-workflows/create_release_pull_request@0.1.10
         with:
-          version: ${{ steps.version.outputs.templateScriptVersion }}
-          changelogConfiguration: ".github/workflows/config/changelog-release.json"
+          release_version: ${{ steps.version.outputs.templateScriptVersion }}
+          changelog_configuration: ".github/workflows/config/changelog-release.json"
           assignee: bot-nimble
