@@ -1,6 +1,9 @@
 package co.nimblehq.template.compose.data.test
 
 import co.nimblehq.template.compose.data.remote.models.responses.ErrorResponse
+import co.nimblehq.template.compose.data.remote.models.responses.OAuthTokenResponse
+import co.nimblehq.template.compose.domain.models.AuthStatus
+import co.nimblehq.template.compose.domain.models.OAuthTokenModel
 import io.mockk.every
 import io.mockk.mockk
 import okhttp3.ResponseBody
@@ -32,5 +35,26 @@ object MockUtil {
 
     val responses = listOf(
         co.nimblehq.template.compose.data.remote.models.responses.Response(id = 1)
+    )
+
+    val oauthTokenResponse = OAuthTokenResponse(
+        accessToken = "accessToken",
+        tokenType = "tokenType",
+        expiresIn = null,
+        refreshToken = "refreshToken",
+    )
+
+    val oAuthTokenModel = OAuthTokenModel(
+        accessToken = "accessToken",
+        tokenType = "tokenType",
+        expiresIn = null,
+        refreshToken = "refreshToken",
+    )
+
+    val authenticatedStatus = AuthStatus.Authenticated(
+        accessToken = "accessToken",
+        tokenType = "tokenType",
+        expiresIn = 10,
+        refreshToken = "refreshToken"
     )
 }
