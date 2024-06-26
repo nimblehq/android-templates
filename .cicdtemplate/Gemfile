@@ -1,0 +1,31 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
+
+# ==============================================================================
+# Danger Dependencies - Android Template
+# ==============================================================================
+# Current Phase: Basic quality checks and code analysis
+# Future: Additional plugins for Compose lint, dependency management, AI rules
+# ==============================================================================
+
+# Core Danger functionality
+gem 'danger'
+
+# Code quality plugins
+gem 'danger-android_lint'      # Android Lint integration
+gem 'danger-commit_lint'       # Commit message validation
+gem 'danger-kotlin_detekt'     # Detekt static analysis integration
+
+# Test coverage plugin
+gem 'danger-shroud'            # Kover test coverage reporting
+
+# ==============================================================================
+# Future Plugin Additions (Planned)
+# ==============================================================================
+# - Compose-specific lint rules plugin
+# - Dependency version checker plugin
+# - Custom template validation plugins
+# ==============================================================================

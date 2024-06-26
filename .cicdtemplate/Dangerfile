@@ -1,0 +1,89 @@
+# frozen_string_literal: true
+
+# ==============================================================================
+# Danger Configuration for Android Template
+# ==============================================================================
+# This file contains automated PR checks for code quality and team standards.
+#
+# Current Phase: Basic project configuration and quality checks
+# Future Phases: Additional Compose lint rules, dependency management, AI assistant rules
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# PR Quality Checks
+# ------------------------------------------------------------------------------
+
+# Make it more obvious that a PR is a work in progress and shouldn't be merged yet
+warn("PR is classed as Work in Progress") if github.pr_title.include? "WIP"
+
+# Warn when there is a big PR
+warn("Big PR") if git.lines_of_code > 500
+
+# Warn to encourage a PR description
+warn("Please provide a summary in the PR description to make it easier to review") if github.pr_body.length == 0
+
+# Warn to encourage that labels should have been used on the PR
+warn("Please add labels to this PR") if github.pr_labels.empty?
+
+# ------------------------------------------------------------------------------
+# Commit Quality Checks
+# ------------------------------------------------------------------------------
+
+# Check commits lint and warn on all checks (instead of failing)
+commit_lint.check warn: :all, disable: [:subject_length]
+
+# ------------------------------------------------------------------------------
+# Code Quality Checks - Detekt
+# ------------------------------------------------------------------------------
+
+detekt_dir = "**/build/reports/detekt/detekt-result.xml"
+detekt_reports = Dir[detekt_dir]
+
+if detekt_reports.any?
+  detekt_reports.each do |file_name|
+    kotlin_detekt.skip_gradle_task = true
+    kotlin_detekt.report_file = file_name
+    kotlin_detekt.detekt(inline_mode: true)
+  end
+else
+  warn("Detekt report not found. Please run `./gradlew detekt` before creating a PR.")
+end
+
+# ------------------------------------------------------------------------------
+# Code Quality Checks - Android Lint
+# ------------------------------------------------------------------------------
+
+lint_dir = "**/**/build/reports/lint/lint-result.xml"
+lint_reports = Dir[lint_dir]
+
+if lint_reports.any?
+  lint_reports.each do |file_name|
+    android_lint.skip_gradle_task = true
+    android_lint.report_file = file_name
+    android_lint.lint(inline_mode: true)
+  end
+else
+  warn("Android Lint report not found. Please run `./gradlew lint` before creating a PR.")
+end
+
+# ------------------------------------------------------------------------------
+# Test Coverage Checks - Kover
+# ------------------------------------------------------------------------------
+
+kover_file = "app/build/reports/kover/report.xml"
+
+if File.exist?(kover_file)
+  markdown "## Kover Coverage Report"
+  shroud.reportKover "Unit Tests", kover_file, 80, 95, false
+else
+  warn("Kover coverage report not found at #{kover_file}. Please run `./gradlew koverXmlReport` before creating a PR.")
+end
+
+# ==============================================================================
+# Future Enhancements (Planned)
+# ==============================================================================
+# - Additional Compose lint rules for latest Compose best practices
+# - Dependency version checks and upgrade recommendations
+# - AI coding assistant integration rules
+# - Custom rules for template-specific patterns
+# ==============================================================================

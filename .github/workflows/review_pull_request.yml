@@ -9,6 +9,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+
   review_pull_request:
     name: Review pull request
     runs-on: ubuntu-latest
@@ -52,7 +53,8 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7'
+          ruby-version: '3.4'
+          bundler-cache: true
 
       - name: Cache gems
         uses: actions/cache@v4
@@ -61,16 +63,6 @@ jobs:
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
-
-      - name: Install Bundle and check environment versions
-        run: |
-          echo 'Install Bundle'
-          bundle config path vendor/bundle
-          bundle install
-          echo 'Check environment setup versions'
-          ruby --version
-          gem --version
-          bundler --version
 
       - name: Run Danger
         env:
