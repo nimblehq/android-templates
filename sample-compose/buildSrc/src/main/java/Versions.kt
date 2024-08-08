@@ -6,10 +6,10 @@ object Versions {
     const val ANDROID_TARGET_SDK_VERSION = 33
 
     const val ANDROID_VERSION_CODE = 1
-    const val ANDROID_VERSION_NAME = "3.27.0"
+    const val ANDROID_VERSION_NAME = "3.29.0"
 
     // Dependencies (Alphabet sorted)
-    const val ACCOMPANIST_PERMISSIONS_VERSION = "0.30.1"
+    const val ACCOMPANIST_VERSION = "0.30.1"
     const val ANDROID_COMMON_KTX_VERSION = "0.1.1"
     const val ANDROID_CRYPTO_VERSION = "1.0.0"
     const val ANDROIDX_CORE_KTX_VERSION = "1.10.1"

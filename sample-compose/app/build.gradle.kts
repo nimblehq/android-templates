@@ -132,7 +132,8 @@ dependencies {
     implementation("androidx.compose.material:material")
 
     implementation("androidx.navigation:navigation-compose:${Versions.COMPOSE_NAVIGATION_VERSION}")
-    implementation("com.google.accompanist:accompanist-permissions:${Versions.ACCOMPANIST_PERMISSIONS_VERSION}")
+    implementation("com.google.accompanist:accompanist-permissions:${Versions.ACCOMPANIST_VERSION}")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:${Versions.ACCOMPANIST_VERSION}")
 
     implementation("androidx.datastore:datastore-preferences:${Versions.ANDROIDX_DATASTORE_PREFERENCES_VERSION}")
 

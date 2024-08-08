@@ -1,0 +1,28 @@
+name: Create the Release pull request
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create_release_pull_request:
+    name: Create the Release pull request
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Check out the latest code
+        uses: actions/checkout@v4
+
+      - name: Read the current version
+        id: version
+        uses: christian-draeger/read-properties@1.1.1
+        with:
+          path: "version.properties"
+          properties: "templateScriptVersion"
+
+      - uses: nimblehq/github-actions-workflows/create_release_pull_request@0.1.10
+        with:
+          release_version: ${{ steps.version.outputs.templateScriptVersion }}
+          changelog_configuration: ".github/workflows/config/changelog-release.json"
+          assignee: bot-nimble

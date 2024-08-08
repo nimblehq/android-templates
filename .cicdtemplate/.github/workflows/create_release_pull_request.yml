@@ -1,0 +1,25 @@
+name: Create the Release pull request
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create_release_pull_request:
+    name: Create the Release pull request
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Check out the latest code
+        uses: actions/checkout@v4
+
+      - name: Read the current version
+        id: version
+        run: echo "version=$(perl -nle 'print $1 if /ANDROID_VERSION_NAME = \"(.*)\"$/' buildSrc/src/main/java/Versions.kt)" >> $GITHUB_OUTPUT
+
+      - uses: nimblehq/github-actions-workflows/create_release_pull_request@0.1.10
+        with:
+          release_version: ${{ steps.version.outputs.version }}
+          changelog_configuration: ".github/workflows/config/changelog-release.json"
+          assignee: bot-nimble
