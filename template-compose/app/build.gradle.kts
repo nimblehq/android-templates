@@ -143,7 +143,8 @@ dependencies {
     with(Dependencies.Compose) {
         implementation(platform(BOM))
         implementation(UI)
-        implementation(UI_TOOLING)
+        debugImplementation(UI_TOOLING)
+        implementation(UI_TOOLING_PREVIEW)
         implementation(MATERIAL)
         implementation(NAVIGATION)
 
