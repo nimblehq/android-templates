@@ -11,8 +11,8 @@ object Dependencies {
     object Compose {
         const val BOM = "androidx.compose:compose-bom:${Versions.COMPOSE_BOM}"
         const val UI = "androidx.compose.ui:ui"
-        const val UI_GRAPHICS = "androidx.compose.ui:ui-graphics"
         const val UI_TOOLING = "androidx.compose.ui:ui-tooling"
+        const val UI_TOOLING_PREVIEW = "androidx.compose.ui:ui-tooling-preview"
         const val MATERIAL = "androidx.compose.material:material"
         const val NAVIGATION = "androidx.navigation:navigation-compose:${Versions.COMPOSE_NAVIGATION}"
 
