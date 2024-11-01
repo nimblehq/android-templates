@@ -4,9 +4,9 @@ import android.content.SharedPreferences
 
 abstract class BaseSharedPreferences {
 
-    protected lateinit var sharedPreferences: SharedPreferences
+    lateinit var sharedPreferences: SharedPreferences
 
-    protected inline fun <reified T> get(key: String): T? =
+    inline fun <reified T> get(key: String): T? =
         if (sharedPreferences.contains(key)) {
             when (T::class) {
                 Boolean::class -> sharedPreferences.getBoolean(key, false) as T?
@@ -20,8 +20,8 @@ abstract class BaseSharedPreferences {
             null
         }
 
-    protected fun <T> set(key: String, value: T) {
-        sharedPreferences.execute {
+    fun <T> set(key: String, value: T, executeWithCommit: Boolean = false) {
+        sharedPreferences.execute(executeWithCommit) {
             when (value) {
                 is Boolean -> it.putBoolean(key, value)
                 is String -> it.putString(key, value)
@@ -32,11 +32,11 @@ abstract class BaseSharedPreferences {
         }
     }
 
-    protected fun remove(key: String) {
-        sharedPreferences.execute { it.remove(key) }
+    fun remove(key: String, executeWithCommit: Boolean = false) {
+        sharedPreferences.execute(executeWithCommit) { it.remove(key) }
     }
 
-    protected fun clearAll() {
-        sharedPreferences.execute { it.clear() }
+    fun clearAll(executeWithCommit: Boolean = false) {
+        sharedPreferences.execute(executeWithCommit) { it.clear() }
     }
 }

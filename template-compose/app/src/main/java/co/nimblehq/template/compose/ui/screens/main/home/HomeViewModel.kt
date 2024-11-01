@@ -5,7 +5,7 @@ import co.nimblehq.template.compose.domain.usecases.UseCase
 import co.nimblehq.template.compose.ui.base.BaseViewModel
 import co.nimblehq.template.compose.ui.models.UiModel
 import co.nimblehq.template.compose.ui.models.toUiModel
-import co.nimblehq.template.compose.util.DispatchersProvider
+import co.nimblehq.template.compose.data.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
