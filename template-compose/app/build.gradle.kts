@@ -1,12 +1,12 @@
 import org.jetbrains.kotlin.konan.properties.loadProperties
 
 plugins {
-    id(Plugins.ANDROID_APPLICATION)
-    id(Plugins.KOTLIN_ANDROID)
-    id(Plugins.KOTLIN_KAPT)
-    id(Plugins.KOTLIN_PARCELIZE)
-    id(Plugins.HILT_ANDROID)
-    id(Plugins.KOVER)
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kover)
 }
 
 val signingProperties = loadProperties("$rootDir/signing.properties")
@@ -133,54 +133,25 @@ dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    with(Dependencies.AndroidX) {
-        implementation(CORE_KTX)
-        implementation(LIFECYCLE_RUNTIME_KTX)
-        implementation(LIFECYCLE_RUNTIME_COMPOSE)
-        implementation(DATASTORE_PREFERENCES)
-    }
+    implementation(libs.bundles.androidx)
 
-    with(Dependencies.Compose) {
-        implementation(platform(BOM))
-        implementation(UI)
-        debugImplementation(UI_TOOLING)
-        implementation(UI_TOOLING_PREVIEW)
-        implementation(MATERIAL)
-        implementation(NAVIGATION)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.bundles.compose)
+    debugImplementation(libs.compose.ui.tooling)
 
-        implementation(ACCOMPANIST_PERMISSIONS)
-    }
+    implementation(libs.bundles.hilt)
+    kapt(libs.hilt.compiler)
 
-    with(Dependencies.Hilt) {
-        implementation(ANDROID)
-        implementation(NAVIGATION_COMPOSE)
-        kapt(COMPILER)
-    }
+    implementation(libs.timber)
+    debugImplementation(libs.chucker)
+    releaseImplementation(libs.chucker.no.op)
 
-    with(Dependencies.Log) {
-        implementation(TIMBER)
+    implementation(libs.nimble.common)
 
-        debugImplementation(CHUCKER)
-        releaseImplementation(CHUCKER_NO_OP)
-    }
-
-    with(Dependencies.Util) {
-        implementation(COMMON_KTX)
-    }
-
-    with(Dependencies.Test) {
-        // Unit test
-        testImplementation(COROUTINES)
-        testImplementation(JUNIT)
-        testImplementation(KOTEST)
-        testImplementation(MOCKK)
-        testImplementation(TURBINE)
-
-        // UI test with Robolectric
-        testImplementation(platform(Dependencies.Compose.BOM))
-        testImplementation(COMPOSE_UI_TEST_JUNIT)
-        testImplementation(ROBOLECTRIC)
-    }
+    testImplementation(libs.bundles.unitTest)
+    testImplementation(libs.test.turbine)
+    testImplementation(platform(libs.compose.bom))
+    testImplementation(libs.bundles.implementationTest)
 }
 
 /*

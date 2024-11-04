@@ -1,7 +1,7 @@
 plugins {
-    id(Plugins.JAVA_LIBRARY)
-    id(Plugins.KOTLIN_JVM)
-    id(Plugins.KOVER)
+    id(libs.plugins.javaLibrary.get().pluginId)
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kover)
 }
 
 java {
@@ -10,18 +10,8 @@ java {
 }
 
 dependencies {
-    with(Dependencies.Kotlin) {
-        implementation(COROUTINES_CORE)
-    }
+    implementation(libs.kotlin.coroutines.core)
+    implementation(libs.javax.inject)
 
-    with(Dependencies.Hilt) {
-        implementation(JAVAX_INJECT)
-    }
-
-    with(Dependencies.Test) {
-        testImplementation(COROUTINES)
-        testImplementation(JUNIT)
-        testImplementation(KOTEST)
-        testImplementation(MOCKK)
-    }
+    testImplementation(libs.bundles.unitTest)
 }
