@@ -38,10 +38,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Set up Ruby
+     - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7'
+            ruby-version: '2.7'
+            bundler-cache: true
 
       - name: Cache gems
         uses: actions/cache@v2
