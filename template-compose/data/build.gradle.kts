@@ -6,10 +6,10 @@ plugins {
 
 android {
     namespace = "co.nimblehq.template.compose.data"
-    compileSdk = Versions.ANDROID_COMPILE_SDK
+    compileSdk = libs.versions.androidCompileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = Versions.ANDROID_MIN_SDK
+        minSdk = libs.versions.androidMinSdk.get().toInt()
 
         consumerProguardFiles("consumer-rules.pro")
     }

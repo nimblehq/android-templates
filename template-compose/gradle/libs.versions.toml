@@ -1,4 +1,10 @@
 [versions]
+androidCompileSdk = "35"
+androidMinSdk = "24"
+androidTargetSdk = "35"
+androidVersionCode = "1"
+androidVersionName = "0.37.0"
+
 accompanist = "0.30.1"
 chucker = "3.5.2"
 composeBom = "2023.09.02"

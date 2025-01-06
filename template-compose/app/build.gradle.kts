@@ -14,20 +14,20 @@ val getVersionCode: () -> Int = {
     if (project.hasProperty("versionCode")) {
         (project.property("versionCode") as String).toInt()
     } else {
-        Versions.ANDROID_VERSION_CODE
+        libs.versions.androidVersionCode.get().toInt()
     }
 }
 
 android {
     namespace = "co.nimblehq.template.compose"
-    compileSdk = Versions.ANDROID_COMPILE_SDK
+    compileSdk = libs.versions.androidCompileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "co.nimblehq.template.compose"
-        minSdk = Versions.ANDROID_MIN_SDK
-        targetSdk = Versions.ANDROID_TARGET_SDK
+        minSdk = libs.versions.androidMinSdk.get().toInt()
+        targetSdk = libs.versions.androidTargetSdk.get().toInt()
         versionCode = getVersionCode()
-        versionName = Versions.ANDROID_VERSION_NAME
+        versionName = libs.versions.androidVersionName.get()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -97,8 +97,9 @@ android {
         buildConfig = true
     }
 
+    // TODO Remove this block in https://github.com/nimblehq/android-templates/issues/587
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.COMPOSE_COMPILER
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
 
     packaging {
