@@ -129,8 +129,8 @@ kapt {
 }
 
 dependencies {
-    implementation(project(Modules.DATA))
-    implementation(project(Modules.DOMAIN))
+    implementation(projects.data)
+    implementation(projects.domain)
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
@@ -164,8 +164,8 @@ dependencies {
  * Kover configs
  */
 dependencies {
-    kover(project(Modules.DATA))
-    kover(project(Modules.DOMAIN))
+    kover(projects.data)
+    kover(projects.domain)
 }
 
 koverReport {

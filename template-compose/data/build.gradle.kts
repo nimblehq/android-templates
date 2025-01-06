@@ -44,7 +44,7 @@ android {
 }
 
 dependencies {
-    implementation(project(Modules.DOMAIN))
+    implementation(projects.domain)
 
     implementation(libs.androidx.core)
     implementation(libs.androidx.datastore.preferences)
