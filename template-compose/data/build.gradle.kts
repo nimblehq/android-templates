@@ -47,8 +47,8 @@ dependencies {
     implementation(project(Modules.DOMAIN))
 
     implementation(libs.androidx.core)
-    implementation(libs.androidx.datastorePreferences)
-    implementation(libs.androidx.securityCrypto)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.security.crypto)
 
     implementation(libs.javax.inject)
 

@@ -135,9 +135,11 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     implementation(libs.bundles.androidx)
+    implementation(libs.androidx.datastore.preferences)
 
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
+    implementation(libs.accompanist.permissions)
     debugImplementation(libs.compose.ui.tooling)
 
     implementation(libs.bundles.hilt)
@@ -145,14 +147,17 @@ dependencies {
 
     implementation(libs.timber)
     debugImplementation(libs.chucker)
-    releaseImplementation(libs.chucker.no.op)
+    releaseImplementation(libs.chucker.noOp)
 
     implementation(libs.nimble.common)
 
+    // Unit test
     testImplementation(libs.bundles.unitTest)
     testImplementation(libs.test.turbine)
+
+    // UI test with Robolectric
     testImplementation(platform(libs.compose.bom))
-    testImplementation(libs.bundles.implementationTest)
+    testImplementation(libs.bundles.uiTest)
 }
 
 /*

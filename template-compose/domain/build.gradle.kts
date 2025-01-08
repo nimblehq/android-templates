@@ -10,7 +10,7 @@ java {
 }
 
 dependencies {
-    implementation(libs.kotlin.coroutines.core)
+    implementation(libs.kotlinx.coroutines.core)
     implementation(libs.javax.inject)
 
     testImplementation(libs.bundles.unitTest)
