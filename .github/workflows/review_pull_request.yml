@@ -9,6 +9,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+
   review_pull_request:
     name: Review pull request
     runs-on: ubuntu-latest
@@ -54,14 +55,6 @@ jobs:
         with:
           ruby-version: '2.7'
           bundler-cache: true
-
-      - name: Cache gems
-        uses: actions/cache@v2
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
 
       - name: Run Danger
         env:
