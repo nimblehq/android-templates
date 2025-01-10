@@ -1,12 +1,14 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    id(Plugins.ANDROID_APPLICATION) version Versions.GRADLE apply false
-    id(Plugins.ANDROID_LIBRARY) version Versions.GRADLE apply false
-    id(Plugins.KOTLIN_JVM) version Versions.KOTLIN apply false
-    id(Plugins.KOTLIN_ANDROID) version Versions.KOTLIN apply false
-    id(Plugins.HILT_ANDROID) version Versions.HILT apply false
-    id(Plugins.DETEKT) version Versions.DETEKT
-    id(Plugins.KOVER) version Versions.KOVER
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.kapt) apply false
+    alias(libs.plugins.kotlin.parcelize) apply false
+    alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.kover)
 }
 
 tasks.register("clean", Delete::class) {
@@ -14,7 +16,7 @@ tasks.register("clean", Delete::class) {
 }
 
 detekt {
-    toolVersion = Versions.DETEKT
+    toolVersion = libs.versions.detekt.get()
 
     source = files(
         "app/src/main/java",

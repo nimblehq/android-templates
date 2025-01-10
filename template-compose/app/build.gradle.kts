@@ -1,12 +1,12 @@
 import org.jetbrains.kotlin.konan.properties.loadProperties
 
 plugins {
-    id(Plugins.ANDROID_APPLICATION)
-    id(Plugins.KOTLIN_ANDROID)
-    id(Plugins.KOTLIN_KAPT)
-    id(Plugins.KOTLIN_PARCELIZE)
-    id(Plugins.HILT_ANDROID)
-    id(Plugins.KOVER)
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kover)
 }
 
 val signingProperties = loadProperties("$rootDir/signing.properties")
@@ -14,20 +14,20 @@ val getVersionCode: () -> Int = {
     if (project.hasProperty("versionCode")) {
         (project.property("versionCode") as String).toInt()
     } else {
-        Versions.ANDROID_VERSION_CODE
+        libs.versions.androidVersionCode.get().toInt()
     }
 }
 
 android {
     namespace = "co.nimblehq.template.compose"
-    compileSdk = Versions.ANDROID_COMPILE_SDK
+    compileSdk = libs.versions.androidCompileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "co.nimblehq.template.compose"
-        minSdk = Versions.ANDROID_MIN_SDK
-        targetSdk = Versions.ANDROID_TARGET_SDK
+        minSdk = libs.versions.androidMinSdk.get().toInt()
+        targetSdk = libs.versions.androidTargetSdk.get().toInt()
         versionCode = getVersionCode()
-        versionName = Versions.ANDROID_VERSION_NAME
+        versionName = libs.versions.androidVersionName.get()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -97,8 +97,9 @@ android {
         buildConfig = true
     }
 
+    // TODO Remove this block in https://github.com/nimblehq/android-templates/issues/587
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.COMPOSE_COMPILER
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
 
     packaging {
@@ -128,67 +129,43 @@ kapt {
 }
 
 dependencies {
-    implementation(project(Modules.DATA))
-    implementation(project(Modules.DOMAIN))
+    implementation(projects.data)
+    implementation(projects.domain)
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    with(Dependencies.AndroidX) {
-        implementation(CORE_KTX)
-        implementation(LIFECYCLE_RUNTIME_KTX)
-        implementation(LIFECYCLE_RUNTIME_COMPOSE)
-        implementation(DATASTORE_PREFERENCES)
-    }
+    implementation(libs.bundles.androidx)
+    implementation(libs.androidx.datastore.preferences)
 
-    with(Dependencies.Compose) {
-        implementation(platform(BOM))
-        implementation(UI)
-        debugImplementation(UI_TOOLING)
-        implementation(UI_TOOLING_PREVIEW)
-        implementation(MATERIAL)
-        implementation(NAVIGATION)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.bundles.compose)
+    implementation(libs.accompanist.permissions)
+    debugImplementation(libs.compose.ui.tooling)
 
-        implementation(ACCOMPANIST_PERMISSIONS)
-    }
+    implementation(libs.bundles.hilt)
+    kapt(libs.hilt.compiler)
 
-    with(Dependencies.Hilt) {
-        implementation(ANDROID)
-        implementation(NAVIGATION_COMPOSE)
-        kapt(COMPILER)
-    }
+    implementation(libs.timber)
+    debugImplementation(libs.chucker)
+    releaseImplementation(libs.chucker.noOp)
 
-    with(Dependencies.Log) {
-        implementation(TIMBER)
+    implementation(libs.nimble.common)
 
-        debugImplementation(CHUCKER)
-        releaseImplementation(CHUCKER_NO_OP)
-    }
+    // Unit test
+    testImplementation(libs.bundles.unitTest)
+    testImplementation(libs.test.turbine)
 
-    with(Dependencies.Util) {
-        implementation(COMMON_KTX)
-    }
-
-    with(Dependencies.Test) {
-        // Unit test
-        testImplementation(COROUTINES)
-        testImplementation(JUNIT)
-        testImplementation(KOTEST)
-        testImplementation(MOCKK)
-        testImplementation(TURBINE)
-
-        // UI test with Robolectric
-        testImplementation(platform(Dependencies.Compose.BOM))
-        testImplementation(COMPOSE_UI_TEST_JUNIT)
-        testImplementation(ROBOLECTRIC)
-    }
+    // UI test with Robolectric
+    testImplementation(platform(libs.compose.bom))
+    testImplementation(libs.bundles.uiTest)
 }
 
 /*
  * Kover configs
  */
 dependencies {
-    kover(project(Modules.DATA))
-    kover(project(Modules.DOMAIN))
+    kover(projects.data)
+    kover(projects.domain)
 }
 
 koverReport {
