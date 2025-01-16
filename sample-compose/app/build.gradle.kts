@@ -1,13 +1,10 @@
 plugins {
-    id("com.android.application")
-
-    id("kotlin-android")
-    id("kotlin-kapt")
-    id("kotlin-parcelize")
-
-    id("dagger.hilt.android.plugin")
-
-    id("org.jetbrains.kotlinx.kover")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kover)
 }
 
 val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
@@ -168,8 +165,8 @@ dependencies {
  * Kover configs
  */
 dependencies {
-    kover(project(":data"))
-    kover(project(":domain"))
+    kover(projects.data)
+    kover(projects.domain)
 }
 
 koverReport {
