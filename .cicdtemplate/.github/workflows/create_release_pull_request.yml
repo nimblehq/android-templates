@@ -16,7 +16,7 @@ jobs:
 
       - name: Read the current version
         id: version
-        run: echo "version=$(perl -nle 'print $1 if /ANDROID_VERSION_NAME = \"(.*)\"$/' buildSrc/src/main/java/Versions.kt)" >> $GITHUB_OUTPUT
+        run: echo "version=$(perl -nle 'print $1 if /androidVersionName = \"(.*)\"$/' gradle/libs.versions.toml)" >> $GITHUB_OUTPUT
 
       - uses: nimblehq/github-actions-workflows/create_release_pull_request@0.1.10
         with:
