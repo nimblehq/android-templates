@@ -42,7 +42,7 @@ jobs:
         run: ./gradlew detekt
 
       - name: Archive Detekt reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DetektReports
           path: build/reports/detekt/
@@ -51,7 +51,7 @@ jobs:
         run: ./gradlew koverHtmlReport
 
       - name: Archive code coverage reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: CodeCoverageReports
           path: app/build/reports/kover/

@@ -39,7 +39,7 @@ jobs:
         run: ./gradlew detekt
 
       - name: Archive Detekt reports on template-compose
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DetektReportsTemplateCompose
           path: template-compose/build/reports/detekt/
@@ -49,7 +49,7 @@ jobs:
         run: ./gradlew koverHtmlReport
 
       - name: Archive code coverage reports on template-compose
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: CodeCoverageReportsTemplateCompose
           path: template-compose/app/build/reports/kover/
@@ -61,17 +61,19 @@ jobs:
         run: ./gradlew detekt
 
       - name: Archive Detekt reports on sample-compose
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DetektReportsTemplateCompose
           path: sample-compose/build/reports/detekt/
+          overwrite: true
 
       - name: Run unit tests with Kover on sample-compose
         working-directory: ./sample-compose
         run: ./gradlew koverHtmlReport
 
       - name: Archive code coverage reports on sample-compose
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: CodeCoverageReportsTemplateCompose
           path: sample-compose/app/build/reports/kover/
+          overwrite: true
