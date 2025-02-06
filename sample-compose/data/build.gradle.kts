@@ -1,15 +1,14 @@
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-
-    id("org.jetbrains.kotlinx.kover")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kover)
 }
 
 android {
-    compileSdk = Versions.ANDROID_COMPILE_SDK_VERSION
+    namespace = "co.nimblehq.sample.compose.data"
+    compileSdk = libs.versions.androidCompileSdk.get().toInt()
     defaultConfig {
-        minSdk = Versions.ANDROID_MIN_SDK_VERSION
-        targetSdk = Versions.ANDROID_TARGET_SDK_VERSION
+        minSdk = libs.versions.androidMinSdk.get().toInt()
 
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -28,12 +27,12 @@ android {
     }
 
     compileOptions {
-        targetCompatibility = JavaVersion.VERSION_11
-        sourceCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     lintOptions {
@@ -44,33 +43,25 @@ android {
 }
 
 dependencies {
-    implementation(project(Module.DOMAIN))
+    implementation(projects.domain)
 
-    implementation("androidx.core:core-ktx:${Versions.ANDROIDX_CORE_KTX_VERSION}")
-    implementation("androidx.datastore:datastore-preferences:${Versions.ANDROIDX_DATASTORE_PREFERENCES_VERSION}")
-    implementation("androidx.security:security-crypto:${Versions.ANDROID_CRYPTO_VERSION}")
-    implementation("com.google.dagger:hilt-android:${Versions.HILT_VERSION}")
-    implementation("com.squareup.moshi:moshi:${Versions.MOSHI_VERSION}")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:${Versions.KOTLIN_VERSION}")
-    implementation("javax.inject:javax.inject:${Versions.JAVAX_INJECT_VERSION}")
+    implementation(libs.androidx.core)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.security.crypto)
+    implementation(libs.hilt.android)
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.javax.inject)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLINX_COROUTINES_VERSION}")
+    implementation(libs.kotlinx.coroutines.core)
 
-    api("com.squareup.retrofit2:converter-moshi:${Versions.RETROFIT_VERSION}")
-    api("com.squareup.retrofit2:retrofit:${Versions.RETROFIT_VERSION}")
-
-    api("com.squareup.moshi:moshi-adapters:${Versions.MOSHI_VERSION}")
-    api("com.squareup.moshi:moshi-kotlin:${Versions.MOSHI_VERSION}")
-
-    api("com.squareup.okhttp3:okhttp:${Versions.OKHTTP_VERSION}")
-    api("com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP_VERSION}")
+    api(libs.bundles.retrofit)
+    api(libs.bundles.okhttp)
+    api(libs.bundles.moshi)
+    implementation(libs.moshi)
 
     // Testing
-    testImplementation("junit:junit:${Versions.TEST_JUNIT_VERSION}")
-    testImplementation("io.mockk:mockk:${Versions.TEST_MOCKK_VERSION}")
-    testImplementation("io.kotest:kotest-assertions-core:${Versions.TEST_KOTEST_VERSION}")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.KOTLINX_COROUTINES_VERSION}")
-    testImplementation("androidx.test:core:${Versions.TEST_ANDROIDX_CORE_VERSION}")
-    testImplementation("org.robolectric:robolectric:${Versions.TEST_ROBOLECTRIC_VERSION}")
-    testImplementation("app.cash.turbine:turbine:${Versions.TEST_TURBINE_VERSION}")
+    testImplementation(libs.bundles.unitTest)
+    testImplementation(libs.test.core.ktx)
+    testImplementation(libs.test.robolectric)
+    testImplementation(libs.test.turbine)
 }

@@ -1,28 +1,14 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath("com.android.tools.build:gradle:${Versions.BUILD_GRADLE_VERSION}")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.HILT_VERSION}")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN_VERSION}")
-    }
-}
-
 plugins {
-    id("io.gitlab.arturbosch.detekt").version(Versions.DETEKT_VERSION)
-    id("org.jetbrains.kotlinx.kover").version(Versions.KOVER_VERSION)
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven { url = uri("https://www.jitpack.io") }
-    }
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.kotlin.kapt) apply false
+    alias(libs.plugins.kotlin.parcelize) apply false
+    alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.kover)
 }
 
 tasks.register("clean", Delete::class) {
@@ -31,7 +17,7 @@ tasks.register("clean", Delete::class) {
 
 tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
     // Target version of the generated JVM bytecode. It is used for type resolution.
-    jvmTarget = JavaVersion.VERSION_11.toString()
+    jvmTarget = JavaVersion.VERSION_17.toString()
     reports {
         xml {
             outputLocation.set(file("build/reports/detekt/detekt.xml"))
@@ -43,7 +29,7 @@ tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
 }
 
 detekt {
-    toolVersion = Versions.DETEKT_VERSION
+    toolVersion = libs.versions.detekt.get()
 
     source = files(
         "app/src/main/java",

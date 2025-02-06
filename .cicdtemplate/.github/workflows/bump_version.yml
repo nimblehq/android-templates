@@ -22,7 +22,7 @@ jobs:
 
       - name: Bump version name
         run: |
-          perl -i -pe 's/ANDROID_VERSION_NAME =(.*)$/ANDROID_VERSION_NAME = "${{ github.event.inputs.newVersion }}"/g' buildSrc/src/main/java/Versions.kt
+          perl -i -pe 's/androidVersionName =(.*)$/androidVersionName = "${{ github.event.inputs.newVersion }}"/g' gradle/libs.versions.toml
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v4

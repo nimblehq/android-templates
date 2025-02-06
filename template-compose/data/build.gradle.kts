@@ -1,15 +1,15 @@
 plugins {
-    id(Plugins.ANDROID_LIBRARY)
-    id(Plugins.KOTLIN_ANDROID)
-    id(Plugins.KOVER)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kover)
 }
 
 android {
     namespace = "co.nimblehq.template.compose.data"
-    compileSdk = Versions.ANDROID_COMPILE_SDK
+    compileSdk = libs.versions.androidCompileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = Versions.ANDROID_MIN_SDK
+        minSdk = libs.versions.androidMinSdk.get().toInt()
 
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -44,37 +44,21 @@ android {
 }
 
 dependencies {
-    implementation(project(Modules.DOMAIN))
+    implementation(projects.domain)
 
-    with(Dependencies.AndroidX) {
-        implementation(CORE_KTX)
-        implementation(DATASTORE_PREFERENCES)
-        implementation(SECURITY_CRYPTO)
-    }
+    implementation(libs.androidx.core)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.security.crypto)
 
-    with(Dependencies.Hilt) {
-        implementation(JAVAX_INJECT)
-    }
+    implementation(libs.javax.inject)
 
-    with(Dependencies.Network) {
-        api(RETROFIT)
-        api(RETROFIT_CONVERTER_MOSHI)
+    api(libs.bundles.retrofit)
+    api(libs.bundles.okhttp)
+    api(libs.moshi)
+    implementation(libs.bundles.moshi)
 
-        api(OKHTTP)
-        api(OKHTTP_LOGGING_INTERCEPTOR)
-
-        api(MOSHI)
-        implementation(MOSHI_ADAPTERS)
-        implementation(MOSHI_KOTLIN)
-    }
-
-    with(Dependencies.Test) {
-        testImplementation(COROUTINES)
-        testImplementation(JUNIT)
-        testImplementation(KOTEST)
-        testImplementation(MOCKK)
-        testImplementation(ROBOLECTRIC)
-        testImplementation(TEST_CORE)
-        testImplementation(TURBINE)
-    }
+    testImplementation(libs.bundles.unitTest)
+    testImplementation(libs.test.core.ktx)
+    testImplementation(libs.test.turbine)
+    testImplementation(libs.test.robolectric)
 }
