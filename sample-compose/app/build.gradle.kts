@@ -1,8 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.kover)
 }
@@ -78,11 +79,6 @@ android {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
-    composeOptions {
-        // TODO Remove this block in https://github.com/nimblehq/android-templates/issues/587
-        kotlinCompilerExtensionVersion = "1.5.3"
-    }
-
     buildFeatures {
         compose = true
         buildConfig = true
@@ -111,10 +107,6 @@ android {
     }
 }
 
-kapt {
-    correctErrorTypes = true
-}
-
 dependencies {
     implementation(projects.data)
     implementation(projects.domain)
@@ -133,7 +125,7 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
 
     implementation(libs.bundles.hilt)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
     implementation(libs.timber)
 
