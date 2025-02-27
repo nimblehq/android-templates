@@ -2,7 +2,9 @@ package co.nimblehq.sample.compose.ui.screens.main.home
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -49,9 +51,11 @@ fun Item(
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            DropdownMenuItem(onClick = { onLongClick(uiModel) }) {
-                Text(stringResource(id = R.string.third_edit_menu_title))
-            }
+            DropdownMenuItem(
+                text = { Text(stringResource(id = R.string.third_edit_menu_title)) },
+                onClick = { onLongClick(uiModel) }
+            )
+
         }
     }
 }
