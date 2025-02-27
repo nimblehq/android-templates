@@ -1,6 +1,8 @@
 package co.nimblehq.sample.compose.ui.theme
 
-import androidx.compose.material.*
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
@@ -8,21 +10,22 @@ import androidx.compose.ui.graphics.Color
 internal val GreenCitrus = Color(0xFF99CC00)
 
 /**
- * Expand the final [Colors] class to provide more custom app colors.
+ * Expand the final [ColorScheme] class to provide more custom app colors.
  */
-data class AppColors(
-    val themeColors: Colors,
+abstract class AppColors(
+    var colorScheme: ColorScheme = LightColorPalette,
 
     // Custom colors here
     val topAppBarBackground: Color = GreenCitrus
-)
+) {
+    open val themeColors: ColorScheme
+        get() = colorScheme
+}
 
-internal val LightColorPalette = AppColors(
-    themeColors = lightColors()
-)
+internal val LightColorPalette: ColorScheme = lightColorScheme()
 
-internal val DarkColorPalette = AppColors(
-    themeColors = darkColors()
-)
+internal val DarkColorPalette: ColorScheme = darkColorScheme()
 
-internal val LocalAppColors = staticCompositionLocalOf { LightColorPalette }
+internal object AppColorsImpl : AppColors()
+
+internal val LocalAppColors = staticCompositionLocalOf<AppColors> { AppColorsImpl }
