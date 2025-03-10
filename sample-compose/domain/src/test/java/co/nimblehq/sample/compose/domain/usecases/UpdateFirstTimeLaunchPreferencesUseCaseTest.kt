@@ -2,14 +2,10 @@ package co.nimblehq.sample.compose.domain.usecases
 
 import co.nimblehq.sample.compose.domain.repositories.AppPreferencesRepository
 import io.mockk.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class UpdateFirstTimeLaunchPreferencesUseCaseTest {
 
     private lateinit var mockAppPreferencesRepository: AppPreferencesRepository
