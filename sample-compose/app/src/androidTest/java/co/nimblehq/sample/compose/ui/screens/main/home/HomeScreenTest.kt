@@ -8,9 +8,9 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.rule.GrantPermissionRule
-import co.nimblehq.sample.compose.domain.usecase.GetModelsUseCase
-import co.nimblehq.sample.compose.domain.usecase.IsFirstTimeLaunchPreferencesUseCase
-import co.nimblehq.sample.compose.domain.usecase.UpdateFirstTimeLaunchPreferencesUseCase
+import co.nimblehq.sample.compose.domain.usecases.GetModelsUseCase
+import co.nimblehq.sample.compose.domain.usecases.IsFirstTimeLaunchPreferencesUseCase
+import co.nimblehq.sample.compose.domain.usecases.UpdateFirstTimeLaunchPreferencesUseCase
 import co.nimblehq.sample.compose.test.MockUtil
 import co.nimblehq.sample.compose.test.TestDispatchersProvider
 import co.nimblehq.sample.compose.ui.base.BaseDestination

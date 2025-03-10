@@ -1,6 +1,6 @@
 package co.nimblehq.sample.compose.test
 
-import co.nimblehq.sample.compose.domain.model.Model
+import co.nimblehq.sample.compose.domain.models.Model
 
 object MockUtil {
 
