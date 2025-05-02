@@ -14,9 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import co.nimblehq.sample.compose.R
-import co.nimblehq.sample.compose.ui.base.BaseDestination
 import co.nimblehq.sample.compose.ui.base.BaseScreen
-import co.nimblehq.sample.compose.ui.base.KeyResultOk
 import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.theme.AppTheme.dimensions
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
@@ -24,16 +22,14 @@ import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 @Composable
 fun SecondScreen(
     viewModel: SecondViewModel = hiltViewModel(),
-    navigator: (destination: BaseDestination) -> Unit,
+    onClickUpdate: () -> Unit,
     id: String,
 ) = BaseScreen(
     isDarkStatusBarIcons = false,
 ) {
     SecondScreenContent(
         id = id,
-        onUpdateClick = {
-            navigator(BaseDestination.Up().addResult(KeyResultOk, true))
-        },
+        onUpdateClick = onClickUpdate,
     )
 }
 

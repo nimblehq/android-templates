@@ -1,10 +1,10 @@
 package co.nimblehq.sample.compose.ui
 
-import co.nimblehq.sample.compose.ui.base.BaseDestination
+import co.nimblehq.sample.compose.ui.base.BaseAppDestination
 
 sealed class AppDestination {
 
-    object RootNavGraph : BaseDestination("rootNavGraph")
+    object RootNavGraph : BaseAppDestination("rootNavGraph")
 
-    object MainNavGraph : BaseDestination("mainNavGraph")
+    object MainNavGraph : BaseAppDestination("mainNavGraph")
 }
