@@ -19,7 +19,6 @@ import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.extensions.collectAsEffect
 import co.nimblehq.sample.compose.extensions.showToast
 import co.nimblehq.sample.compose.lib.IsLoading
-import co.nimblehq.sample.compose.ui.base.BaseDestination
 import co.nimblehq.sample.compose.ui.base.BaseScreen
 import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.models.UiModel
@@ -34,6 +33,9 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun HomeScreen(
+    viewModel: HomeViewModel = hiltViewModel(),
+    onNavigateToSecondScreen: (id: String) -> Unit,
+    onNavigateToThirdScreen: (UiModel) -> Unit,
     isResultOk: Boolean = false,
     navigator: (destination: BaseDestination) -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
@@ -42,7 +44,6 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
     viewModel.error.collectAsEffect { e -> e.showToast(context) }
-    viewModel.navigator.collectAsEffect { destination -> navigator(destination) }
 
     val isLoading: IsLoading by viewModel.isLoading.collectAsStateWithLifecycle()
     val uiModels: ImmutableList<UiModel> by viewModel.uiModels.collectAsStateWithLifecycle()
@@ -56,6 +57,8 @@ fun HomeScreen(
     }
 
     LaunchedEffect(Unit) {
+        viewModel.getModels()
+        viewModel.checkIfFirstTimeLaunch()
         if (isResultOk) {
             context.showToast(context.getString(R.string.message_updated))
         }
@@ -66,8 +69,8 @@ fun HomeScreen(
     HomeScreenContent(
         uiModels = uiModels,
         isLoading = isLoading,
-        onItemClick = viewModel::navigateToSecond,
-        onItemLongClick = viewModel::navigateToThird
+        onItemClick = onNavigateToSecondScreen,
+        onItemLongClick = onNavigateToThirdScreen
     )
 }
 
@@ -98,7 +101,7 @@ private fun CameraPermission() {
 private fun HomeScreenContent(
     uiModels: ImmutableList<UiModel>,
     isLoading: IsLoading,
-    onItemClick: (UiModel) -> Unit,
+    onItemClick: (id: String) -> Unit,
     onItemLongClick: (UiModel) -> Unit,
 ) {
     Scaffold(topBar = {

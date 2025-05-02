@@ -14,7 +14,7 @@ import kotlinx.collections.immutable.persistentListOf
 @Composable
 fun ItemList(
     uiModels: ImmutableList<UiModel>,
-    onItemClick: (UiModel) -> Unit,
+    onItemClick: (id: String) -> Unit,
     onItemLongClick: (UiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {

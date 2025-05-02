@@ -7,7 +7,6 @@ import co.nimblehq.sample.compose.domain.usecases.UpdateFirstTimeLaunchPreferenc
 import co.nimblehq.sample.compose.ui.base.BaseViewModel
 import co.nimblehq.sample.compose.ui.models.UiModel
 import co.nimblehq.sample.compose.ui.models.toUiModel
-import co.nimblehq.sample.compose.ui.screens.main.MainDestination
 import co.nimblehq.sample.compose.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -23,8 +22,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    getModelsUseCase: GetModelsUseCase,
-    isFirstTimeLaunchPreferencesUseCase: IsFirstTimeLaunchPreferencesUseCase,
+    private val getModelsUseCase: GetModelsUseCase,
+    private val isFirstTimeLaunchPreferencesUseCase: IsFirstTimeLaunchPreferencesUseCase,
     private val updateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase,
     private val dispatchersProvider: DispatchersProvider,
 ) : BaseViewModel() {
@@ -35,7 +34,7 @@ class HomeViewModel @Inject constructor(
     private val _isFirstTimeLaunch = MutableStateFlow(false)
     val isFirstTimeLaunch = _isFirstTimeLaunch.asStateFlow()
 
-    init {
+    fun getModels() {
         getModelsUseCase()
             .injectLoading()
             .onEach { result ->
@@ -45,7 +44,9 @@ class HomeViewModel @Inject constructor(
             .flowOn(dispatchersProvider.io)
             .catch { e -> _error.emit(e) }
             .launchIn(viewModelScope)
+    }
 
+    fun checkIfFirstTimeLaunch() {
         isFirstTimeLaunchPreferencesUseCase()
             .onEach { isFirstTimeLaunch ->
                 _isFirstTimeLaunch.emit(isFirstTimeLaunch)
@@ -60,13 +61,5 @@ class HomeViewModel @Inject constructor(
             updateFirstTimeLaunchPreferencesUseCase(false)
             _isFirstTimeLaunch.emit(false)
         }
-    }
-
-    fun navigateToSecond(uiModel: UiModel) {
-        launch { _navigator.emit(MainDestination.Second.createRoute(uiModel.id)) }
-    }
-
-    fun navigateToThird(uiModel: UiModel) {
-        launch { _navigator.emit(MainDestination.Third.addParcel(uiModel)) }
     }
 }

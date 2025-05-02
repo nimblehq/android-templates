@@ -18,7 +18,7 @@ import co.nimblehq.sample.compose.ui.theme.AppTheme.dimensions
 @Composable
 fun Item(
     uiModel: UiModel,
-    onClick: (UiModel) -> Unit,
+    onClick: (id: String) -> Unit,
     onLongClick: (UiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -28,7 +28,7 @@ fun Item(
         modifier = modifier
             .fillMaxWidth()
             .combinedClickable(
-                onClick = { onClick(uiModel) },
+                onClick = { onClick(uiModel.id) },
                 onLongClick = { expanded = true }
             )
     ) {
