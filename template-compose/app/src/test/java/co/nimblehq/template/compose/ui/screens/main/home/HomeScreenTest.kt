@@ -7,7 +7,6 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import co.nimblehq.template.compose.R
 import co.nimblehq.template.compose.domain.usecases.UseCase
 import co.nimblehq.template.compose.test.MockUtil
-import co.nimblehq.template.compose.ui.base.BaseDestination
 import co.nimblehq.template.compose.ui.screens.BaseScreenTest
 import co.nimblehq.template.compose.ui.screens.MainActivity
 import co.nimblehq.template.compose.ui.theme.ComposeTheme
@@ -16,7 +15,6 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.*
 import org.junit.*
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -31,7 +29,6 @@ class HomeScreenTest : BaseScreenTest() {
     private val mockUseCase: UseCase = mockk()
 
     private lateinit var viewModel: HomeViewModel
-    private var expectedDestination: BaseDestination? = null
 
     @Before
     fun setUp() {
@@ -67,7 +64,6 @@ class HomeScreenTest : BaseScreenTest() {
             ComposeTheme {
                 HomeScreen(
                     viewModel = viewModel,
-                    navigator = { destination -> expectedDestination = destination }
                 )
             }
         }
