@@ -18,7 +18,7 @@ definitions:
     - &unit_test_on_template_compose
       name: Run unit tests on template-compose
       working_directory: ./template-compose
-      script: ./gradlew koverHtmlReport
+      script: ./gradlew koverHtmlReportCustom
   artifacts:
     - &artifacts_template_compose template-compose/app/build/reports/kover/
     - &artifacts_staging_apk template-compose/app/build/outputs/apk/staging/debug/app-staging-debug.apk

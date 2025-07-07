@@ -65,3 +65,11 @@ dependencies {
     testImplementation(libs.test.robolectric)
     testImplementation(libs.test.turbine)
 }
+
+kover {
+    currentProject {
+        createVariant("custom") {
+            add("debug")
+        }
+    }
+}
