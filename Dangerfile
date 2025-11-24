@@ -34,4 +34,9 @@ end
 # or if any modified file's coverage is under 95%
 kover_file_template_compose = "template-compose/app/build/reports/kover/reportCustom.xml"
 markdown "## Kover report for template-compose:"
-shroud.reportKover "Template - Compose Unit Tests", kover_file_template_compose, 80, 95, false
+shroud.reportKover moduleName: "Template - Compose Unit Tests",
+                   file: kover_file_template_compose,
+                   totalProjectThreshold: 80,
+                   modifiedFileThreshold: 95,
+                   failIfUnderProjectThreshold: false,
+                   failIfUnderFileThreshold: false

@@ -59,7 +59,12 @@ kover_file = "app/build/reports/kover/report.xml"
 
 if File.exist?(kover_file)
   markdown "## Kover Coverage Report"
-  shroud.reportKover "Unit Tests", kover_file, 80, 95, false
+  shroud.reportKover moduleName: "Unit Tests",
+                     file: kover_file,
+                     totalProjectThreshold: 80,
+                     modifiedFileThreshold: 95,
+                     failIfUnderProjectThreshold: false,
+                     failIfUnderFileThreshold: false
 else
   warn("Kover coverage report not found at #{kover_file}. Please run `./gradlew koverXmlReport` before creating a PR.")
 end
