@@ -39,10 +39,10 @@ jobs:
           java-version: '17'
 
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+        uses: ./.github/actions/setup-ruby
         with:
-          ruby-version: '2.7'
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+          ruby-version: '3.3'
+          bundler-cache: 'true'
 
       - name: Run Danger
         env:

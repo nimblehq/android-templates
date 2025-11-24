@@ -51,18 +51,10 @@ jobs:
         run: ./gradlew koverXmlReportCustom
 
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+        uses: ./.github/actions/setup-ruby
         with:
-          ruby-version: '3.4'
-          bundler-cache: true
-
-      - name: Cache gems
-        uses: actions/cache@v4
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
+          ruby-version: '3.3'
+          bundler-cache: 'true'
 
       - name: Run Danger
         env:
