@@ -46,7 +46,6 @@ jobs:
       - name: Set up Ruby
         uses: ./.github/actions/setup-ruby
         with:
-          ruby-version: '3.3'
           bundler-cache: 'true'
 
       - name: Run Danger
