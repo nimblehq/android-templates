@@ -38,10 +38,18 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Run Detekt
+        run: ./gradlew detekt
+
+      - name: Run Android Lint
+        run: ./gradlew lint
+
+      - name: Run unit tests with Kover
+        run: ./gradlew koverXmlReport
+
       - name: Set up Ruby
         uses: ./.github/actions/setup-ruby
         with:
-          ruby-version: '3.3'
           bundler-cache: 'true'
 
       - name: Run Danger
