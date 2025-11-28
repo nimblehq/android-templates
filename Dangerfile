@@ -23,10 +23,16 @@ end
 
 # Android Lint output check
 lint_dir = "**/**/build/reports/lint/lint-result.xml"
-Dir[lint_dir].each do |file_name|
-  android_lint.skip_gradle_task = true
-  android_lint.report_file = file_name
-  android_lint.lint(inline_mode: true)
+lint_reports = Dir[lint_dir]
+
+if lint_reports.any?
+  lint_reports.each do |file_name|
+    android_lint.skip_gradle_task = true
+    android_lint.report_file = file_name
+    android_lint.lint(inline_mode: true)
+  end
+else
+  warn("Android Lint report not found. Please run `./gradlew lint` before creating a PR.")
 end
 
 # Show Danger test coverage report from Kover for templates
