@@ -15,10 +15,16 @@ commit_lint.check warn: :all, disable: [:subject_length]
 
 # Detekt output check
 detekt_dir = "**/build/reports/detekt/detekt-result.xml"
-Dir[detekt_dir].each do |file_name|
-  kotlin_detekt.skip_gradle_task = true
-  kotlin_detekt.report_file = file_name
-  kotlin_detekt.detekt(inline_mode: true)
+detekt_reports = Dir[detekt_dir]
+
+if detekt_reports.any?
+  detekt_reports.each do |file_name|
+    kotlin_detekt.skip_gradle_task = true
+    kotlin_detekt.report_file = file_name
+    kotlin_detekt.detekt(inline_mode: true)
+  end
+else
+  warn("Detekt report not found. Please run `./gradlew detekt` before creating a PR.")
 end
 
 # Android Lint output check
