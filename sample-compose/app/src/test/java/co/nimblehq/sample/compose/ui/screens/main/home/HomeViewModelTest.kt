@@ -83,10 +83,11 @@ class HomeViewModelTest {
 
     @Test
     fun `When calling navigate to Second, it navigates to Second screen`() = runTest {
+        val uiModel = MockUtil.models[0].toUiModel()
         viewModel.navigator.test {
-            viewModel.navigateToSecond(MockUtil.models[0].toUiModel())
+            viewModel.navigateToSecond(uiModel)
 
-            expectMostRecentItem() shouldBe MainDestination.Second
+            expectMostRecentItem() shouldBe MainDestination.Second(uiModel.id)
         }
     }
 

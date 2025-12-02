@@ -19,7 +19,7 @@ import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.extensions.collectAsEffect
 import co.nimblehq.sample.compose.extensions.showToast
 import co.nimblehq.sample.compose.lib.IsLoading
-import co.nimblehq.sample.compose.ui.base.BaseDestination
+import co.nimblehq.sample.compose.navigation.Navigator
 import co.nimblehq.sample.compose.ui.base.BaseScreen
 import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.models.UiModel
@@ -34,15 +34,14 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun HomeScreen(
-    isResultOk: Boolean = false,
-    navigator: (destination: BaseDestination) -> Unit,
+    navigator: Navigator,
     viewModel: HomeViewModel = hiltViewModel(),
 ) = BaseScreen(
     isDarkStatusBarIcons = true,
 ) {
     val context = LocalContext.current
     viewModel.error.collectAsEffect { e -> e.showToast(context) }
-    viewModel.navigator.collectAsEffect { destination -> navigator(destination) }
+    viewModel.navigator.collectAsEffect { destination -> navigator.goTo(destination) }
 
     val isLoading: IsLoading by viewModel.isLoading.collectAsStateWithLifecycle()
     val uiModels: ImmutableList<UiModel> by viewModel.uiModels.collectAsStateWithLifecycle()
@@ -52,12 +51,6 @@ fun HomeScreen(
         if (isFirstTimeLaunch) {
             context.showToast(context.getString(R.string.message_first_time_launch))
             viewModel.onFirstTimeLaunch()
-        }
-    }
-
-    LaunchedEffect(Unit) {
-        if (isResultOk) {
-            context.showToast(context.getString(R.string.message_updated))
         }
     }
 

@@ -8,7 +8,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @SuppressLint("ComposableNaming")
 @Composable
-fun setStatusBarColor(
+fun StatusBarColor(
     color: Color,
     darkIcons: Boolean,
 ) {
