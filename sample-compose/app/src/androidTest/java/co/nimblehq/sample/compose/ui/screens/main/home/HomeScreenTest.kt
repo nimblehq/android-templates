@@ -13,7 +13,7 @@ import co.nimblehq.sample.compose.domain.usecase.IsFirstTimeLaunchPreferencesUse
 import co.nimblehq.sample.compose.domain.usecase.UpdateFirstTimeLaunchPreferencesUseCase
 import co.nimblehq.sample.compose.test.MockUtil
 import co.nimblehq.sample.compose.test.TestDispatchersProvider
-import co.nimblehq.sample.compose.ui.base.BaseDestination
+import androidx.navigation3.runtime.NavKey
 import co.nimblehq.sample.compose.ui.screens.MainActivity
 import co.nimblehq.sample.compose.ui.screens.main.MainDestination
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
@@ -43,7 +43,7 @@ class HomeScreenTest {
     private val mockUpdateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase = mockk()
 
     private lateinit var viewModel: HomeViewModel
-    private var expectedDestination: BaseDestination? = null
+    private var expectedDestination: NavKey? = null
 
     @Before
     fun setUp() {
@@ -74,7 +74,7 @@ class HomeScreenTest {
     fun when_clicking_on_a_list_item__it_navigates_to_Second_screen() = initComposable {
         onNodeWithText("1").performClick()
 
-        assertEquals(expectedDestination, MainDestination.Second)
+        assertEquals((expectedDestination as? MainDestination.Second)?.id, "1")
     }
 
     private fun initComposable(

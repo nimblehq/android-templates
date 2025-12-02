@@ -3,8 +3,10 @@ package co.nimblehq.sample.compose.ui.screens
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.navigation.compose.rememberNavController
 import co.nimblehq.sample.compose.ui.AppNavGraph
+import co.nimblehq.sample.compose.ui.navigation.Navigator
+import co.nimblehq.sample.compose.ui.navigation.rememberNavigationState
+import co.nimblehq.sample.compose.ui.screens.main.MainDestination
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,7 +17,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeTheme {
-                AppNavGraph(navController = rememberNavController())
+                val navigationState = rememberNavigationState<MainDestination>(MainDestination.Home)
+                val navigator = Navigator(navigationState)
+                AppNavGraph(
+                    navigationState = navigationState,
+                    navigator = navigator
+                )
             }
         }
     }

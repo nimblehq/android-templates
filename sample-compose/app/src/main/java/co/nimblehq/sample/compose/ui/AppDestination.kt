@@ -1,10 +1,10 @@
 package co.nimblehq.sample.compose.ui
 
-import co.nimblehq.sample.compose.ui.base.BaseDestination
+import androidx.navigation3.runtime.NavKey
+import kotlinx.serialization.Serializable
 
-sealed class AppDestination {
+sealed interface AppDestination : NavKey {
 
-    object RootNavGraph : BaseDestination("rootNavGraph")
-
-    object MainNavGraph : BaseDestination("mainNavGraph")
+    @Serializable
+    data object MainNavGraph : AppDestination
 }
