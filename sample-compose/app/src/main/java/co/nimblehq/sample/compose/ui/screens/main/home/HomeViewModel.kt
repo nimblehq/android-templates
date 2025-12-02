@@ -7,7 +7,8 @@ import co.nimblehq.sample.compose.domain.usecases.UpdateFirstTimeLaunchPreferenc
 import co.nimblehq.sample.compose.ui.base.BaseViewModel
 import co.nimblehq.sample.compose.ui.models.UiModel
 import co.nimblehq.sample.compose.ui.models.toUiModel
-import co.nimblehq.sample.compose.ui.screens.main.MainDestination
+import co.nimblehq.sample.compose.ui.screens.main.second.Second
+import co.nimblehq.sample.compose.ui.screens.main.third.Third
 import co.nimblehq.sample.compose.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
@@ -63,10 +64,10 @@ class HomeViewModel @Inject constructor(
     }
 
     fun navigateToSecond(uiModel: UiModel) {
-        launch { _navigator.emit(MainDestination.Second.createRoute(uiModel.id)) }
+        launch { _navigator.emit(Second(uiModel.id)) }
     }
 
     fun navigateToThird(uiModel: UiModel) {
-        launch { _navigator.emit(MainDestination.Third.addParcel(uiModel)) }
+        launch { _navigator.emit(Third(uiModel)) }
     }
 }

@@ -1,25 +1,35 @@
 package co.nimblehq.sample.compose.ui.screens.main.home
 
 import androidx.activity.compose.setContent
-import androidx.compose.ui.test.*
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.rule.GrantPermissionRule
 import co.nimblehq.sample.compose.R
-import co.nimblehq.sample.compose.domain.usecases.*
+import co.nimblehq.sample.compose.domain.usecases.GetModelsUseCase
+import co.nimblehq.sample.compose.domain.usecases.IsFirstTimeLaunchPreferencesUseCase
+import co.nimblehq.sample.compose.domain.usecases.UpdateFirstTimeLaunchPreferencesUseCase
 import co.nimblehq.sample.compose.test.MockUtil
-import co.nimblehq.sample.compose.ui.base.BaseDestination
 import co.nimblehq.sample.compose.ui.screens.BaseScreenTest
+import co.nimblehq.sample.compose.ui.screens.FakeNavigator
 import co.nimblehq.sample.compose.ui.screens.MainActivity
-import co.nimblehq.sample.compose.ui.screens.main.MainDestination
+import co.nimblehq.sample.compose.ui.screens.main.second.Second
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import io.kotest.matchers.shouldBe
-import io.mockk.*
+import io.mockk.Runs
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import org.junit.*
 import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowToast
@@ -45,10 +55,11 @@ class HomeScreenTest : BaseScreenTest() {
         mockk()
 
     private lateinit var viewModel: HomeViewModel
-    private var expectedDestination: BaseDestination? = null
+    private lateinit var fakeNavigator: FakeNavigator
 
     @Before
     fun setUp() {
+        ShadowToast.reset()
         every { mockGetModelsUseCase() } returns flowOf(MockUtil.models)
         every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flowOf(false)
         coEvery { mockUpdateFirstTimeLaunchPreferencesUseCase(any()) } just Runs
@@ -105,20 +116,20 @@ class HomeScreenTest : BaseScreenTest() {
     fun `When clicking on a list item, it navigates to Second screen`() = initComposable {
         onNodeWithText("1").performClick()
 
-        assertEquals(expectedDestination, MainDestination.Second)
+        assertEquals("1", (fakeNavigator.currentScreen() as? Second)?.id)
     }
 
     private fun initComposable(
         testBody: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>.() -> Unit,
     ) {
         initViewModel()
+        fakeNavigator = FakeNavigator()
 
         composeRule.activity.setContent {
             ComposeTheme {
                 HomeScreen(
-                    isResultOk = false,
                     viewModel = viewModel,
-                    navigator = { destination -> expectedDestination = destination },
+                    navigator = fakeNavigator,
                 )
             }
         }
