@@ -9,7 +9,7 @@ import androidx.test.rule.GrantPermissionRule
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.domain.usecases.*
 import co.nimblehq.sample.compose.test.MockUtil
-import co.nimblehq.sample.compose.ui.base.BaseDestination
+import androidx.navigation3.runtime.NavKey
 import co.nimblehq.sample.compose.ui.screens.BaseScreenTest
 import co.nimblehq.sample.compose.ui.screens.MainActivity
 import co.nimblehq.sample.compose.ui.screens.main.MainDestination
@@ -46,7 +46,7 @@ class HomeScreenTest : BaseScreenTest() {
         mockk()
 
     private lateinit var viewModel: HomeViewModel
-    private var expectedDestination: BaseDestination? = null
+    private var expectedDestination: NavKey? = null
 
     @Before
     fun setUp() {
@@ -106,7 +106,7 @@ class HomeScreenTest : BaseScreenTest() {
     fun `When clicking on a list item, it navigates to Second screen`() = initComposable {
         onNodeWithText("1").performClick()
 
-        assertEquals(expectedDestination, MainDestination.Second)
+        assertEquals((expectedDestination as? MainDestination.Second)?.id, "1")
     }
 
     private fun initComposable(

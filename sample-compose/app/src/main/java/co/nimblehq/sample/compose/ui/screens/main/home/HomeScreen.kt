@@ -15,7 +15,7 @@ import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.extensions.collectAsEffect
 import co.nimblehq.sample.compose.extensions.showToast
 import co.nimblehq.sample.compose.lib.IsLoading
-import co.nimblehq.sample.compose.ui.base.BaseDestination
+import androidx.navigation3.runtime.NavKey
 import co.nimblehq.sample.compose.ui.base.BaseScreen
 import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.models.UiModel
@@ -26,7 +26,7 @@ import com.google.accompanist.permissions.*
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
-    navigator: (destination: BaseDestination) -> Unit,
+    navigator: (destination: NavKey) -> Unit,
     isResultOk: Boolean = false,
 ) = BaseScreen(
     isDarkStatusBarIcons = true,
