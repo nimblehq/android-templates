@@ -1,31 +1,16 @@
 package co.nimblehq.sample.compose.ui.screens.main
 
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
-import co.nimblehq.sample.compose.ui.base.BaseDestination
 import co.nimblehq.sample.compose.ui.models.UiModel
+import kotlinx.serialization.Serializable
 
-const val KeyId = "id"
-const val KeyModel = "model"
+sealed interface MainDestination {
 
-sealed class MainDestination {
+    @Serializable
+    data object Home : MainDestination
 
-    object Home : BaseDestination("home")
+    @Serializable
+    data class Second(val id: String) : MainDestination
 
-    object Second : BaseDestination("second/{$KeyId}") {
-
-        override val arguments = listOf(
-            navArgument(KeyId) { type = NavType.StringType }
-        )
-
-        fun createRoute(id: String) = apply {
-            destination = "second/$id"
-        }
-    }
-
-    object Third : BaseDestination("third") {
-        fun addParcel(value: UiModel) = apply {
-            parcelableArgument = KeyModel to value
-        }
-    }
+    @Serializable
+    data class Third(val model: UiModel) : MainDestination
 }
