@@ -1,4 +1,4 @@
-package co.nimblehq.sample.compose.ui.screens.main.home
+package co.nimblehq.sample.compose.ui.screens.list
 
 import androidx.lifecycle.viewModelScope
 import co.nimblehq.sample.compose.domain.usecases.GetModelsUseCase
@@ -7,7 +7,6 @@ import co.nimblehq.sample.compose.domain.usecases.UpdateFirstTimeLaunchPreferenc
 import co.nimblehq.sample.compose.ui.base.BaseViewModel
 import co.nimblehq.sample.compose.ui.models.UiModel
 import co.nimblehq.sample.compose.ui.models.toUiModel
-import co.nimblehq.sample.compose.ui.screens.main.MainDestination
 import co.nimblehq.sample.compose.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +18,7 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class ListViewModel @Inject constructor(
     getModelsUseCase: GetModelsUseCase,
     isFirstTimeLaunchPreferencesUseCase: IsFirstTimeLaunchPreferencesUseCase,
     private val updateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase,
@@ -57,13 +56,5 @@ class HomeViewModel @Inject constructor(
             updateFirstTimeLaunchPreferencesUseCase(false)
             _isFirstTimeLaunch.emit(false)
         }
-    }
-
-    fun navigateToSecond(uiModel: UiModel) {
-        launch { _navigator.emit(MainDestination.Second.createRoute(uiModel.id)) }
-    }
-
-    fun navigateToThird(uiModel: UiModel) {
-        launch { _navigator.emit(MainDestination.Third.addParcel(uiModel)) }
     }
 }
