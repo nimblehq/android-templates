@@ -3,6 +3,10 @@ package co.nimblehq.sample.compose.ui.screens
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import co.nimblehq.sample.compose.extensions.setEdgeToEdgeConfig
@@ -31,6 +35,36 @@ class MainActivity : ComponentActivity() {
                     onBack = { navigator.goBack() },
                     entryProvider = entryProvider {
                         entryProviderScopes.forEach { builder -> this.builder() }
+                    },
+                    transitionSpec = {
+                        // Slide in from right when navigating forward
+                        slideInHorizontally(
+                            initialOffsetX = { it },
+                            animationSpec = tween(500)
+                        ) togetherWith slideOutHorizontally(
+                            targetOffsetX = { -it },
+                            animationSpec = tween(500)
+                        )
+                    },
+                    popTransitionSpec = {
+                        // Slide in from left when navigating back
+                        slideInHorizontally(
+                            initialOffsetX = { -it },
+                            animationSpec = tween(500)
+                        ) togetherWith slideOutHorizontally(
+                            targetOffsetX = { it },
+                            animationSpec = tween(500)
+                        )
+                    },
+                    predictivePopTransitionSpec = {
+                        // Slide in from left when navigating back
+                        slideInHorizontally(
+                            initialOffsetX = { -it },
+                            animationSpec = tween(500)
+                        ) togetherWith slideOutHorizontally(
+                            targetOffsetX = { it },
+                            animationSpec = tween(500)
+                        )
                     }
                 )
             }
