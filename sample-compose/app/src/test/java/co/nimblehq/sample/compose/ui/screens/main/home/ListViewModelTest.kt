@@ -6,8 +6,8 @@ import co.nimblehq.sample.compose.domain.usecases.IsFirstTimeLaunchPreferencesUs
 import co.nimblehq.sample.compose.domain.usecases.UpdateFirstTimeLaunchPreferencesUseCase
 import co.nimblehq.sample.compose.test.CoroutineTestRule
 import co.nimblehq.sample.compose.test.MockUtil
-import co.nimblehq.sample.compose.ui.screens.main.MainDestination
 import co.nimblehq.sample.compose.ui.models.toUiModel
+import co.nimblehq.sample.compose.ui.screens.list.ListViewModel
 import co.nimblehq.sample.compose.util.DispatchersProvider
 import io.kotest.matchers.shouldBe
 import io.mockk.Runs
@@ -28,7 +28,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class HomeViewModelTest {
+class ListViewModelTest {
 
     @get:Rule
     val coroutinesRule = CoroutineTestRule()
@@ -37,7 +37,7 @@ class HomeViewModelTest {
     private val mockIsFirstTimeLaunchPreferencesUseCase: IsFirstTimeLaunchPreferencesUseCase = mockk()
     private val mockUpdateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase = mockk()
 
-    private lateinit var viewModel: HomeViewModel
+    private lateinit var viewModel: ListViewModel
 
     private val isFirstTimeLaunch = false
 
@@ -82,15 +82,6 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `When calling navigate to Second, it navigates to Second screen`() = runTest {
-        viewModel.navigator.test {
-            viewModel.navigateToSecond(MockUtil.models[0].toUiModel())
-
-            expectMostRecentItem() shouldBe MainDestination.Second
-        }
-    }
-
-    @Test
     fun `When initializing the ViewModel, it emits whether the app is launched for the first time accordingly`() =
         runTest {
             viewModel.isFirstTimeLaunch.first() shouldBe isFirstTimeLaunch
@@ -123,7 +114,7 @@ class HomeViewModelTest {
         }
 
     private fun initViewModel(dispatchers: DispatchersProvider = coroutinesRule.testDispatcherProvider) {
-        viewModel = HomeViewModel(
+        viewModel = ListViewModel(
             mockGetModelsUseCase,
             mockIsFirstTimeLaunchPreferencesUseCase,
             mockUpdateFirstTimeLaunchPreferencesUseCase,

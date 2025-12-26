@@ -7,12 +7,14 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import co.nimblehq.sample.compose.extensions.setEdgeToEdgeConfig
+import co.nimblehq.sample.compose.navigation.EntryProviderInstaller
+import co.nimblehq.sample.compose.navigation.Navigator
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
-import co.nimblehq.sample.compose.util.EntryProviderInstaller
-import co.nimblehq.sample.compose.util.Navigator
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -33,6 +35,14 @@ class MainActivity : ComponentActivity() {
                 NavDisplay(
                     backStack = navigator.backStack,
                     onBack = { navigator.goBack() },
+                    // In order to add the `ViewModelStoreNavEntryDecorator` (see comment below for why)
+                    // we also need to add the default `NavEntryDecorator`s as well. These provide
+                    // extra information to the entry's content to enable it to display correctly
+                    // and save its state.
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
                     entryProvider = entryProvider {
                         entryProviderScopes.forEach { builder -> this.builder() }
                     },

@@ -11,7 +11,7 @@ data class Response(
     val userName: String?,
 )
 
-private fun Response.toModel() = Model(
+fun Response.toModel() = Model(
     id = this.id,
     username = this.userName,
 )

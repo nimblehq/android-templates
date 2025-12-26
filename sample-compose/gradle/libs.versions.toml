@@ -23,7 +23,7 @@ kotlinxCoroutines = "1.7.3"
 kotlinxSerialization = "1.9.0"
 kover = "0.7.3"
 ksp = "2.1.0-1.0.29"
-lifecycle = "2.8.7"
+lifecycle = "2.10.0"
 mockk = "1.13.8"
 moshi = "1.15.1"
 nimbleCommon = "0.1.2"
@@ -41,6 +41,7 @@ turbine = "0.13.0"
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "core" }
 androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "lifecycle" }
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 androidx-security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "security" }
 androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "navigation3" }
@@ -100,6 +101,7 @@ androidx = [
     "androidx-core",
     "androidx-lifecycle-runtime",
     "androidx-lifecycle-compose",
+    "androidx-lifecycle-viewmodel-navigation3",
     "androidx-navigation3-runtime",
     "androidx-navigation3-ui",
 ]

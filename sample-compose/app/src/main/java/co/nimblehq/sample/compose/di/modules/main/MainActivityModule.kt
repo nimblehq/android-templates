@@ -1,12 +1,14 @@
 package co.nimblehq.sample.compose.di.modules.main
 
 import androidx.hilt.navigation.compose.hiltViewModel
-import co.nimblehq.sample.compose.ui.screens.detail.DetailScreen
-import co.nimblehq.sample.compose.ui.screens.detail.DetailScreenUi
+import co.nimblehq.sample.compose.navigation.EntryProviderInstaller
+import co.nimblehq.sample.compose.navigation.Navigator
+import co.nimblehq.sample.compose.navigation.NavigatorImpl
+import co.nimblehq.sample.compose.ui.screens.details.DetailsScreen
+import co.nimblehq.sample.compose.ui.screens.details.DetailsScreenUi
+import co.nimblehq.sample.compose.ui.screens.details.DetailsViewModel
 import co.nimblehq.sample.compose.ui.screens.list.ListScreen
 import co.nimblehq.sample.compose.ui.screens.list.ListScreenUi
-import co.nimblehq.sample.compose.util.EntryProviderInstaller
-import co.nimblehq.sample.compose.util.Navigator
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +22,7 @@ object MainActivityModule {
 
     @Provides
     @ActivityRetainedScoped
-    fun provideNavigator() : Navigator = Navigator(startDestination = ListScreen)
+    fun provideNavigator(): Navigator = NavigatorImpl(startDestination = ListScreen)
 
     @IntoSet
     @Provides
@@ -34,8 +36,24 @@ object MainActivityModule {
                     }
                 )
             }
-            entry<DetailScreen> { key ->
-                DetailScreenUi()
+            entry<DetailsScreen> { key ->
+                val viewModel = hiltViewModel<DetailsViewModel, DetailsViewModel.Factory>(
+                    // Note: We need a new ViewModel for every new DetailsScreen instance. Usually
+                    // we would need to supply a `key` String that is unique to the
+                    // instance, however, the ViewModelStoreNavEntryDecorator (supplied
+                    // above) does this for us, using `NavEntry.contentKey` to uniquely
+                    // identify the viewModel.
+                    //
+                    // tl;dr: Make sure you use rememberViewModelStoreNavEntryDecorator()
+                    // if you want a new ViewModel for each new navigation key instance.
+                    creationCallback = { factory ->
+                        factory.create(key)
+                    }
+                )
+                DetailsScreenUi(
+                    viewModel = viewModel,
+                    onClickBack = navigator::goBack
+                )
             }
         }
 }

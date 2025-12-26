@@ -21,7 +21,7 @@ import co.nimblehq.sample.compose.lib.IsLoading
 import co.nimblehq.sample.compose.ui.base.BaseScreen
 import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.models.UiModel
-import co.nimblehq.sample.compose.ui.screens.detail.DetailScreen
+import co.nimblehq.sample.compose.ui.screens.details.DetailsScreen
 import co.nimblehq.sample.compose.ui.showToast
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -34,8 +34,8 @@ data object ListScreen
 @Composable
 fun ListScreenUi(
     viewModel: ListViewModel,
-    onItemClick: (goTo: DetailScreen) -> Unit
-)= BaseScreen(
+    onItemClick: (goTo: DetailsScreen) -> Unit
+) = BaseScreen(
     isDarkStatusBarIcons = true,
 ) {
 
@@ -53,19 +53,13 @@ fun ListScreenUi(
         }
     }
 
-//    LaunchedEffect(Unit) {
-//        if (isResultOk) {
-//            context.showToast(context.getString(R.string.message_updated))
-//        }
-//    }
-
     CameraPermission()
 
     ListScreenUiContent(
         uiModels = uiModels,
         isLoading = isLoading,
-        onItemClick = {
-            onItemClick(DetailScreen)
+        onItemClick = { model ->
+            onItemClick(DetailsScreen(id = model.id.toInt()))
         },
     )
 }
@@ -99,9 +93,11 @@ private fun ListScreenUiContent(
     isLoading: IsLoading,
     onItemClick: (UiModel) -> Unit,
 ) {
-    Scaffold(topBar = {
-        AppBar(R.string.home_title_bar)
-    }) { paddingValues ->
+    Scaffold(
+        topBar = {
+            AppBar(R.string.list_title)
+        }
+    ) { paddingValues ->
         Box(
             modifier = Modifier
                 .fillMaxSize()

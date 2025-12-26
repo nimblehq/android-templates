@@ -1,5 +1,6 @@
 package co.nimblehq.sample.compose.data.repositories
 
+import co.nimblehq.sample.compose.data.remote.models.responses.toModel
 import co.nimblehq.sample.compose.data.remote.models.responses.toModels
 import co.nimblehq.sample.compose.data.remote.services.ApiService
 import co.nimblehq.sample.compose.data.test.MockUtil
@@ -42,6 +43,26 @@ class RepositoryTest {
         coEvery { mockService.getResponses() } throws expected
 
         repository.getModels().catch {
+            it shouldBe expected
+        }.collect()
+    }
+
+    @Test
+    fun `When getting details successful, it returns success`() = runTest {
+        val expected = MockUtil.responses.first()
+        coEvery { mockService.getDetails(any()) } returns expected
+
+        repository.getDetails(1).collect {
+            it shouldBe expected.toModel()
+        }
+    }
+
+    @Test
+    fun `When getting details failed, it returns error`() = runTest {
+        val expected = Throwable()
+        coEvery { mockService.getDetails(any()) } throws expected
+
+        repository.getDetails(1).catch {
             it shouldBe expected
         }.collect()
     }
