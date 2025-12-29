@@ -9,6 +9,12 @@ import co.nimblehq.sample.compose.ui.screens.details.DetailsScreenUi
 import co.nimblehq.sample.compose.ui.screens.details.DetailsViewModel
 import co.nimblehq.sample.compose.ui.screens.list.ListScreen
 import co.nimblehq.sample.compose.ui.screens.list.ListScreenUi
+import co.nimblehq.sample.compose.ui.screens.login.LoginOrRegisterScreen
+import co.nimblehq.sample.compose.ui.screens.login.LoginOrRegisterScreenUi
+import co.nimblehq.sample.compose.ui.screens.login.LoginScreen
+import co.nimblehq.sample.compose.ui.screens.login.LoginScreenUi
+import co.nimblehq.sample.compose.util.LocalResultEventBus
+import co.nimblehq.sample.compose.util.ResultEffect
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -50,8 +56,40 @@ object MainActivityModule {
                         factory.create(key)
                     }
                 )
+                val eventBus = LocalResultEventBus.current
+
+                ResultEffect<String> { userName ->
+                    viewModel.changeUserName(userName)
+                    eventBus.removeResult<String>()
+                }
+
                 DetailsScreenUi(
                     viewModel = viewModel,
+                    navigateToLoginOrRegister = {
+                        navigator.goTo(LoginOrRegisterScreen)
+                    },
+                    onClickBack = navigator::goBack
+                )
+            }
+
+            entry<LoginOrRegisterScreen> {
+                LoginOrRegisterScreenUi(
+                    navigateToLogin = {
+                        navigator.goTo(LoginScreen)
+                    },
+                    navigateToRegister = {},
+                    onClickBack = navigator::goBack
+                )
+            }
+
+            entry<LoginScreen> {
+                val eventBus = LocalResultEventBus.current
+
+                LoginScreenUi(
+                    navigateToDetails = { userName ->
+                        eventBus.sendResult<String>(result = userName)
+                        navigator.goBackToLast(DetailsScreen::class)
+                    },
                     onClickBack = navigator::goBack
                 )
             }

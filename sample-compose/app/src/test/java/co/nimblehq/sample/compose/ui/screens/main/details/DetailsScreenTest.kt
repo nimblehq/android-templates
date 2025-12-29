@@ -5,7 +5,9 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.domain.usecases.GetDetailsUseCase
@@ -16,8 +18,10 @@ import co.nimblehq.sample.compose.ui.screens.MainActivity
 import co.nimblehq.sample.compose.ui.screens.details.DetailsScreen
 import co.nimblehq.sample.compose.ui.screens.details.DetailsScreenUi
 import co.nimblehq.sample.compose.ui.screens.details.DetailsViewModel
+import co.nimblehq.sample.compose.ui.screens.login.LoginOrRegisterScreen
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
@@ -68,6 +72,32 @@ class DetailsScreenTest : BaseScreenTest() {
         }
     }
 
+    @Test
+    fun `When clicking Like button without being logged in, it navigates to Login screen`() {
+        initComposable {
+            // Click Like button
+            composeRule.onNodeWithTag(activity.getString(R.string.test_tag_favorite_button)).performClick()
+
+            navigator.backStack.last() shouldBe LoginOrRegisterScreen
+        }
+    }
+
+    @Test
+    fun `When clicking Like button when logged in, it change like state accordingly`() {
+        initComposable {
+            // Simulate user logged in
+            viewModel.changeUserName("Test User")
+
+            // Click Like button
+            composeRule.onNodeWithTag(activity.getString(R.string.test_tag_favorite_button)).performClick()
+
+            // Verify did not navigate to Login screen
+            navigator.backStack.last() shouldNotBe LoginOrRegisterScreen
+            // Verify Like button state changed
+            viewModel.isLiked.value shouldBe true
+        }
+    }
+
     private fun initComposable(
         testBody: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>.() -> Unit,
     ) {
@@ -85,7 +115,10 @@ class DetailsScreenTest : BaseScreenTest() {
             ComposeTheme {
                 DetailsScreenUi(
                     viewModel = viewModel,
-                    onClickBack = navigator::goBack
+                    onClickBack = navigator::goBack,
+                    navigateToLoginOrRegister = {
+                        navigator.goTo(LoginOrRegisterScreen)
+                    }
                 )
             }
         }
@@ -100,4 +133,3 @@ class DetailsScreenTest : BaseScreenTest() {
         )
     }
 }
-

@@ -1,6 +1,7 @@
 package co.nimblehq.sample.compose.ui.screens.details
 
 import androidx.lifecycle.viewModelScope
+import co.nimblehq.common.extensions.isNotNullOrBlank
 import co.nimblehq.sample.compose.domain.usecases.GetDetailsUseCase
 import co.nimblehq.sample.compose.ui.base.BaseViewModel
 import co.nimblehq.sample.compose.ui.models.UiModel
@@ -10,12 +11,15 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 @HiltViewModel(assistedFactory = DetailsViewModel.Factory::class)
 class DetailsViewModel @AssistedInject constructor(
@@ -26,6 +30,15 @@ class DetailsViewModel @AssistedInject constructor(
 
     private val _uiModel = MutableStateFlow<UiModel?>(null)
     val uiModel = _uiModel.asStateFlow()
+
+    private val _isLiked = MutableStateFlow(false)
+    val isLiked = _isLiked.asStateFlow()
+
+    private val _onLoginRequired = MutableSharedFlow<Unit>()
+    val onLoginRequired = _onLoginRequired.asSharedFlow()
+
+    private val _userName = MutableStateFlow<String?>(null)
+    val userName = _userName.asStateFlow()
 
     @AssistedFactory
     interface Factory {
@@ -41,5 +54,19 @@ class DetailsViewModel @AssistedInject constructor(
             .flowOn(dispatchersProvider.io)
             .catch { e -> _error.emit(e) }
             .launchIn(viewModelScope)
+    }
+
+    fun onClickLike() {
+        if (_userName.value.isNotNullOrBlank()) {
+            _isLiked.value = !_isLiked.value
+        } else {
+            viewModelScope.launch {
+                _onLoginRequired.emit(Unit)
+            }
+        }
+    }
+
+    fun changeUserName(userName: String) {
+        _userName.value = userName
     }
 }
