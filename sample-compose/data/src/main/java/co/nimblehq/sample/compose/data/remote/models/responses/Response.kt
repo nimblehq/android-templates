@@ -8,12 +8,12 @@ data class Response(
     val id: Int?,
     // A sample to ensure @Json annotation work properly with a differ between field name and JSON key name
     @Json(name = "username")
-    val userName: String?,
+    val username: String?,
 )
 
 fun Response.toModel() = Model(
     id = this.id,
-    username = this.userName,
+    username = this.username,
 )
 
 fun List<Response>.toModels() = this.map { it.toModel() }

@@ -19,4 +19,8 @@ class RepositoryImpl (
     override fun getDetails(id: Int): Flow<Model> = flowTransform {
         apiService.getDetails(id).toModel()
     }
+
+    override fun searchUser(username: String): Flow<List<Model>> = flowTransform {
+        apiService.searchUser(username).toModels()
+    }
 }

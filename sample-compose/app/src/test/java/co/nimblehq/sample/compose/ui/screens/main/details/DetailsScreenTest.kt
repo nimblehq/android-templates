@@ -11,6 +11,7 @@ import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.domain.usecases.GetDetailsUseCase
+import co.nimblehq.sample.compose.domain.usecases.SearchUserUseCase
 import co.nimblehq.sample.compose.navigation.Navigator
 import co.nimblehq.sample.compose.test.MockUtil
 import co.nimblehq.sample.compose.ui.screens.BaseScreenTest
@@ -42,17 +43,19 @@ class DetailsScreenTest : BaseScreenTest() {
     lateinit var navigator: Navigator
 
     private val mockGetDetailsUseCase: GetDetailsUseCase = mockk()
+    private val mockSearchUseCase: SearchUserUseCase = mockk()
 
     private lateinit var viewModel: DetailsViewModel
 
     @Before
     fun setUp() {
         every { mockGetDetailsUseCase(any()) } returns flowOf(MockUtil.models.first())
+        every { mockSearchUseCase(any()) } returns flowOf(MockUtil.models)
     }
 
     @Test
     fun `When entering the Details screen and loading the details successfully, it shows the item correctly`() =
-        initComposable {
+        initComposable(DetailsScreen.Details(id = 1)) {
             onNodeWithText(activity.getString(R.string.details_title)).isDisplayed()
             onNodeWithText("1").assertIsDisplayed()
         }
@@ -64,7 +67,7 @@ class DetailsScreenTest : BaseScreenTest() {
         val error = Exception()
         every { mockGetDetailsUseCase(any()) } returns flow { throw error }
 
-        initComposable {
+        initComposable(DetailsScreen.Details(id = 1)) {
             composeRule.waitForIdle()
             advanceUntilIdle()
 
@@ -74,7 +77,7 @@ class DetailsScreenTest : BaseScreenTest() {
 
     @Test
     fun `When clicking Like button without being logged in, it navigates to Login screen`() {
-        initComposable {
+        initComposable(DetailsScreen.Details(id = 1)) {
             // Click Like button
             composeRule.onNodeWithTag(activity.getString(R.string.test_tag_favorite_button)).performClick()
 
@@ -84,9 +87,9 @@ class DetailsScreenTest : BaseScreenTest() {
 
     @Test
     fun `When clicking Like button when logged in, it change like state accordingly`() {
-        initComposable {
+        initComposable(DetailsScreen.Details(id = 1)) {
             // Simulate user logged in
-            viewModel.changeUserName("Test User")
+            viewModel.changeUsername("Test User")
 
             // Click Like button
             composeRule.onNodeWithTag(activity.getString(R.string.test_tag_favorite_button)).performClick()
@@ -99,9 +102,10 @@ class DetailsScreenTest : BaseScreenTest() {
     }
 
     private fun initComposable(
+        details: DetailsScreen,
         testBody: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>.() -> Unit,
     ) {
-        initViewModel()
+        initViewModel(details)
 
         // inject test navigator into activity before setContent
         composeRule.activityRule.scenario.onActivity { activity ->
@@ -109,7 +113,7 @@ class DetailsScreenTest : BaseScreenTest() {
         }
 
         // Mock the current screen as DetailsScreen
-        navigator.goTo(DetailsScreen(1))
+        navigator.goTo(DetailsScreen.Details(1))
 
         composeRule.activity.setContent {
             ComposeTheme {
@@ -125,11 +129,12 @@ class DetailsScreenTest : BaseScreenTest() {
         testBody(composeRule)
     }
 
-    private fun initViewModel() {
+    private fun initViewModel(details: DetailsScreen) {
         viewModel = DetailsViewModel(
-            DetailsScreen(id = 1),
-            mockGetDetailsUseCase,
-            coroutinesRule.testDispatcherProvider
+            details = details,
+            getDetailsUseCase = mockGetDetailsUseCase,
+            searchUserUseCase = mockSearchUseCase,
+            dispatchersProvider = coroutinesRule.testDispatcherProvider
         )
     }
 }

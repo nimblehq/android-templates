@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation3.runtime.NavKey
 import co.nimblehq.common.extensions.isNotNullOrBlank
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.extensions.collectAsEffect
@@ -33,8 +34,15 @@ import co.nimblehq.sample.compose.ui.models.UiModel
 import co.nimblehq.sample.compose.ui.screens.list.Item
 import co.nimblehq.sample.compose.ui.showToast
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
+import kotlinx.serialization.Serializable
 
-data class DetailsScreen(val id: Int)
+@Serializable
+sealed class DetailsScreen: NavKey {
+    @Serializable
+    data class Details(val id: Int) : DetailsScreen()
+    @Serializable
+    data class Search(val username: String) : DetailsScreen()
+}
 
 @Composable
 fun DetailsScreenUi(
@@ -47,6 +55,7 @@ fun DetailsScreenUi(
     val uiModel by viewModel.uiModel.collectAsStateWithLifecycle()
     val isLiked by viewModel.isLiked.collectAsStateWithLifecycle()
     val isLoading: IsLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val isFromDeepLink by viewModel.isFromDeepLink.collectAsStateWithLifecycle()
 
     viewModel.error.collectAsEffect { e -> e.showToast(context) }
 
@@ -54,12 +63,13 @@ fun DetailsScreenUi(
         navigateToLoginOrRegister()
     }
 
-    viewModel.userName.collectAsEffect { userName ->
-        if (userName.isNotNullOrBlank()) context.showToast(context.getString(R.string.welcome_back, userName))
+    viewModel.username.collectAsEffect { username ->
+        if (username.isNotNullOrBlank()) context.showToast(context.getString(R.string.welcome_back, username))
     }
 
     DetailsScreenUiContent(
         uiModel = uiModel,
+        isFromDeepLink = isFromDeepLink,
         isLiked = isLiked,
         isLoading = isLoading,
         onClickBack = onClickBack,
@@ -70,6 +80,7 @@ fun DetailsScreenUi(
 @Composable
 private fun DetailsScreenUiContent(
     uiModel: UiModel?,
+    isFromDeepLink: Boolean,
     isLiked: Boolean,
     isLoading: IsLoading,
     onClickBack: () -> Unit,
@@ -81,15 +92,17 @@ private fun DetailsScreenUiContent(
                 title = R.string.details_title,
                 onClickBack = onClickBack,
                 actions = {
-                    IconButton(
-                        onClick = onClickLike,
-                        modifier = Modifier.testTag(stringResource(R.string.test_tag_favorite_button))
-                    ) {
-                        Icon(
-                            if (isLiked) Icons.Filled.Favorite else Icons.Outlined.Favorite,
-                            contentDescription = null,
-                            tint = if (isLiked) Color.Red else LocalContentColor.current
-                        )
+                    if (!isFromDeepLink) {
+                        IconButton(
+                            onClick = onClickLike,
+                            modifier = Modifier.testTag(stringResource(R.string.test_tag_favorite_button))
+                        ) {
+                            Icon(
+                                if (isLiked) Icons.Filled.Favorite else Icons.Outlined.Favorite,
+                                contentDescription = null,
+                                tint = if (isLiked) Color.Red else LocalContentColor.current
+                            )
+                        }
                     }
                 }
             )
@@ -123,6 +136,7 @@ private fun DetailsScreenUiContentPreview(
     ComposeTheme {
         DetailsScreenUiContent(
             uiModel = params.uiModel,
+            isFromDeepLink = params.isFromDeepLink,
             isLiked = params.isLiked,
             isLoading = params.isLoading,
             onClickBack = {},
@@ -140,8 +154,6 @@ private class DetailsScreenPreviewParametersProvider :
                     id = "1",
                     username = "John"
                 ),
-                isLiked = false,
-                isLoading = false,
             ),
             Params(
                 uiModel = UiModel(
@@ -149,18 +161,21 @@ private class DetailsScreenPreviewParametersProvider :
                     username = "John"
                 ),
                 isLiked = true,
-                isLoading = false,
             ),
+            Params(isLoading = true,),
             Params(
-                uiModel = null,
-                isLiked = false,
-                isLoading = true,
+                uiModel = UiModel(
+                    id = "1",
+                    username = "John"
+                ),
+                isFromDeepLink = true,
             ),
         )
 
     class Params(
-        val uiModel: UiModel?,
-        val isLiked: Boolean,
-        val isLoading: IsLoading,
+        val uiModel: UiModel? = null,
+        val isFromDeepLink: Boolean = false,
+        val isLiked: Boolean = false,
+        val isLoading: IsLoading = false,
     )
 }

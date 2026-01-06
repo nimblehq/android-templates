@@ -3,6 +3,7 @@ package co.nimblehq.sample.compose.ui.screens.details
 import androidx.lifecycle.viewModelScope
 import co.nimblehq.common.extensions.isNotNullOrBlank
 import co.nimblehq.sample.compose.domain.usecases.GetDetailsUseCase
+import co.nimblehq.sample.compose.domain.usecases.SearchUserUseCase
 import co.nimblehq.sample.compose.ui.base.BaseViewModel
 import co.nimblehq.sample.compose.ui.models.UiModel
 import co.nimblehq.sample.compose.ui.models.toUiModel
@@ -25,6 +26,7 @@ import kotlinx.coroutines.launch
 class DetailsViewModel @AssistedInject constructor(
     @Assisted val details: DetailsScreen,
     getDetailsUseCase: GetDetailsUseCase,
+    searchUserUseCase: SearchUserUseCase,
     dispatchersProvider: DispatchersProvider,
 ) : BaseViewModel() {
 
@@ -37,8 +39,11 @@ class DetailsViewModel @AssistedInject constructor(
     private val _onLoginRequired = MutableSharedFlow<Unit>()
     val onLoginRequired = _onLoginRequired.asSharedFlow()
 
-    private val _userName = MutableStateFlow<String?>(null)
-    val userName = _userName.asStateFlow()
+    private val _username = MutableStateFlow<String?>(null)
+    val username = _username.asStateFlow()
+
+    private val _isFromDeepLink = MutableStateFlow(false)
+    val isFromDeepLink = _isFromDeepLink.asStateFlow()
 
     @AssistedFactory
     interface Factory {
@@ -46,18 +51,32 @@ class DetailsViewModel @AssistedInject constructor(
     }
 
     init {
-        getDetailsUseCase(details.id)
-            .injectLoading()
-            .onEach { result ->
-                _uiModel.emit(result.toUiModel())
-            }
-            .flowOn(dispatchersProvider.io)
-            .catch { e -> _error.emit(e) }
-            .launchIn(viewModelScope)
+        if (details is DetailsScreen.Details) {
+            getDetailsUseCase(details.id)
+                .injectLoading()
+                .onEach { result ->
+                    _uiModel.emit(result.toUiModel())
+                }
+                .flowOn(dispatchersProvider.io)
+                .catch { e -> _error.emit(e) }
+                .launchIn(viewModelScope)
+        } else if (details is DetailsScreen.Search) {
+            _isFromDeepLink.value = true
+            searchUserUseCase(details.username)
+                .injectLoading()
+                .onEach { result ->
+                    result.firstOrNull()?.toUiModel()?.let {
+                        _uiModel.emit(it)
+                    }
+                }
+                .flowOn(dispatchersProvider.io)
+                .catch { e -> _error.emit(e) }
+                .launchIn(viewModelScope)
+        }
     }
 
     fun onClickLike() {
-        if (_userName.value.isNotNullOrBlank()) {
+        if (_username.value.isNotNullOrBlank()) {
             _isLiked.value = !_isLiked.value
         } else {
             viewModelScope.launch {
@@ -66,7 +85,7 @@ class DetailsViewModel @AssistedInject constructor(
         }
     }
 
-    fun changeUserName(userName: String) {
-        _userName.value = userName
+    fun changeUsername(username: String) {
+        _username.value = username
     }
 }

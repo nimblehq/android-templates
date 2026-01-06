@@ -20,6 +20,7 @@
 
         <activity
             android:name=".ui.screens.MainActivity"
+            android:launchMode="singleTask"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +35,13 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="https" />
-                <data android:host="android.nimblehq.co" />
+                <data android:host="www.android.nimblehq.co" />
+
+                <!-- filter for optional query arguments -->
+                <uri-relative-filter-group android:allow="true">
+                    <data android:path="/users/search" />
+                    <data android:query="username=value!" />
+                </uri-relative-filter-group>
             </intent-filter>
 
             <intent-filter>

@@ -4,7 +4,11 @@ import android.Manifest.permission.CAMERA
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -14,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation3.runtime.NavKey
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.extensions.collectAsEffect
 import co.nimblehq.sample.compose.extensions.showToast
@@ -29,11 +34,12 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 
-data object ListScreen
+data object ListScreen: NavKey
 
 @Composable
 fun ListScreenUi(
     viewModel: ListViewModel,
+    onClickSearch: () -> Unit,
     onItemClick: (goTo: DetailsScreen) -> Unit
 ) = BaseScreen(
     isDarkStatusBarIcons = true,
@@ -58,8 +64,9 @@ fun ListScreenUi(
     ListScreenUiContent(
         uiModels = uiModels,
         isLoading = isLoading,
+        onClickSearch = onClickSearch,
         onItemClick = { model ->
-            onItemClick(DetailsScreen(id = model.id.toInt()))
+            onItemClick(DetailsScreen.Details(id = model.id.toInt()))
         },
     )
 }
@@ -91,11 +98,21 @@ private fun CameraPermission() {
 private fun ListScreenUiContent(
     uiModels: List<UiModel>,
     isLoading: IsLoading,
+    onClickSearch: () -> Unit,
     onItemClick: (UiModel) -> Unit,
 ) {
     Scaffold(
         topBar = {
-            AppBar(R.string.list_title)
+            AppBar(
+                title = R.string.list_title,
+                actions = {
+                    IconButton(
+                        onClick = onClickSearch
+                    ) {
+                        Icon(Icons.Outlined.Search, contentDescription = null)
+                    }
+                }
+            )
         }
     ) { paddingValues ->
         Box(
@@ -122,6 +139,7 @@ private fun ListScreenUiContentPreview() {
         ListScreenUiContent(
             uiModels = listOf(UiModel("1", "name1"), UiModel("2", "name2"), UiModel("3", "name3")),
             isLoading = false,
+            onClickSearch = {},
             onItemClick = {},
         )
     }

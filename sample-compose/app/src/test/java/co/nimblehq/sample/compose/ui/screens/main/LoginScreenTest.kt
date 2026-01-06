@@ -48,7 +48,7 @@ class LoginScreenTest : BaseScreenTest() {
         // Mock the current screen as LoginScreen
         navigator.addToBackStack(
             listOf(
-                DetailsScreen(1),
+                DetailsScreen.Details(1),
                 LoginOrRegisterScreen,
                 LoginScreen
             )
@@ -80,7 +80,7 @@ class LoginScreenTest : BaseScreenTest() {
             composeRule.onNodeWithTag(activity.getString(R.string.test_tag_login_button)).performClick()
 
             // Verify it navigated back to DetailsScreen
-            navigator.currentScreenClass() shouldBe DetailsScreen::class
+            navigator.currentScreenClass() shouldBe DetailsScreen.Details::class
             composeRule.onNodeWithText(activity.getString(R.string.details_title)).isDisplayed()
 
             ShadowToast.showedToast(activity.getString(R.string.welcome_back, "Test")) shouldBe true

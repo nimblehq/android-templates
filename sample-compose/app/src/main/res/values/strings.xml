@@ -18,6 +18,10 @@
     <string name="message_first_time_launch">This is the first time launch</string>
     <string name="message_updated">Updated!</string>
 
+    <string name="search_title">Search</string>
+    <string name="enter_username">Enter user name</string>
+    <string name="create_deeplink">Create deeplink</string>
+
     <!--  Test tags  -->
     <string name="test_tag_back_button">test_tag_back_button</string>
     <string name="test_tag_favorite_button">test_tag_favorite_button</string>

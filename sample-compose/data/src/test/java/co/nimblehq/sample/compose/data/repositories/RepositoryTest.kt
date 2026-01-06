@@ -48,6 +48,26 @@ class RepositoryTest {
     }
 
     @Test
+    fun `When searching user successful, it returns success`() = runTest {
+        val expected = MockUtil.responses
+        coEvery { mockService.searchUser(any()) } returns expected
+
+        repository.searchUser("John").collect {
+            it shouldBe expected.toModels()
+        }
+    }
+
+    @Test
+    fun `When searching user failed, it returns error`() = runTest {
+        val expected = Throwable()
+        coEvery { mockService.searchUser(any()) } throws expected
+
+        repository.searchUser("John").catch {
+            it shouldBe expected
+        }.collect()
+    }
+
+    @Test
     fun `When getting details successful, it returns success`() = runTest {
         val expected = MockUtil.responses.first()
         coEvery { mockService.getDetails(any()) } returns expected

@@ -33,7 +33,7 @@ object MockUtil {
     val responses = listOf(
         co.nimblehq.sample.compose.data.remote.models.responses.Response(
             id = 1,
-            userName = "name1",
+            username = "name1",
         )
     )
 }

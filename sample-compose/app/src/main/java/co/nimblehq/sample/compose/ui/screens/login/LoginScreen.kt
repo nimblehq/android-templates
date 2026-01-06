@@ -18,15 +18,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation3.runtime.NavKey
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.theme.AppTheme
 
-data object LoginScreen
+data object LoginScreen: NavKey
 
 @Composable
 fun LoginScreenUi(
-    navigateToDetails: (userName: String) -> Unit,
+    navigateToDetails: (username: String) -> Unit,
     onClickBack: () -> Unit
 ) {
     Scaffold(
@@ -37,7 +38,7 @@ fun LoginScreenUi(
             )
         }
     ) { paddingValues ->
-        var userName by remember { mutableStateOf("") }
+        var username by remember { mutableStateOf("") }
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -47,9 +48,9 @@ fun LoginScreenUi(
                 .padding(paddingValues)
         ) {
             TextField(
-                value = userName,
+                value = username,
                 onValueChange = {
-                    userName = it
+                    username = it
                 },
                 label = { Text(text = stringResource(R.string.username)) },
                 modifier = Modifier.testTag(stringResource(R.string.test_tag_user_name_field))
@@ -57,7 +58,7 @@ fun LoginScreenUi(
 
             Button(
                 onClick = {
-                    navigateToDetails(userName)
+                    navigateToDetails(username)
                 },
                 modifier = Modifier
                     .padding(top = AppTheme.dimensions.spacingMedium)

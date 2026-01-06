@@ -117,7 +117,7 @@ class ListScreenTest : BaseScreenTest() {
     fun `When clicking on a list item, it navigates to details screen`() = initComposable {
         onNodeWithText("1").performClick()
 
-        navigator.backStack.last() shouldBe DetailsScreen(1)
+        navigator.backStack.last() shouldBe DetailsScreen.Details(1)
     }
 
     private fun initComposable(
@@ -136,6 +136,9 @@ class ListScreenTest : BaseScreenTest() {
                     viewModel = viewModel,
                     onItemClick = { detailsScreen ->
                         navigator.goTo(detailsScreen)
+                    },
+                    onClickSearch = {
+                        // TODO
                     }
                 )
             }
