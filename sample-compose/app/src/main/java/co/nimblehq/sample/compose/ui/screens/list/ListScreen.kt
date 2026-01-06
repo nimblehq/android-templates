@@ -1,39 +1,52 @@
-package co.nimblehq.sample.compose.ui.screens.main.home
+package co.nimblehq.sample.compose.ui.screens.list
 
-import android.Manifest.permission.*
-import androidx.compose.foundation.layout.*
+import android.Manifest.permission.CAMERA
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation3.runtime.NavKey
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.extensions.collectAsEffect
 import co.nimblehq.sample.compose.extensions.showToast
 import co.nimblehq.sample.compose.lib.IsLoading
-import co.nimblehq.sample.compose.ui.base.BaseDestination
 import co.nimblehq.sample.compose.ui.base.BaseScreen
 import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.models.UiModel
+import co.nimblehq.sample.compose.ui.screens.details.DetailsScreen
 import co.nimblehq.sample.compose.ui.showToast
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
-import com.google.accompanist.permissions.*
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.shouldShowRationale
+
+data object ListScreen: NavKey
 
 @Composable
-fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel(),
-    navigator: (destination: BaseDestination) -> Unit,
-    isResultOk: Boolean = false,
+fun ListScreenUi(
+    viewModel: ListViewModel,
+    onClickSearch: () -> Unit,
+    onItemClick: (goTo: DetailsScreen) -> Unit
 ) = BaseScreen(
     isDarkStatusBarIcons = true,
 ) {
+
     val context = LocalContext.current
     viewModel.error.collectAsEffect { e -> e.showToast(context) }
-    viewModel.navigator.collectAsEffect { destination -> navigator(destination) }
 
     val isLoading: IsLoading by viewModel.isLoading.collectAsStateWithLifecycle()
     val uiModels: List<UiModel> by viewModel.uiModels.collectAsStateWithLifecycle()
@@ -46,19 +59,15 @@ fun HomeScreen(
         }
     }
 
-    LaunchedEffect(Unit) {
-        if (isResultOk) {
-            context.showToast(context.getString(R.string.message_updated))
-        }
-    }
-
     CameraPermission()
 
-    HomeScreenContent(
+    ListScreenUiContent(
         uiModels = uiModels,
         isLoading = isLoading,
-        onItemClick = viewModel::navigateToSecond,
-        onItemLongClick = viewModel::navigateToThird
+        onClickSearch = onClickSearch,
+        onItemClick = { model ->
+            onItemClick(DetailsScreen.Details(id = model.id.toInt()))
+        },
     )
 }
 
@@ -86,15 +95,26 @@ private fun CameraPermission() {
 }
 
 @Composable
-private fun HomeScreenContent(
+private fun ListScreenUiContent(
     uiModels: List<UiModel>,
     isLoading: IsLoading,
+    onClickSearch: () -> Unit,
     onItemClick: (UiModel) -> Unit,
-    onItemLongClick: (UiModel) -> Unit,
 ) {
-    Scaffold(topBar = {
-        AppBar(R.string.home_title_bar)
-    }) { paddingValues ->
+    Scaffold(
+        topBar = {
+            AppBar(
+                title = R.string.list_title,
+                actions = {
+                    IconButton(
+                        onClick = onClickSearch
+                    ) {
+                        Icon(Icons.Outlined.Search, contentDescription = null)
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -106,7 +126,6 @@ private fun HomeScreenContent(
                 ItemList(
                     uiModels = uiModels,
                     onItemClick = onItemClick,
-                    onItemLongClick = onItemLongClick
                 )
             }
         }
@@ -115,13 +134,13 @@ private fun HomeScreenContent(
 
 @Preview(showSystemUi = true)
 @Composable
-private fun HomeScreenPreview() {
+private fun ListScreenUiContentPreview() {
     ComposeTheme {
-        HomeScreenContent(
+        ListScreenUiContent(
             uiModels = listOf(UiModel("1", "name1"), UiModel("2", "name2"), UiModel("3", "name3")),
             isLoading = false,
+            onClickSearch = {},
             onItemClick = {},
-            onItemLongClick = {}
         )
     }
 }

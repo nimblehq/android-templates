@@ -2,8 +2,14 @@ package co.nimblehq.sample.compose.ui.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -17,9 +23,6 @@ abstract class BaseViewModel : ViewModel() {
 
     protected val _error = MutableSharedFlow<Throwable>()
     val error = _error.asSharedFlow()
-
-    protected val _navigator = MutableSharedFlow<BaseDestination>()
-    val navigator = _navigator.asSharedFlow()
 
     /**
      * To show loading manually, should call `hideLoading` after

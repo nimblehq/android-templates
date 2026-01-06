@@ -1,4 +1,4 @@
-package co.nimblehq.sample.compose.ui.screens.main.home
+package co.nimblehq.sample.compose.ui.screens.list
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,7 +13,6 @@ import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 fun ItemList(
     uiModels: List<UiModel>,
     onItemClick: (UiModel) -> Unit,
-    onItemLongClick: (UiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(modifier) {
@@ -21,7 +20,6 @@ fun ItemList(
             Item(
                 uiModel = uiModel,
                 onClick = onItemClick,
-                onLongClick = onItemLongClick
             )
             HorizontalDivider()
         }
@@ -35,7 +33,6 @@ private fun ItemListPreview() {
         ItemList(
             uiModels = listOf(UiModel("1", "name1"), UiModel("2", "name2"), UiModel("3", "name3")),
             onItemClick = {},
-            onItemLongClick = {}
         )
     }
 }

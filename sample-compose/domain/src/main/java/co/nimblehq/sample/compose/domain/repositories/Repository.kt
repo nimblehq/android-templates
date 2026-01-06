@@ -6,4 +6,8 @@ import kotlinx.coroutines.flow.Flow
 interface Repository {
 
     fun getModels(): Flow<List<Model>>
+
+    fun getDetails(id: Int): Flow<Model>
+
+    fun searchUser(username: String): Flow<List<Model>>
 }

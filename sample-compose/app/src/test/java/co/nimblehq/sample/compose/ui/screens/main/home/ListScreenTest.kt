@@ -1,35 +1,47 @@
 package co.nimblehq.sample.compose.ui.screens.main.home
 
 import androidx.activity.compose.setContent
-import androidx.compose.ui.test.*
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.rule.GrantPermissionRule
 import co.nimblehq.sample.compose.R
-import co.nimblehq.sample.compose.domain.usecases.*
+import co.nimblehq.sample.compose.domain.usecases.GetModelsUseCase
+import co.nimblehq.sample.compose.domain.usecases.IsFirstTimeLaunchPreferencesUseCase
+import co.nimblehq.sample.compose.domain.usecases.UpdateFirstTimeLaunchPreferencesUseCase
+import co.nimblehq.sample.compose.navigation.Navigator
 import co.nimblehq.sample.compose.test.MockUtil
-import co.nimblehq.sample.compose.ui.base.BaseDestination
 import co.nimblehq.sample.compose.ui.screens.BaseScreenTest
 import co.nimblehq.sample.compose.ui.screens.MainActivity
-import co.nimblehq.sample.compose.ui.screens.main.MainDestination
+import co.nimblehq.sample.compose.ui.screens.details.DetailsScreen
+import co.nimblehq.sample.compose.ui.screens.list.ListScreenUi
+import co.nimblehq.sample.compose.ui.screens.list.ListViewModel
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import io.kotest.matchers.shouldBe
-import io.mockk.*
+import io.mockk.Runs
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.*
-import org.junit.*
-import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowToast
 
 @RunWith(RobolectricTestRunner::class)
-class HomeScreenTest : BaseScreenTest() {
+class ListScreenTest : BaseScreenTest() {
 
     @get:Rule
     val composeRule = createAndroidComposeRule<MainActivity>()
+
+    lateinit var navigator: Navigator
 
     /**
      * More test samples with Runtime Permissions https://alexzh.com/ui-testing-of-android-runtime-permissions/
@@ -45,8 +57,7 @@ class HomeScreenTest : BaseScreenTest() {
     private val mockUpdateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase =
         mockk()
 
-    private lateinit var viewModel: HomeViewModel
-    private var expectedDestination: BaseDestination? = null
+    private lateinit var viewModel: ListViewModel
 
     @Before
     fun setUp() {
@@ -56,7 +67,7 @@ class HomeScreenTest : BaseScreenTest() {
     }
 
     @Test
-    fun `When entering the Home screen for the first time, it shows a toast confirming that`() {
+    fun `When entering the List screen for the first time, it shows a toast confirming that`() {
         every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flowOf(true)
 
         initComposable {
@@ -68,7 +79,7 @@ class HomeScreenTest : BaseScreenTest() {
     }
 
     @Test
-    fun `When entering the Home screen NOT for the first time, it doesn't show the toast confirming that`() {
+    fun `When entering the List screen NOT for the first time, it doesn't show the toast confirming that`() {
         initComposable {
             composeRule.waitForIdle()
             advanceUntilIdle()
@@ -78,9 +89,9 @@ class HomeScreenTest : BaseScreenTest() {
     }
 
     @Test
-    fun `When entering the Home screen and loading the list item successfully, it shows the list item correctly`() =
+    fun `When entering the List screen and loading the list item successfully, it shows the list item correctly`() =
         initComposable {
-            onNodeWithText("Home").assertIsDisplayed()
+            onNodeWithText(activity.getString(R.string.list_title)).assertIsDisplayed()
 
             onNodeWithText("1").assertIsDisplayed()
             onNodeWithText("2").assertIsDisplayed()
@@ -88,7 +99,7 @@ class HomeScreenTest : BaseScreenTest() {
         }
 
     @Test
-    fun `When entering the Home screen and loading the list item failure, it shows the corresponding error`() {
+    fun `When entering the List screen and loading the list item failure, it shows the corresponding error`() {
         setStandardTestDispatcher()
 
         val error = Exception()
@@ -103,10 +114,10 @@ class HomeScreenTest : BaseScreenTest() {
     }
 
     @Test
-    fun `When clicking on a list item, it navigates to Second screen`() = initComposable {
+    fun `When clicking on a list item, it navigates to details screen`() = initComposable {
         onNodeWithText("1").performClick()
 
-        assertEquals(expectedDestination, MainDestination.Second)
+        navigator.backStack.last() shouldBe DetailsScreen.Details(1)
     }
 
     private fun initComposable(
@@ -114,11 +125,21 @@ class HomeScreenTest : BaseScreenTest() {
     ) {
         initViewModel()
 
+        // inject test navigator into activity before setContent
+        composeRule.activityRule.scenario.onActivity { activity ->
+            navigator = activity.navigator
+        }
+
         composeRule.activity.setContent {
             ComposeTheme {
-                HomeScreen(
+                ListScreenUi(
                     viewModel = viewModel,
-                    navigator = { destination -> expectedDestination = destination },
+                    onItemClick = { detailsScreen ->
+                        navigator.goTo(detailsScreen)
+                    },
+                    onClickSearch = {
+                        // TODO
+                    }
                 )
             }
         }
@@ -126,7 +147,7 @@ class HomeScreenTest : BaseScreenTest() {
     }
 
     private fun initViewModel() {
-        viewModel = HomeViewModel(
+        viewModel = ListViewModel(
             mockGetModelsUseCase,
             mockIsFirstTimeLaunchPreferencesUseCase,
             mockUpdateFirstTimeLaunchPreferencesUseCase,
