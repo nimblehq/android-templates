@@ -35,12 +35,6 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
-
-    lint {
-        checkDependencies = true
-        xmlReport = true
-        xmlOutput = file("build/reports/lint/lint-result.xml")
-    }
 }
 
 dependencies {

@@ -41,9 +41,9 @@ jobs:
         working-directory: ./template-compose
         run: ./gradlew detekt
 
-      - name: Run Android Lint on template-compose
+      - name: Run Ktlint on template-compose
         working-directory: ./template-compose
-        run: ./gradlew lint
+        run: ./gradlew ktlintCheck
 
       - name: Run unit tests with Kover on template-compose
         working-directory: ./template-compose

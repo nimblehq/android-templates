@@ -104,12 +104,6 @@ android {
         }
     }
 
-    lint {
-        checkDependencies = true
-        xmlReport = true
-        xmlOutput = file("build/reports/lint/lint-result.xml")
-    }
-
     testOptions {
         unitTests {
             // Robolectric resource processing/loading https://github.com/robolectric/robolectric/pull/4736

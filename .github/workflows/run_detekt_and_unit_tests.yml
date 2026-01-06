@@ -1,4 +1,4 @@
-name: Run Detekt and unit tests
+name: Run Detekt, Ktlint and unit tests
 
 on: push
 
@@ -8,7 +8,7 @@ concurrency:
 
 jobs:
   run_detekt_and_unit_tests:
-    name: Run Detekt and unit tests
+    name: Run Detekt, Ktlint and unit tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -38,6 +38,10 @@ jobs:
         working-directory: ./template-compose
         run: ./gradlew detekt
 
+      - name: Run Ktlint on template-compose
+        working-directory: ./template-compose
+        run: ./gradlew ktlintCheck
+
       - name: Archive Detekt reports on template-compose
         uses: actions/upload-artifact@v4
         with:
@@ -59,6 +63,10 @@ jobs:
       - name: Run Detekt on sample-compose
         working-directory: ./sample-compose
         run: ./gradlew detekt
+
+      - name: Run Ktlint on sample-compose
+        working-directory: ./sample-compose
+        run: ./gradlew ktlintCheck
 
       - name: Archive Detekt reports on sample-compose
         uses: actions/upload-artifact@v4

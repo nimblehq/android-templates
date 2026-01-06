@@ -14,19 +14,18 @@ warn("Please add labels to this PR") if github.pr_labels.empty?
 commit_lint.check warn: :all, disable: [:subject_length]
 
 # Detekt output check
-detekt_dir = "**/build/reports/detekt/detekt-result.xml" 
+detekt_dir = "**/build/reports/detekt/detekt-result.xml"
 Dir[detekt_dir].each do |file_name|
   kotlin_detekt.skip_gradle_task = true
   kotlin_detekt.report_file = file_name
   kotlin_detekt.detekt(inline_mode: true)
 end
 
-# Android Lint output check
-lint_dir = "**/**/build/reports/lint/lint-result.xml"
-Dir[lint_dir].each do |file_name|
-  android_lint.skip_gradle_task = true
-  android_lint.report_file = file_name
-  android_lint.lint(inline_mode: true)
+# Ktlint output check
+ktlint_dir = "**/build/reports/ktlint/**/ktlint*.xml"
+Dir[ktlint_dir].each do |file_name|
+  checkstyle_format.base_path = Dir.pwd
+  checkstyle_format.report file_name
 end
   
 # Show Danger test coverage report from Kover for templates

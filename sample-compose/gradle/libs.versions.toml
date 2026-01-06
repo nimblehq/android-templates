@@ -23,6 +23,7 @@ kotlin = "2.1.10"
 kotlinxCoroutines = "1.7.3"
 kover = "0.7.3"
 ksp = "2.1.0-1.0.29"
+ktlint = "12.1.2"
 lifecycle = "2.8.7"
 mockk = "1.13.8"
 moshi = "1.15.1"
@@ -145,3 +146,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin"  }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }

@@ -9,21 +9,29 @@ A sample project generated from our template using Compose layouts
 
 ## Linter and static code analysis
 
-- Lint:
-
-```
-$ ./gradlew lint
-```
-
-Report is located at: `./app/build/reports/lint/`
-
-- Detekt
+- Detekt:
 
 ```
 $ ./gradlew detekt
 ```
 
 Report is located at: `./build/reports/detekt`
+
+- Ktlint:
+
+```
+$ ./gradlew ktlintCheck
+```
+
+Report is located at: `./build/reports/ktlint`
+
+To automatically fix formatting issues:
+
+```
+$ ./gradlew ktlintFormat
+```
+
+**Note:** `ktlintFormat` runs automatically before each build to ensure code is properly formatted.
 
 ## Testing
 
