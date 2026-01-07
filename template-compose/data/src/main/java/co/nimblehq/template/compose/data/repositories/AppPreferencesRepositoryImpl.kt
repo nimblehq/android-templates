@@ -4,33 +4,33 @@ import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import co.nimblehq.template.compose.domain.repositories.AppPreferencesRepository
-import kotlinx.coroutines.flow.*
 import java.io.IOException
 import javax.inject.Inject
+import kotlinx.coroutines.flow.*
 
 class AppPreferencesRepositoryImpl @Inject constructor(
-    private val appPreferencesDataStore: DataStore<Preferences>
+    private val appPreferencesDataStore: DataStore<Preferences>,
 ) : AppPreferencesRepository {
-
     private object PreferencesKeys {
         val APP_PREFERENCE = booleanPreferencesKey("APP_PREFERENCE")
     }
 
-    override fun getAppPreference(): Flow<Boolean> = appPreferencesDataStore.data
-        .catch { exception ->
-            if (exception is IOException) {
-                Log.i(
-                    AppPreferencesRepositoryImpl::class.simpleName,
-                    "Error reading preferences.",
-                    exception
-                )
-                emit(emptyPreferences())
-            } else {
-                throw exception
+    override fun getAppPreference(): Flow<Boolean> =
+        appPreferencesDataStore.data
+            .catch { exception ->
+                if (exception is IOException) {
+                    Log.i(
+                        AppPreferencesRepositoryImpl::class.simpleName,
+                        "Error reading preferences.",
+                        exception,
+                    )
+                    emit(emptyPreferences())
+                } else {
+                    throw exception
+                }
+            }.map { preferences ->
+                preferences[PreferencesKeys.APP_PREFERENCE] ?: true
             }
-        }.map { preferences ->
-            preferences[PreferencesKeys.APP_PREFERENCE] ?: true
-        }
 
     override suspend fun updateAppPreference(appPreferenceValue: Boolean) {
         appPreferencesDataStore.edit { preferences ->

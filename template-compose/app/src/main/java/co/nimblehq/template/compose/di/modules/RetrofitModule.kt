@@ -15,7 +15,6 @@ import retrofit2.Retrofit
 @Module
 @InstallIn(SingletonComponent::class)
 class RetrofitModule {
-
     @Provides
     fun provideBaseApiUrl() = BuildConfig.BASE_API_URL
 
@@ -28,9 +27,10 @@ class RetrofitModule {
         baseUrl: String,
         okHttpClient: OkHttpClient,
         converterFactory: Converter.Factory,
-    ): Retrofit = RetrofitProvider
-        .getRetrofitBuilder(baseUrl, okHttpClient, converterFactory)
-        .build()
+    ): Retrofit =
+        RetrofitProvider
+            .getRetrofitBuilder(baseUrl, okHttpClient, converterFactory)
+            .build()
 
     @Provides
     fun provideApiService(retrofit: Retrofit): ApiService =

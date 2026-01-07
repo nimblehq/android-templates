@@ -18,20 +18,19 @@ private const val APP_PREFERENCES = "app_preferences"
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class PreferencesModule {
-
     @Binds
     abstract fun bindAppPreferencesRepository(
-        appPreferencesRepositoryImpl: AppPreferencesRepositoryImpl
+        appPreferencesRepositoryImpl: AppPreferencesRepositoryImpl,
     ): AppPreferencesRepository
 
     companion object {
         @Singleton
         @Provides
         fun provideAppPreferencesDataStore(
-            @ApplicationContext appContext: Context
+            @ApplicationContext appContext: Context,
         ): DataStore<Preferences> {
             return PreferenceDataStoreFactory.create(
-                produceFile = { appContext.preferencesDataStoreFile(APP_PREFERENCES) }
+                produceFile = { appContext.preferencesDataStoreFile(APP_PREFERENCES) },
             )
         }
     }

@@ -7,15 +7,14 @@ import co.nimblehq.template.compose.ui.models.UiModel
 import co.nimblehq.template.compose.ui.models.toUiModel
 import co.nimblehq.template.compose.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
 import javax.inject.Inject
+import kotlinx.coroutines.flow.*
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     dispatchersProvider: DispatchersProvider,
     useCase: UseCase,
 ) : BaseViewModel() {
-
     private val _uiModels = MutableStateFlow<List<UiModel>>(emptyList())
     val uiModels = _uiModels.asStateFlow()
 

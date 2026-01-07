@@ -6,7 +6,6 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.util.Date
 
 object MoshiBuilderProvider {
-
     val moshiBuilder: Moshi.Builder
         get() = Moshi.Builder()
             // Parse the DateTime in this format: [yyyy-MM-ddThh:mm:ss.ssZ]

@@ -10,7 +10,6 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 class MoshiModule {
-
     @Provides
     fun provideMoshi(): Moshi = MoshiBuilderProvider.moshiBuilder.build()
 }

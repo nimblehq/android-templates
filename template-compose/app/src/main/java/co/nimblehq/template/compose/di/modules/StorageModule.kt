@@ -11,11 +11,10 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class StorageModule {
-
     companion object {
-
         @Provides
-        fun provideSecuredLocalStorage(@ApplicationContext context: Context) =
-            EncryptedSharedPreferences(context)
+        fun provideSecuredLocalStorage(
+            @ApplicationContext context: Context,
+        ) = EncryptedSharedPreferences(context)
     }
 }

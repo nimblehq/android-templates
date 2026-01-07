@@ -8,10 +8,10 @@ import co.nimblehq.template.compose.domain.repositories.Repository
 import kotlinx.coroutines.flow.Flow
 
 class RepositoryImpl constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
 ) : Repository {
-
-    override fun getModels(): Flow<List<Model>> = flowTransform {
-        apiService.getResponses().toModels()
-    }
+    override fun getModels(): Flow<List<Model>> =
+        flowTransform {
+            apiService.getResponses().toModels()
+        }
 }

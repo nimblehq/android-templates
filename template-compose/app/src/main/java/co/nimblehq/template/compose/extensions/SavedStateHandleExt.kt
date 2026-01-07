@@ -7,5 +7,7 @@ fun <T> SavedStateHandle.getThenRemove(key: String): T? {
         val value = get<T>(key)
         remove<T>(key)
         value
-    } else null
+    } else {
+        null
+    }
 }

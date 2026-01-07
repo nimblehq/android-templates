@@ -12,5 +12,4 @@ fun Throwable.userReadableMessage(context: Context): String {
     } ?: context.getString(R.string.error_generic)
 }
 
-fun Throwable.showToast(context: Context) =
-    context.showToast(userReadableMessage(context))
+fun Throwable.showToast(context: Context) = context.showToast(userReadableMessage(context))

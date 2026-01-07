@@ -11,13 +11,11 @@ import co.nimblehq.template.compose.ui.base.BaseDestination
 import co.nimblehq.template.compose.ui.screens.main.mainNavGraph
 
 @Composable
-fun AppNavGraph(
-    navController: NavHostController,
-) {
+fun AppNavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
         route = AppDestination.RootNavGraph.route,
-        startDestination = AppDestination.MainNavGraph.destination
+        startDestination = AppDestination.MainNavGraph.destination,
     ) {
         mainNavGraph(navController = navController)
     }
@@ -35,7 +33,7 @@ fun NavGraphBuilder.composable(
                 uriPattern = it
             }
         },
-        content = content
+        content = content,
     )
 }
 

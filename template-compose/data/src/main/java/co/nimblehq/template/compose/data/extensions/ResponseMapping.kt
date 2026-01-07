@@ -6,17 +6,19 @@ import co.nimblehq.template.compose.data.remote.providers.MoshiBuilderProvider
 import co.nimblehq.template.compose.domain.exceptions.ApiException
 import co.nimblehq.template.compose.domain.exceptions.NoConnectivityException
 import com.squareup.moshi.JsonDataException
-import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.flow.flow
-import retrofit2.HttpException
-import retrofit2.Response
 import java.io.IOException
 import java.io.InterruptedIOException
 import java.net.UnknownHostException
 import kotlin.experimental.ExperimentalTypeInference
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.flow
+import retrofit2.HttpException
+import retrofit2.Response
 
 @OptIn(ExperimentalTypeInference::class)
-fun <T> flowTransform(@BuilderInference block: suspend FlowCollector<T>.() -> T) = flow {
+fun <T> flowTransform(
+    @BuilderInference block: suspend FlowCollector<T>.() -> T,
+) = flow {
     runCatching { block() }
         .onSuccess { result -> emit(result) }
         .onFailure { exception -> throw exception.mapError() }
@@ -25,13 +27,14 @@ fun <T> flowTransform(@BuilderInference block: suspend FlowCollector<T>.() -> T)
 private fun Throwable.mapError(): Throwable {
     return when (this) {
         is UnknownHostException,
-        is InterruptedIOException -> NoConnectivityException
+        is InterruptedIOException,
+        -> NoConnectivityException
         is HttpException -> {
             val errorResponse = parseErrorResponse(response())
             ApiException(
                 errorResponse?.toModel(),
                 code(),
-                message()
+                message(),
             )
         }
         else -> this

@@ -2,14 +2,13 @@ package co.nimblehq.template.compose.ui.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 @Suppress("PropertyName")
 abstract class BaseViewModel : ViewModel() {
-
     private var loadingCount: Int = 0
 
     private val _isLoading = MutableStateFlow(false)
@@ -41,12 +40,15 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 
-    protected fun launch(context: CoroutineContext = EmptyCoroutineContext, job: suspend () -> Unit) =
-        viewModelScope.launch(context) {
-            job.invoke()
-        }
+    protected fun launch(
+        context: CoroutineContext = EmptyCoroutineContext,
+        job: suspend () -> Unit,
+    ) = viewModelScope.launch(context) {
+        job.invoke()
+    }
 
-    protected fun <T> Flow<T>.injectLoading(): Flow<T> = this
-        .onStart { showLoading() }
-        .onCompletion { hideLoading() }
+    protected fun <T> Flow<T>.injectLoading(): Flow<T> =
+        this
+            .onStart { showLoading() }
+            .onCompletion { hideLoading() }
 }

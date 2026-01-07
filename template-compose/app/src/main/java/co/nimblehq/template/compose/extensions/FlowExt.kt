@@ -3,9 +3,9 @@ package co.nimblehq.template.compose.extensions
 import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import kotlinx.coroutines.flow.*
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
+import kotlinx.coroutines.flow.*
 
 @SuppressLint("ComposableNaming")
 @Composable

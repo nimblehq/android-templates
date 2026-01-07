@@ -13,7 +13,6 @@ import androidx.compose.runtime.staticCompositionLocalOf
  */
 abstract class AppColors(
     var colorScheme: ColorScheme = LightColorPalette,
-
     // Custom colors here
 ) {
     open val themeColors: ColorScheme
@@ -27,4 +26,3 @@ internal val DarkColorPalette: ColorScheme = darkColorScheme()
 internal object AppColorsImpl : AppColors()
 
 internal val LocalAppColors = staticCompositionLocalOf<AppColors> { AppColorsImpl }
-

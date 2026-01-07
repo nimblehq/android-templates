@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 
 data class ErrorResponse(
     @Json(name = "message")
-    val message: String
+    val message: String,
 )
 
 internal fun ErrorResponse.toModel() = Error(message = message)

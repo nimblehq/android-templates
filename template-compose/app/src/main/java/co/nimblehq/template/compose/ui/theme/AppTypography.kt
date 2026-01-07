@@ -12,4 +12,3 @@ interface AppTypography {
 object AppTypographyImpl : AppTypography
 
 internal val LocalAppTypography = staticCompositionLocalOf<AppTypography> { AppTypographyImpl }
-

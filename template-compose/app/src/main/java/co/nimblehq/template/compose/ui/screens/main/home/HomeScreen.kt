@@ -38,25 +38,25 @@ fun HomeScreen(
 
     HomeScreenContent(
         title = stringResource(id = R.string.app_name),
-        uiModels = uiModels
+        uiModels = uiModels,
     )
 }
 
 @Composable
 private fun HomeScreenContent(
     title: String,
-    uiModels: List<UiModel>
+    uiModels: List<UiModel>,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Text(
             text = title,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(all = dimensions.spacingMedium)
+                .padding(all = dimensions.spacingMedium),
         )
     }
     Timber.d("Result : $uiModels")
@@ -68,7 +68,7 @@ private fun HomeScreenPreview() {
     ComposeTheme {
         HomeScreenContent(
             title = stringResource(id = R.string.app_name),
-            uiModels = listOf(UiModel(1), UiModel(2), UiModel(3))
+            uiModels = listOf(UiModel(1), UiModel(2), UiModel(3)),
         )
     }
 }

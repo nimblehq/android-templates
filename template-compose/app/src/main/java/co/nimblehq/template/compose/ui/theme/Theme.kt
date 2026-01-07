@@ -12,7 +12,7 @@ fun ComposeTheme(
     styles: AppStyles = LocalAppStyles.current,
     typography: AppTypography = LocalAppTypography.current,
     darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val colorScheme = if (darkTheme) {
         DarkColorPalette
@@ -34,7 +34,7 @@ fun ComposeTheme(
             colorScheme = colors.themeColors,
             typography = typography.themeTypography,
             shapes = shapes.themeShapes,
-            content = content
+            content = content,
         )
     }
 }
@@ -44,7 +44,6 @@ fun ComposeTheme(
  * or to extend [MaterialTheme]'s types e.g. return our own [AppColors] extension.
  */
 object AppTheme {
-
     val colors: AppColors
         @Composable
         @ReadOnlyComposable

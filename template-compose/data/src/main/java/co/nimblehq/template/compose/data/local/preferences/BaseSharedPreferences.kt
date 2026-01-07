@@ -3,7 +3,6 @@ package co.nimblehq.template.compose.data.local.preferences
 import android.content.SharedPreferences
 
 abstract class BaseSharedPreferences {
-
     protected lateinit var sharedPreferences: SharedPreferences
 
     protected inline fun <reified T> get(key: String): T? =
@@ -20,7 +19,10 @@ abstract class BaseSharedPreferences {
             null
         }
 
-    protected fun <T> set(key: String, value: T) {
+    protected fun <T> set(
+        key: String,
+        value: T,
+    ) {
         sharedPreferences.execute {
             when (value) {
                 is Boolean -> it.putBoolean(key, value)

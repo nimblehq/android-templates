@@ -7,5 +7,5 @@ object NoConnectivityException : RuntimeException()
 data class ApiException(
     val error: Error?,
     val httpCode: Int,
-    val httpMessage: String?
+    val httpMessage: String?,
 ) : RuntimeException()
