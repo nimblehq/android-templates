@@ -12,7 +12,7 @@ plugins {
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.detekt)
     alias(libs.plugins.kover)
-    alias(libs.plugins.ktlint)
+    alias(libs.plugins.ktlint) apply false
 }
 
 tasks.register("clean", Delete::class) {
@@ -40,23 +40,27 @@ detekt {
     ignoredFlavors = listOf(Flavors.PRODUCTION)
 }
 
-ktlint {
-    android.set(true)
-    outputToConsole.set(true)
-    outputColorName.set("RED")
-    ignoreFailures.set(false)
+subprojects {
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
-    reporters {
-        reporter(ReporterType.PLAIN)
-        reporter(ReporterType.SARIF)
-        reporter(ReporterType.CHECKSTYLE)
-        reporter(ReporterType.HTML)
-    }
+    configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+        android.set(true)
+        outputToConsole.set(true)
+        outputColorName.set("RED")
+        ignoreFailures.set(false)
 
-    filter {
-        exclude("**/build/**")
-        exclude("**/generated/**")
-        exclude("**/*.kts")
+        reporters {
+            reporter(ReporterType.PLAIN)
+            reporter(ReporterType.SARIF)
+            reporter(ReporterType.CHECKSTYLE)
+            reporter(ReporterType.HTML)
+        }
+
+        filter {
+            exclude("**/build/**")
+            exclude("**/generated/**")
+            exclude("**/*.kts")
+        }
     }
 }
 
@@ -75,6 +79,6 @@ tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
 // Run ktlintFormat before building
 subprojects {
     afterEvaluate {
-        tasks.findByName("preBuild")?.dependsOn(rootProject.tasks.named("ktlintFormat"))
+        tasks.findByName("preBuild")?.dependsOn(tasks.named("ktlintFormat"))
     }
 }
