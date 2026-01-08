@@ -49,6 +49,12 @@ Examples:
 
 4. Update `android_version_code` and `android_version_name` in `template/build.gradle`
 
+## Dependency Management
+
+This repository uses [Dependabot](/.github/DEPENDABOT.md) to automatically keep dependencies up-to-date. Dependabot creates weekly pull requests for Gradle dependencies and GitHub Actions updates.
+
+See the [Dependabot Configuration Guide](/.github/DEPENDABOT.md) for details on how it works and how to manage dependency updates.
+
 ## Wiki
 
 Learn more about our Android templates on the [Wiki](https://github.com/nimblehq/android-templates/wiki).

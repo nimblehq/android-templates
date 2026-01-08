@@ -1,0 +1,155 @@
+# Dependabot configuration for Android Templates
+# Automates dependency updates for Gradle projects and GitHub Actions
+# Documentation: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+
+updates:
+  # ============================================================================
+  # Template Compose - Gradle Dependencies
+  # ============================================================================
+  - package-ecosystem: "gradle"
+    directory: "/template-compose"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "gradle"
+      - "template-compose"
+    reviewers:
+      - "nimblehq/android-team"
+    commit-message:
+      prefix: "[Chore]"
+      prefix-development: "[Chore]"
+      include: "scope"
+    # Group dependencies to reduce PR noise
+    groups:
+      androidx:
+        patterns:
+          - "androidx.*"
+        exclude-patterns:
+          - "androidx.compose*"
+      compose:
+        patterns:
+          - "androidx.compose*"
+          - "compose-*"
+          - "accompanist*"
+      kotlin:
+        patterns:
+          - "org.jetbrains.kotlin*"
+          - "kotlinx-*"
+          - "ksp"
+      networking:
+        patterns:
+          - "*retrofit*"
+          - "*okhttp*"
+          - "*moshi*"
+      dependency-injection:
+        patterns:
+          - "*hilt*"
+          - "*dagger*"
+          - "javax.inject"
+      testing:
+        patterns:
+          - "*test*"
+          - "*junit*"
+          - "*mockk*"
+          - "*kotest*"
+          - "*turbine*"
+          - "*robolectric*"
+      build-tools:
+        patterns:
+          - "*gradle*"
+          - "*android.application*"
+          - "*android.library*"
+          - "*detekt*"
+          - "*kover*"
+
+  # ============================================================================
+  # Sample Compose - Gradle Dependencies
+  # ============================================================================
+  - package-ecosystem: "gradle"
+    directory: "/sample-compose"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "gradle"
+      - "sample-compose"
+    reviewers:
+      - "nimblehq/android-team"
+    commit-message:
+      prefix: "[Chore]"
+      prefix-development: "[Chore]"
+      include: "scope"
+    # Same grouping strategy as template-compose
+    groups:
+      androidx:
+        patterns:
+          - "androidx.*"
+        exclude-patterns:
+          - "androidx.compose*"
+      compose:
+        patterns:
+          - "androidx.compose*"
+          - "compose-*"
+          - "accompanist*"
+      kotlin:
+        patterns:
+          - "org.jetbrains.kotlin*"
+          - "kotlinx-*"
+          - "ksp"
+      networking:
+        patterns:
+          - "*retrofit*"
+          - "*okhttp*"
+          - "*moshi*"
+      dependency-injection:
+        patterns:
+          - "*hilt*"
+          - "*dagger*"
+          - "javax.inject"
+      testing:
+        patterns:
+          - "*test*"
+          - "*junit*"
+          - "*mockk*"
+          - "*kotest*"
+          - "*turbine*"
+          - "*robolectric*"
+      build-tools:
+        patterns:
+          - "*gradle*"
+          - "*android.application*"
+          - "*android.library*"
+          - "*detekt*"
+          - "*kover*"
+
+  # ============================================================================
+  # GitHub Actions
+  # ============================================================================
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "github-actions"
+      - "ci-cd"
+    reviewers:
+      - "nimblehq/android-team"
+    commit-message:
+      prefix: "[Chore]"
+      include: "scope"
