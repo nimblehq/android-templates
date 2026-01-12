@@ -6,6 +6,7 @@ definitions:
     environment:
       groups:
         - firebase_credentials
+      java: 17
     cache:
       cache_paths:
         - $HOME/.gradle/caches
@@ -52,13 +53,17 @@ workflows:
       events:
         - push
       branch_patterns:
-        - pattern: develop
+        - pattern: 'develop'
     scripts:
       - *detekt
       - *unit_test
       - name: Build APK for staging
         script: |
           ./gradlew assembleStagingDebug -PversionCode=$BUILD_NUMBER
+      - name: Generate release notes with the latest git commit
+        script: |
+          RELEASE_NOTE_CONTENT="$((git log -1 --merges | grep "\[") | grep . && echo "" || echo $(git log -1 --merges --format=%B))"
+          echo "$RELEASE_NOTE_CONTENT" | tee release_notes.txt
     artifacts:
       - *artifacts_test_report
       - *artifacts_staging_apk
@@ -78,13 +83,24 @@ workflows:
       events:
         - push
       branch_patterns:
-        - pattern: main
+        - pattern: 'main'
+    environment:
+      vars:
+        # Increase the clone depth to 50 to cover all commits from the latest tag
+        CM_CLONE_DEPTH: 50
+      groups:
+        - firebase_credentials
+      java: 17
     scripts:
       - *detekt
       - *unit_test
       - name: Build APK for production
         script: |
           ./gradlew assembleProductionDebug -PversionCode=$BUILD_NUMBER
+      - name: Generate release notes with git commits from the latest tag
+        script: |
+          RELEASE_NOTE_CONTENT="$(git log --merges --pretty=%B $(git describe --abbrev=0 --tags)..HEAD | grep "\[")"
+          echo "$RELEASE_NOTE_CONTENT" | tee release_notes.txt
     artifacts:
       - *artifacts_test_report
       - *artifacts_production_apk

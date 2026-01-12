@@ -8,8 +8,3 @@ object BuildType {
     const val DEBUG = "debug"
     const val RELEASE = "release"
 }
-
-object Module {
-    const val DATA = ":data"
-    const val DOMAIN = ":domain"
-}

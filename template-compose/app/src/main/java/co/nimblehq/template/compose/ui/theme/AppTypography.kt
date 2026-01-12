@@ -1,10 +1,15 @@
 package co.nimblehq.template.compose.ui.theme
 
-import androidx.compose.material.Typography
+import androidx.compose.material3.Typography
 import androidx.compose.runtime.staticCompositionLocalOf
 
-private val Typography = Typography(
+interface AppTypography {
     // Custom typography here
-)
+    val themeTypography: Typography
+        get() = Typography()
+}
 
-internal val LocalAppTypography = staticCompositionLocalOf { Typography }
+object AppTypographyImpl : AppTypography
+
+internal val LocalAppTypography = staticCompositionLocalOf<AppTypography> { AppTypographyImpl }
+

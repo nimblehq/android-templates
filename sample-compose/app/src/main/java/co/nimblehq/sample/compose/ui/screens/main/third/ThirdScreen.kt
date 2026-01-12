@@ -3,8 +3,8 @@ package co.nimblehq.sample.compose.ui.screens.main.third
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.ui.base.BaseDestination
+import co.nimblehq.sample.compose.ui.base.BaseScreen
 import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.models.UiModel
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
@@ -23,6 +24,9 @@ fun ThirdScreen(
     model: UiModel?,
     viewModel: ThirdViewModel = hiltViewModel(),
     navigator: (destination: BaseDestination) -> Unit,
+    model: UiModel?,
+) = BaseScreen(
+    isDarkStatusBarIcons = true,
 ) {
     ThirdScreenContent(data = model)
 }

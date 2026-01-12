@@ -1,13 +1,11 @@
 plugins {
-    id("com.android.application")
-
-    id("kotlin-android")
-    id("kotlin-kapt")
-    id("kotlin-parcelize")
-
-    id("dagger.hilt.android.plugin")
-
-    id("org.jetbrains.kotlinx.kover")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kover)
 }
 
 val keystoreProperties = rootDir.loadGradleProperties("signing.properties")
@@ -30,13 +28,14 @@ android {
         }
     }
 
-    compileSdk = Versions.ANDROID_COMPILE_SDK_VERSION
+    namespace = "co.nimblehq.sample.compose"
+    compileSdk = libs.versions.androidCompileSdk.get().toInt()
     defaultConfig {
         applicationId = "co.nimblehq.sample.compose"
-        minSdk = Versions.ANDROID_MIN_SDK_VERSION
-        targetSdk = Versions.ANDROID_TARGET_SDK_VERSION
-        versionCode = Versions.ANDROID_VERSION_CODE
-        versionName = Versions.ANDROID_VERSION_NAME
+        minSdk = libs.versions.androidMinSdk.get().toInt()
+        targetSdk = libs.versions.androidTargetSdk.get().toInt()
+        versionCode = libs.versions.androidVersionCode.get().toInt()
+        versionName = libs.versions.androidVersionName.get()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -72,20 +71,17 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.COMPOSE_COMPILER_VERSION
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     packagingOptions {
@@ -111,73 +107,60 @@ android {
     }
 }
 
-kapt {
-    correctErrorTypes = true
-}
-
 dependencies {
-    implementation(project(Module.DATA))
-    implementation(project(Module.DOMAIN))
+    implementation(projects.data)
+    implementation(projects.domain)
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    implementation("androidx.core:core-ktx:${Versions.ANDROIDX_CORE_KTX_VERSION}")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.ANDROIDX_LIFECYCLE_VERSION}")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:${Versions.ANDROIDX_LIFECYCLE_VERSION}")
+    implementation(libs.bundles.androidx)
 
-    implementation(platform("androidx.compose:compose-bom:${Versions.COMPOSE_BOM_VERSION}"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-tooling")
-    implementation("androidx.compose.foundation:foundation")
-    implementation("androidx.compose.material:material")
+    implementation(platform(libs.compose.bom))
+    implementation(libs.bundles.compose)
+    debugImplementation(libs.compose.ui.tooling)
 
-    implementation("androidx.navigation:navigation-compose:${Versions.COMPOSE_NAVIGATION_VERSION}")
-    implementation("com.google.accompanist:accompanist-permissions:${Versions.ACCOMPANIST_PERMISSIONS_VERSION}")
+    implementation(libs.accompanist.permissions)
+    implementation(libs.accompanist.systemUiController)
 
-    implementation("androidx.datastore:datastore-preferences:${Versions.ANDROIDX_DATASTORE_PREFERENCES_VERSION}")
+    implementation(libs.androidx.datastore.preferences)
 
-    implementation("com.google.dagger:hilt-android:${Versions.HILT_VERSION}")
-    implementation("androidx.hilt:hilt-navigation-compose:${Versions.HILT_NAVIGATION_COMPOSE_VERSION}")
+    implementation(libs.bundles.hilt)
+    ksp(libs.hilt.compiler)
 
-    implementation("com.jakewharton.timber:timber:${Versions.TIMBER_LOG_VERSION}")
+    implementation(libs.timber)
 
-    implementation("com.github.nimblehq:android-common-ktx:${Versions.ANDROID_COMMON_KTX_VERSION}")
+    implementation(libs.nimble.common)
 
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:${Versions.KOTLIN_VERSION}")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLINX_COROUTINES_VERSION}")
-    implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:${Versions.KOTLIN_COLLECTIONS_IMMUTABLE_VERSION}")
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.collections.immutable)
 
-    kapt("com.google.dagger:hilt-compiler:${Versions.HILT_VERSION}")
-
-    debugImplementation("com.github.chuckerteam.chucker:library:${Versions.CHUCKER_VERSION}")
-    releaseImplementation("com.github.chuckerteam.chucker:library-no-op:${Versions.CHUCKER_VERSION}")
+    debugImplementation(libs.chucker)
+    releaseImplementation(libs.chucker.noOp)
 
     // Unit test
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.KOTLINX_COROUTINES_VERSION}")
-    testImplementation("io.kotest:kotest-assertions-core:${Versions.TEST_KOTEST_VERSION}")
-    testImplementation("junit:junit:${Versions.TEST_JUNIT_VERSION}")
-    testImplementation("io.mockk:mockk:${Versions.TEST_MOCKK_VERSION}")
-    testImplementation("app.cash.turbine:turbine:${Versions.TEST_TURBINE_VERSION}")
+    testImplementation(libs.bundles.unitTest)
+    testImplementation(libs.test.turbine)
 
     // UI test with Robolectric
-    testImplementation(platform("androidx.compose:compose-bom:${Versions.COMPOSE_BOM_VERSION}"))
-    testImplementation("androidx.compose.ui:ui-test-junit4")
-    testImplementation("androidx.test:rules:${Versions.TEST_RULES_VERSION}")
-    testImplementation("org.robolectric:robolectric:${Versions.TEST_ROBOLECTRIC_VERSION}")
+    testImplementation(platform(libs.compose.bom))
+    testImplementation(libs.test.compose.ui)
+    testImplementation(libs.test.rules)
+    testImplementation(libs.test.robolectric)
 
     // UI test
-    androidTestImplementation(platform("androidx.compose:compose-bom:${Versions.COMPOSE_BOM_VERSION}"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    androidTestImplementation("androidx.test:rules:${Versions.TEST_RULES_VERSION}")
-    androidTestImplementation("io.mockk:mockk-android:${Versions.TEST_MOCKK_VERSION}")
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.test.compose.ui)
+    androidTestImplementation(libs.test.rules)
+    androidTestImplementation(libs.test.mockk)
 }
 
 /*
  * Kover configs
  */
 dependencies {
-    kover(project(":data"))
-    kover(project(":domain"))
+    kover(projects.data)
+    kover(projects.domain)
 }
 
 koverReport {

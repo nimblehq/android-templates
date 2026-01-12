@@ -2,8 +2,8 @@ package co.nimblehq.sample.compose.ui.screens.main.home
 
 import android.Manifest.permission.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,6 +16,7 @@ import co.nimblehq.sample.compose.extensions.collectAsEffect
 import co.nimblehq.sample.compose.extensions.showToast
 import co.nimblehq.sample.compose.lib.IsLoading
 import co.nimblehq.sample.compose.ui.base.BaseDestination
+import co.nimblehq.sample.compose.ui.base.BaseScreen
 import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.models.UiModel
 import co.nimblehq.sample.compose.ui.showToast
@@ -30,6 +31,9 @@ fun HomeScreen(
     isResultOk: Boolean = false,
     viewModel: HomeViewModel = hiltViewModel(),
     navigator: (destination: BaseDestination) -> Unit,
+    isResultOk: Boolean = false,
+) = BaseScreen(
+    isDarkStatusBarIcons = true,
 ) {
     val context = LocalContext.current
     viewModel.error.collectAsEffect { e -> e.showToast(context) }
