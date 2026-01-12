@@ -22,9 +22,8 @@ import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 @Composable
 fun ThirdScreen(
     model: UiModel?,
-    viewModel: ThirdViewModel = hiltViewModel(),
     navigator: (destination: BaseDestination) -> Unit,
-    model: UiModel?,
+    viewModel: ThirdViewModel = hiltViewModel(),
 ) = BaseScreen(
     isDarkStatusBarIcons = true,
 ) {
@@ -32,7 +31,7 @@ fun ThirdScreen(
 }
 
 @Composable
-fun ThirdScreenContent(
+private fun ThirdScreenContent(
     data: UiModel?,
     modifier: Modifier = Modifier,
 ) {

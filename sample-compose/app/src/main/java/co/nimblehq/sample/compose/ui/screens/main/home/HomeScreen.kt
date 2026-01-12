@@ -1,10 +1,14 @@
 package co.nimblehq.sample.compose.ui.screens.main.home
 
-import android.Manifest.permission.*
-import androidx.compose.foundation.layout.*
+import android.Manifest.permission.CAMERA
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -21,17 +25,18 @@ import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.models.UiModel
 import co.nimblehq.sample.compose.ui.showToast
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
-import com.google.accompanist.permissions.*
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.shouldShowRationale
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.coroutines.flow.*
 
 @Composable
 fun HomeScreen(
     isResultOk: Boolean = false,
-    viewModel: HomeViewModel = hiltViewModel(),
     navigator: (destination: BaseDestination) -> Unit,
-    isResultOk: Boolean = false,
+    viewModel: HomeViewModel = hiltViewModel(),
 ) = BaseScreen(
     isDarkStatusBarIcons = true,
 ) {

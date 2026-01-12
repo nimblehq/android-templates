@@ -117,6 +117,7 @@ class HomeScreenTest : BaseScreenTest() {
         composeRule.activity.setContent {
             ComposeTheme {
                 HomeScreen(
+                    isResultOk = false,
                     viewModel = viewModel,
                     navigator = { destination -> expectedDestination = destination },
                 )
