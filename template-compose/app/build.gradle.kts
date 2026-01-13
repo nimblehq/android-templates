@@ -137,6 +137,8 @@ dependencies {
     implementation(libs.bundles.hilt)
     ksp(libs.hilt.compiler)
 
+    implementation(libs.kotlinx.collections.immutable)
+
     implementation(libs.timber)
     debugImplementation(libs.chucker)
     releaseImplementation(libs.chucker.noOp)

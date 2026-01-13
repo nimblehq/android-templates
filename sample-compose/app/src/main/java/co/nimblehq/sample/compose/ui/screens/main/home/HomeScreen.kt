@@ -1,10 +1,14 @@
 package co.nimblehq.sample.compose.ui.screens.main.home
 
-import android.Manifest.permission.*
-import androidx.compose.foundation.layout.*
+import android.Manifest.permission.CAMERA
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -21,13 +25,18 @@ import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.models.UiModel
 import co.nimblehq.sample.compose.ui.showToast
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
-import com.google.accompanist.permissions.*
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.shouldShowRationale
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel(),
-    navigator: (destination: BaseDestination) -> Unit,
     isResultOk: Boolean = false,
+    navigator: (destination: BaseDestination) -> Unit,
+    viewModel: HomeViewModel = hiltViewModel(),
 ) = BaseScreen(
     isDarkStatusBarIcons = true,
 ) {
@@ -36,7 +45,7 @@ fun HomeScreen(
     viewModel.navigator.collectAsEffect { destination -> navigator(destination) }
 
     val isLoading: IsLoading by viewModel.isLoading.collectAsStateWithLifecycle()
-    val uiModels: List<UiModel> by viewModel.uiModels.collectAsStateWithLifecycle()
+    val uiModels: ImmutableList<UiModel> by viewModel.uiModels.collectAsStateWithLifecycle()
     val isFirstTimeLaunch: Boolean by viewModel.isFirstTimeLaunch.collectAsStateWithLifecycle()
 
     LaunchedEffect(isFirstTimeLaunch) {
@@ -87,7 +96,7 @@ private fun CameraPermission() {
 
 @Composable
 private fun HomeScreenContent(
-    uiModels: List<UiModel>,
+    uiModels: ImmutableList<UiModel>,
     isLoading: IsLoading,
     onItemClick: (UiModel) -> Unit,
     onItemLongClick: (UiModel) -> Unit,
@@ -118,7 +127,7 @@ private fun HomeScreenContent(
 private fun HomeScreenPreview() {
     ComposeTheme {
         HomeScreenContent(
-            uiModels = listOf(UiModel("1", "name1"), UiModel("2", "name2"), UiModel("3", "name3")),
+            uiModels = persistentListOf(UiModel("1", "name1"), UiModel("2", "name2"), UiModel("3", "name3")),
             isLoading = false,
             onItemClick = {},
             onItemLongClick = {}

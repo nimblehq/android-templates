@@ -23,9 +23,9 @@ import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 
 @Composable
 fun SecondScreen(
-    viewModel: SecondViewModel = hiltViewModel(),
-    navigator: (destination: BaseDestination) -> Unit,
     id: String,
+    navigator: (destination: BaseDestination) -> Unit,
+    viewModel: SecondViewModel = hiltViewModel(),
 ) = BaseScreen(
     isDarkStatusBarIcons = false,
 ) {
@@ -41,10 +41,14 @@ fun SecondScreen(
 private fun SecondScreenContent(
     id: String,
     onUpdateClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    Scaffold(topBar = {
-        AppBar(R.string.second_title_bar)
-    }) { paddingValues ->
+    Scaffold(
+        topBar = {
+            AppBar(R.string.second_title_bar)
+        },
+        modifier = modifier,
+    ) { paddingValues ->
         Box(
             modifier = Modifier
                 .fillMaxSize()

@@ -133,6 +133,7 @@ dependencies {
 
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.collections.immutable)
 
     debugImplementation(libs.chucker)
     releaseImplementation(libs.chucker.noOp)

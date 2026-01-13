@@ -12,6 +12,10 @@ plugins {
     alias(libs.plugins.kover)
 }
 
+dependencies {
+    detektPlugins(libs.detekt.compose.rules)
+}
+
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
