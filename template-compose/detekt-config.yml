@@ -73,7 +73,7 @@ complexity:
     active: true
     functionThreshold: 5
     ignoreDefaultParameters: true
-    ignoreAnnotated: [ 'Composable' ]
+    ignoreAnnotated: [ 'Composable', 'HiltViewModel' ]
   MethodOverloading:
     active: false
     threshold: 5
