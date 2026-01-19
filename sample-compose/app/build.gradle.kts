@@ -156,9 +156,7 @@ dependencies {
     androidTestImplementation(libs.test.rules)
     androidTestImplementation(libs.test.mockk.android)
 
-    // Unable to resolve activity for Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER]
-    // cmp=co.nimblehq.sample.compose/androidx.activity.ComponentActivity } --
-    // see https://github.com/robolectric/robolectric/pull/4736 for details
+    // Needed for createComposeRule(), but not for createAndroidComposeRule<YourActivity>()
     // Ref: https://developer.android.com/develop/ui/compose/testing#setup
     debugImplementation(libs.test.compose.ui.manifest)
 }
