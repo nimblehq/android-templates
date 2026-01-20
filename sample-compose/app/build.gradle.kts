@@ -36,7 +36,7 @@ android {
         targetSdk = libs.versions.androidTargetSdk.get().toInt()
         versionCode = libs.versions.androidVersionCode.get().toInt()
         versionName = libs.versions.androidVersionName.get()
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "co.nimblehq.sample.compose.HiltTestRunner"
     }
 
     buildTypes {
@@ -155,6 +155,9 @@ dependencies {
     androidTestImplementation(libs.test.compose.ui.junit4)
     androidTestImplementation(libs.test.rules)
     androidTestImplementation(libs.test.mockk.android)
+    androidTestImplementation(libs.test.navigation)
+    androidTestImplementation(libs.test.hilt.android)
+    kspAndroidTest(libs.test.hilt.android.kotlin)
 
     // Needed for createComposeRule(), but not for createAndroidComposeRule<YourActivity>()
     // Ref: https://developer.android.com/develop/ui/compose/testing#setup

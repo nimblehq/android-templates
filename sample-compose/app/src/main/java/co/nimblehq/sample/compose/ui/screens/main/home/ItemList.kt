@@ -12,7 +12,7 @@ import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 @Composable
 fun ItemList(
     uiModels: List<UiModel>,
-    onItemClick: (UiModel) -> Unit,
+    onItemClick: (id: String) -> Unit,
     onItemLongClick: (UiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {

@@ -6,7 +6,6 @@ import co.nimblehq.sample.compose.domain.usecases.IsFirstTimeLaunchPreferencesUs
 import co.nimblehq.sample.compose.domain.usecases.UpdateFirstTimeLaunchPreferencesUseCase
 import co.nimblehq.sample.compose.test.CoroutineTestRule
 import co.nimblehq.sample.compose.test.MockUtil
-import co.nimblehq.sample.compose.ui.screens.main.MainDestination
 import co.nimblehq.sample.compose.ui.models.toUiModel
 import co.nimblehq.sample.compose.util.DispatchersProvider
 import io.kotest.matchers.shouldBe
@@ -52,6 +51,8 @@ class HomeViewModelTest {
 
     @Test
     fun `When loading models successfully, it shows the model list`() = runTest {
+        viewModel.getModels()
+
         viewModel.uiModels.test {
             expectMostRecentItem() shouldBe MockUtil.models.map { it.toUiModel() }
         }
@@ -62,6 +63,8 @@ class HomeViewModelTest {
         val error = Exception()
         every { mockGetModelsUseCase() } returns flow { throw error }
         initViewModel(dispatchers = CoroutineTestRule(StandardTestDispatcher()).testDispatcherProvider)
+
+        viewModel.getModels()
 
         viewModel.error.test {
             advanceUntilIdle()
@@ -74,19 +77,12 @@ class HomeViewModelTest {
     fun `When loading models, it shows and hides loading correctly`() = runTest {
         initViewModel(dispatchers = CoroutineTestRule(StandardTestDispatcher()).testDispatcherProvider)
 
+        viewModel.getModels()
+
         viewModel.isLoading.test {
             awaitItem() shouldBe false
             awaitItem() shouldBe true
             awaitItem() shouldBe false
-        }
-    }
-
-    @Test
-    fun `When calling navigate to Second, it navigates to Second screen`() = runTest {
-        viewModel.navigator.test {
-            viewModel.navigateToSecond(MockUtil.models[0].toUiModel())
-
-            expectMostRecentItem() shouldBe MainDestination.Second
         }
     }
 
@@ -104,6 +100,8 @@ class HomeViewModelTest {
 
             initViewModel(dispatchers = CoroutineTestRule(StandardTestDispatcher()).testDispatcherProvider)
 
+            viewModel.checkIfFirstTimeLaunch()
+
             viewModel.error.test {
                 advanceUntilIdle()
 
@@ -114,6 +112,8 @@ class HomeViewModelTest {
     @Test
     fun `When launching the app for the first time, it executes the use case and emits value accordingly`() =
         runTest {
+            viewModel.checkIfFirstTimeLaunch()
+
             viewModel.onFirstTimeLaunch()
 
             coVerify(exactly = 1) {

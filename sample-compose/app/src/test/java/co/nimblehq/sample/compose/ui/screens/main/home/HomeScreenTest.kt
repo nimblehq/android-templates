@@ -9,17 +9,15 @@ import androidx.test.rule.GrantPermissionRule
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.domain.usecases.*
 import co.nimblehq.sample.compose.test.MockUtil
-import co.nimblehq.sample.compose.ui.base.BaseDestination
+import co.nimblehq.sample.compose.ui.models.UiModel
 import co.nimblehq.sample.compose.ui.screens.BaseScreenTest
 import co.nimblehq.sample.compose.ui.screens.MainActivity
-import co.nimblehq.sample.compose.ui.screens.main.MainDestination
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import io.kotest.matchers.shouldBe
 import io.mockk.*
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import org.junit.*
-import org.junit.Assert.assertEquals
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowToast
@@ -43,15 +41,18 @@ class HomeScreenTest : BaseScreenTest() {
         mockk()
     private val mockUpdateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase =
         mockk()
+    private val mockOnNavigateToSecondScreen: (String) -> Unit = mockk()
+    private val mockOnNavigateToThirdScreen: (UiModel) -> Unit = mockk()
 
     private lateinit var viewModel: HomeViewModel
-    private var expectedDestination: BaseDestination? = null
 
     @Before
     fun setUp() {
         every { mockGetModelsUseCase() } returns flowOf(MockUtil.models)
         every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flowOf(false)
         coEvery { mockUpdateFirstTimeLaunchPreferencesUseCase(any()) } just Runs
+        every { mockOnNavigateToSecondScreen(any()) } just Runs
+        every { mockOnNavigateToThirdScreen(any()) } just Runs
     }
 
     @Test
@@ -105,7 +106,7 @@ class HomeScreenTest : BaseScreenTest() {
     fun `When clicking on a list item, it navigates to Second screen`() = initComposable {
         onNodeWithText("1").performClick()
 
-        assertEquals(expectedDestination, MainDestination.Second)
+        verify(exactly = 1) { mockOnNavigateToSecondScreen(any()) }
     }
 
     private fun initComposable(
@@ -117,7 +118,8 @@ class HomeScreenTest : BaseScreenTest() {
             ComposeTheme {
                 HomeScreen(
                     viewModel = viewModel,
-                    navigator = { destination -> expectedDestination = destination },
+                    onNavigateToSecondScreen = mockOnNavigateToSecondScreen,
+                    onNavigateToThirdScreen = mockOnNavigateToThirdScreen,
                 )
             }
         }
