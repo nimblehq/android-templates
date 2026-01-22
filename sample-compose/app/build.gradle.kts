@@ -84,10 +84,13 @@ android {
         buildConfig = true
     }
 
-    packagingOptions {
+    packaging {
         jniLibs {
             // Resolve "libmockkjvmtiagent.so" https://github.com/mockk/mockk/issues/297#issuecomment-901924678
             useLegacyPackaging = true
+        }
+        resources {
+            merges += listOf("/META-INF/LICENSE.md", "/META-INF/LICENSE-notice.md")
         }
     }
 
@@ -144,15 +147,19 @@ dependencies {
 
     // UI test with Robolectric
     testImplementation(platform(libs.compose.bom))
-    testImplementation(libs.test.compose.ui)
+    testImplementation(libs.test.compose.ui.junit4)
     testImplementation(libs.test.rules)
     testImplementation(libs.test.robolectric)
 
     // UI test
     androidTestImplementation(platform(libs.compose.bom))
-    androidTestImplementation(libs.test.compose.ui)
+    androidTestImplementation(libs.test.compose.ui.junit4)
     androidTestImplementation(libs.test.rules)
-    androidTestImplementation(libs.test.mockk)
+    androidTestImplementation(libs.test.mockk.android)
+
+    // Needed for createComposeRule(), but not for createAndroidComposeRule<YourActivity>()
+    // Ref: https://developer.android.com/develop/ui/compose/testing#setup
+    debugImplementation(libs.test.compose.ui.manifest)
 }
 
 /*

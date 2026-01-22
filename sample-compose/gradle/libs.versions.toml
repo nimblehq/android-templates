@@ -34,7 +34,7 @@ retrofit = "2.11.0"
 robolectric = "4.13"
 security = "1.0.0"
 testCore = "1.6.1"
-testRules = "1.6.1"
+testRules = "1.7.0-alpha01"
 timber = "5.0.1"
 turbine = "0.13.0"
 
@@ -93,11 +93,17 @@ test-core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "tes
 test-junit = { group = "junit", name = "junit", version.ref = "junit" }
 test-kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 test-kotest-assertions-core = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
+# For Unit Test
 test-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 test-turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
-test-compose-ui = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+test-compose-ui-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 test-robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 test-rules = { group = "androidx.test", name = "rules", version.ref = "testRules" }
+
+# For UI Test
+# Ref: https://github.com/mockk/mockk/issues/325#issuecomment-549027350
+test-mockk-android = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
+test-compose-ui-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 
 [bundles]
 androidx = [
@@ -135,7 +141,7 @@ unitTest = [
     "test-mockk",
 ]
 uiTest = [
-    "test-compose-ui",
+    "test-compose-ui-junit4",
     "test-robolectric",
 ]
 
