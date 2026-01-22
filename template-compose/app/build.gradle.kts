@@ -162,34 +162,50 @@ dependencies {
     kover(projects.domain)
 }
 
-koverReport {
-    defaults {
-        mergeWith("stagingDebug")
+kover {
+    currentProject {
+        createVariant("custom") {
+            addWithDependencies("stagingDebug")
+        }
+    }
+    reports {
+        // filters for all report types of all build variants
         filters {
-            val excludedFiles = listOf(
-                "*.BuildConfig.*",
-                "*.BuildConfig",
-                // Enum
-                "*.*\$Creator*",
-                // DI
-                "*.di.*",
-                // Hilt
-                "*.*_ComponentTreeDeps*",
-                "*.*_HiltComponents*",
-                "*.*_HiltModules*",
-                "*.*_MembersInjector*",
-                "*.*_Factory*",
-                "*.Hilt_*",
-                "dagger.hilt.internal.*",
-                "hilt_aggregated_deps.*",
-                // Jetpack Compose
-                "*.ComposableSingletons*",
-                "*.*\$*Preview\$*",
-                "*.ui.preview.*",
-            )
-
             excludes {
-                classes(excludedFiles)
+                androidGeneratedClasses()
+                annotatedBy(
+                    // Compose
+                    "androidx.compose.ui.tooling.preview.Preview",
+                    // DI
+                    "dagger.Module",
+                )
+                classes(
+                    // DataStore
+                    "*Kt\$Dsl*",
+                    "*OuterClass*",
+                    // DI
+                    "*.*_ComponentTreeDeps*",
+                    "*.*_HiltComponents*",
+                    "*.*_HiltModules*",
+                    "*.*_MembersInjector*",
+                    "*.*_Factory*",
+                    "*.Hilt_*",
+                    // Enum
+                    "*.*\$Creator*",
+                    // Compose
+                    "*ComposableSingletons*",
+                )
+                inheritedFrom(
+                    // Compose
+                    "androidx.compose.ui.tooling.preview.PreviewParameterProvider",
+                    // DI
+                    "dagger.internal.Factory",
+                )
+                packages(
+                    // DI
+                    "dagger.hilt.internal",
+                    "hilt_aggregated_deps",
+                )
             }
         }
     }
