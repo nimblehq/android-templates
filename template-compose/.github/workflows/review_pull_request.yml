@@ -17,12 +17,12 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 100
 
       - name: Cache Gradle
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches/modules-*
@@ -49,8 +49,6 @@ jobs:
 
       - name: Set up Ruby
         uses: ./.github/actions/setup-ruby
-        with:
-          bundler-cache: 'true'
 
       - name: Run Danger
         env:

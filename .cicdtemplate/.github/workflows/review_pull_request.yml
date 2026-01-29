@@ -45,8 +45,6 @@ jobs:
 
       - name: Set up Ruby
         uses: ./.github/actions/setup-ruby
-        with:
-          bundler-cache: 'true'
 
       - name: Run Danger
         env:

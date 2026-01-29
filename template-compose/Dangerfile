@@ -29,21 +29,32 @@ end
 
 # Android Lint output check
 lint_dir = "**/**/build/reports/lint/lint-result.xml"
-Dir[lint_dir].each do |file_name|
-  android_lint.skip_gradle_task = true
-  android_lint.report_file = file_name
-  android_lint.lint(inline_mode: true)
+lint_reports = Dir[lint_dir]
+
+if lint_reports.any?
+  lint_reports.each do |file_name|
+    android_lint.skip_gradle_task = true
+    android_lint.report_file = file_name
+    android_lint.lint(inline_mode: true)
+  end
+else
+  warn("Android Lint report not found. Please run `./gradlew lint` before creating a PR.")
 end
-  
+
 # Show Danger test coverage report from Kover for templates
 # Report coverage of modified files, warn if total project coverage is under 80%
 # or if any modified file's coverage is under 95%
 
 kover_file_template = "app/build/reports/kover/report.xml"
-markdown "## Kover report for $project:"
-shroud.reportKover moduleName: "Template - Compose Unit Tests",
-                   file: kover_file_template_compose,
-                   totalProjectThreshold: 80,
-                   modifiedFileThreshold: 95,
-                   failIfUnderProjectThreshold: false,
-                   failIfUnderFileThreshold: false
+
+if File.exist?(kover_file_template)
+  markdown "## Kover report for template-compose:"
+  shroud.reportKover moduleName: "Template - Compose Unit Tests",
+                     file: kover_file_template,
+                     totalProjectThreshold: 80,
+                     modifiedFileThreshold: 95,
+                     failIfUnderProjectThreshold: false,
+                     failIfUnderFileThreshold: false
+else
+  warn("Kover report not found at #{kover_file_template}. Please run `./gradlew koverXmlReport` before creating a PR.")
+end
