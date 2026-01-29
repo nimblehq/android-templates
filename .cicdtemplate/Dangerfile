@@ -21,7 +21,7 @@ commit_lint.check warn: :all, disable: [:subject_length]
 # Code Quality Checks - Detekt
 # ------------------------------------------------------------------------------
 
-detekt_dir = "**/build/reports/detekt/detekt-result.xml"
+detekt_dir = "**/build/reports/detekt/detekt.xml"
 detekt_reports = Dir[detekt_dir]
 
 if detekt_reports.any?
@@ -55,7 +55,7 @@ end
 # Test Coverage Checks - Kover
 # ------------------------------------------------------------------------------
 
-kover_file = "app/build/reports/kover/report.xml"
+kover_file = "app/build/reports/kover/reportCustom.xml"
 
 if File.exist?(kover_file)
   markdown "## Kover Coverage Report"
@@ -66,5 +66,5 @@ if File.exist?(kover_file)
                      failIfUnderProjectThreshold: false,
                      failIfUnderFileThreshold: false
 else
-  warn("Kover coverage report not found at #{kover_file}. Please run `./gradlew koverXmlReport` before creating a PR.")
+  warn("Kover coverage report not found at #{kover_file}. Please run `./gradlew koverXmlReportCustom` before creating a PR.")
 end

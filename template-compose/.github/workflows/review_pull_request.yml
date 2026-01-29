@@ -45,7 +45,7 @@ jobs:
         run: ./gradlew lint
 
       - name: Run unit tests with Kover
-        run: ./gradlew koverXmlReport
+        run: ./gradlew koverXmlReportCustom
 
       - name: Set up Ruby
         uses: ./.github/actions/setup-ruby

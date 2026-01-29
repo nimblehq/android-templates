@@ -14,7 +14,7 @@ warn("Please add labels to this PR") if github.pr_labels.empty?
 commit_lint.check warn: :all, disable: [:subject_length]
 
 # Detekt output check
-detekt_dir = "**/build/reports/detekt/detekt-result.xml"
+detekt_dir = "**/build/reports/detekt/detekt.xml"
 detekt_reports = Dir[detekt_dir]
 
 if detekt_reports.any?
