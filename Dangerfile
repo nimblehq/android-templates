@@ -45,10 +45,15 @@ end
 # Report coverage of modified files, warn if total project coverage is under 80%
 # or if any modified file's coverage is under 95%
 kover_file_template_compose = "template-compose/app/build/reports/kover/reportCustom.xml"
-markdown "## Kover report for template-compose:"
-shroud.reportKover moduleName: "Template - Compose Unit Tests",
-                   file: kover_file_template_compose,
-                   totalProjectThreshold: 80,
-                   modifiedFileThreshold: 95,
-                   failIfUnderProjectThreshold: false,
-                   failIfUnderFileThreshold: false
+
+if File.exist?(kover_file_template_compose)
+  markdown "## Kover report for template-compose:"
+  shroud.reportKover moduleName: "Template - Compose Unit Tests",
+                     file: kover_file_template_compose,
+                     totalProjectThreshold: 80,
+                     modifiedFileThreshold: 95,
+                     failIfUnderProjectThreshold: false,
+                     failIfUnderFileThreshold: false
+else
+  warn("Kover coverage report not found at #{kover_file_template_compose}. Please run `./gradlew koverXmlReportCustom` before creating a PR.")
+end
