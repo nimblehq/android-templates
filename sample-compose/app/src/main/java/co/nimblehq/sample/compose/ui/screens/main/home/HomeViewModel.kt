@@ -10,6 +10,9 @@ import co.nimblehq.sample.compose.ui.models.toUiModel
 import co.nimblehq.sample.compose.ui.screens.main.MainDestination
 import co.nimblehq.sample.compose.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -26,7 +29,7 @@ class HomeViewModel @Inject constructor(
     private val dispatchersProvider: DispatchersProvider,
 ) : BaseViewModel() {
 
-    private val _uiModels = MutableStateFlow<List<UiModel>>(emptyList())
+    private val _uiModels = MutableStateFlow<ImmutableList<UiModel>>(persistentListOf())
     val uiModels = _uiModels.asStateFlow()
 
     private val _isFirstTimeLaunch = MutableStateFlow(false)
@@ -37,7 +40,7 @@ class HomeViewModel @Inject constructor(
             .injectLoading()
             .onEach { result ->
                 val uiModels = result.map { it.toUiModel() }
-                _uiModels.emit(uiModels)
+                _uiModels.emit(uiModels.toImmutableList())
             }
             .flowOn(dispatchersProvider.io)
             .catch { e -> _error.emit(e) }

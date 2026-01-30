@@ -38,7 +38,7 @@ $ ./gradlew domain:test
 - Run unit testing with coverage:
 
 ```
-$ ./gradlew koverHtmlReport
+$ ./gradlew koverHtmlReportCustom
 ```
 
 Report is located at: `app/build/reports/kover/`

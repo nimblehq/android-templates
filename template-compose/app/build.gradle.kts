@@ -2,9 +2,10 @@ import org.jetbrains.kotlin.konan.properties.loadProperties
 
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.kover)
 }
@@ -97,11 +98,6 @@ android {
         buildConfig = true
     }
 
-    // TODO Remove this block in https://github.com/nimblehq/android-templates/issues/587
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
-    }
-
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -124,10 +120,6 @@ android {
     }
 }
 
-kapt {
-    correctErrorTypes = true
-}
-
 dependencies {
     implementation(projects.data)
     implementation(projects.domain)
@@ -143,7 +135,9 @@ dependencies {
     debugImplementation(libs.compose.ui.tooling)
 
     implementation(libs.bundles.hilt)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
+
+    implementation(libs.kotlinx.collections.immutable)
 
     implementation(libs.timber)
     debugImplementation(libs.chucker)
@@ -168,34 +162,50 @@ dependencies {
     kover(projects.domain)
 }
 
-koverReport {
-    defaults {
-        mergeWith("stagingDebug")
+kover {
+    currentProject {
+        createVariant("custom") {
+            addWithDependencies("stagingDebug")
+        }
+    }
+    reports {
+        // filters for all report types of all build variants
         filters {
-            val excludedFiles = listOf(
-                "*.BuildConfig.*",
-                "*.BuildConfig",
-                // Enum
-                "*.*\$Creator*",
-                // DI
-                "*.di.*",
-                // Hilt
-                "*.*_ComponentTreeDeps*",
-                "*.*_HiltComponents*",
-                "*.*_HiltModules*",
-                "*.*_MembersInjector*",
-                "*.*_Factory*",
-                "*.Hilt_*",
-                "dagger.hilt.internal.*",
-                "hilt_aggregated_deps.*",
-                // Jetpack Compose
-                "*.ComposableSingletons*",
-                "*.*\$*Preview\$*",
-                "*.ui.preview.*",
-            )
-
             excludes {
-                classes(excludedFiles)
+                androidGeneratedClasses()
+                annotatedBy(
+                    // Compose
+                    "androidx.compose.ui.tooling.preview.Preview",
+                    // DI
+                    "dagger.Module",
+                )
+                classes(
+                    // DataStore
+                    "*Kt\$Dsl*",
+                    "*OuterClass*",
+                    // DI
+                    "*.*_ComponentTreeDeps*",
+                    "*.*_HiltComponents*",
+                    "*.*_HiltModules*",
+                    "*.*_MembersInjector*",
+                    "*.*_Factory*",
+                    "*.Hilt_*",
+                    // Enum
+                    "*.*\$Creator*",
+                    // Compose
+                    "*ComposableSingletons*",
+                )
+                inheritedFrom(
+                    // Compose
+                    "androidx.compose.ui.tooling.preview.PreviewParameterProvider",
+                    // DI
+                    "dagger.internal.Factory",
+                )
+                packages(
+                    // DI
+                    "dagger.hilt.internal",
+                    "hilt_aggregated_deps",
+                )
             }
         }
     }

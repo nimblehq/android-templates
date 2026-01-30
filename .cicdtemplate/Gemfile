@@ -1,0 +1,16 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
+
+# Core Danger functionality
+gem 'danger'
+
+# Code quality plugins
+gem 'danger-android_lint'      # Android Lint integration
+gem 'danger-commit_lint'       # Commit message validation
+gem 'danger-kotlin_detekt'     # Detekt static analysis integration
+
+# Test coverage plugin
+gem 'danger-shroud'            # Kover test coverage reporting

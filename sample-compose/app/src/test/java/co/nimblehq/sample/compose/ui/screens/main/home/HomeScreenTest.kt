@@ -18,7 +18,6 @@ import io.kotest.matchers.shouldBe
 import io.mockk.*
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.*
 import org.junit.*
 import org.junit.Assert.assertEquals
 import org.junit.runner.RunWith
@@ -117,6 +116,7 @@ class HomeScreenTest : BaseScreenTest() {
         composeRule.activity.setContent {
             ComposeTheme {
                 HomeScreen(
+                    isResultOk = false,
                     viewModel = viewModel,
                     navigator = { destination -> expectedDestination = destination },
                 )

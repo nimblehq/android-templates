@@ -1,0 +1,26 @@
+name: Set up Ruby with Bundler Cache
+description: Install Ruby and bundle dependencies with caching support.
+
+inputs:
+  ruby-version:
+    description: Ruby version to install.
+    required: false
+    default: '3.3.0'
+  working-directory:
+    description: Directory where bundler should run.
+    required: false
+    default: '.'
+  bundler-cache:
+    description: Enable bundler cache to execute `bundle install` and cache installed gems automatically.
+    required: false
+    default: 'true'
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ inputs.ruby-version }}
+        bundler-cache: ${{ inputs.bundler-cache }}
+        working-directory: ${{ inputs.working-directory }}

@@ -15,3 +15,11 @@ dependencies {
 
     testImplementation(libs.bundles.unitTest)
 }
+
+kover {
+    currentProject {
+        createVariant("custom") {
+            add("jvm")
+        }
+    }
+}

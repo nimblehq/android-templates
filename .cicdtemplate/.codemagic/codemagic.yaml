@@ -16,7 +16,7 @@ definitions:
       script: ./gradlew detekt
     - &unit_test
       name: Run unit tests
-      script: ./gradlew koverHtmlReport
+      script: ./gradlew koverHtmlReportCustom
   artifacts:
     - &artifacts_test_report app/build/reports/kover/
     - &artifacts_staging_apk app/build/outputs/apk/staging/debug/app-staging-debug.apk

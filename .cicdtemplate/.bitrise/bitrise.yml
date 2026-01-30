@@ -49,7 +49,7 @@ workflows:
       # Execute UnitTest
       - android-unit-test@1:
           inputs:
-            - arguments: koverHtmlReport
+            - arguments: koverHtmlReportCustom
             - variant: "$VARIANT"
             - module: "$MODULE"
             - report_path_pattern: '*build/reports'
@@ -61,7 +61,7 @@ workflows:
       # Upload Kover report to Apps & Artifacts for later downloading
       - deploy-to-bitrise-io@1:
           inputs:
-            - deploy_path: "$PROJECT_LOCATION/app/build/reports/kover/html/index.html"
+            - deploy_path: "$PROJECT_LOCATION/app/build/reports/kover/htmlCustom/index.html"
             - is_enable_public_page: 'false'
             - is_compress: 'true'
             - notify_user_groups: none

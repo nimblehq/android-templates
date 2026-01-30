@@ -1,8 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.kover)
 }
@@ -78,20 +79,18 @@ android {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
-    composeOptions {
-        // TODO Remove this block in https://github.com/nimblehq/android-templates/issues/587
-        kotlinCompilerExtensionVersion = "1.5.3"
-    }
-
     buildFeatures {
         compose = true
         buildConfig = true
     }
 
-    packagingOptions {
+    packaging {
         jniLibs {
             // Resolve "libmockkjvmtiagent.so" https://github.com/mockk/mockk/issues/297#issuecomment-901924678
             useLegacyPackaging = true
+        }
+        resources {
+            merges += listOf("/META-INF/LICENSE.md", "/META-INF/LICENSE-notice.md")
         }
     }
 
@@ -109,10 +108,6 @@ android {
         // Disable device's animation for instrument testing
         // animationsDisabled = true
     }
-}
-
-kapt {
-    correctErrorTypes = true
 }
 
 dependencies {
@@ -133,7 +128,7 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
 
     implementation(libs.bundles.hilt)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
     implementation(libs.timber)
 
@@ -141,6 +136,7 @@ dependencies {
 
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.collections.immutable)
 
     debugImplementation(libs.chucker)
     releaseImplementation(libs.chucker.noOp)
@@ -151,15 +147,19 @@ dependencies {
 
     // UI test with Robolectric
     testImplementation(platform(libs.compose.bom))
-    testImplementation(libs.test.compose.ui)
+    testImplementation(libs.test.compose.ui.junit4)
     testImplementation(libs.test.rules)
     testImplementation(libs.test.robolectric)
 
     // UI test
     androidTestImplementation(platform(libs.compose.bom))
-    androidTestImplementation(libs.test.compose.ui)
+    androidTestImplementation(libs.test.compose.ui.junit4)
     androidTestImplementation(libs.test.rules)
-    androidTestImplementation(libs.test.mockk)
+    androidTestImplementation(libs.test.mockk.android)
+
+    // Needed for createComposeRule(), but not for createAndroidComposeRule<YourActivity>()
+    // Ref: https://developer.android.com/develop/ui/compose/testing#setup
+    debugImplementation(libs.test.compose.ui.manifest)
 }
 
 /*
@@ -170,34 +170,50 @@ dependencies {
     kover(projects.domain)
 }
 
-koverReport {
-    defaults {
-        mergeWith("stagingDebug")
+kover {
+    currentProject {
+        createVariant("custom") {
+            addWithDependencies("stagingDebug")
+        }
+    }
+    reports {
+        // filters for all report types of all build variants
         filters {
-            val excludedFiles = listOf(
-                "*.BuildConfig.*",
-                "*.BuildConfig",
-                // Enum
-                "*.*\$Creator*",
-                // DI
-                "*.di.*",
-                // Hilt
-                "*.*_ComponentTreeDeps*",
-                "*.*_HiltComponents*",
-                "*.*_HiltModules*",
-                "*.*_MembersInjector*",
-                "*.*_Factory*",
-                "*.Hilt_*",
-                "dagger.hilt.internal.*",
-                "hilt_aggregated_deps.*",
-                // Jetpack Compose
-                "*.ComposableSingletons*",
-                "*.*\$*Preview\$*",
-                "*.ui.preview.*",
-            )
-
             excludes {
-                classes(excludedFiles)
+                androidGeneratedClasses()
+                annotatedBy(
+                    // Compose
+                    "androidx.compose.ui.tooling.preview.Preview",
+                    // DI
+                    "dagger.Module",
+                )
+                classes(
+                    // DataStore
+                    "*Kt\$Dsl*",
+                    "*OuterClass*",
+                    // DI
+                    "*.*_ComponentTreeDeps*",
+                    "*.*_HiltComponents*",
+                    "*.*_HiltModules*",
+                    "*.*_MembersInjector*",
+                    "*.*_Factory*",
+                    "*.Hilt_*",
+                    // Enum
+                    "*.*\$Creator*",
+                    // Compose
+                    "*ComposableSingletons*",
+                )
+                inheritedFrom(
+                    // Compose
+                    "androidx.compose.ui.tooling.preview.PreviewParameterProvider",
+                    // DI
+                    "dagger.internal.Factory",
+                )
+                packages(
+                    // DI
+                    "dagger.hilt.internal",
+                    "hilt_aggregated_deps",
+                )
             }
         }
     }
