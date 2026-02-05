@@ -4,51 +4,95 @@ You are an experienced Android developer working on a project template generator
 
 Android project template generator using [Nimble Compass](https://nimblehq.co/compass/) conventions.
 
-**Stack:** Kotlin, Jetpack Compose, Hilt, Kscript (generator)
+## Technology Stack
+
+| Category | Technology |
+|----------|------------|
+| **Language** | Kotlin |
+| **UI Framework** | Jetpack Compose |
+| **Architecture** | MVVM / Clean Architecture (app → domain ← data) |
+| **Dependency Injection** | Hilt |
+| **Generator** | Kscript |
+| **Build System** | Gradle (Kotlin DSL) |
+| **Static Analysis** | Detekt, Android Lint |
+| **Coverage** | Kover |
 
 ## Project Structure
 
-- Generator script: `scripts/new_project.kts` (Kscript)
-- Source template: `template-compose/` (see its AGENTS.md for Android-specific guidance)
-- Example output: `sample-compose/` (regenerate, don't edit directly)
+```
+/scripts          → Generator script (new_project.kts)
+/template-compose → Source template (see its AGENTS.md for Android guidance)
+/sample-compose   → Example output (regenerate, don't edit directly)
+/build-logic      → Shared Gradle convention plugins
+/.github          → CI workflows and PR templates
+```
+
+## Prerequisites
+
+- Android Studio (Latest Stable)
+- JDK 17+
+- Kscript installed (`brew install holgerbrandl/tap/kscript`)
 
 ## Commands
 
+### Build
 ```bash
-# Build template
 cd template-compose && ./gradlew assembleDebug
+```
 
-# Static analysis
+### Static Analysis
+```bash
 cd template-compose && ./gradlew detekt lint
+```
 
-# Run tests
+### Tests
+```bash
 cd template-compose && ./gradlew app:testStagingDebugUnitTest data:testDebugUnitTest domain:test
+```
 
-# Coverage report
+### Coverage
+```bash
 cd template-compose && ./gradlew koverXmlReportCustom
+```
 
-# Generate new project
+### Generate New Project
+```bash
 cd scripts && kscript new_project.kts package-name=com.example.app app-name="My App" template=compose
 ```
 
 ## Testing
 
-Before commit:
+**Before commit:**
 ```bash
 cd template-compose && ./gradlew detekt lint assembleDebug
 ```
 
-Before PR:
+**Before PR:**
 ```bash
 cd template-compose && ./gradlew detekt lint app:testStagingDebugUnitTest data:testDebugUnitTest domain:test koverXmlReportCustom
 ```
 
-After changing template, verify generator works:
+**After template changes:** Verify generator works:
 ```bash
 cd scripts && kscript new_project.kts package-name=co.test.app app-name="Test App" template=compose
 ```
 
-CI pipeline: Detekt → Lint → Tests → Coverage → Danger
+## Configuration Files
+
+| File | Purpose |
+|------|---------|
+| `template-compose/config/detekt/detekt.yml` | Detekt rules |
+| `build-logic/convention/` | Shared Gradle plugins |
+| `.github/workflows/android.yml` | CI pipeline |
+| `.github/workflows/danger.yml` | Danger PR checks |
+
+## CI/CD
+
+**Pipeline:** Detekt → Lint → Tests → Coverage → Danger
+
+Workflows defined in `.github/workflows/`:
+- `android.yml` — Main CI (build, test, coverage)
+- `danger.yml` — PR automation and checks
 
 ## Template Placeholders
 
@@ -63,13 +107,30 @@ The generator replaces these strings — don't modify them:
 
 ## Git Workflow
 
-- `main` — Production. Never commit directly.
-- `develop` — Staging. Never commit directly.
-- Feature branches from `develop`
+**Branches:**
+- `main` — Production (protected, no direct commits)
+- `develop` — Staging (protected, no direct commits)
+- Feature branches from `develop` using `kebab-case`: `feature/add-login`, `bug/fix-crash`
 
-Commit format: `[#123] Add feature` or `[Brand-456] Fix bug`
+**Commits:**
+- Format: `[#123] Add feature` — capitalize first word, present tense
+- One logical change per commit
+- Include ticket ID for traceability
 
-PR title: `[#ticket] Description`
+**Pull Requests:**
+- Title: `[#ticket] Description`
+- 2 approvals required (include Team Lead or senior for large squads)
+- Target merge within 2-3 days
+- Only Team Lead merges to protected branches
+
+## Key Guidelines for Agents
+
+1. **Template Awareness**: Never modify placeholder strings used by the generator
+2. **Regenerate, Don't Edit**: Changes to `sample-compose/` are overwritten — modify `template-compose/` instead
+3. **Static Analysis**: Always run `./gradlew detekt lint` before committing
+4. **Test Generator**: After any template change, verify generation still works
+5. **Module Boundaries**: Core modules must not depend on feature modules
+6. **Compose Only**: All UI must use Jetpack Compose — never suggest XML layouts
 
 ## Boundaries
 
@@ -77,6 +138,7 @@ PR title: `[#ticket] Description`
 - Run `detekt lint` before commits
 - Test generator after template changes
 - 2 PR approvals
+- Follow Nimble Compass conventions
 
 ⚠️ **Ask before:**
 - Adding modules to template
@@ -89,3 +151,4 @@ PR title: `[#ticket] Description`
 - Push to `main` or `develop`
 - Skip CI checks
 - Commit secrets or credentials
+- Merge PRs without Team Lead approval
