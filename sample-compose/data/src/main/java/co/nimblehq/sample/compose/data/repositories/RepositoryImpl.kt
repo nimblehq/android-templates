@@ -7,7 +7,7 @@ import co.nimblehq.sample.compose.domain.models.Model
 import co.nimblehq.sample.compose.domain.repositories.Repository
 import kotlinx.coroutines.flow.Flow
 
-class RepositoryImpl constructor(
+class RepositoryImpl(
     private val apiService: ApiService
 ) : Repository {
 

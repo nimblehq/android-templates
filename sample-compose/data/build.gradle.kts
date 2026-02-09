@@ -15,10 +15,12 @@ android {
 
     buildTypes {
         getByName(BuildType.RELEASE) {
-            isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            )
+            isMinifyEnabled = false
+            consumerProguardFiles("consumer-rules.pro")
+        }
+
+        create(BuildType.PRERELEASE) {
+            initWith(getByName(BuildType.RELEASE))
         }
 
         getByName(BuildType.DEBUG) {
@@ -58,6 +60,10 @@ dependencies {
     api(libs.bundles.okhttp)
     api(libs.bundles.moshi)
     implementation(libs.moshi)
+
+    debugImplementation(libs.chucker)
+    preReleaseImplementation(libs.chucker)
+    releaseImplementation(libs.chucker.noOp)
 
     // Testing
     testImplementation(libs.bundles.unitTest)
