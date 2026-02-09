@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.konan.properties.loadProperties
 
 plugins {
@@ -61,6 +62,10 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs[BuildTypes.RELEASE]
             buildConfigField("String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\"")
+        }
+
+        create(BuildTypes.PRERELEASE) {
+            initWith(getByName(BuildTypes.RELEASE))
         }
 
         debug {
@@ -141,6 +146,7 @@ dependencies {
 
     implementation(libs.timber)
     debugImplementation(libs.chucker)
+    preReleaseImplementation(libs.chucker)
     releaseImplementation(libs.chucker.noOp)
 
     implementation(libs.nimble.common)
