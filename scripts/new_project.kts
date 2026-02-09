@@ -295,7 +295,7 @@ object NewProject {
         showMessage("=> 🔎 Renaming package name within files...")
         File(projectPath)
             .walk()
-            .filter { it.name.endsWithAny(".kt", ".xml", ".gradle.kts") }
+            .filter { it.name.endsWithAny(".kt", ".xml", ".gradle.kts", ".md") }
             .forEach { filePath ->
                 rename(
                     sourcePath = filePath.toString(),
