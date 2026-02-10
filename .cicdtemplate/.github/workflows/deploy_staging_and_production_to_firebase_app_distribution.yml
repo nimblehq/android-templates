@@ -65,7 +65,7 @@ jobs:
           appId: ${{secrets.FIREBASE_APP_ID_STAGING}}
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CREDENTIAL_FILE_CONTENT }}
           groups: testers
-          file: app/build/outputs/apk/staging/preRelease/app-staging-debug.apk
+          file: app/build/outputs/apk/staging/preRelease/app-staging-preRelease.apk
 
       - name: Build production APK
         run: ./gradlew assembleProductionPreRelease
@@ -76,4 +76,4 @@ jobs:
           appId: ${{secrets.FIREBASE_APP_ID_PRODUCTION}}
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CREDENTIAL_FILE_CONTENT }}
           groups: testers
-          file: app/build/outputs/apk/production/preRelease/app-production-debug.apk
+          file: app/build/outputs/apk/production/preRelease/app-production-preRelease.apk

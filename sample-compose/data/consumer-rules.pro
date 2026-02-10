@@ -27,6 +27,6 @@
 # To enable the workaround in the [RequestInterceptor] for [NewRelic.addHTTPHeadersTrackingFor]
 -keep class okhttp3.Headers { *; }
 
-# Moshi's models https://medium0.com/androiddevelopers/practical-proguard-rules-examples-5640a3907dc9
--keep class co.nimblehq.template.compose.data.remote.models.requests.** { *; }
--keep class co.nimblehq.template.compose.data.remote.models.responses.** { *; }
+# Moshi's models https://medium.com/androiddevelopers/practical-proguard-rules-examples-5640a3907dc9
+-keep class co.nimblehq.sample.compose.data.remote.models.requests.** { *; }
+-keep class co.nimblehq.sample.compose.data.remote.models.responses.** { *; }
