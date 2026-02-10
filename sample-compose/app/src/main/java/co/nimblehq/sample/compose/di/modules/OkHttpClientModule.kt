@@ -13,6 +13,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.*
 
 private const val READ_TIME_OUT = 30L
+private const val BUILD_TYPE_RELEASE = "release"
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -22,7 +23,7 @@ class OkHttpClientModule {
     fun provideOkHttpClient(
         chuckerInterceptor: ChuckerInterceptor
     ) = OkHttpClient.Builder().apply {
-        if (BuildConfig.DEBUG) {
+        if (!BuildConfig.BUILD_TYPE.equals(BUILD_TYPE_RELEASE, ignoreCase = true)) {
             addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             })

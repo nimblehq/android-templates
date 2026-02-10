@@ -63,6 +63,10 @@ android {
             buildConfigField("String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\"")
         }
 
+        create(BuildTypes.PRERELEASE) {
+            initWith(getByName(BuildTypes.RELEASE))
+        }
+
         debug {
             // For quickly testing build with proguard, enable this
             isMinifyEnabled = false
@@ -141,6 +145,7 @@ dependencies {
 
     implementation(libs.timber)
     debugImplementation(libs.chucker)
+    preReleaseImplementation(libs.chucker)
     releaseImplementation(libs.chucker.noOp)
 
     implementation(libs.nimble.common)

@@ -49,6 +49,10 @@ android {
             buildConfigField("String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\"")
         }
 
+        create(BuildType.PRERELEASE) {
+            initWith(getByName(BuildType.RELEASE))
+        }
+
         getByName(BuildType.DEBUG) {
             // For quickly testing build with proguard, enable this
             isMinifyEnabled = false
@@ -139,6 +143,7 @@ dependencies {
     implementation(libs.kotlinx.collections.immutable)
 
     debugImplementation(libs.chucker)
+    preReleaseImplementation(libs.chucker)
     releaseImplementation(libs.chucker.noOp)
 
     // Unit test
