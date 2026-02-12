@@ -18,7 +18,7 @@ abstract class BaseViewModel : ViewModel() {
     protected val _error = MutableSharedFlow<Throwable>()
     val error = _error.asSharedFlow()
 
-    protected val _navigator = MutableSharedFlow<BaseDestination>()
+    protected val _navigator = MutableSharedFlow<Any>()
     val navigator = _navigator.asSharedFlow()
 
     /**

@@ -13,7 +13,7 @@ import co.nimblehq.sample.compose.domain.usecases.IsFirstTimeLaunchPreferencesUs
 import co.nimblehq.sample.compose.domain.usecases.UpdateFirstTimeLaunchPreferencesUseCase
 import co.nimblehq.sample.compose.test.MockUtil
 import co.nimblehq.sample.compose.test.TestDispatchersProvider
-import co.nimblehq.sample.compose.ui.base.BaseDestination
+import co.nimblehq.sample.compose.ui.screens.FakeNavigator
 import co.nimblehq.sample.compose.ui.screens.MainActivity
 import co.nimblehq.sample.compose.ui.screens.main.MainDestination
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
@@ -43,7 +43,7 @@ class HomeScreenTest {
     private val mockUpdateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase = mockk()
 
     private lateinit var viewModel: HomeViewModel
-    private var expectedDestination: BaseDestination? = null
+    private lateinit var fakeNavigator: FakeNavigator
 
     @Before
     fun setUp() {
@@ -74,17 +74,18 @@ class HomeScreenTest {
     fun when_clicking_on_a_list_item__it_navigates_to_Second_screen() = initComposable {
         onNodeWithText("1").performClick()
 
-        assertEquals(expectedDestination, MainDestination.Second)
+        assertEquals((fakeNavigator.currentScreen() as? MainDestination.Second)?.id, "1")
     }
 
     private fun initComposable(
         testBody: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>.() -> Unit
     ) {
+        fakeNavigator = FakeNavigator()
         composeRule.activity.setContent {
             ComposeTheme {
                 HomeScreen(
                     viewModel = viewModel,
-                    navigator = { destination -> expectedDestination = destination }
+                    navigator = fakeNavigator
                 )
             }
         }

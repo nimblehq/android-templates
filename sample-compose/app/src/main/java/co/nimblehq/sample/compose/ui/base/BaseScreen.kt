@@ -3,7 +3,7 @@ package co.nimblehq.sample.compose.ui.base
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.colorResource
 import co.nimblehq.sample.compose.R
-import co.nimblehq.sample.compose.util.setStatusBarColor
+import co.nimblehq.sample.compose.util.StatusBarColor
 
 @Composable
 fun BaseScreen(
@@ -11,7 +11,7 @@ fun BaseScreen(
     content: @Composable () -> Unit,
 ) {
     if (isDarkStatusBarIcons != null) {
-        setStatusBarColor(
+        StatusBarColor(
             color = colorResource(id = R.color.statusBarColor),
             darkIcons = isDarkStatusBarIcons,
         )

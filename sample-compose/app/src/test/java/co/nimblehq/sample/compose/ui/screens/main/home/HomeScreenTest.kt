@@ -9,8 +9,8 @@ import androidx.test.rule.GrantPermissionRule
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.domain.usecases.*
 import co.nimblehq.sample.compose.test.MockUtil
-import co.nimblehq.sample.compose.ui.base.BaseDestination
 import co.nimblehq.sample.compose.ui.screens.BaseScreenTest
+import co.nimblehq.sample.compose.ui.screens.FakeNavigator
 import co.nimblehq.sample.compose.ui.screens.MainActivity
 import co.nimblehq.sample.compose.ui.screens.main.MainDestination
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
@@ -45,7 +45,7 @@ class HomeScreenTest : BaseScreenTest() {
         mockk()
 
     private lateinit var viewModel: HomeViewModel
-    private var expectedDestination: BaseDestination? = null
+    private lateinit var fakeNavigator: FakeNavigator
 
     @Before
     fun setUp() {
@@ -105,20 +105,20 @@ class HomeScreenTest : BaseScreenTest() {
     fun `When clicking on a list item, it navigates to Second screen`() = initComposable {
         onNodeWithText("1").performClick()
 
-        assertEquals(expectedDestination, MainDestination.Second)
+        assertEquals((fakeNavigator.currentScreen() as? MainDestination.Second)?.id, "1")
     }
 
     private fun initComposable(
         testBody: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>.() -> Unit,
     ) {
         initViewModel()
+        fakeNavigator = FakeNavigator()
 
         composeRule.activity.setContent {
             ComposeTheme {
                 HomeScreen(
-                    isResultOk = false,
                     viewModel = viewModel,
-                    navigator = { destination -> expectedDestination = destination },
+                    navigator = fakeNavigator,
                 )
             }
         }

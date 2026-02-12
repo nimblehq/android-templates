@@ -14,26 +14,25 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import co.nimblehq.sample.compose.R
-import co.nimblehq.sample.compose.ui.base.BaseDestination
+import co.nimblehq.sample.compose.navigation.Navigator
 import co.nimblehq.sample.compose.ui.base.BaseScreen
-import co.nimblehq.sample.compose.ui.base.KeyResultOk
 import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.theme.AppTheme.dimensions
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 
+@Suppress("UnusedPrivateMember")
 @Composable
 fun SecondScreen(
     id: String,
-    navigator: (destination: BaseDestination) -> Unit,
+    navigator: Navigator,
     viewModel: SecondViewModel = hiltViewModel(),
+    onUpdate: () -> Unit = {},
 ) = BaseScreen(
     isDarkStatusBarIcons = false,
 ) {
     SecondScreenContent(
         id = id,
-        onUpdateClick = {
-            navigator(BaseDestination.Up().addResult(KeyResultOk, true))
-        },
+        onUpdateClick = onUpdate,
     )
 }
 
