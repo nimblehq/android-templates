@@ -1,7 +1,12 @@
 package co.nimblehq.sample.compose.ui.common
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -18,10 +23,23 @@ import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 fun AppBar(
     @StringRes title: Int,
     modifier: Modifier = Modifier,
+    onClickBack: (() -> Unit)? = null,
+    actions: @Composable RowScope.() -> Unit = {},
 ) {
     TopAppBar(
         modifier = modifier,
         title = { Text(text = stringResource(title)) },
+        navigationIcon = {
+            if (onClickBack != null) {
+                IconButton(onClick = onClickBack) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = "Back"
+                    )
+                }
+            }
+        },
+        actions = actions,
         colors = TopAppBarDefaults.topAppBarColors().copy(
             containerColor = AppTheme.colors.topAppBarBackground
         )
@@ -31,5 +49,5 @@ fun AppBar(
 @Preview(showBackground = true)
 @Composable
 private fun AppBarPreview() {
-    ComposeTheme { AppBar(R.string.home_title_bar) }
+    ComposeTheme { AppBar(R.string.list_title) }
 }

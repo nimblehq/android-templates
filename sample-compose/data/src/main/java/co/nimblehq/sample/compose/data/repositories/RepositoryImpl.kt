@@ -1,6 +1,7 @@
 package co.nimblehq.sample.compose.data.repositories
 
 import co.nimblehq.sample.compose.data.extensions.flowTransform
+import co.nimblehq.sample.compose.data.remote.models.responses.toModel
 import co.nimblehq.sample.compose.data.remote.models.responses.toModels
 import co.nimblehq.sample.compose.data.remote.services.ApiService
 import co.nimblehq.sample.compose.domain.models.Model
@@ -13,5 +14,13 @@ class RepositoryImpl constructor(
 
     override fun getModels(): Flow<List<Model>> = flowTransform {
         apiService.getResponses().toModels()
+    }
+
+    override fun getDetails(id: Int): Flow<Model> = flowTransform {
+        apiService.getDetails(id).toModel()
+    }
+
+    override fun searchUser(username: String): Flow<List<Model>> = flowTransform {
+        apiService.searchUser(username).toModels()
     }
 }

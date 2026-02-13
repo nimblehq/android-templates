@@ -100,6 +100,7 @@ internal class DeepLinkPattern<T : Any>(
  */
 private typealias TypeParser = (String) -> Serializable
 
+@Suppress(" ComplexMethod ")
 @OptIn(ExperimentalSerializationApi::class)
 private fun getTypeParser(kind: SerialKind): TypeParser {
     return when (kind) {
