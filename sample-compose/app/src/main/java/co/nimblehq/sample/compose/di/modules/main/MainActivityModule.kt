@@ -1,7 +1,7 @@
 package co.nimblehq.sample.compose.di.modules.main
 
 import androidx.compose.ui.platform.LocalContext
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.extensions.showToast
 import co.nimblehq.sample.compose.navigation.EntryProviderInstaller
