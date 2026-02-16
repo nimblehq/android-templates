@@ -49,10 +49,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setEdgeToEdgeConfig()
+        handleNewIntent(intent)
         setContent {
             val eventBus = remember { ResultEventBus() }
-
-            handleNewIntent(intent)
 
             ComposeTheme {
                 CompositionLocalProvider(LocalResultEventBus.provides(eventBus)) {
@@ -117,6 +116,9 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        if (deepLinkNavKey != null) navigator.goTo(deepLinkNavKey)
+        if (deepLinkNavKey != null) {
+            navigator.goTo(deepLinkNavKey)
+            intent.data = null
+        }
     }
 }

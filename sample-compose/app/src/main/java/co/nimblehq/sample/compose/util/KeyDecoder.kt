@@ -8,7 +8,7 @@ import kotlinx.serialization.modules.EmptySerializersModule
 import kotlinx.serialization.modules.SerializersModule
 
 /**
- * Decodes the list of arguments into a a back stack key
+ * Decodes the list of arguments into a back stack key
  *
  * **IMPORTANT** This decoder assumes that all argument types are Primitives.
  */

@@ -74,7 +74,7 @@ class HomeScreenTest {
     fun when_clicking_on_a_list_item__it_navigates_to_Second_screen() = initComposable {
         onNodeWithText("1").performClick()
 
-        assertEquals((fakeNavigator.currentScreen() as? MainDestination.Second)?.id, "1")
+        assertEquals("1", (fakeNavigator.currentScreen() as? MainDestination.Second)?.id)
     }
 
     private fun initComposable(

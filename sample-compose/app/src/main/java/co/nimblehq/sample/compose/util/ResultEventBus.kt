@@ -81,6 +81,7 @@ class ResultEventBus {
      * Removes all results associated with the given key from the store.
      */
     inline fun <reified T> removeResult(resultKey: String = T::class.toString()) {
+        channelMap[resultKey]?.close()
         channelMap.remove(resultKey)
     }
 }
