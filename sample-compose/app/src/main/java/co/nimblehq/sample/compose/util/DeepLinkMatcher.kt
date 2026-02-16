@@ -78,4 +78,4 @@ internal data class DeepLinkMatchResult<T : Any>(
     val args: Map<String, Any>
 )
 
-const val TAG_LOG_ERROR = "Nav3RecipesDeepLink"
+const val TAG_LOG_ERROR = "SampleComposeDeepLink"
