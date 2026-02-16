@@ -1,6 +1,7 @@
 package co.nimblehq.sample.compose.util
 
 import android.net.Uri
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.SerialKind
@@ -35,9 +36,10 @@ import java.io.Serializable
  * @param serializer the serializer of [T]
  * @param uriPattern the supported deeplink's uri pattern, i.e. "abc.com/home/{pathArg}"
  */
+@OptIn(ExperimentalSerializationApi::class)
 internal class DeepLinkPattern<T : Any>(
     val serializer: KSerializer<T>,
-    val uriPattern: Uri
+    val uriPattern: Uri,
 ) {
     /**
      * Help differentiate if a path segment is an argument or a static value
@@ -89,7 +91,7 @@ internal class DeepLinkPattern<T : Any>(
     class PathSegment(
         val stringValue: String,
         val isParamArg: Boolean,
-        val typeParser: TypeParser
+        val typeParser: TypeParser,
     )
 }
 
@@ -98,6 +100,7 @@ internal class DeepLinkPattern<T : Any>(
  */
 private typealias TypeParser = (String) -> Serializable
 
+@OptIn(ExperimentalSerializationApi::class)
 private fun getTypeParser(kind: SerialKind): TypeParser {
     return when (kind) {
         PrimitiveKind.STRING -> Any::toString

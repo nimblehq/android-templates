@@ -49,6 +49,7 @@ class HomeScreenTest : BaseScreenTest() {
 
     @Before
     fun setUp() {
+        ShadowToast.reset()
         every { mockGetModelsUseCase() } returns flowOf(MockUtil.models)
         every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flowOf(false)
         coEvery { mockUpdateFirstTimeLaunchPreferencesUseCase(any()) } just Runs

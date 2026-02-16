@@ -31,7 +31,7 @@ import co.nimblehq.sample.compose.util.ResultEventBus
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-private const val TWEEN_DURATION_IN_MILLIS = 500;
+private const val TWEEN_DURATION_IN_MILLIS = 500
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

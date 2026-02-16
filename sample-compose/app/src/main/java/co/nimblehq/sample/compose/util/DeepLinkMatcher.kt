@@ -5,7 +5,7 @@ import kotlinx.serialization.KSerializer
 
 internal class DeepLinkMatcher<T : Any>(
     val request: DeepLinkRequest,
-    val deepLinkPattern: DeepLinkPattern<T>
+    val deepLinkPattern: DeepLinkPattern<T>,
 ) {
     /**
      * Match a [DeepLinkRequest] to a [DeepLinkPattern].
@@ -25,7 +25,7 @@ internal class DeepLinkMatcher<T : Any>(
             // zip to compare the two objects side by side, order matters here so we
             // need to make sure the compared segments are at the same position within the url
             .zip(deepLinkPattern.pathSegments.asSequence())
-            .forEach { it ->
+            .forEach {
                 // retrieve the two path segments to compare
                 val requestedSegment = it.first
                 val candidateSegment = it.second
@@ -75,7 +75,7 @@ internal class DeepLinkMatcher<T : Any>(
  * */
 internal data class DeepLinkMatchResult<T : Any>(
     val serializer: KSerializer<T>,
-    val args: Map<String, Any>
+    val args: Map<String, Any>,
 )
 
 const val TAG_LOG_ERROR = "SampleComposeDeepLink"
