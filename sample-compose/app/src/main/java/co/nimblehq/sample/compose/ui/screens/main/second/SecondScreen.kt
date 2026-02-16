@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.navigation.Navigator
 import co.nimblehq.sample.compose.ui.base.BaseScreen
