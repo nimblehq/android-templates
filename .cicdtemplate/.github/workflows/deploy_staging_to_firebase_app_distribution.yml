@@ -1,4 +1,4 @@
-name: Deploy staging and production to Firebase App Distribution
+name: Deploy staging to Firebase App Distribution
 
 on:
   # Trigger the workflow on push action in develop branch.
@@ -6,10 +6,16 @@ on:
   push:
     branches:
       - develop
+  workflow_dispatch:
+    inputs:
+      testerGroups:
+        description: "Tester groups (Use \"vars.TESTER_GROUPS\" as default)"
+        required: false
+        type: string
 
 jobs:
-  deploy_staging_and_production_to_firebase_app_distribution:
-    name: Deploy staging and production to Firebase App Distribution
+  deploy_staging_to_firebase_app_distribution:
+    name: Deploy staging to Firebase App Distribution
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -26,6 +32,8 @@ jobs:
 
       - name: Checkout source code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Cache Gradle
         uses: actions/cache@v4
@@ -59,21 +67,18 @@ jobs:
       - name: Build staging APK
         run: ./gradlew assembleStagingPreRelease
 
+      - name: Generate release notes
+        id: generate-release-notes
+        run: |
+          echo 'RELEASE_NOTES<<EOF' >> $GITHUB_OUTPUT
+          echo "$((git log -1 --merges | grep "\[") | grep . && echo "" || echo $(git log -1 --merges --format=%B))" >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+
       - name: Deploy staging to Firebase
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{secrets.FIREBASE_APP_ID_STAGING}}
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CREDENTIAL_FILE_CONTENT }}
-          groups: testers
+          groups: ${{ github.event.inputs.testerGroups || vars.TESTER_GROUPS }}
           file: app/build/outputs/apk/staging/preRelease/app-staging-preRelease.apk
-
-      - name: Build production APK
-        run: ./gradlew assembleProductionPreRelease
-
-      - name: Deploy production to Firebase
-        uses: wzieba/Firebase-Distribution-Github-Action@v1
-        with:
-          appId: ${{secrets.FIREBASE_APP_ID_PRODUCTION}}
-          serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CREDENTIAL_FILE_CONTENT }}
-          groups: testers
-          file: app/build/outputs/apk/production/preRelease/app-production-preRelease.apk
+          releaseNotes: ${{ steps.generate-release-notes.outputs.RELEASE_NOTES }}
