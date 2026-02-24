@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -16,10 +18,12 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            )
+            isMinifyEnabled = false
+            consumerProguardFiles("consumer-rules.pro")
+        }
+
+        create(BuildTypes.PRERELEASE) {
+            initWith(getByName(BuildTypes.RELEASE))
         }
 
         debug {
@@ -56,6 +60,10 @@ dependencies {
     api(libs.bundles.okhttp)
     api(libs.moshi)
     implementation(libs.bundles.moshi)
+
+    debugImplementation(libs.chucker)
+    preReleaseImplementation(libs.chucker)
+    releaseImplementation(libs.chucker.noOp)
 
     testImplementation(libs.bundles.unitTest)
     testImplementation(libs.test.core.ktx)

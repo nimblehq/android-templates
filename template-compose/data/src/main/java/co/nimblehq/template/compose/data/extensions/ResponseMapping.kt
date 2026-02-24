@@ -29,9 +29,9 @@ private fun Throwable.mapError(): Throwable {
         is HttpException -> {
             val errorResponse = parseErrorResponse(response())
             ApiException(
-                errorResponse?.toModel(),
-                code(),
-                message()
+                error = errorResponse?.toModel(),
+                httpCode = code(),
+                httpMessage = message()
             )
         }
         else -> this
@@ -44,9 +44,9 @@ private fun parseErrorResponse(response: Response<*>?): ErrorResponse? {
         val moshi = MoshiBuilderProvider.moshiBuilder.build()
         val adapter = moshi.adapter(ErrorResponse::class.java)
         adapter.fromJson(jsonString.orEmpty())
-    } catch (exception: IOException) {
+    } catch (_: IOException) {
         null
-    } catch (exception: JsonDataException) {
+    } catch (_: JsonDataException) {
         null
     }
 }
