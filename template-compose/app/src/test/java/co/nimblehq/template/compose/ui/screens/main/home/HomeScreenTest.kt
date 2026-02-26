@@ -7,8 +7,8 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import co.nimblehq.template.compose.R
 import co.nimblehq.template.compose.domain.usecases.UseCase
 import co.nimblehq.template.compose.test.MockUtil
-import co.nimblehq.template.compose.ui.base.BaseDestination
 import co.nimblehq.template.compose.ui.screens.BaseScreenTest
+import co.nimblehq.template.compose.ui.screens.FakeNavigator
 import co.nimblehq.template.compose.ui.screens.MainActivity
 import co.nimblehq.template.compose.ui.theme.ComposeTheme
 import io.kotest.matchers.shouldBe
@@ -31,7 +31,7 @@ class HomeScreenTest : BaseScreenTest() {
     private val mockUseCase: UseCase = mockk()
 
     private lateinit var viewModel: HomeViewModel
-    private var expectedDestination: BaseDestination? = null
+    private lateinit var fakeNavigator: FakeNavigator
 
     @Before
     fun setUp() {
@@ -62,12 +62,13 @@ class HomeScreenTest : BaseScreenTest() {
         testBody: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>.() -> Unit,
     ) {
         initViewModel()
+        fakeNavigator = FakeNavigator()
 
         composeRule.activity.setContent {
             ComposeTheme {
                 HomeScreen(
                     viewModel = viewModel,
-                    navigator = { destination -> expectedDestination = destination }
+                    navigator = fakeNavigator
                 )
             }
         }
