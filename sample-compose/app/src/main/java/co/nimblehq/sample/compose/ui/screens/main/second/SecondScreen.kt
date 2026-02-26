@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName", "UnusedPrivateMember")
+
 package co.nimblehq.sample.compose.ui.screens.main.second
 
 import androidx.compose.foundation.layout.Box
@@ -25,7 +27,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Second(val id: String) : NavKey
 
-@Suppress("UnusedPrivateMember")
 @Composable
 fun SecondScreen(
     id: String,

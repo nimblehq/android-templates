@@ -1,3 +1,6 @@
+@file:Suppress("ComplexMethod")
+@file:OptIn(ExperimentalSerializationApi::class)
+
 package co.nimblehq.sample.compose.util
 
 import android.net.Uri
@@ -9,7 +12,7 @@ import java.io.Serializable
 
 /**
  * Parse a supported deeplink and stores its metadata as a easily readable format
- *
+ *ø
  * The following notes applies specifically to this particular sample implementation:
  *
  * The supported deeplink is expected to be built from a serializable backstack key [T] that
@@ -36,7 +39,6 @@ import java.io.Serializable
  * @param serializer the serializer of [T]
  * @param uriPattern the supported deeplink's uri pattern, i.e. "abc.com/home/{pathArg}"
  */
-@OptIn(ExperimentalSerializationApi::class)
 internal class DeepLinkPattern<T : Any>(
     val serializer: KSerializer<T>,
     val uriPattern: Uri,
@@ -100,7 +102,7 @@ internal class DeepLinkPattern<T : Any>(
  */
 private typealias TypeParser = (String) -> Serializable
 
-@OptIn(ExperimentalSerializationApi::class)
+
 private fun getTypeParser(kind: SerialKind): TypeParser {
     return when (kind) {
         PrimitiveKind.STRING -> Any::toString

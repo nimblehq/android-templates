@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName")
+
 package co.nimblehq.sample.compose.ui.screens.main.home
 
 import android.Manifest.permission.CAMERA

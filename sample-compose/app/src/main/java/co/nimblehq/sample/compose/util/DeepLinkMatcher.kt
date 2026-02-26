@@ -1,3 +1,5 @@
+@file:Suppress("ComplexMethod", "ReturnCount")
+
 package co.nimblehq.sample.compose.util
 
 import kotlinx.serialization.KSerializer
