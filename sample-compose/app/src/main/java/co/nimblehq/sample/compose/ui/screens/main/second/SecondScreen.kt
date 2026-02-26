@@ -13,12 +13,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation3.runtime.NavKey
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.navigation.Navigator
 import co.nimblehq.sample.compose.ui.base.BaseScreen
 import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.theme.AppTheme.dimensions
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class Second(val id: String) : NavKey
 
 @Suppress("UnusedPrivateMember")
 @Composable
@@ -26,13 +31,13 @@ fun SecondScreen(
     id: String,
     navigator: Navigator,
     viewModel: SecondViewModel = hiltViewModel(),
-    onUpdate: () -> Unit = {},
+    onUpdateClick: () -> Unit = {},
 ) = BaseScreen(
     isDarkStatusBarIcons = false,
 ) {
     SecondScreenContent(
         id = id,
-        onUpdateClick = onUpdate,
+        onUpdateClick = onUpdateClick,
     )
 }
 

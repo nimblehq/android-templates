@@ -20,7 +20,7 @@ import co.nimblehq.sample.compose.extensions.setEdgeToEdgeConfig
 import co.nimblehq.sample.compose.navigation.EntryProviderInstaller
 import co.nimblehq.sample.compose.navigation.Navigator
 import co.nimblehq.sample.compose.ui.common.URL_SECOND_SCREEN
-import co.nimblehq.sample.compose.ui.screens.main.MainDestination
+import co.nimblehq.sample.compose.ui.screens.main.second.Second
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import co.nimblehq.sample.compose.util.DeepLinkMatcher
 import co.nimblehq.sample.compose.util.DeepLinkPattern
@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
     lateinit var entryProviderScopes: Set<@JvmSuppressWildcards EntryProviderInstaller>
 
     internal val deepLinkPatterns: List<DeepLinkPattern<out Any>> = listOf(
-        DeepLinkPattern(MainDestination.Second.serializer(), URL_SECOND_SCREEN.toUri()),
+        DeepLinkPattern(Second.serializer(), URL_SECOND_SCREEN.toUri()),
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

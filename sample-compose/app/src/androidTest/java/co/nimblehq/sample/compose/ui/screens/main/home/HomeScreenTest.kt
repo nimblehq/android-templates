@@ -15,7 +15,7 @@ import co.nimblehq.sample.compose.test.MockUtil
 import co.nimblehq.sample.compose.test.TestDispatchersProvider
 import co.nimblehq.sample.compose.ui.screens.FakeNavigator
 import co.nimblehq.sample.compose.ui.screens.MainActivity
-import co.nimblehq.sample.compose.ui.screens.main.MainDestination
+import co.nimblehq.sample.compose.ui.screens.main.second.Second
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 import io.mockk.every
 import io.mockk.mockk
@@ -74,7 +74,7 @@ class HomeScreenTest {
     fun when_clicking_on_a_list_item__it_navigates_to_Second_screen() = initComposable {
         onNodeWithText("1").performClick()
 
-        assertEquals("1", (fakeNavigator.currentScreen() as? MainDestination.Second)?.id)
+        assertEquals("1", (fakeNavigator.currentScreen() as? Second)?.id)
     }
 
     private fun initComposable(

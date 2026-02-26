@@ -7,9 +7,11 @@ import co.nimblehq.sample.compose.extensions.showToast
 import co.nimblehq.sample.compose.navigation.EntryProviderInstaller
 import co.nimblehq.sample.compose.navigation.Navigator
 import co.nimblehq.sample.compose.navigation.NavigatorImpl
-import co.nimblehq.sample.compose.ui.screens.main.MainDestination
+import co.nimblehq.sample.compose.ui.screens.main.home.Home
 import co.nimblehq.sample.compose.ui.screens.main.home.HomeScreen
+import co.nimblehq.sample.compose.ui.screens.main.second.Second
 import co.nimblehq.sample.compose.ui.screens.main.second.SecondScreen
+import co.nimblehq.sample.compose.ui.screens.main.third.Third
 import co.nimblehq.sample.compose.ui.screens.main.third.ThirdScreen
 import co.nimblehq.sample.compose.util.LocalResultEventBus
 import co.nimblehq.sample.compose.util.ResultEffect
@@ -26,13 +28,13 @@ object MainActivityModule {
 
     @Provides
     @ActivityRetainedScoped
-    fun provideNavigator(): Navigator = NavigatorImpl(startDestination = MainDestination.Home)
+    fun provideNavigator(): Navigator = NavigatorImpl(startDestination = Home)
 
     @IntoSet
     @Provides
     fun provideEntryProviderInstaller(navigator: Navigator): EntryProviderInstaller =
         {
-            entry<MainDestination.Home> {
+            entry<Home> {
                 val eventBus = LocalResultEventBus.current
                 val context = LocalContext.current
 
@@ -49,21 +51,21 @@ object MainActivityModule {
                 )
             }
 
-            entry<MainDestination.Second> { key ->
+            entry<Second> { key ->
                 val eventBus = LocalResultEventBus.current
 
                 SecondScreen(
                     id = key.id,
                     navigator = navigator,
                     viewModel = hiltViewModel(),
-                    onUpdate = {
+                    onUpdateClick = {
                         eventBus.sendResult<Boolean>(result = true)
                         navigator.goBack()
                     }
                 )
             }
 
-            entry<MainDestination.Third> { key ->
+            entry<Third> { key ->
                 ThirdScreen(
                     model = key.model,
                     navigator = navigator,

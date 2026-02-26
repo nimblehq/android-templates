@@ -6,8 +6,8 @@ import co.nimblehq.sample.compose.domain.usecases.IsFirstTimeLaunchPreferencesUs
 import co.nimblehq.sample.compose.domain.usecases.UpdateFirstTimeLaunchPreferencesUseCase
 import co.nimblehq.sample.compose.test.CoroutineTestRule
 import co.nimblehq.sample.compose.test.MockUtil
-import co.nimblehq.sample.compose.ui.screens.main.MainDestination
 import co.nimblehq.sample.compose.ui.models.toUiModel
+import co.nimblehq.sample.compose.ui.screens.main.second.Second
 import co.nimblehq.sample.compose.util.DispatchersProvider
 import io.kotest.matchers.shouldBe
 import io.mockk.Runs
@@ -87,7 +87,7 @@ class HomeViewModelTest {
         viewModel.navigator.test {
             viewModel.navigateToSecond(uiModel)
 
-            expectMostRecentItem() shouldBe MainDestination.Second(uiModel.id)
+            expectMostRecentItem() shouldBe Second(uiModel.id)
         }
     }
 

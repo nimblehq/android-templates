@@ -1,7 +1,7 @@
 package co.nimblehq.sample.compose.util
 
-import android.util.Log
 import kotlinx.serialization.KSerializer
+import timber.log.Timber
 
 internal class DeepLinkMatcher<T : Any>(
     val request: DeepLinkRequest,
@@ -35,7 +35,7 @@ internal class DeepLinkMatcher<T : Any>(
                     val parsedValue = try {
                         candidateSegment.typeParser.invoke(requestedSegment)
                     } catch (e: IllegalArgumentException) {
-                        Log.e(TAG_LOG_ERROR, "Failed to parse path value:[$requestedSegment].", e)
+                        Timber.e(e, "Failed to parse path value:[$requestedSegment].")
                         return null
                     }
                     args[candidateSegment.stringValue] = parsedValue
@@ -52,7 +52,7 @@ internal class DeepLinkMatcher<T : Any>(
                 val queryParsedValue = try {
                     queryStringParser.invoke(query.value)
                 } catch (e: IllegalArgumentException) {
-                    Log.e(TAG_LOG_ERROR, "Failed to parse query name:[$name] value:[${query.value}].", e)
+                    Timber.e(e, "Failed to parse query name:[$name] value:[${query.value}].")
                     return null
                 }
                 args[name] = queryParsedValue
@@ -77,5 +77,3 @@ internal data class DeepLinkMatchResult<T : Any>(
     val serializer: KSerializer<T>,
     val args: Map<String, Any>,
 )
-
-const val TAG_LOG_ERROR = "SampleComposeDeepLink"
