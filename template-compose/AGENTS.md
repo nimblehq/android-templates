@@ -66,7 +66,7 @@ This project follows Google's official architecture guidance with a layered, mod
 
 ## Build Variants
 
-The app has two product flavors and two build types:
+The app has two product flavors and three build types:
 
 | Flavor | Purpose |
 |--------|---------|
@@ -138,16 +138,16 @@ fun `When user taps login, it shows loading`() { }
 | File | Purpose |
 |------|---------|
 | `app/.../MainActivity.kt` | Single activity entry point |
-| `app/.../ui/AppNavigation.kt` | Navigation graph |
+| `app/.../ui/AppNavGraph.kt` | Navigation graph |
 | `app/.../ui/base/BaseViewModel.kt` | ViewModel base class |
 | `data/.../remote/services/` | API service definitions |
-| `config/detekt/detekt.yml` | Detekt rules |
+| `detekt-config.yml` | Detekt rules |
 
 ## Configuration Files
 
 | File | Purpose |
 |------|---------|
-| `config/detekt/detekt.yml` | Static analysis rules |
+| `detekt-config.yml` | Static analysis rules |
 | `app/proguard-rules.pro` | ProGuard configuration |
 | `local.properties` | API keys (gitignored) |
 

@@ -23,7 +23,6 @@ Android project template generator using [Nimble Compass](https://nimblehq.co/co
 /scripts          → Generator script (new_project.kts)
 /template-compose → Source template (see its AGENTS.md for Android guidance)
 /sample-compose   → Example output (regenerate, don't edit directly)
-/build-logic      → Shared Gradle convention plugins
 /.github          → CI workflows and PR templates
 ```
 
@@ -81,7 +80,7 @@ cd scripts && kscript new_project.kts package-name=co.test.app app-name="Test Ap
 
 | File | Purpose |
 |------|---------|
-| `template-compose/config/detekt/detekt.yml` | Detekt rules |
+| `template-compose/detekt-config.yml` | Detekt rules |
 | `.github/workflows/run_detekt_and_unit_tests.yml` | CI pipeline (Detekt + unit tests) |
 | `.github/workflows/review_pull_request.yml` | PR automation and checks |
 | `.github/workflows/verify_newproject_script.yml` | Validate generator script on PRs |
