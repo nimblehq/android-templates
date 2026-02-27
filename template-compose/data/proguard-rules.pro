@@ -1,24 +1,5 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.kts.
+# ProGuard rules for data module
 #
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
-
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
-
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
-
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
-
-# Suppress: Missing classes detected while running R8 https://qiita.com/Nabe1216/items/05c9981fd12eb2fa1df0
--dontwarn java.lang.invoke.StringConcatFactory
+# Note: This module has minification disabled (isMinifyEnabled = false).
+# All ProGuard rules for this module are defined in consumer-rules.pro,
+# which is automatically applied to consuming modules (app) during their minification.

@@ -6,5 +6,6 @@ object Flavor {
 
 object BuildType {
     const val DEBUG = "debug"
+    const val PRERELEASE = "preRelease"
     const val RELEASE = "release"
 }
