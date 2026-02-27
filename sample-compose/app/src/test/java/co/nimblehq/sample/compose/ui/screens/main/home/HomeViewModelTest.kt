@@ -6,8 +6,8 @@ import co.nimblehq.sample.compose.domain.usecases.IsFirstTimeLaunchPreferencesUs
 import co.nimblehq.sample.compose.domain.usecases.UpdateFirstTimeLaunchPreferencesUseCase
 import co.nimblehq.sample.compose.test.CoroutineTestRule
 import co.nimblehq.sample.compose.test.MockUtil
-import co.nimblehq.sample.compose.ui.screens.main.MainDestination
 import co.nimblehq.sample.compose.ui.models.toUiModel
+import co.nimblehq.sample.compose.ui.screens.main.second.Second
 import co.nimblehq.sample.compose.util.DispatchersProvider
 import io.kotest.matchers.shouldBe
 import io.mockk.Runs
@@ -83,10 +83,11 @@ class HomeViewModelTest {
 
     @Test
     fun `When calling navigate to Second, it navigates to Second screen`() = runTest {
+        val uiModel = MockUtil.models[0].toUiModel()
         viewModel.navigator.test {
-            viewModel.navigateToSecond(MockUtil.models[0].toUiModel())
+            viewModel.navigateToSecond(uiModel)
 
-            expectMostRecentItem() shouldBe MainDestination.Second
+            expectMostRecentItem() shouldBe Second(uiModel.id)
         }
     }
 

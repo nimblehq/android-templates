@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName", "UnusedPrivateMember")
+
 package co.nimblehq.sample.compose.ui.screens.main.third
 
 import androidx.compose.foundation.layout.Box
@@ -11,18 +13,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation3.runtime.NavKey
 import co.nimblehq.sample.compose.R
-import co.nimblehq.sample.compose.ui.base.BaseDestination
+import co.nimblehq.sample.compose.navigation.Navigator
 import co.nimblehq.sample.compose.ui.base.BaseScreen
 import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.models.UiModel
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class Third(val model: UiModel) : NavKey
 
 @Composable
 fun ThirdScreen(
     model: UiModel?,
-    navigator: (destination: BaseDestination) -> Unit,
+    navigator: Navigator,
     viewModel: ThirdViewModel = hiltViewModel(),
 ) = BaseScreen(
     isDarkStatusBarIcons = true,

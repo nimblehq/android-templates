@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName", "UnusedPrivateMember")
+
 package co.nimblehq.sample.compose.ui.screens.main.second
 
 import androidx.compose.foundation.layout.Box
@@ -12,28 +14,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation3.runtime.NavKey
 import co.nimblehq.sample.compose.R
-import co.nimblehq.sample.compose.ui.base.BaseDestination
+import co.nimblehq.sample.compose.navigation.Navigator
 import co.nimblehq.sample.compose.ui.base.BaseScreen
-import co.nimblehq.sample.compose.ui.base.KeyResultOk
 import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.theme.AppTheme.dimensions
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class Second(val id: String) : NavKey
 
 @Composable
 fun SecondScreen(
     id: String,
-    navigator: (destination: BaseDestination) -> Unit,
+    navigator: Navigator,
     viewModel: SecondViewModel = hiltViewModel(),
+    onUpdateClick: () -> Unit = {},
 ) = BaseScreen(
     isDarkStatusBarIcons = false,
 ) {
     SecondScreenContent(
         id = id,
-        onUpdateClick = {
-            navigator(BaseDestination.Up().addResult(KeyResultOk, true))
-        },
+        onUpdateClick = onUpdateClick,
     )
 }
 
