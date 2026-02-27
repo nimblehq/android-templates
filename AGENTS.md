@@ -82,17 +82,18 @@ cd scripts && kscript new_project.kts package-name=co.test.app app-name="Test Ap
 | File | Purpose |
 |------|---------|
 | `template-compose/config/detekt/detekt.yml` | Detekt rules |
-| `build-logic/convention/` | Shared Gradle plugins |
-| `.github/workflows/android.yml` | CI pipeline |
-| `.github/workflows/danger.yml` | Danger PR checks |
+| `.github/workflows/run_detekt_and_unit_tests.yml` | CI pipeline (Detekt + unit tests) |
+| `.github/workflows/review_pull_request.yml` | PR automation and checks |
+| `.github/workflows/verify_newproject_script.yml` | Validate generator script on PRs |
 
 ## CI/CD
 
 **Pipeline:** Detekt → Lint → Tests → Coverage → Danger
 
 Workflows defined in `.github/workflows/`:
-- `android.yml` — Main CI (build, test, coverage)
-- `danger.yml` — PR automation and checks
+- `run_detekt_and_unit_tests.yml` — Main CI (Detekt + unit tests)
+- `review_pull_request.yml` — PR automation and checks
+- `verify_newproject_script.yml` — Validate generator script on PRs
 
 ## Template Placeholders
 

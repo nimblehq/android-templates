@@ -76,6 +76,7 @@ The app has two product flavors and two build types:
 | Build Type | Purpose |
 |------------|---------|
 | `debug` | Development with debug tools |
+| `preRelease` | Release-like build with debug certificate |
 | `release` | Optimized, ProGuard-enabled |
 
 **Default development:** `assembleStagingDebug`
@@ -149,7 +150,6 @@ fun `When user taps login, it shows loading`() { }
 | `config/detekt/detekt.yml` | Static analysis rules |
 | `app/proguard-rules.pro` | ProGuard configuration |
 | `local.properties` | API keys (gitignored) |
-| `build-logic/convention/` | Shared Gradle plugins |
 
 ## Code Style
 
