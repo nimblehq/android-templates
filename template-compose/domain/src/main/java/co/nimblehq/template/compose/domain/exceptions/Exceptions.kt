@@ -2,7 +2,7 @@ package co.nimblehq.template.compose.domain.exceptions
 
 import co.nimblehq.template.compose.domain.models.Error
 
-object NoConnectivityException : RuntimeException()
+class NoConnectivityException : RuntimeException()
 
 data class ApiException(
     val error: Error?,

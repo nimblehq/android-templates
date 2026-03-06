@@ -24,7 +24,7 @@ class ResponseMappingTest {
             flowTransform<Model> {
                 throw UnknownHostException()
             }.catch {
-                it shouldBe NoConnectivityException
+                it shouldBe NoConnectivityException()
             }.collect()
         }
 
@@ -34,7 +34,7 @@ class ResponseMappingTest {
             flowTransform<Model> {
                 throw InterruptedIOException()
             }.catch {
-                it shouldBe NoConnectivityException
+                it shouldBe NoConnectivityException()
             }.collect()
         }
 
