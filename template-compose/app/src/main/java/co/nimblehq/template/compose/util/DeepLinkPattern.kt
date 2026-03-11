@@ -13,6 +13,10 @@ import java.io.Serializable
 /**
  * Parse a supported deeplink and stores its metadata as a easily readable format
  *
+ * **Template note:** Navigation 3 does not natively support deep links. This is a custom
+ * implementation provided as template boilerplate. Register instances of this class in
+ * [MainActivity.deepLinkPatterns] to enable deep link handling.
+ *
  * The following notes applies specifically to this particular sample implementation:
  *
  * The supported deeplink is expected to be built from a serializable backstack key [T] that
@@ -103,13 +107,24 @@ internal class DeepLinkPattern<T : Any>(
 private typealias TypeParser = (String) -> Serializable
 
 
+private fun parseBooleanArg(s: String): Boolean = when (s.lowercase()) {
+    "true" -> true
+    "false" -> false
+    else -> throw IllegalArgumentException("Cannot parse '$s' as Boolean; expected 'true' or 'false'")
+}
+
+private fun parseCharArg(s: String): Char {
+    if (s.length == 1) return s[0]
+    throw IllegalArgumentException("Cannot parse '$s' as Char; expected exactly 1 character")
+}
+
 private fun getTypeParser(kind: SerialKind): TypeParser {
     return when (kind) {
         PrimitiveKind.STRING -> Any::toString
         PrimitiveKind.INT -> String::toInt
-        PrimitiveKind.BOOLEAN -> String::toBoolean
+        PrimitiveKind.BOOLEAN -> ::parseBooleanArg
         PrimitiveKind.BYTE -> String::toByte
-        PrimitiveKind.CHAR -> { it -> it.first() }
+        PrimitiveKind.CHAR -> ::parseCharArg
         PrimitiveKind.DOUBLE -> String::toDouble
         PrimitiveKind.FLOAT -> String::toFloat
         PrimitiveKind.LONG -> String::toLong

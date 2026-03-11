@@ -5,6 +5,9 @@ import android.net.Uri
 /**
  * Parse the requested Uri and store it in a easily readable format
  *
+ * **Template note:** Navigation 3 does not natively support deep links. This is part of a
+ * custom deep link implementation provided as template boilerplate.
+ *
  * @param uri the target deeplink uri to link to
  */
 internal class DeepLinkRequest(
@@ -20,7 +23,8 @@ internal class DeepLinkRequest(
      */
     val queries = buildMap {
         uri.queryParameterNames.forEach { argName ->
-            this[argName] = uri.getQueryParameter(argName) ?: ""
+            val value = uri.getQueryParameter(argName)
+            if (value != null) this[argName] = value
         }
     }
 

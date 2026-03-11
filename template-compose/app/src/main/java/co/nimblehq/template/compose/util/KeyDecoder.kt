@@ -13,6 +13,9 @@ import kotlinx.serialization.modules.SerializersModule
  * Decodes the list of arguments into a back stack key
  *
  * **IMPORTANT** This decoder assumes that all argument types are Primitives.
+ *
+ * **Template note:** Navigation 3 does not natively support deep links. This is part of a
+ * custom deep link implementation provided as template boilerplate.
  */
 internal class KeyDecoder(
     private val arguments: Map<String, Any>,
@@ -46,7 +49,7 @@ internal class KeyDecoder(
             val currentName = descriptor.getElementName(currentIndex)
             // Check if bundle has argument value. If so, we tell decoder to process
             // currentIndex. Otherwise, we skip this index and proceed to next index.
-            if (arguments.contains(currentName)) {
+            if (arguments[currentName] != null) {
                 elementIndex = currentIndex
                 elementName = currentName
                 return elementIndex

@@ -39,6 +39,17 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var entryProviderScopes: Set<@JvmSuppressWildcards EntryProviderInstaller>
 
+    /**
+     * List of deep link patterns supported by the app.
+     *
+     * **Template note:** Navigation 3 does not natively support deep links. Add [DeepLinkPattern]
+     * instances here for each deep link your app should handle.
+     *
+     * Example:
+     * ```
+     * DeepLinkPattern(Home.serializer(), Uri.parse("https://example.com/home"))
+     * ```
+     */
     internal val deepLinkPatterns: List<DeepLinkPattern<out Any>> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,9 +116,13 @@ class MainActivity : ComponentActivity() {
             val match = deepLinkPatterns.firstNotNullOfOrNull { pattern ->
                 DeepLinkMatcher(request, pattern).match()
             }
-            match?.let {
-                KeyDecoder(match.args)
-                    .decodeSerializableValue(match.serializer)
+            try {
+                match?.let {
+                    KeyDecoder(match.args).decodeSerializableValue(match.serializer)
+                }
+            } catch (_: Exception) {
+                intent.data = null
+                null
             }
         }
 

@@ -3,10 +3,11 @@ package co.nimblehq.template.compose.ui.screens
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import co.nimblehq.template.compose.navigation.Navigator
+import co.nimblehq.template.compose.ui.screens.main.home.Home
 import kotlin.reflect.KClass
 
-class FakeNavigator : Navigator {
-    override val backStack: SnapshotStateList<Any> = mutableStateListOf()
+class FakeNavigator(startDestination: Any = Home) : Navigator {
+    override val backStack: SnapshotStateList<Any> = mutableStateListOf(startDestination)
 
     override fun goTo(destination: Any) {
         backStack.add(destination)

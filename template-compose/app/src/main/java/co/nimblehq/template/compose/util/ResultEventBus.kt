@@ -25,7 +25,9 @@ import androidx.compose.runtime.compositionLocalOf
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
+import java.util.concurrent.ConcurrentHashMap
 
 // Reference: https://github.com/android/nav3-recipes/blob/main/app/src/main/java/com/example/nav3recipes/results/event/ResultEventBus.kt
 
@@ -47,7 +49,7 @@ object LocalResultEventBus {
      * Provides a [ResultEventBus] to the composition
      */
     infix fun provides(
-        bus: ResultEventBus
+        bus: ResultEventBus,
     ): ProvidedValue<ResultEventBus?> {
         return LocalResultEventBus.provides(bus)
     }
@@ -57,12 +59,29 @@ object LocalResultEventBus {
  * An EventBus for passing results between multiple sets of screens.
  *
  * It provides a solution for event based results.
+ *
+ * **Template note:** Navigation 3 does not have a built-in result passing mechanism
+ * between screens. Use [sendResult] to send a result from a source screen and [ResultEffect]
+ * in the destination screen to receive it. [ResultEventBus] is provided via
+ * [LocalResultEventBus] in [MainActivity].
  */
 class ResultEventBus {
     /**
      * Map from the result key to a channel of results.
+     *
+     * Cannot be private because it is accessed from public inline functions
+     * ([sendResult], [getResultFlow], [removeResult]).
      */
-    val channelMap: MutableMap<String, Channel<Any?>> = mutableMapOf()
+    @Suppress("MemberVisibilityCanBePrivate")
+    val channelMap = ConcurrentHashMap<String, Channel<Any?>>()
+
+    /**
+     * Ensures a channel exists for [resultKey] and returns its flow.
+     */
+    fun ensureChannelAndGetFlow(resultKey: String): Flow<Any?> =
+        channelMap.computeIfAbsent(resultKey) {
+            Channel(capacity = BUFFERED, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+        }.receiveAsFlow()
 
     /**
      * Provides a flow for the given resultKey.
@@ -74,17 +93,16 @@ class ResultEventBus {
      * Sends a result into the channel associated with the given resultKey.
      */
     inline fun <reified T> sendResult(resultKey: String = T::class.toString(), result: T) {
-        if (!channelMap.contains(resultKey)) {
-            channelMap[resultKey] = Channel(capacity = BUFFERED, onBufferOverflow = BufferOverflow.SUSPEND)
-        }
-        channelMap[resultKey]?.trySend(result)
+        channelMap.computeIfAbsent(resultKey) {
+            Channel(capacity = BUFFERED, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+        }.trySend(result)
     }
 
     /**
      * Removes all results associated with the given key from the store.
      */
     inline fun <reified T> removeResult(resultKey: String = T::class.toString()) {
-        channelMap[resultKey]?.close()
-        channelMap.remove(resultKey)
+        val channel = channelMap[resultKey] ?: return
+        while (channel.tryReceive().isSuccess) { /* drain buffered items */ }
     }
 }

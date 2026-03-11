@@ -65,8 +65,7 @@ javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "j
 # Kotlin
 kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
-kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
-
+kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinxSerialization" }
 # Log
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 chucker = { group = "com.github.chuckerteam.chucker", name = "library", version.ref = "chucker" }

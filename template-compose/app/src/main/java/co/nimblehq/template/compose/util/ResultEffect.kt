@@ -22,9 +22,13 @@ import androidx.compose.runtime.LaunchedEffect
 // Reference: https://github.com/android/nav3-recipes/blob/main/app/src/main/java/com/example/nav3recipes/results/event/ResultEffect.kt
 
 /**
- * An Effect to provide a result even between different screens
+ * An Effect to provide a result event between different screens.
  *
  * The trailing lambda provides the result from a flow of results.
+ *
+ * **Template note:** Navigation 3 does not have a built-in result passing mechanism between
+ * screens. Use this in a destination Composable to receive a result sent via
+ * [ResultEventBus.sendResult].
  *
  * @param resultEventBus the ResultEventBus to retrieve the result from. The default value
  * is read from the `LocalResultEventBus` composition local.
@@ -37,8 +41,9 @@ inline fun <reified T> ResultEffect(
     resultKey: String = T::class.toString(),
     crossinline onResult: suspend (T) -> Unit
 ) {
-    LaunchedEffect(resultKey, resultEventBus.channelMap[resultKey]) {
-        resultEventBus.getResultFlow<T>(resultKey)?.collect { result ->
+    LaunchedEffect(resultKey) {
+        @Suppress("UNCHECKED_CAST")
+        resultEventBus.ensureChannelAndGetFlow(resultKey).collect { result ->
             onResult.invoke(result as T)
         }
     }

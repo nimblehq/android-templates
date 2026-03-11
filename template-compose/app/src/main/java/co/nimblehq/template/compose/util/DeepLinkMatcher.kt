@@ -5,6 +5,17 @@ package co.nimblehq.template.compose.util
 import kotlinx.serialization.KSerializer
 import timber.log.Timber
 
+/**
+ * Matches a [DeepLinkRequest] against a [DeepLinkPattern].
+ *
+ * **Template note:** Navigation 3 does not natively support deep links. This is a custom
+ * implementation provided as template boilerplate. Register [DeepLinkPattern] instances in
+ * [MainActivity.deepLinkPatterns] to enable deep link handling.
+ *
+ * @param T the backstack key type associated with the matched deeplink
+ * @param request the incoming deeplink request to match
+ * @param deepLinkPattern the supported deeplink pattern to match against
+ */
 internal class DeepLinkMatcher<T : Any>(
     val request: DeepLinkRequest,
     val deepLinkPattern: DeepLinkPattern<T>,
@@ -15,6 +26,8 @@ internal class DeepLinkMatcher<T : Any>(
      * Returns a [DeepLinkMatchResult] if this matches the pattern, returns null otherwise
      */
     fun match(): DeepLinkMatchResult<T>? {
+        if (request.uri.scheme != deepLinkPattern.uriPattern.scheme) return null
+        if (request.uri.host != deepLinkPattern.uriPattern.host) return null
         if (request.pathSegments.size != deepLinkPattern.pathSegments.size) return null
         // exact match (url does not contain any arguments)
         if (request.uri == deepLinkPattern.uriPattern)
@@ -37,7 +50,9 @@ internal class DeepLinkMatcher<T : Any>(
                     val parsedValue = try {
                         candidateSegment.typeParser.invoke(requestedSegment)
                     } catch (e: IllegalArgumentException) {
-                        Timber.e(e, "Failed to parse path value:[$requestedSegment].")
+                        val message = "Failed to parse path arg [${candidateSegment.stringValue}]" +
+                            " in pattern [${deepLinkPattern.uriPattern}]."
+                        Timber.e(e, message)
                         return null
                     }
                     args[candidateSegment.stringValue] = parsedValue
@@ -59,7 +74,7 @@ internal class DeepLinkMatcher<T : Any>(
             val queryParsedValue = try {
                 queryStringParser.invoke(query.value)
             } catch (e: IllegalArgumentException) {
-                Timber.e(e, "Failed to parse query name:[$name] value:[${query.value}].")
+                Timber.e(e, "Failed to parse query arg [$name] in pattern [${deepLinkPattern.uriPattern}].")
                 return false
             }
             args[name] = queryParsedValue
