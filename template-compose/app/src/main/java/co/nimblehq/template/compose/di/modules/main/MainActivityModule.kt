@@ -1,11 +1,10 @@
 package co.nimblehq.template.compose.di.modules.main
 
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import co.nimblehq.template.compose.navigation.EntryProviderInstaller
 import co.nimblehq.template.compose.navigation.Navigator
 import co.nimblehq.template.compose.navigation.NavigatorImpl
-import co.nimblehq.template.compose.ui.screens.main.home.Home
-import co.nimblehq.template.compose.ui.screens.main.home.HomeScreen
+import co.nimblehq.template.compose.navigation.entries.Home
+import co.nimblehq.template.compose.navigation.entries.homeScreenEntry
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,11 +23,6 @@ object MainActivityModule {
     @IntoSet
     @Provides
     fun provideEntryProviderInstaller(navigator: Navigator): EntryProviderInstaller = {
-        entry<Home> {
-            HomeScreen(
-                viewModel = hiltViewModel(),
-                navigator = navigator
-            )
-        }
+        homeScreenEntry(navigator)
     }
 }

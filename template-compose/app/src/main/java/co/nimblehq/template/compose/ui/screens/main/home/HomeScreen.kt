@@ -1,5 +1,3 @@
-@file:Suppress("MatchingDeclarationName")
-
 package co.nimblehq.template.compose.ui.screens.main.home
 
 import androidx.compose.foundation.layout.Arrangement
@@ -17,7 +15,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation3.runtime.NavKey
 import co.nimblehq.template.compose.R
 import co.nimblehq.template.compose.extensions.collectAsEffect
 import co.nimblehq.template.compose.navigation.Navigator
@@ -26,10 +23,9 @@ import co.nimblehq.template.compose.ui.models.UiModel
 import co.nimblehq.template.compose.ui.showToast
 import co.nimblehq.template.compose.ui.theme.AppTheme.dimensions
 import co.nimblehq.template.compose.ui.theme.ComposeTheme
-import kotlinx.collections.immutable.*
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import timber.log.Timber
-
-data object Home : NavKey
 
 @Composable
 fun HomeScreen(
@@ -51,7 +47,7 @@ fun HomeScreen(
 @Composable
 private fun HomeScreenContent(
     title: String,
-    uiModels: ImmutableList<UiModel>
+    uiModels: ImmutableList<UiModel>,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
