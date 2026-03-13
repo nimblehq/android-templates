@@ -13,27 +13,28 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.nimblehq.template.compose.R
 import co.nimblehq.template.compose.extensions.collectAsEffect
-import co.nimblehq.template.compose.ui.base.BaseDestination
+import co.nimblehq.template.compose.navigation.Navigator
 import co.nimblehq.template.compose.ui.base.BaseScreen
 import co.nimblehq.template.compose.ui.models.UiModel
 import co.nimblehq.template.compose.ui.showToast
 import co.nimblehq.template.compose.ui.theme.AppTheme.dimensions
 import co.nimblehq.template.compose.ui.theme.ComposeTheme
-import kotlinx.collections.immutable.*
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import timber.log.Timber
 
 @Composable
 fun HomeScreen(
+    navigator: Navigator,
     viewModel: HomeViewModel = hiltViewModel(),
-    navigator: (destination: BaseDestination) -> Unit,
 ) = BaseScreen {
     val context = LocalContext.current
     viewModel.error.collectAsEffect { e -> e.showToast(context) }
-    viewModel.navigator.collectAsEffect { destination -> navigator(destination) }
+    viewModel.navigator.collectAsEffect { destination -> navigator.goTo(destination) }
 
     val uiModels: ImmutableList<UiModel> by viewModel.uiModels.collectAsStateWithLifecycle()
 
@@ -46,7 +47,7 @@ fun HomeScreen(
 @Composable
 private fun HomeScreenContent(
     title: String,
-    uiModels: ImmutableList<UiModel>
+    uiModels: ImmutableList<UiModel>,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),

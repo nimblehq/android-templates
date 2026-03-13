@@ -25,7 +25,7 @@ fun <T> flowTransform(@BuilderInference block: suspend FlowCollector<T>.() -> T)
 private fun Throwable.mapError(): Throwable {
     return when (this) {
         is UnknownHostException,
-        is InterruptedIOException -> NoConnectivityException
+        is InterruptedIOException -> NoConnectivityException()
         is HttpException -> {
             val errorResponse = parseErrorResponse(response())
             ApiException(

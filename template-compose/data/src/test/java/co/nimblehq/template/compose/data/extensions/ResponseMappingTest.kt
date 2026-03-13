@@ -6,6 +6,7 @@ import co.nimblehq.template.compose.domain.exceptions.ApiException
 import co.nimblehq.template.compose.domain.exceptions.NoConnectivityException
 import co.nimblehq.template.compose.domain.models.Model
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -24,7 +25,7 @@ class ResponseMappingTest {
             flowTransform<Model> {
                 throw UnknownHostException()
             }.catch {
-                it shouldBe NoConnectivityException
+                it.shouldBeInstanceOf<NoConnectivityException>()
             }.collect()
         }
 
@@ -34,7 +35,7 @@ class ResponseMappingTest {
             flowTransform<Model> {
                 throw InterruptedIOException()
             }.catch {
-                it shouldBe NoConnectivityException
+                it.shouldBeInstanceOf<NoConnectivityException>()
             }.collect()
         }
 
