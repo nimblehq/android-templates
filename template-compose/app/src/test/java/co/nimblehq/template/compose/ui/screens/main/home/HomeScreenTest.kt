@@ -8,7 +8,7 @@ import co.nimblehq.template.compose.R
 import co.nimblehq.template.compose.domain.usecases.UseCase
 import co.nimblehq.template.compose.test.MockUtil
 import co.nimblehq.template.compose.ui.screens.BaseScreenTest
-import co.nimblehq.template.compose.ui.screens.FakeNavigator
+import co.nimblehq.template.compose.navigation.FakeNavigator
 import co.nimblehq.template.compose.ui.screens.MainActivity
 import co.nimblehq.template.compose.ui.theme.ComposeTheme
 import io.kotest.matchers.shouldBe

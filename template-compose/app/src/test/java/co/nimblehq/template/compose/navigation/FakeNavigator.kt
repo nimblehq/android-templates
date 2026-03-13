@@ -1,8 +1,7 @@
-package co.nimblehq.template.compose.ui.screens
+package co.nimblehq.template.compose.navigation
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import co.nimblehq.template.compose.navigation.Navigator
 import co.nimblehq.template.compose.navigation.entries.Home
 import kotlin.reflect.KClass
 

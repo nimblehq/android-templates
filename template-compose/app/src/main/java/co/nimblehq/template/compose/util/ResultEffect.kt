@@ -41,10 +41,10 @@ inline fun <reified T> ResultEffect(
     resultKey: String = T::class.toString(),
     crossinline onResult: suspend (T) -> Unit
 ) {
-    LaunchedEffect(resultKey) {
+    LaunchedEffect(resultKey, resultEventBus) {
         @Suppress("UNCHECKED_CAST")
         resultEventBus.ensureChannelAndGetFlow(resultKey).collect { result ->
-            onResult.invoke(result as T)
+            onResult.invoke(result as? T ?: return@collect)
         }
     }
 }
