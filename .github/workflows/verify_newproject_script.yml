@@ -2,7 +2,7 @@ name: Verify newproject script
 
 on:
   pull_request:
-    types: [ opened, reopened, synchronize ]
+    types: [ opened, reopened, synchronize, ready_for_review ]
     branches: [ develop ]
 
 concurrency:
@@ -12,6 +12,7 @@ concurrency:
 jobs:
   verify_newproject_script:
     name: Verify newproject script
+    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
