@@ -37,8 +37,6 @@ fun HomeScreen(
     onNavigateToSecondScreen: (id: String) -> Unit,
     onNavigateToThirdScreen: (UiModel) -> Unit,
     isResultOk: Boolean = false,
-    navigator: (destination: BaseDestination) -> Unit,
-    viewModel: HomeViewModel = hiltViewModel(),
 ) = BaseScreen(
     isDarkStatusBarIcons = true,
 ) {

@@ -22,8 +22,6 @@ import co.nimblehq.sample.compose.ui.theme.ComposeTheme
 fun ThirdScreen(
     viewModel: ThirdViewModel = hiltViewModel(),
     model: UiModel?,
-    navigator: (destination: BaseDestination) -> Unit,
-    viewModel: ThirdViewModel = hiltViewModel(),
 ) = BaseScreen(
     isDarkStatusBarIcons = true,
 ) {

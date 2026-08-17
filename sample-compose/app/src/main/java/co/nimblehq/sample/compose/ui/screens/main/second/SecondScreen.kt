@@ -24,8 +24,6 @@ fun SecondScreen(
     viewModel: SecondViewModel = hiltViewModel(),
     onClickUpdate: () -> Unit,
     id: String,
-    navigator: (destination: BaseDestination) -> Unit,
-    viewModel: SecondViewModel = hiltViewModel(),
 ) = BaseScreen(
     isDarkStatusBarIcons = false,
 ) {
