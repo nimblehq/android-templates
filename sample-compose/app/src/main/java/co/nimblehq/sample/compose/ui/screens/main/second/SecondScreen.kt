@@ -14,9 +14,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import co.nimblehq.sample.compose.R
+import co.nimblehq.sample.compose.extensions.collectAsEffect
 import co.nimblehq.sample.compose.ui.base.BaseDestination
 import co.nimblehq.sample.compose.ui.base.BaseScreen
-import co.nimblehq.sample.compose.ui.base.KeyResultOk
 import co.nimblehq.sample.compose.ui.common.AppBar
 import co.nimblehq.sample.compose.ui.theme.AppTheme.dimensions
 import co.nimblehq.sample.compose.ui.theme.ComposeTheme
@@ -29,18 +29,22 @@ fun SecondScreen(
 ) = BaseScreen(
     isDarkStatusBarIcons = false,
 ) {
+    viewModel.viewEffect.collectAsEffect { effect ->
+        when (effect) {
+            is SecondViewEffect.Navigate -> navigator(effect.destination)
+        }
+    }
+
     SecondScreenContent(
         id = id,
-        onUpdateClick = {
-            navigator(BaseDestination.Up().addResult(KeyResultOk, true))
-        },
+        onIntent = viewModel::onIntent,
     )
 }
 
 @Composable
 private fun SecondScreenContent(
     id: String,
-    onUpdateClick: () -> Unit,
+    onIntent: (SecondViewIntent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -60,7 +64,7 @@ private fun SecondScreenContent(
                 )
 
                 Button(
-                    onClick = { onUpdateClick() },
+                    onClick = { onIntent(SecondViewIntent.UpdateClick) },
                     modifier = Modifier.padding(dimensions.spacingMedium)
                 ) {
                     Text(
@@ -78,7 +82,7 @@ private fun SecondScreenPreview() {
     ComposeTheme {
         SecondScreenContent(
             id = "1",
-            onUpdateClick = {},
+            onIntent = {},
         )
     }
 }

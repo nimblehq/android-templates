@@ -6,18 +6,19 @@ import co.nimblehq.sample.compose.domain.usecases.IsFirstTimeLaunchPreferencesUs
 import co.nimblehq.sample.compose.domain.usecases.UpdateFirstTimeLaunchPreferencesUseCase
 import co.nimblehq.sample.compose.test.CoroutineTestRule
 import co.nimblehq.sample.compose.test.MockUtil
-import co.nimblehq.sample.compose.ui.screens.main.MainDestination
 import co.nimblehq.sample.compose.ui.models.toUiModel
+import co.nimblehq.sample.compose.ui.screens.main.MainDestination
 import co.nimblehq.sample.compose.util.DispatchersProvider
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -52,21 +53,23 @@ class HomeViewModelTest {
 
     @Test
     fun `When loading models successfully, it shows the model list`() = runTest {
-        viewModel.uiModels.test {
-            expectMostRecentItem() shouldBe MockUtil.models.map { it.toUiModel() }
+        viewModel.viewState.test {
+            expectMostRecentItem().uiModels shouldBe MockUtil.models.map { it.toUiModel() }
         }
     }
 
     @Test
-    fun `When loading models failed, it shows the corresponding error`() = runTest {
+    fun `When loading models failed, it sends the corresponding error effect`() = runTest {
         val error = Exception()
         every { mockGetModelsUseCase() } returns flow { throw error }
         initViewModel(dispatchers = CoroutineTestRule(StandardTestDispatcher()).testDispatcherProvider)
 
-        viewModel.error.test {
+        viewModel.viewEffect.test {
             advanceUntilIdle()
 
-            expectMostRecentItem() shouldBe error
+            val effect = expectMostRecentItem()
+            effect.shouldBeInstanceOf<HomeViewEffect.ShowError>()
+            effect.error shouldBe error
         }
     }
 
@@ -74,52 +77,69 @@ class HomeViewModelTest {
     fun `When loading models, it shows and hides loading correctly`() = runTest {
         initViewModel(dispatchers = CoroutineTestRule(StandardTestDispatcher()).testDispatcherProvider)
 
-        viewModel.isLoading.test {
-            awaitItem() shouldBe false
-            awaitItem() shouldBe true
-            awaitItem() shouldBe false
+        viewModel.viewState.test {
+            awaitItem().isLoading shouldBe false
+            awaitItem().isLoading shouldBe true
+            awaitItem().uiModels shouldBe MockUtil.models.map { it.toUiModel() }.toImmutableList()
+            awaitItem().isLoading shouldBe false
         }
     }
 
     @Test
-    fun `When calling navigate to Second, it navigates to Second screen`() = runTest {
-        viewModel.navigator.test {
-            viewModel.navigateToSecond(MockUtil.models[0].toUiModel())
+    fun `When receiving the ItemClick intent, it navigates to Second screen`() = runTest {
+        viewModel.viewEffect.test {
+            viewModel.onIntent(HomeViewIntent.ItemClick(MockUtil.models[0].toUiModel()))
 
-            expectMostRecentItem() shouldBe MainDestination.Second
+            expectMostRecentItem() shouldBe HomeViewEffect.Navigate(MainDestination.Second)
         }
     }
 
     @Test
-    fun `When initializing the ViewModel, it emits whether the app is launched for the first time accordingly`() =
+    fun `When receiving the ItemLongClick intent, it navigates to Third screen`() = runTest {
+        viewModel.viewEffect.test {
+            viewModel.onIntent(HomeViewIntent.ItemLongClick(MockUtil.models[0].toUiModel()))
+
+            expectMostRecentItem() shouldBe HomeViewEffect.Navigate(MainDestination.Third)
+        }
+    }
+
+    @Test
+    fun `When launching the app for the first time, it shows the message and updates the preference`() =
         runTest {
-            viewModel.isFirstTimeLaunch.first() shouldBe isFirstTimeLaunch
+            every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flowOf(true)
+            initViewModel()
+
+            viewModel.viewEffect.test {
+                awaitItem() shouldBe HomeViewEffect.ShowFirstTimeLaunchMessage
+            }
+            coVerify(exactly = 1) {
+                mockUpdateFirstTimeLaunchPreferencesUseCase(false)
+            }
         }
 
     @Test
-    fun `When initializing the ViewModel and isFirstTimeLaunchPreferencesUseCase returns error, it shows the corresponding error`() =
+    fun `When launching the app NOT for the first time, it does not show the message or update the preference`() =
+        runTest {
+            coVerify(exactly = 0) {
+                mockUpdateFirstTimeLaunchPreferencesUseCase(any())
+            }
+        }
+
+    @Test
+    fun `When initializing the ViewModel and isFirstTimeLaunchPreferencesUseCase returns error, it sends the corresponding error effect`() =
         runTest {
             val error = Exception()
             every { mockIsFirstTimeLaunchPreferencesUseCase() } returns flow { throw error }
 
             initViewModel(dispatchers = CoroutineTestRule(StandardTestDispatcher()).testDispatcherProvider)
 
-            viewModel.error.test {
+            viewModel.viewEffect.test {
                 advanceUntilIdle()
 
-                expectMostRecentItem() shouldBe error
+                val effect = expectMostRecentItem()
+                effect.shouldBeInstanceOf<HomeViewEffect.ShowError>()
+                effect.error shouldBe error
             }
-        }
-
-    @Test
-    fun `When launching the app for the first time, it executes the use case and emits value accordingly`() =
-        runTest {
-            viewModel.onFirstTimeLaunch()
-
-            coVerify(exactly = 1) {
-                mockUpdateFirstTimeLaunchPreferencesUseCase(false)
-            }
-            viewModel.isFirstTimeLaunch.first() shouldBe false
         }
 
     private fun initViewModel(dispatchers: DispatchersProvider = coroutinesRule.testDispatcherProvider) {

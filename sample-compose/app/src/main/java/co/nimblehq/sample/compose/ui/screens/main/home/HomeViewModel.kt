@@ -10,15 +10,13 @@ import co.nimblehq.sample.compose.ui.models.toUiModel
 import co.nimblehq.sample.compose.ui.screens.main.MainDestination
 import co.nimblehq.sample.compose.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,46 +25,44 @@ class HomeViewModel @Inject constructor(
     isFirstTimeLaunchPreferencesUseCase: IsFirstTimeLaunchPreferencesUseCase,
     private val updateFirstTimeLaunchPreferencesUseCase: UpdateFirstTimeLaunchPreferencesUseCase,
     private val dispatchersProvider: DispatchersProvider,
-) : BaseViewModel() {
-
-    private val _uiModels = MutableStateFlow<ImmutableList<UiModel>>(persistentListOf())
-    val uiModels = _uiModels.asStateFlow()
-
-    private val _isFirstTimeLaunch = MutableStateFlow(false)
-    val isFirstTimeLaunch = _isFirstTimeLaunch.asStateFlow()
+) : BaseViewModel<HomeViewState, HomeViewIntent, HomeViewEffect>(HomeViewState()) {
 
     init {
         getModelsUseCase()
-            .injectLoading()
+            .onStart { updateViewState { it.copy(isLoading = true) } }
             .onEach { result ->
-                val uiModels = result.map { it.toUiModel() }
-                _uiModels.emit(uiModels.toImmutableList())
+                val uiModels = result.map { it.toUiModel() }.toImmutableList()
+                updateViewState { it.copy(uiModels = uiModels) }
             }
+            .onCompletion { updateViewState { it.copy(isLoading = false) } }
             .flowOn(dispatchersProvider.io)
-            .catch { e -> _error.emit(e) }
+            .catch { e -> sendViewEffect(HomeViewEffect.ShowError(e)) }
             .launchIn(viewModelScope)
 
         isFirstTimeLaunchPreferencesUseCase()
             .onEach { isFirstTimeLaunch ->
-                _isFirstTimeLaunch.emit(isFirstTimeLaunch)
+                if (isFirstTimeLaunch) {
+                    sendViewEffect(HomeViewEffect.ShowFirstTimeLaunchMessage)
+                    updateFirstTimeLaunchPreferencesUseCase(false)
+                }
             }
             .flowOn(dispatchersProvider.io)
-            .catch { e -> _error.emit(e) }
+            .catch { e -> sendViewEffect(HomeViewEffect.ShowError(e)) }
             .launchIn(viewModelScope)
     }
 
-    fun onFirstTimeLaunch() {
-        launch(dispatchersProvider.io) {
-            updateFirstTimeLaunchPreferencesUseCase(false)
-            _isFirstTimeLaunch.emit(false)
+    override fun onIntent(intent: HomeViewIntent) {
+        when (intent) {
+            is HomeViewIntent.ItemClick -> navigateToSecond(intent.uiModel)
+            is HomeViewIntent.ItemLongClick -> navigateToThird(intent.uiModel)
         }
     }
 
-    fun navigateToSecond(uiModel: UiModel) {
-        launch { _navigator.emit(MainDestination.Second.createRoute(uiModel.id)) }
+    private fun navigateToSecond(uiModel: UiModel) {
+        sendViewEffect(HomeViewEffect.Navigate(MainDestination.Second.createRoute(uiModel.id)))
     }
 
-    fun navigateToThird(uiModel: UiModel) {
-        launch { _navigator.emit(MainDestination.Third.addParcel(uiModel)) }
+    private fun navigateToThird(uiModel: UiModel) {
+        sendViewEffect(HomeViewEffect.Navigate(MainDestination.Third.addParcel(uiModel)))
     }
 }

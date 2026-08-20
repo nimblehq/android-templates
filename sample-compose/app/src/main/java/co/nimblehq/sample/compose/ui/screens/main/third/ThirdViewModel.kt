@@ -5,4 +5,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ThirdViewModel @Inject constructor() : BaseViewModel()
+class ThirdViewModel @Inject constructor() :
+    BaseViewModel<ThirdViewState, ThirdViewIntent, ThirdViewEffect>(ThirdViewState) {
+
+    override fun onIntent(intent: ThirdViewIntent) = Unit
+}

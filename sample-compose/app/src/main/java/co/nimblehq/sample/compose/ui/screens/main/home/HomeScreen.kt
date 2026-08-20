@@ -18,7 +18,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.nimblehq.sample.compose.R
 import co.nimblehq.sample.compose.extensions.collectAsEffect
 import co.nimblehq.sample.compose.extensions.showToast
-import co.nimblehq.sample.compose.lib.IsLoading
 import co.nimblehq.sample.compose.ui.base.BaseDestination
 import co.nimblehq.sample.compose.ui.base.BaseScreen
 import co.nimblehq.sample.compose.ui.common.AppBar
@@ -29,7 +28,6 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
@@ -41,19 +39,16 @@ fun HomeScreen(
     isDarkStatusBarIcons = true,
 ) {
     val context = LocalContext.current
-    viewModel.error.collectAsEffect { e -> e.showToast(context) }
-    viewModel.navigator.collectAsEffect { destination -> navigator(destination) }
-
-    val isLoading: IsLoading by viewModel.isLoading.collectAsStateWithLifecycle()
-    val uiModels: ImmutableList<UiModel> by viewModel.uiModels.collectAsStateWithLifecycle()
-    val isFirstTimeLaunch: Boolean by viewModel.isFirstTimeLaunch.collectAsStateWithLifecycle()
-
-    LaunchedEffect(isFirstTimeLaunch) {
-        if (isFirstTimeLaunch) {
-            context.showToast(context.getString(R.string.message_first_time_launch))
-            viewModel.onFirstTimeLaunch()
+    viewModel.viewEffect.collectAsEffect { effect ->
+        when (effect) {
+            is HomeViewEffect.Navigate -> navigator(effect.destination)
+            is HomeViewEffect.ShowError -> effect.error.showToast(context)
+            is HomeViewEffect.ShowFirstTimeLaunchMessage ->
+                context.showToast(context.getString(R.string.message_first_time_launch))
         }
     }
+
+    val viewState: HomeViewState by viewModel.viewState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         if (isResultOk) {
@@ -64,10 +59,8 @@ fun HomeScreen(
     CameraPermission()
 
     HomeScreenContent(
-        uiModels = uiModels,
-        isLoading = isLoading,
-        onItemClick = viewModel::navigateToSecond,
-        onItemLongClick = viewModel::navigateToThird
+        viewState = viewState,
+        onIntent = viewModel::onIntent,
     )
 }
 
@@ -96,10 +89,8 @@ private fun CameraPermission() {
 
 @Composable
 private fun HomeScreenContent(
-    uiModels: ImmutableList<UiModel>,
-    isLoading: IsLoading,
-    onItemClick: (UiModel) -> Unit,
-    onItemLongClick: (UiModel) -> Unit,
+    viewState: HomeViewState,
+    onIntent: (HomeViewIntent) -> Unit,
 ) {
     Scaffold(topBar = {
         AppBar(R.string.home_title_bar)
@@ -109,13 +100,13 @@ private fun HomeScreenContent(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            if (isLoading) {
+            if (viewState.isLoading) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             } else {
                 ItemList(
-                    uiModels = uiModels,
-                    onItemClick = onItemClick,
-                    onItemLongClick = onItemLongClick
+                    uiModels = viewState.uiModels,
+                    onItemClick = { onIntent(HomeViewIntent.ItemClick(it)) },
+                    onItemLongClick = { onIntent(HomeViewIntent.ItemLongClick(it)) }
                 )
             }
         }
@@ -127,10 +118,10 @@ private fun HomeScreenContent(
 private fun HomeScreenPreview() {
     ComposeTheme {
         HomeScreenContent(
-            uiModels = persistentListOf(UiModel("1", "name1"), UiModel("2", "name2"), UiModel("3", "name3")),
-            isLoading = false,
-            onItemClick = {},
-            onItemLongClick = {}
+            viewState = HomeViewState(
+                uiModels = persistentListOf(UiModel("1", "name1"), UiModel("2", "name2"), UiModel("3", "name3")),
+            ),
+            onIntent = {}
         )
     }
 }
