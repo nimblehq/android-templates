@@ -6,7 +6,6 @@ import co.nimblehq.template.compose.navigation.entry.listDestinationEntry
 import co.nimblehq.template.compose.navigation.navigator.AppNavigator
 import co.nimblehq.template.compose.navigation.navigator.AppNavigatorImpl
 import co.nimblehq.template.compose.navigation.navigator.EntryProviderInstaller
-import co.nimblehq.template.compose.navigation.navigator.Up
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,8 +23,13 @@ class NavigationModule {
 
     @IntoSet
     @Provides
-    fun provideEntryProviderInstaller(navigator: AppNavigator): EntryProviderInstaller = {
-        homeDestinationEntry(onNavigate = { destination -> if (destination is Up) navigator.goBack() else  navigator.goTo(destination)})
-        listDestinationEntry(onNavigate = { destination -> if (destination is Up) navigator.goBack() else  navigator.goTo(destination) })
+    fun provideHomeEntryProviderInstaller(navigator: AppNavigator): EntryProviderInstaller = {
+        homeDestinationEntry(onNavigate = navigator::goTo)
+    }
+
+    @IntoSet
+    @Provides
+    fun provideListEntryProviderInstaller(navigator: AppNavigator): EntryProviderInstaller = {
+        listDestinationEntry(onNavigateBack = navigator::goBack)
     }
 }

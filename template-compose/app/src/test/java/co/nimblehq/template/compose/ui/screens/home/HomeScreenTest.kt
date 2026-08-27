@@ -56,9 +56,8 @@ class HomeScreenTest {
             ComposeTheme {
                 HomeScreen(
                     viewModel = viewModel,
-                    onNavigate = {},
-
-                    )
+                    onNavigate = mockNavigator::goTo,
+                )
             }
         }
     }

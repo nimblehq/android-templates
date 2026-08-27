@@ -75,6 +75,10 @@ abstract class BaseViewModel<INTENT : BaseIntent, UI_MODEL>(
         emitEvent(NavigationEvent(destination))
     }
 
+    protected fun emitNavigateBack() {
+        emitEvent(NavigateBackEvent)
+    }
+
     protected fun emitError(error: Throwable) {
         emitEvent(ErrorEvent(error))
     }

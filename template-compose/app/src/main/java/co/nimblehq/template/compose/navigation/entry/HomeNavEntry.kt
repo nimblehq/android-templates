@@ -6,7 +6,6 @@ import androidx.navigation3.runtime.NavKey
 import co.nimblehq.template.compose.ui.screens.home.HomeScreen
 import kotlinx.serialization.Serializable
 
-
 @Serializable
 data object HomeDestination : NavKey
 

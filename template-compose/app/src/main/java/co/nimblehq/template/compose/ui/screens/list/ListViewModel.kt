@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import co.nimblehq.template.compose.common.BaseViewModel
 import co.nimblehq.template.compose.common.BaseViewState
 import co.nimblehq.template.compose.domain.usecases.UseCase
-import co.nimblehq.template.compose.navigation.navigator.Up
 import co.nimblehq.template.compose.ui.screens.list.model.ListUiModel
 import co.nimblehq.template.compose.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,7 +27,7 @@ class ListViewModel @Inject constructor(
     override fun handleIntent(intent: ListIntent) {
         when (intent) {
             is ListIntent.LoadModels -> loadModels()
-            is ListIntent.NavigateBack -> emitNavigation(Up)
+            is ListIntent.NavigateBack -> emitNavigateBack()
         }
     }
 

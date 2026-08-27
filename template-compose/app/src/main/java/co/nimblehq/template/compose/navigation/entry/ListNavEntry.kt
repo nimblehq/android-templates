@@ -9,8 +9,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object ListDestination : NavKey
 
-fun EntryProviderScope<Any>.listDestinationEntry(onNavigate: (NavKey) -> Unit) {
+fun EntryProviderScope<Any>.listDestinationEntry(onNavigateBack: () -> Unit) {
     entry<ListDestination> {
-        ListScreen(viewModel = hiltViewModel(), onNavigate = onNavigate)
+        ListScreen(viewModel = hiltViewModel(), onNavigateBack = onNavigateBack)
     }
 }

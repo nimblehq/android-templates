@@ -7,3 +7,5 @@ abstract class BaseEvent
 data class ErrorEvent(val error: Throwable) : BaseEvent()
 
 data class NavigationEvent(val destination: NavKey) : BaseEvent()
+
+data object NavigateBackEvent : BaseEvent()

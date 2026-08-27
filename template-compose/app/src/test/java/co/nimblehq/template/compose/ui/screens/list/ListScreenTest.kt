@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.test.core.app.ApplicationProvider
 import co.nimblehq.template.compose.R
 import co.nimblehq.template.compose.domain.usecases.UseCase
@@ -13,6 +14,7 @@ import co.nimblehq.template.compose.ui.theme.ComposeTheme
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Rule
@@ -57,12 +59,25 @@ class ListScreenTest {
         ShadowToast.showedToast(context.getString(R.string.error_generic)) shouldBe true
     }
 
-    private fun initComposable() {
+    @Test
+    fun `When tapping the go back button, it navigates back`() {
+        every { mockUseCase() } returns flowOf(MockUtil.models)
+        val onNavigateBack: () -> Unit = mockk(relaxed = true)
+
+        initComposable(onNavigateBack = onNavigateBack)
+
+        composeRule.onNodeWithText(context.getString(R.string.go_back)).performClick()
+        composeRule.waitForIdle()
+
+        verify { onNavigateBack() }
+    }
+
+    private fun initComposable(onNavigateBack: () -> Unit = {}) {
         viewModel = ListViewModel(coroutinesRule.testDispatcherProvider, mockUseCase)
 
         composeRule.setContent {
             ComposeTheme {
-                ListScreen(viewModel = viewModel, onNavigate = {})
+                ListScreen(viewModel = viewModel, onNavigateBack = onNavigateBack)
             }
         }
     }

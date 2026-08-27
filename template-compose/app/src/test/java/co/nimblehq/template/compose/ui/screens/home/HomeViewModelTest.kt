@@ -2,6 +2,7 @@ package co.nimblehq.template.compose.ui.screens.home
 
 import app.cash.turbine.test
 import co.nimblehq.template.compose.common.NavigationEvent
+import co.nimblehq.template.compose.navigation.entry.ListDestination
 import co.nimblehq.template.compose.test.CoroutineTestRule
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -28,7 +29,7 @@ class HomeViewModelTest {
         viewModel.events.test {
             viewModel.setIntent(HomeIntent.NavigateToList)
 
-            expectMostRecentItem() shouldBe NavigationEvent(HomeDestination.List)
+            expectMostRecentItem() shouldBe NavigationEvent(ListDestination)
         }
     }
 }

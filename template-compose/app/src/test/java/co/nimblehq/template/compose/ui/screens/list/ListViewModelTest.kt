@@ -3,6 +3,7 @@ package co.nimblehq.template.compose.ui.screens.list
 import app.cash.turbine.test
 import co.nimblehq.template.compose.common.BaseViewState
 import co.nimblehq.template.compose.common.ErrorEvent
+import co.nimblehq.template.compose.common.NavigateBackEvent
 import co.nimblehq.template.compose.domain.usecases.UseCase
 import co.nimblehq.template.compose.test.CoroutineTestRule
 import co.nimblehq.template.compose.test.MockUtil
@@ -95,6 +96,15 @@ class ListViewModelTest {
             expectMostRecentItem() shouldBe BaseViewState.Loaded(
                 uiModel = ListUiModel(MockUtil.models.mapNotNull { it.id })
             )
+        }
+    }
+
+    @Test
+    fun `When sending the NavigateBack intent, it navigates back`() = runTest {
+        viewModel.events.test {
+            viewModel.setIntent(ListIntent.NavigateBack)
+
+            expectMostRecentItem() shouldBe NavigateBackEvent
         }
     }
 

@@ -20,11 +20,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation3.runtime.NavKey
 import co.nimblehq.template.compose.R
 import co.nimblehq.template.compose.common.BaseViewState
 import co.nimblehq.template.compose.common.ErrorEvent
-import co.nimblehq.template.compose.common.NavigationEvent
+import co.nimblehq.template.compose.common.NavigateBackEvent
 import co.nimblehq.template.compose.common.ui.BaseScreen
 import co.nimblehq.template.compose.extensions.collectAsEffect
 import co.nimblehq.template.compose.ui.screens.list.model.ListUiModel
@@ -35,14 +34,14 @@ import co.nimblehq.template.compose.ui.theme.ComposeTheme
 @Composable
 fun ListScreen(
     viewModel: ListViewModel = hiltViewModel(),
-    onNavigate: (NavKey) -> Unit,
+    onNavigateBack: () -> Unit,
 ) = BaseScreen {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
     viewModel.events.collectAsEffect { event ->
         when (event) {
-            is NavigationEvent -> onNavigate(event.destination)
+            is NavigateBackEvent -> onNavigateBack()
             is ErrorEvent -> event.error.showToast(context)
         }
     }
