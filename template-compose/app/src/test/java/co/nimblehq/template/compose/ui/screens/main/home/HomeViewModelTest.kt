@@ -5,7 +5,7 @@ import co.nimblehq.template.compose.domain.usecases.UseCase
 import co.nimblehq.template.compose.test.CoroutineTestRule
 import co.nimblehq.template.compose.test.MockUtil
 import co.nimblehq.template.compose.ui.models.toUiModel
-import co.nimblehq.template.compose.util.DispatchersProvider
+import co.nimblehq.template.compose.data.util.DispatchersProvider
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk

@@ -6,6 +6,7 @@
 
 - Clone the project
 - Run the project with Android Studio
+- Add `api-config.properties` file in the `resources` folder of the :app module to override the default configuration. 
 
 ## Linter and static code analysis
 
