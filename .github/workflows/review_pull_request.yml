@@ -2,7 +2,7 @@ name: Review pull request
 
 on:
   pull_request:
-    types: [ opened, edited, reopened, synchronize ]
+    types: [ opened, reopened, synchronize, ready_for_review ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -12,6 +12,7 @@ jobs:
 
   review_pull_request:
     name: Review pull request
+    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     timeout-minutes: 30
     environment: template-compose
