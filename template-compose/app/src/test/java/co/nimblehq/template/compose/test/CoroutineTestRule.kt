@@ -1,6 +1,6 @@
 package co.nimblehq.template.compose.test
 
-import co.nimblehq.template.compose.util.DispatchersProvider
+import co.nimblehq.template.compose.data.util.DispatchersProvider
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.*
 import org.junit.rules.TestWatcher
