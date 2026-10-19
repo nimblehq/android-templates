@@ -55,6 +55,8 @@ jobs:
         uses: ./.github/actions/setup-ruby
 
       - name: Run Danger
+        # Dependabot runs get a read-only token. Danger cannot post comments with it.
+        if: github.actor != 'dependabot[bot]'
         env:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: bundle exec danger
