@@ -1,4 +1,4 @@
-package co.nimblehq.template.compose.util
+package co.nimblehq.template.compose.data.util
 
 import kotlinx.coroutines.Dispatchers
 
