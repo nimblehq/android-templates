@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.konan.properties.loadProperties
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.kover)
@@ -58,7 +58,7 @@ android {
             isMinifyEnabled = true
             isDebuggable = false
             isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs[BuildTypes.RELEASE]
             buildConfigField("String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\"")
         }
@@ -91,10 +91,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     buildFeatures {
@@ -142,6 +138,7 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     implementation(libs.kotlinx.collections.immutable)
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.timber)
     debugImplementation(libs.chucker)

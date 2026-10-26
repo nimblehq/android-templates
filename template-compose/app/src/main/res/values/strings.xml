@@ -2,4 +2,6 @@
 <resources>
     <string name="app_name">Template Compose</string>
     <string name="error_generic">Unexpected error</string>
+    <string name="go_back">go back</string>
+    <string name="home_navigate_to_list">navigate to list</string>
 </resources>

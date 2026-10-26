@@ -15,7 +15,7 @@ Android app template implementing modern Android development best practices. Thi
 | **Architecture** | MVVM / Clean Architecture |
 | **State Management** | Unidirectional Data Flow (UDF) with StateFlow |
 | **Dependency Injection** | Hilt |
-| **Navigation** | Jetpack Navigation Compose |
+| **Navigation** | Navigation 3 (`androidx.navigation3`) |
 | **Async** | Kotlin Coroutines + Flow |
 | **Networking** | Retrofit + OkHttp + Moshi |
 | **Local Storage** | DataStore, Room (when needed) |
@@ -37,12 +37,19 @@ This project follows Google's official architecture guidance with a layered, mod
 ```
 ┌─────────────────────────────────────────────────────┐
 │  app/                                               │
+│  ├── common/      → BaseViewModel, BaseEvent,      │
+│  │                  BaseIntent, BaseViewState,     │
+│  │                  ui/BaseScreen                  │
 │  ├── di/          → Hilt modules                   │
 │  ├── extensions/  → Kotlin extensions              │
+│  ├── navigation/  → AppNavigation.kt (NavDisplay), │
+│  │                  entry/ (routes + entries),     │
+│  │                  navigator/ (AppNavigator)      │
 │  ├── ui/                                            │
-│  │   ├── base/    → BaseViewModel, BaseScreen      │
 │  │   ├── screens/ → Feature screens & ViewModels   │
 │  │   └── theme/   → AppColors, AppTypography, etc. │
+│  ├── util/        → DeepLinkPattern, DeepLinkRequest,│
+│  │                  DeepLinkMatcher, KeyDecoder    │
 │  └── MainApplication.kt                            │
 ├─────────────────────────────────────────────────────┤
 │  domain/                                            │
@@ -137,9 +144,10 @@ fun `When user taps login, it shows loading`() { }
 
 | File | Purpose |
 |------|---------|
-| `app/.../MainActivity.kt` | Single activity entry point |
-| `app/.../ui/AppNavGraph.kt` | Navigation graph |
-| `app/.../ui/base/BaseViewModel.kt` | ViewModel base class |
+| `app/.../MainActivity.kt` | Single activity entry point, deep link handling |
+| `app/.../navigation/AppNavigation.kt` | NavDisplay setup (transitions, decorators) |
+| `app/.../navigation/navigator/AppNavigator.kt` | Back stack navigator |
+| `app/.../common/BaseViewModel.kt` | ViewModel base class |
 | `data/.../remote/services/` | API service definitions |
 | `detekt-config.yml` | Detekt rules |
 
@@ -177,15 +185,23 @@ fun MyButton(
 ) { }
 ```
 
-**Screen pattern** — public wrapper with ViewModel, private stateless content:
+**Screen pattern** — public wrapper with ViewModel, private stateless content. Navigation is MVI:
+the ViewModel emits a `NavigationEvent`/navigate-back event via `BaseViewModel`, and the screen
+collects it and forwards it to an `onNavigate`/`onNavigateBack` callback supplied by its
+`EntryProviderInstaller` (see [Navigation](#navigation) below):
 
 ```kotlin
 @Composable
 fun FeatureScreen(
     viewModel: FeatureViewModel = hiltViewModel(),
-    navigator: (BaseDestination) -> Unit,
+    onNavigate: (NavKey) -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    LaunchedEffect(Unit) {
+        viewModel.events.collect { event ->
+            if (event is NavigationEvent) onNavigate(event.destination)
+        }
+    }
     FeatureScreenContent(state = state, onAction = viewModel::onAction)
 }
 
@@ -196,6 +212,37 @@ private fun FeatureScreenContent(
     modifier: Modifier = Modifier,
 ) { }
 ```
+
+### Navigation
+
+Routes and their entries live in `navigation/entry/`, one file per screen:
+
+```kotlin
+@Serializable
+data object FeatureRoute : NavKey
+
+fun EntryProviderScope<Any>.featureEntry(onNavigate: (NavKey) -> Unit) {
+    entry<FeatureRoute> {
+        FeatureScreen(viewModel = hiltViewModel(), onNavigate = onNavigate)
+    }
+}
+```
+
+Register the entry with its own `@IntoSet EntryProviderInstaller` Hilt binding in
+`di/modules/NavigationModule.kt` — **one provider per feature**, not one combined provider for
+multiple screens:
+
+```kotlin
+@IntoSet
+@Provides
+fun provideFeatureEntryProviderInstaller(navigator: AppNavigator): EntryProviderInstaller = {
+    featureEntry(onNavigate = navigator::goTo)
+}
+```
+
+To make a route reachable via deep link, register a `DeepLinkPattern` for it in
+`MainActivity.deepLinkPatterns` (and add a matching `<intent-filter>` in `AndroidManifest.xml` if
+it should be reachable from outside the app) — see the KDoc on `util/DeepLinkPattern.kt`.
 
 ## Code Organization
 

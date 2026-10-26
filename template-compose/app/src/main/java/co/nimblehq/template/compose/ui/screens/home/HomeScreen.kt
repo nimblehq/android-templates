@@ -1,56 +1,61 @@
-package co.nimblehq.template.compose.ui.screens.main.home
+package co.nimblehq.template.compose.ui.screens.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation3.runtime.NavKey
 import co.nimblehq.template.compose.R
+import co.nimblehq.template.compose.common.ErrorEvent
+import co.nimblehq.template.compose.common.NavigationEvent
+import co.nimblehq.template.compose.common.ui.BaseScreen
 import co.nimblehq.template.compose.extensions.collectAsEffect
-import co.nimblehq.template.compose.ui.base.BaseDestination
-import co.nimblehq.template.compose.ui.base.BaseScreen
-import co.nimblehq.template.compose.ui.models.UiModel
 import co.nimblehq.template.compose.ui.showToast
 import co.nimblehq.template.compose.ui.theme.AppTheme.dimensions
 import co.nimblehq.template.compose.ui.theme.ComposeTheme
-import kotlinx.collections.immutable.*
-import timber.log.Timber
 
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
-    navigator: (destination: BaseDestination) -> Unit,
+    onNavigate: (NavKey) -> Unit,
 ) = BaseScreen {
     val context = LocalContext.current
-    viewModel.error.collectAsEffect { e -> e.showToast(context) }
-    viewModel.navigator.collectAsEffect { destination -> navigator(destination) }
 
-    val uiModels: ImmutableList<UiModel> by viewModel.uiModels.collectAsStateWithLifecycle()
+    viewModel.events.collectAsEffect { event ->
+        when (event) {
+            is NavigationEvent -> onNavigate(event.destination)
+            is ErrorEvent -> event.error.showToast(context)
+        }
+    }
 
     HomeScreenContent(
         title = stringResource(id = R.string.app_name),
-        uiModels = uiModels
+        onNavigateToList = { viewModel.setIntent(HomeIntent.NavigateToList) },
     )
 }
 
 @Composable
 private fun HomeScreenContent(
     title: String,
-    uiModels: ImmutableList<UiModel>
+    onNavigateToList: () -> Unit,
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center
+        modifier = Modifier.fillMaxSize().padding(8.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = title,
@@ -59,8 +64,16 @@ private fun HomeScreenContent(
                 .fillMaxWidth()
                 .padding(all = dimensions.spacingMedium)
         )
+        Button(
+            modifier = Modifier.wrapContentWidth(),
+            onClick = onNavigateToList,
+        ) {
+            Text(
+                text = stringResource(id = R.string.home_navigate_to_list),
+                textAlign = TextAlign.Center,
+            )
+        }
     }
-    Timber.d("Result : $uiModels")
 }
 
 @Preview(showSystemUi = true)
@@ -69,7 +82,7 @@ private fun HomeScreenPreview() {
     ComposeTheme {
         HomeScreenContent(
             title = stringResource(id = R.string.app_name),
-            uiModels = persistentListOf(UiModel(1), UiModel(2), UiModel(3))
+            onNavigateToList = {}
         )
     }
 }
