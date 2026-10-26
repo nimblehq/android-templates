@@ -1,18 +1,10 @@
 <network-security-config>
-    <debug-overrides>
+    <!-- Staging builds are internal only (Firebase App Distribution). -->
+    <!-- User added CAs are trusted so that a proxy can inspect HTTPS traffic. -->
+    <base-config cleartextTrafficPermitted="false">
         <trust-anchors>
-            <!-- Only trust user added CAs while app is debuggable -->
-            <certificates src="user" />
             <certificates src="system" />
-        </trust-anchors>
-    </debug-overrides>
-
-    <domain-config>
-        <!-- Enter your base URL here -->
-        <domain includeSubdomains="true">www.jsonplaceholder.typicode.com</domain>
-        <trust-anchors>
             <certificates src="user" />
-            <certificates src="system" />
         </trust-anchors>
-    </domain-config>
+    </base-config>
 </network-security-config>

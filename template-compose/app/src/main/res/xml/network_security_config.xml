@@ -1,1 +1,11 @@
-<network-security-config />
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+
+    <debug-overrides>
+        <trust-anchors>
+            <!-- Trust user added CAs only while the app is debuggable -->
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </debug-overrides>
+</network-security-config>
