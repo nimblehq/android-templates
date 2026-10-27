@@ -1,8 +1,10 @@
 package co.nimblehq.sample.compose.config
 
-import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
-import io.kotest.matchers.shouldBe
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldContainAll
+import io.kotest.matchers.collections.shouldNotBeEmpty
 import org.junit.Test
+import org.w3c.dom.Document
 import org.w3c.dom.Element
 import java.io.File
 import javax.xml.parsers.DocumentBuilderFactory
@@ -13,43 +15,70 @@ class NetworkSecurityConfigTest {
     private val stagingConfig = parse("src/staging/res/xml/network_security_config.xml")
 
     @Test
-    fun `When reading the staging config, it blocks cleartext traffic`() {
-        stagingConfig.baseConfig().getAttribute("cleartextTrafficPermitted") shouldBe "false"
+    fun `When reading the main config, no element permits cleartext traffic`() {
+        mainConfig.cleartextPermittingElements().shouldBeEmpty()
     }
 
     @Test
-    fun `When reading the staging config, its base config trusts system and user certificates`() {
-        stagingConfig.baseConfig().certificateSources() shouldContainExactlyInAnyOrder listOf("system", "user")
+    fun `When reading the main config, user certificates are trusted only in debug overrides`() {
+        mainConfig.descendants("certificates")
+            .filter { it.getAttribute("src") == "user" }
+            .filterNot { it.hasAncestor("debug-overrides") }
+            .shouldBeEmpty()
     }
 
     @Test
-    fun `When reading the main config, it blocks cleartext traffic`() {
-        mainConfig.baseConfig().getAttribute("cleartextTrafficPermitted") shouldBe "false"
+    fun `When reading the main config, its base config trusts no extra certificates`() {
+        mainConfig.documentElement.children("base-config").single()
+            .descendants("certificates")
+            .shouldBeEmpty()
     }
 
     @Test
-    fun `When reading the main config, it trusts user certificates only in debug overrides`() {
-        val root = mainConfig.documentElement
-        val debugOverrides = root.children("debug-overrides").single()
+    fun `When reading the staging config, no element permits cleartext traffic`() {
+        stagingConfig.cleartextPermittingElements().shouldBeEmpty()
+    }
 
-        debugOverrides.certificateSources() shouldContainExactlyInAnyOrder listOf("system", "user")
-        root.children("base-config").single().certificateSources() shouldBe emptyList()
+    @Test
+    fun `When reading the staging config, every trust anchor trusts system and user certificates`() {
+        val trustAnchors = stagingConfig.descendants("trust-anchors")
+
+        trustAnchors.shouldNotBeEmpty()
+        trustAnchors.forEach {
+            it.certificateSources() shouldContainAll listOf("system", "user")
+        }
     }
 
     private fun parse(path: String) = DocumentBuilderFactory.newInstance()
         .newDocumentBuilder()
         .parse(File(path))
 
-    private fun org.w3c.dom.Document.baseConfig() = documentElement.children("base-config").single()
+    private fun Document.cleartextPermittingElements() = descendants("*")
+        .filter { it.getAttribute("cleartextTrafficPermitted") == "true" }
+
+    private fun Document.descendants(tag: String) = documentElement.descendants(tag)
+
+    private fun Element.descendants(tag: String): List<Element> {
+        val nodes = getElementsByTagName(tag)
+        return (0 until nodes.length).map { nodes.item(it) as Element }
+    }
 
     private fun Element.children(tag: String): List<Element> {
         val nodes = getElementsByTagName(tag)
-        return (0 until nodes.length).map { nodes.item(it) as Element }
+        return (0 until nodes.length)
+            .map { nodes.item(it) as Element }
             .filter { it.parentNode == this }
     }
 
-    private fun Element.certificateSources(): List<String> {
-        val nodes = getElementsByTagName("certificates")
-        return (0 until nodes.length).map { (nodes.item(it) as Element).getAttribute("src") }
+    private fun Element.hasAncestor(tag: String): Boolean {
+        var node = parentNode
+        while (node != null) {
+            if (node.nodeName == tag) return true
+            node = node.parentNode
+        }
+        return false
     }
+
+    private fun Element.certificateSources() = descendants("certificates")
+        .map { it.getAttribute("src") }
 }
