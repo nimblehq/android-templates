@@ -3,6 +3,7 @@ package co.nimblehq.template.compose.config
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.collections.shouldNotBeEmpty
+import io.kotest.matchers.shouldBe
 import org.junit.Test
 import org.w3c.dom.Document
 import org.w3c.dom.Element
@@ -17,13 +18,17 @@ class NetworkSecurityConfigTest {
     @Test
     fun `When reading the main config, no element permits cleartext traffic`() {
         mainConfig.cleartextPermittingElements().shouldBeEmpty()
+        mainConfig.documentElement.children("base-config").single()
+            .getAttribute("cleartextTrafficPermitted") shouldBe "false"
     }
 
     @Test
     fun `When reading the main config, user certificates are trusted only in debug overrides`() {
-        mainConfig.descendants("certificates")
+        val userCertificates = mainConfig.descendants("certificates")
             .filter { it.getAttribute("src") == "user" }
-            .filterNot { it.hasAncestor("debug-overrides") }
+
+        userCertificates.shouldNotBeEmpty()
+        userCertificates.filterNot { it.hasAncestor("debug-overrides") }
             .shouldBeEmpty()
     }
 
@@ -37,6 +42,15 @@ class NetworkSecurityConfigTest {
     @Test
     fun `When reading the staging config, no element permits cleartext traffic`() {
         stagingConfig.cleartextPermittingElements().shouldBeEmpty()
+        stagingConfig.documentElement.children("base-config").single()
+            .getAttribute("cleartextTrafficPermitted") shouldBe "false"
+    }
+
+    @Test
+    fun `When reading the staging config, its base config declares system and user trust anchors`() {
+        stagingConfig.documentElement.children("base-config").single()
+            .children("trust-anchors").single()
+            .certificateSources() shouldContainAll listOf("system", "user")
     }
 
     @Test
