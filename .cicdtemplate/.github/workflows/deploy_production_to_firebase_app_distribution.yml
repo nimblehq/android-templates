@@ -11,6 +11,9 @@ on:
         required: false
         type: string
 
+permissions:
+  contents: read
+
 jobs:
   deploy_production_to_firebase_app_distribution:
     name: Deploy production to Firebase App Distribution

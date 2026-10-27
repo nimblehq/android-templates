@@ -3,6 +3,9 @@ name: Create the Release pull request
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   create_release_pull_request:
     name: Create the Release pull request

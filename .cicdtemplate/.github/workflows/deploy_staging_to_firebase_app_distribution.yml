@@ -13,6 +13,9 @@ on:
         required: false
         type: string
 
+permissions:
+  contents: read
+
 jobs:
   deploy_staging_to_firebase_app_distribution:
     name: Deploy staging to Firebase App Distribution
