@@ -21,8 +21,14 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       - name: Bump version name
+        env:
+          NEW_VERSION: ${{ github.event.inputs.newVersion }}
         run: |
-          perl -i -pe 's/androidVersionName =(.*)$/androidVersionName = "${{ github.event.inputs.newVersion }}"/g' gradle/libs.versions.toml
+          if [[ ! "$NEW_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.]+)?$ ]]; then
+            echo "Version must look like 1.2.3 or 1.2.3-beta.1" >&2
+            exit 1
+          fi
+          perl -i -pe 's/androidVersionName =.*$/androidVersionName = "$ENV{NEW_VERSION}"/' gradle/libs.versions.toml
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@38e0b6e68b4c852a5500a94740f0e535e0d7ba54 # v4
