@@ -11,7 +11,7 @@ private const val TOKEN_TYPE = "TOKEN_TYPE"
 private const val EXPIRES_IN = "EXPIRES_IN"
 private const val REFRESH_TOKEN = "REFRESH_TOKEN"
 
-class NetworkEncryptedSharedPreferences constructor(
+class NetworkEncryptedSharedPreferences(
     applicationContext: Context,
 ) : BaseEncryptedSharedPreferences() {
 
@@ -27,93 +27,43 @@ class NetworkEncryptedSharedPreferences constructor(
         }
     }
 
-    private var accessToken: String?
+    private val accessToken: String?
         get() = get(ACCESS_TOKEN)
-        set(value) = if (value == null) {
-            remove(
-                key = ACCESS_TOKEN,
-                executeWithCommit = true
-            )
-        } else {
-            set(
-                key = ACCESS_TOKEN,
-                value = value,
-                executeWithCommit = true
-            )
-        }
 
-    private var tokenType: String?
+    private val tokenType: String?
         get() = get(TOKEN_TYPE)
-        set(value) = if (value == null) {
-            remove(
-                key = TOKEN_TYPE,
-                executeWithCommit = true
-            )
-        } else {
-            set(
-                key = TOKEN_TYPE,
-                value = value,
-                executeWithCommit = true
-            )
-        }
 
-    private var expiresIn: Int?
+    private val expiresIn: Int?
         get() = get(EXPIRES_IN)
-        set(value) = if (value == null) {
-            remove(
-                key = EXPIRES_IN,
-                executeWithCommit = true
-            )
-        } else {
-            set(
-                key = EXPIRES_IN,
-                value = value,
-                executeWithCommit = true
-            )
-        }
 
-    private var refreshToken: String?
+    private val refreshToken: String?
         get() = get(REFRESH_TOKEN)
-        set(value) = if (value == null) {
-            remove(
-                key = REFRESH_TOKEN,
-                executeWithCommit = true
-            )
-        } else {
-            set(
-                key = REFRESH_TOKEN,
-                value = value,
-                executeWithCommit = true
-            )
-        }
 
     var authStatus: AuthStatus
-        get() {
-            return if (
-                accessToken.isNullOrEmpty()
-                && tokenType.isNullOrEmpty()
-                && expiresIn == null
-                && refreshToken.isNullOrEmpty()
-            ) {
-                AuthStatus.Anonymous
-            } else {
-                AuthStatus.Authenticated(
-                    accessToken = accessToken.orEmpty(),
-                    tokenType = tokenType,
-                    expiresIn = expiresIn,
-                    refreshToken = refreshToken.orEmpty(),
-                )
-            }
+        get() = if (accessToken.isNullOrEmpty()) {
+            AuthStatus.Anonymous
+        } else {
+            AuthStatus.Authenticated(
+                accessToken = accessToken.orEmpty(),
+                tokenType = tokenType,
+                expiresIn = expiresIn,
+                refreshToken = refreshToken.orEmpty(),
+            )
         }
         set(value) {
-            if (value is AuthStatus.Authenticated) {
-                accessToken = value.accessToken
-                tokenType = value.tokenType
-                expiresIn = value.expiresIn
-                refreshToken = value.refreshToken
-            } else {
-                // AuthStatus.Anonymous means logging out
-                clearAll(executeWithCommit = true)
+            // Write every field in one transaction, so readers never see a partial update
+            sharedPreferences.execute(executeWithCommit = true) { editor ->
+                if (value is AuthStatus.Authenticated) {
+                    editor.putString(ACCESS_TOKEN, value.accessToken)
+                    editor.putString(TOKEN_TYPE, value.tokenType)
+                    value.expiresIn?.let { editor.putInt(EXPIRES_IN, it) } ?: editor.remove(
+                        EXPIRES_IN
+                    )
+                    editor.putString(REFRESH_TOKEN, value.refreshToken)
+                } else {
+                    // AuthStatus.Anonymous means logging out
+                    editor.clear()
+                }
             }
         }
 }
