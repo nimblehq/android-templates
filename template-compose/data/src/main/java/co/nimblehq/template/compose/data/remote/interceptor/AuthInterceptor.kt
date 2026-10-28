@@ -12,18 +12,20 @@ class AuthInterceptor @Inject constructor(
     private val preferences: NetworkEncryptedSharedPreferences,
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        return if (preferences.authStatus is AuthStatus.Authenticated) {
-            val authStatus = preferences.authStatus as AuthStatus.Authenticated
+        val authStatus = preferences.authStatus as? AuthStatus.Authenticated
+        val tokenType = authStatus?.tokenType
+        val accessToken = authStatus?.accessToken
+        val request = if (!tokenType.isNullOrBlank() && !accessToken.isNullOrBlank()) {
             chain.request()
                 .newBuilder()
                 .header(
                     name = AUTH_HEADER,
-                    value = "${authStatus.tokenType} ${authStatus.accessToken}"
+                    value = "$tokenType $accessToken"
                 )
                 .build()
-                .let(chain::proceed)
         } else {
-            chain.proceed(chain.request())
+            chain.request()
         }
+        return chain.proceed(request)
     }
 }
