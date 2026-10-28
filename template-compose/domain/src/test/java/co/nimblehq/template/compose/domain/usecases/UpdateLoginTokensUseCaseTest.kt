@@ -3,6 +3,8 @@ package co.nimblehq.template.compose.domain.usecases
 import co.nimblehq.template.compose.domain.models.toAuthenticatedStatus
 import co.nimblehq.template.compose.domain.repositories.AuthPreferenceRepository
 import co.nimblehq.template.compose.domain.test.MockUtil
+import app.cash.turbine.test
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -29,7 +31,10 @@ class UpdateLoginTokensUseCaseTest {
                 mockAuthPreferenceRepository.updateAuthenticationStatus(any())
             } returns flowOf(Unit)
 
-            updateLoginTokensUseCase(MockUtil.oAuthTokenModel.toAuthenticatedStatus())
+            updateLoginTokensUseCase(MockUtil.oAuthTokenModel.toAuthenticatedStatus()).test {
+                awaitItem() shouldBe Unit
+                awaitComplete()
+            }
 
             verify(exactly = 1) {
                 mockAuthPreferenceRepository.updateAuthenticationStatus(any())

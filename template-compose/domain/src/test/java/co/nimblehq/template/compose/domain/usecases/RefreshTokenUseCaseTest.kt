@@ -2,10 +2,10 @@ package co.nimblehq.template.compose.domain.usecases
 
 import co.nimblehq.template.compose.domain.repositories.TokenRepository
 import co.nimblehq.template.compose.domain.test.MockUtil
+import app.cash.turbine.test
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
@@ -29,8 +29,9 @@ class RefreshTokenUseCaseTest {
 
         useCase(
             refreshToken = "refreshToken"
-        ).collect {
-            it shouldBe expected
+        ).test {
+            awaitItem() shouldBe expected
+            awaitComplete()
         }
     }
 
@@ -41,8 +42,8 @@ class RefreshTokenUseCaseTest {
 
         useCase(
             refreshToken = "refreshToken"
-        ).catch {
-            it shouldBe expected
-        }.collect {}
+        ).test {
+            awaitError() shouldBe expected
+        }
     }
 }

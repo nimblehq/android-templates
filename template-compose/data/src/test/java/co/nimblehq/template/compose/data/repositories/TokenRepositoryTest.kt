@@ -4,11 +4,11 @@ import co.nimblehq.template.compose.data.remote.models.responses.toModel
 import co.nimblehq.template.compose.data.remote.services.ApiService
 import co.nimblehq.template.compose.data.test.MockUtil
 import co.nimblehq.template.compose.domain.repositories.TokenRepository
+import app.cash.turbine.test
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -38,8 +38,9 @@ class TokenRepositoryTest {
 
         repository.refreshToken(
             refreshToken = "refreshToken"
-        ).collect {
-            it shouldBe expected.toModel()
+        ).test {
+            awaitItem() shouldBe expected.toModel()
+            awaitComplete()
         }
     }
 
@@ -50,8 +51,8 @@ class TokenRepositoryTest {
 
         repository.refreshToken(
             refreshToken = "refreshToken"
-        ).catch {
-            it shouldBe expected
-        }.collect {}
+        ).test {
+            awaitError() shouldBe expected
+        }
     }
 }

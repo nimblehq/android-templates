@@ -22,6 +22,7 @@ dependencies {
     implementation(libs.javax.inject)
 
     testImplementation(libs.bundles.unitTest)
+    testImplementation(libs.test.turbine)
 }
 
 kover {

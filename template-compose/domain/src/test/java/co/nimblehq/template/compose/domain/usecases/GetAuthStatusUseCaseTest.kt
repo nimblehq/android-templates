@@ -2,6 +2,7 @@ package co.nimblehq.template.compose.domain.usecases
 
 import co.nimblehq.template.compose.domain.models.AuthStatus
 import co.nimblehq.template.compose.domain.repositories.AuthPreferenceRepository
+import app.cash.turbine.test
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
@@ -34,8 +35,9 @@ class GetAuthStatusUseCaseTest {
                 mockAuthPreferenceRepository.getAuthStatus()
             } returns flowOf(expected)
 
-            getAuthStatusUseCase().collect {
-                it shouldBe expected
+            getAuthStatusUseCase().test {
+                awaitItem() shouldBe expected
+                awaitComplete()
             }
         }
 
@@ -47,8 +49,9 @@ class GetAuthStatusUseCaseTest {
                 mockAuthPreferenceRepository.getAuthStatus()
             } returns flowOf(expected)
 
-            getAuthStatusUseCase().collect {
-                it shouldBe expected
+            getAuthStatusUseCase().test {
+                awaitItem() shouldBe expected
+                awaitComplete()
             }
         }
 }
