@@ -5,6 +5,7 @@ import co.nimblehq.template.compose.data.remote.interceptor.AUTH_HEADER
 import co.nimblehq.template.compose.data.test.CoroutineTestRule
 import co.nimblehq.template.compose.data.test.MockUtil
 import co.nimblehq.template.compose.domain.exceptions.NoConnectivityException
+import co.nimblehq.template.compose.domain.models.AuthStatus
 import co.nimblehq.template.compose.domain.models.toAuthenticatedStatus
 import co.nimblehq.template.compose.domain.usecases.GetAuthStatusUseCase
 import co.nimblehq.template.compose.domain.usecases.RefreshTokenUseCase
@@ -59,11 +60,15 @@ class RequestAuthenticatorTest {
     }
 
     @Test
-    fun `When refresh access token fails with other error, it returns null`() {
+    fun `When refresh access token fails with other error, it clears the tokens and returns null`() {
         val error = Exception()
         every { mockRefreshTokenUseCase(any()) } returns flow { throw error }
 
         authenticator.authenticate(route = mockRoute, response = mockResponse) shouldBe null
+
+        verify(exactly = 1) {
+            mockUpdateLoginTokensUseCase(AuthStatus.Anonymous)
+        }
     }
 
     @Test

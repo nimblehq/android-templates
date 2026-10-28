@@ -82,7 +82,8 @@ class RequestAuthenticator(
         )
     } catch (e: Exception) {
         if (e !is NoConnectivityException) {
-            // send force logout request to view layer
+            // clear the stored tokens, then send force logout request to view layer
+            updateToken(AuthStatus.Anonymous)
             RequestInterceptingDelegate.requestForceLogout()
 
             // cancel all pending requests
