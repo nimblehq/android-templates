@@ -87,11 +87,8 @@ class RequestAuthenticator(
 
             // cancel all pending requests
             okHttpClient?.dispatcher?.cancelAll()
-            response.request
-        } else {
-            // do nothing
-            null
         }
+        null
     }
 
     private fun Response.priorResponseCount(): Int =

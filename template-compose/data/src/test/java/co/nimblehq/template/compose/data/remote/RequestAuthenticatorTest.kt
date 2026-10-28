@@ -59,11 +59,11 @@ class RequestAuthenticatorTest {
     }
 
     @Test
-    fun `When refresh access token fails with other error, it returns the original request`() {
+    fun `When refresh access token fails with other error, it returns null`() {
         val error = Exception()
         every { mockRefreshTokenUseCase(any()) } returns flow { throw error }
 
-        authenticator.authenticate(route = mockRoute, response = mockResponse) shouldBe mockResponse.request
+        authenticator.authenticate(route = mockRoute, response = mockResponse) shouldBe null
     }
 
     @Test
