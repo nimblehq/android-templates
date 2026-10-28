@@ -23,7 +23,7 @@ class RefreshTokenUseCaseTest {
     }
 
     @Test
-    fun `When calling request successfully, it returns success response`() = runTest {
+    fun `When calling request succeeds, it returns success response`() = runTest {
         val expected = MockUtil.oAuthTokenModel
         every { mockRepository.refreshToken(any()) } returns flowOf(expected)
 

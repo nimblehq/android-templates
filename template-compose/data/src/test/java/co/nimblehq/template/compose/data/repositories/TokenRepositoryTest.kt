@@ -31,7 +31,7 @@ class TokenRepositoryTest {
     }
 
     @Test
-    fun `When calling refreshToken request successfully, it return success response`() = runTest {
+    fun `When calling refreshToken request succeeds, it returns success response`() = runTest {
         val expected = MockUtil.oauthTokenResponse
 
         coEvery { mockService.refreshOAuthToken(any(), any(), any()) } returns expected
