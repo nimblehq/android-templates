@@ -65,8 +65,10 @@ class RequestAuthenticator(
                     return null
                 }
 
-                // Update the token (for future requests)
-                newAuthStatus?.let(::updateToken)
+                // Update the token (for future requests), keeping the current refresh token
+                // when the response omits it (RFC 6749 section 6)
+                val newRefreshToken = newAuthStatus?.refreshToken?.takeUnless { it.isEmpty() } ?: refreshToken
+                newAuthStatus?.copy(refreshToken = newRefreshToken)?.let(::updateToken)
 
                 // Retry with the NEW token
                 newTokenType to newAccessToken

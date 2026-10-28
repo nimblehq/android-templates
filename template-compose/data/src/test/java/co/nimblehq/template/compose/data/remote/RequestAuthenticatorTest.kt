@@ -93,6 +93,21 @@ class RequestAuthenticatorTest {
     }
 
     @Test
+    fun `When the refresh response omits the refresh token, it keeps the existing refresh token`() {
+        val newToken = MockUtil.oAuthTokenModel.copy(accessToken = "newAccessToken", refreshToken = null)
+        every { mockRefreshTokenUseCase(any()) } returns flowOf(newToken)
+        every { mockResponse.request.newBuilder().header(any(), any()).build() } returns mockResponse.request
+
+        authenticator.authenticate(route = mockRoute, response = mockResponse)
+
+        verify(exactly = 1) {
+            mockUpdateLoginTokensUseCase(
+                newToken.toAuthenticatedStatus().copy(refreshToken = MockUtil.authenticatedStatus.refreshToken)
+            )
+        }
+    }
+
+    @Test
     fun `When new access token is null, it returns null`() {
         every { mockRefreshTokenUseCase(any()) } returns flowOf(MockUtil.oAuthTokenModel.copy(accessToken = null))
 
