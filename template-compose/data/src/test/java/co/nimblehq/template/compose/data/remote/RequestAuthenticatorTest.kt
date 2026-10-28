@@ -10,6 +10,7 @@ import co.nimblehq.template.compose.domain.usecases.GetAuthStatusUseCase
 import co.nimblehq.template.compose.domain.usecases.RefreshTokenUseCase
 import co.nimblehq.template.compose.domain.usecases.UpdateLoginTokensUseCase
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -47,6 +48,7 @@ class RequestAuthenticatorTest {
         every { mockRefreshTokenUseCase(any()) } returns flowOf(MockUtil.oAuthTokenModel)
         every { mockUpdateLoginTokensUseCase(any()) } returns flowOf(Unit)
         every { mockResponse.request.header(any()) } returns "${MockUtil.authenticatedStatus.tokenType} ${MockUtil.authenticatedStatus.accessToken}"
+        every { mockResponse.priorResponse } returns null
     }
 
     @Test
@@ -65,14 +67,24 @@ class RequestAuthenticatorTest {
     }
 
     @Test
-    fun `When refresh access token fails for three times, it returns null`() {
-        val error = Exception()
-        every { mockRefreshTokenUseCase(any()) } returns flow { throw error }
+    fun `When the request was already retried three times, it returns null`() {
+        authenticator.authenticate(route = mockRoute, response = responseWithPriorCount(3)) shouldBe null
 
-        authenticator.authenticate(route = mockRoute, response = mockResponse) is Request
-        authenticator.authenticate(route = mockRoute, response = mockResponse) is Request
-        authenticator.authenticate(route = mockRoute, response = mockResponse) is Request
-        authenticator.authenticate(route = mockRoute, response = mockResponse) shouldBe null
+        verify(exactly = 0) {
+            mockRefreshTokenUseCase(any())
+        }
+    }
+
+    @Test
+    fun `When the request was retried fewer than three times, it retries with the existing token`() {
+        val existingToken = "${MockUtil.authenticatedStatus.tokenType} ${MockUtil.authenticatedStatus.accessToken}"
+        every { mockResponse.request.header(any()) } returnsMany listOf("tokenType oldAccessToken", existingToken)
+        every { mockResponse.request.newBuilder().header(any(), any()).build() } returns mockResponse.request
+
+        val result = authenticator.authenticate(route = mockRoute, response = responseWithPriorCount(2))
+
+        result.shouldBeInstanceOf<Request>()
+        result.header(AUTH_HEADER) shouldBe existingToken
     }
 
     @Test
@@ -102,4 +114,12 @@ class RequestAuthenticatorTest {
             mockUpdateLoginTokensUseCase(newToken.toAuthenticatedStatus())
         }
     }
+
+    private fun responseWithPriorCount(count: Int): Response =
+        (0 until count).fold(mockResponse) { prior, _ ->
+            mockk<Response>(relaxed = true) {
+                every { request } returns mockResponse.request
+                every { priorResponse } returns prior
+            }
+        }
 }

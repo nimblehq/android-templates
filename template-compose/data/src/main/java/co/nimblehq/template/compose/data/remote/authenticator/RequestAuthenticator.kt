@@ -32,26 +32,14 @@ class RequestAuthenticator(
 ) : Authenticator {
 
     var okHttpClient: OkHttpClient? = null
-    private var retryCount = 0
-    private var retryDelay = 0L
 
     override fun authenticate(route: Route?, response: Response): Request? {
-        // Due to unable to check the last retry succeeded
-        // So reset the retry count on the request first triggered by an automatic retry
-        if (response.priorResponse == null && retryCount != 0) {
-            retryCount = 0
-        }
-
-        return if (retryCount >= MAX_ATTEMPTS) {
-            // Reset retry count once reached max attempts
-            retryCount = 0
+        val attempt = response.priorResponseCount()
+        return if (attempt >= MAX_ATTEMPTS) {
             null
         } else {
-            retryCount++
-
-            retryDelay = calculateExponentialBackoff(retryCount).toLong()
+            val retryDelay = calculateExponentialBackoff(attempt + 1).toLong()
             runBlocking { delay(retryDelay * SECOND_IN_MILLISECONDS) }
-
             retryWithNewToken(response)
         }
     }
@@ -105,6 +93,9 @@ class RequestAuthenticator(
             null
         }
     }
+
+    private fun Response.priorResponseCount(): Int =
+        generateSequence(priorResponse) { it.priorResponse }.count()
 
     private fun calculateExponentialBackoff(retryCount: Int): Double {
         return EXPONENTIAL_BACKOFF_BASE.pow(retryCount.toDouble()) * EXPONENTIAL_BACKOFF_SCALE
