@@ -1,0 +1,12 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directories:
+      - "/"
+      - "/.github/actions/setup-ruby"
+      - "/template-compose"
+      - "/template-compose/.github/actions/setup-ruby"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "type : chore"
