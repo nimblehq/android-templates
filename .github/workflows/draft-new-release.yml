@@ -20,26 +20,33 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
-      - name: Install Kscript
+      - name: Install Kotlin and Kscript
         run: |
-          curl -s "https://get.sdkman.io" | bash
-          source "$HOME/.sdkman/bin/sdkman-init.sh"
           source version.properties
-          sdk install kotlin $kotlinVersion
-          sdk install kscript $kscriptVersion
-          echo $PATH >> $GITHUB_PATH
+          curl --proto '=https' --tlsv1.2 -fsSL -o kotlin.zip \
+            "https://github.com/JetBrains/kotlin/releases/download/v${kotlinVersion}/kotlin-compiler-${kotlinVersion}.zip"
+          echo "${kotlinSha256}  kotlin.zip" | sha256sum -c -
+          curl --proto '=https' --tlsv1.2 -fsSL -o kscript.zip \
+            "https://github.com/kscripting/kscript/releases/download/v${kscriptVersion}/kscript-${kscriptVersion}-bin.zip"
+          echo "${kscriptSha256}  kscript.zip" | sha256sum -c -
+          unzip -q kotlin.zip -d "$HOME/kotlin"
+          unzip -q kscript.zip -d "$HOME/kscript"
+          rm kotlin.zip kscript.zip
+          echo "$HOME/kotlin/kotlinc/bin" >> "$GITHUB_PATH"
+          echo "$HOME/kscript/kscript-${kscriptVersion}/bin" >> "$GITHUB_PATH"
 
       - name: Get version from the latest commit message
         working-directory: scripts
+        env:
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: |
-          COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
           VERSION=$(kscript get_version.kts "$COMMIT_MESSAGE")
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Draft release
-        uses: release-drafter/release-drafter@v5
+        uses: release-drafter/release-drafter@09c613e259eb8d4e7c81c2cb00618eb5fc4575a7 # v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:

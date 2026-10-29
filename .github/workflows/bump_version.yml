@@ -8,6 +8,9 @@ on:
         required: true
         type: string
 
+permissions:
+  contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -18,18 +21,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       - name: Bump version script
+        env:
+          NEW_VERSION: ${{ github.event.inputs.newVersion }}
         run: |
-          perl -i -pe 's/^(templateScriptVersion=(.*))$/"templateScriptVersion=${{ github.event.inputs.newVersion }}"/e' version.properties
+          if [[ ! "$NEW_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Version must look like 1.2.3" >&2
+            exit 1
+          fi
+          perl -i -pe 's/^templateScriptVersion=.*$/templateScriptVersion=$ENV{NEW_VERSION}/' version.properties
 
       - name: Bump version Compose
+        env:
+          NEW_VERSION: ${{ github.event.inputs.newVersion }}
         run: |
-          perl -i -pe 's/androidVersionName =(.*)$/androidVersionName = "${{ github.event.inputs.newVersion }}"/g' sample-compose/gradle/libs.versions.toml
+          perl -i -pe 's/androidVersionName =.*$/androidVersionName = "$ENV{NEW_VERSION}"/' sample-compose/gradle/libs.versions.toml
 
       - name: Create pull request
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@38e0b6e68b4c852a5500a94740f0e535e0d7ba54 # v4
         with:
           assignees: ${{ secrets.GITHUB_USER }}
           token: ${{ secrets.WIKI_ACTION_TOKEN }}
