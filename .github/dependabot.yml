@@ -4,6 +4,8 @@ updates:
     directories:
       - "/"
       - "/.github/actions/setup-ruby"
+      - "/template-compose"
+      - "/template-compose/.github/actions/setup-ruby"
     schedule:
       interval: "weekly"
     labels:
