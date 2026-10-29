@@ -8,6 +8,8 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 
+const val CLIENT_SECRET_HEADER = "Client-Secret"
+
 interface ApiService {
 
     @GET("users")
@@ -17,7 +19,7 @@ interface ApiService {
     @POST("oauth/token")
     suspend fun refreshOAuthToken(
         @Header("Client-Id") clientId: String,
-        @Header("Client-Secret") clientSecret: String,
+        @Header(CLIENT_SECRET_HEADER) clientSecret: String,
         @Body body: RefreshTokenRequest,
     ): OAuthTokenResponse
 }

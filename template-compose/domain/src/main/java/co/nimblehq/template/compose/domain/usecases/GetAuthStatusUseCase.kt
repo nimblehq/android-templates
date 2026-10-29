@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetAuthStatusUseCase @Inject constructor(
-    private val authPreferenceRepository: AuthPreferenceRepository
+    private val authPreferenceRepository: AuthPreferenceRepository,
 ) {
 
     operator fun invoke(): Flow<AuthStatus> = authPreferenceRepository.getAuthStatus()

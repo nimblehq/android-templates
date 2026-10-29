@@ -4,6 +4,7 @@ import co.nimblehq.template.compose.data.remote.authenticator.RequestAuthenticat
 import co.nimblehq.template.compose.data.remote.interceptor.AUTH_HEADER
 import co.nimblehq.template.compose.data.test.CoroutineTestRule
 import co.nimblehq.template.compose.data.test.MockUtil
+import co.nimblehq.template.compose.domain.exceptions.ApiException
 import co.nimblehq.template.compose.domain.exceptions.NoConnectivityException
 import co.nimblehq.template.compose.domain.models.AuthStatus
 import co.nimblehq.template.compose.domain.models.toAuthenticatedStatus
@@ -60,13 +61,38 @@ class RequestAuthenticatorTest {
     }
 
     @Test
-    fun `When refresh access token fails with other error, it clears the tokens and returns null`() {
-        val error = Exception()
+    fun `When refresh token is rejected, it clears the tokens and returns null`() {
+        listOf(400, 401).forEach { httpCode ->
+            val error = ApiException(error = null, httpCode = httpCode, httpMessage = null)
+            every { mockRefreshTokenUseCase(any()) } returns flow { throw error }
+
+            authenticator.authenticate(route = mockRoute, response = mockResponse) shouldBe null
+        }
+
+        verify(exactly = 2) {
+            mockUpdateLoginTokensUseCase(AuthStatus.Anonymous)
+        }
+    }
+
+    @Test
+    fun `When refresh access token fails with server error, it keeps the tokens and returns null`() {
+        val error = ApiException(error = null, httpCode = 500, httpMessage = null)
         every { mockRefreshTokenUseCase(any()) } returns flow { throw error }
 
         authenticator.authenticate(route = mockRoute, response = mockResponse) shouldBe null
 
-        verify(exactly = 1) {
+        verify(exactly = 0) {
+            mockUpdateLoginTokensUseCase(AuthStatus.Anonymous)
+        }
+    }
+
+    @Test
+    fun `When refresh access token fails with unknown error, it keeps the tokens and returns null`() {
+        every { mockRefreshTokenUseCase(any()) } returns flow { throw Exception() }
+
+        authenticator.authenticate(route = mockRoute, response = mockResponse) shouldBe null
+
+        verify(exactly = 0) {
             mockUpdateLoginTokensUseCase(AuthStatus.Anonymous)
         }
     }
@@ -116,7 +142,16 @@ class RequestAuthenticatorTest {
 
     @Test
     fun `When new access token is the same as failed access token, it returns null`() {
+        every { mockResponse.request.header(any()) } returns "${MockUtil.authenticatedStatus.tokenType} ${MockUtil.authenticatedStatus.accessToken}"
+        every { mockRefreshTokenUseCase(any()) } returns flowOf(
+            MockUtil.oAuthTokenModel.copy(accessToken = MockUtil.authenticatedStatus.accessToken)
+        )
+
         authenticator.authenticate(route = mockRoute, response = mockResponse) shouldBe null
+
+        verify(exactly = 0) {
+            mockUpdateLoginTokensUseCase(any())
+        }
     }
 
     @Test

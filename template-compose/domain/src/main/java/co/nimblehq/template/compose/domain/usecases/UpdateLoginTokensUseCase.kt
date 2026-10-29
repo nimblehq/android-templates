@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class UpdateLoginTokensUseCase @Inject constructor(
-    private val authPreferenceRepository: AuthPreferenceRepository
+    private val authPreferenceRepository: AuthPreferenceRepository,
 ) {
 
     operator fun invoke(authStatus: AuthStatus): Flow<Unit> =

@@ -52,7 +52,7 @@ class NetworkEncryptedSharedPreferences(
         }
         set(value) {
             // Write every field in one transaction, so readers never see a partial update
-            sharedPreferences.execute(executeWithCommit = true) { editor ->
+            sharedPreferences.execute(isCommitEnabled = true) { editor ->
                 if (value is AuthStatus.Authenticated) {
                     editor.putString(ACCESS_TOKEN, value.accessToken)
                     editor.putString(TOKEN_TYPE, value.tokenType)

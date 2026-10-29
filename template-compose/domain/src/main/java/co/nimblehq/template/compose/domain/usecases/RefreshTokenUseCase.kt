@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class RefreshTokenUseCase @Inject constructor(
-    private val repository: TokenRepository
+    private val repository: TokenRepository,
 ) {
 
     operator fun invoke(refreshToken: String): Flow<OAuthTokenModel> {

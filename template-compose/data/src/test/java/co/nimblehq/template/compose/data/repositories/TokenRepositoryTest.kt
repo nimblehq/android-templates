@@ -1,10 +1,10 @@
 package co.nimblehq.template.compose.data.repositories
 
+import app.cash.turbine.test
 import co.nimblehq.template.compose.data.remote.models.responses.toModel
 import co.nimblehq.template.compose.data.remote.services.ApiService
 import co.nimblehq.template.compose.data.test.MockUtil
 import co.nimblehq.template.compose.domain.repositories.TokenRepository
-import app.cash.turbine.test
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.every

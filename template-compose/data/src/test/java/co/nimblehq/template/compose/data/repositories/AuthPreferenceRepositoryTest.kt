@@ -24,7 +24,6 @@ class AuthPreferenceRepositoryTest {
     @Before
     fun setUp() {
         repository = AuthPreferenceRepositoryImpl(mockNetworkSharedPreferences)
-        every { mockNetworkSharedPreferences.set<Any>(any(), any()) } returns Unit
         every { mockNetworkSharedPreferences.authStatus = any() } returns Unit
     }
 

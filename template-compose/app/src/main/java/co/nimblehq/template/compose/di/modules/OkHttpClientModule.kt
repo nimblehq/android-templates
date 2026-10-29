@@ -2,7 +2,9 @@ package co.nimblehq.template.compose.di.modules
 
 import android.content.Context
 import co.nimblehq.template.compose.BuildConfig
+import co.nimblehq.template.compose.data.remote.interceptor.AUTH_HEADER
 import co.nimblehq.template.compose.data.remote.interceptor.AuthInterceptor
+import co.nimblehq.template.compose.data.remote.services.CLIENT_SECRET_HEADER
 import co.nimblehq.template.compose.data.local.preferences.NetworkEncryptedSharedPreferences
 import co.nimblehq.template.compose.data.remote.authenticator.RequestAuthenticator
 import co.nimblehq.template.compose.data.util.DispatchersProvider
@@ -36,6 +38,8 @@ class OkHttpClientModule {
         if (!BuildConfig.BUILD_TYPE.equals(BUILD_TYPE_RELEASE, ignoreCase = true)) {
             addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
+                redactHeader(AUTH_HEADER)
+                redactHeader(CLIENT_SECRET_HEADER)
             })
             addInterceptor(chuckerInterceptor)
             readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
@@ -54,6 +58,8 @@ class OkHttpClientModule {
         if (BuildConfig.DEBUG) {
             addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
+                redactHeader(AUTH_HEADER)
+                redactHeader(CLIENT_SECRET_HEADER)
             })
             addInterceptor(chuckerInterceptor)
             readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
@@ -75,6 +81,7 @@ class OkHttpClientModule {
         return ChuckerInterceptor.Builder(context)
             .collector(chuckerCollector)
             .alwaysReadResponseBody(true)
+            .redactHeaders(AUTH_HEADER, CLIENT_SECRET_HEADER)
             .build()
     }
 

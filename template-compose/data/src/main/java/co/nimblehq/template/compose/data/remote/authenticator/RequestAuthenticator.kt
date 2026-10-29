@@ -2,7 +2,7 @@ package co.nimblehq.template.compose.data.remote.authenticator
 
 import co.nimblehq.template.compose.data.remote.interceptor.AUTH_HEADER
 import co.nimblehq.template.compose.data.util.DispatchersProvider
-import co.nimblehq.template.compose.domain.exceptions.NoConnectivityException
+import co.nimblehq.template.compose.domain.exceptions.ApiException
 import co.nimblehq.template.compose.domain.models.AuthStatus
 import co.nimblehq.template.compose.domain.models.toAuthenticatedStatus
 import co.nimblehq.template.compose.domain.usecases.GetAuthStatusUseCase
@@ -23,6 +23,10 @@ private const val MAX_ATTEMPTS = 3
 private const val EXPONENTIAL_BACKOFF_BASE = 2.0
 private const val EXPONENTIAL_BACKOFF_SCALE = 0.5
 private const val SECOND_IN_MILLISECONDS = 1000
+
+// OAuth servers reject a refresh token with 400 (invalid_grant) or 401
+private const val HTTP_BAD_REQUEST = 400
+private const val HTTP_UNAUTHORIZED = 401
 
 class RequestAuthenticator(
     private val dispatchersProvider: DispatchersProvider,
@@ -83,9 +87,10 @@ class RequestAuthenticator(
             accessToken = accessToken
         )
     } catch (e: Exception) {
-        if (e !is NoConnectivityException) {
-            // clear the stored tokens, then send force logout request to view layer
-            updateToken(AuthStatus.Anonymous)
+        if (e is ApiException && e.httpCode in HTTP_BAD_REQUEST..HTTP_UNAUTHORIZED) {
+            // the refresh token was rejected, so clear the stored tokens
+            // then send force logout request to view layer
+            runCatching { updateToken(AuthStatus.Anonymous) }
             RequestInterceptingDelegate.requestForceLogout()
 
             // cancel all pending requests
