@@ -234,7 +234,7 @@ private fun FeatureScreenContent(
 
 - API keys in `.properties` files (gitignored)
 - Sensitive data → `EncryptedSharedPreferences`
-- Never log tokens, passwords, or PII
+- Never log tokens, passwords, or PII in release builds. Pre-release builds may log network traffic (e.g. `HttpLoggingInterceptor`, Chucker), but headers carrying secrets must be redacted
 - HTTPS only
 - WebView JavaScript disabled by default
 - Components `exported="false"` by default

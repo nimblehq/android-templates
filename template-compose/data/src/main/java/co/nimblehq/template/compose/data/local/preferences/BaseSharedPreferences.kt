@@ -20,8 +20,8 @@ abstract class BaseSharedPreferences {
             null
         }
 
-    protected fun <T> set(key: String, value: T) {
-        sharedPreferences.execute {
+    protected fun <T> set(key: String, value: T, isCommitEnabled: Boolean = false) {
+        sharedPreferences.execute(isCommitEnabled) {
             when (value) {
                 is Boolean -> it.putBoolean(key, value)
                 is String -> it.putString(key, value)
@@ -32,11 +32,11 @@ abstract class BaseSharedPreferences {
         }
     }
 
-    protected fun remove(key: String) {
-        sharedPreferences.execute { it.remove(key) }
+    protected fun remove(key: String, isCommitEnabled: Boolean = false) {
+        sharedPreferences.execute(isCommitEnabled) { it.remove(key) }
     }
 
-    protected fun clearAll() {
-        sharedPreferences.execute { it.clear() }
+    protected fun clearAll(isCommitEnabled: Boolean = false) {
+        sharedPreferences.execute(isCommitEnabled) { it.clear() }
     }
 }
