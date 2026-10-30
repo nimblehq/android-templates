@@ -6,10 +6,12 @@ import java.util.Properties
 /**
  * Fails a release build with one message when its signing inputs are missing.
  *
- * AGP creates no validateSigning task for a release keystore.
- * An APK build runs write<Variant>SigningConfigVersions. A bundle build skips that task,
- * so the check also runs in package<Variant>Bundle.
- * The name match covers every release variant, such as StagingRelease and StagingPreRelease.
+ * AGP has no task that validates a release keystore.
+ * So the check runs inside a task that each release build already runs:
+ * - An APK build runs `write<Variant>SigningConfigVersions`.
+ * - A bundle build skips that task. It runs `package<Variant>Bundle`.
+ *
+ * The name match covers all release variants, such as StagingRelease and StagingPreRelease.
  */
 fun Project.registerReleaseSigningCheck(
     propertiesFile: File,
