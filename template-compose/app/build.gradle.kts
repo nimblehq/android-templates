@@ -130,17 +130,21 @@ android {
 }
 
 // Fail early with one message when a release build lacks its signing inputs.
-// AGP creates no validateSigning task for a release keystore, so the check hooks the
-// signing-config task that runs before packaging.
+// AGP creates no validateSigning task for a release keystore.
+// The check runs in the signing-config task, which runs before packaging.
+// An APK build runs write<Variant>SigningConfigVersions. A bundle build skips that task, so it also runs
+// package<Variant>Bundle. The name match covers every release variant, such as StagingRelease and StagingPreRelease.
 tasks.matching {
-    it.name.startsWith("write") && it.name.endsWith("SigningConfigVersions") && it.name.contains("Release")
+    val isSigningConfigTask = it.name.startsWith("write") && it.name.endsWith("SigningConfigVersions")
+    val isBundlePackageTask = it.name.startsWith("package") && it.name.endsWith("Bundle")
+    (isSigningConfigTask || isBundlePackageTask) && it.name.contains("Release", ignoreCase = true)
 }.configureEach {
     // An up-to-date task skips doFirst, so the check must always run.
     outputs.upToDateWhen { false }
     doFirst {
         val problems = buildList {
             if (!signingPropertiesFile.exists()) {
-                add("signing.properties is missing. Copy signing.properties.sample and fill it.")
+                add("signing.properties is missing. Copy signing.properties.sample to signing.properties and enter the release values.")
             } else {
                 requiredSigningKeys
                     .filter { signingProperties.getProperty(it).isNullOrBlank() }

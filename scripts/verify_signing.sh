@@ -50,11 +50,11 @@ fi
 # 2. A release build without the file fails with one clear message.
 if gradle assembleStagingRelease >"$WORK_DIR/release_missing.log" 2>&1; then
     fail "release build without signing.properties must fail"
-elif grep -q "signing.properties" "$WORK_DIR/release_missing.log" &&
+elif grep -q "signing.properties is missing. Copy signing.properties.sample to signing.properties and enter the release values." "$WORK_DIR/release_missing.log" &&
     grep -q "release.keystore" "$WORK_DIR/release_missing.log"; then
     pass "release build without signing.properties fails with a message"
 else
-    fail "release failure message misses signing.properties or release.keystore"
+    fail "release failure message misses the signing.properties text or release.keystore"
     tail -20 "$WORK_DIR/release_missing.log"
 fi
 
@@ -67,6 +67,11 @@ KEY_ALIAS=$KEY_ALIAS
 KEYSTORE_PASSWORD=$STORE_PASSWORD
 KEY_PASSWORD=$KEY_PASSWORD
 EOF
+if gradle bundleStagingRelease >"$WORK_DIR/bundle.log" 2>&1; then
+    pass "bundleStagingRelease with signing.properties and keystore"
+else
+    fail "bundleStagingRelease with signing.properties and keystore"; tail -20 "$WORK_DIR/bundle.log"
+fi
 for task in assembleStagingRelease assembleStagingPreRelease; do
     if gradle "$task" >"$WORK_DIR/$task.log" 2>&1; then
         variant="${task#assembleStaging}"
@@ -81,7 +86,18 @@ for task in assembleStagingRelease assembleStagingPreRelease; do
     fi
 done
 
-# 4. A blank key fails and the message names the key.
+# 4. A release bundle without the file also fails.
+mv "$WORK_DIR/project/template-compose/signing.properties" "$WORK_DIR/signing.properties.keep"
+if gradle bundleStagingRelease >"$WORK_DIR/bundle_missing.log" 2>&1; then
+    fail "bundle build without signing.properties must fail"
+elif grep -q "signing.properties is missing" "$WORK_DIR/bundle_missing.log"; then
+    pass "bundle build without signing.properties fails with a message"
+else
+    fail "bundle failure message misses signing.properties"; tail -20 "$WORK_DIR/bundle_missing.log"
+fi
+mv "$WORK_DIR/signing.properties.keep" "$WORK_DIR/project/template-compose/signing.properties"
+
+# 5. A blank key fails and the message names the key.
 sed -i.bak 's/^KEY_PASSWORD=.*/KEY_PASSWORD=/' "$WORK_DIR/project/template-compose/signing.properties"
 if gradle assembleStagingRelease >"$WORK_DIR/release_blank.log" 2>&1; then
     fail "release build with a blank KEY_PASSWORD must fail"
