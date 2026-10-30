@@ -41,3 +41,6 @@ captures/
 
 # Keystore
 config/release.keystore
+
+# Signing
+signing.properties

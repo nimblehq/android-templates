@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.konan.properties.loadProperties
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
@@ -10,7 +8,9 @@ plugins {
     alias(libs.plugins.kover)
 }
 
-val signingProperties = loadProperties("$rootDir/signing.properties")
+val signingPropertiesFile = file("$rootDir/signing.properties")
+val signingProperties = signingPropertiesFile.readProperties()
+val releaseKeystoreFile = file("$rootDir/config/release.keystore")
 val getVersionCode: () -> Int = {
     if (project.hasProperty("versionCode")) {
         (project.property("versionCode") as String).toInt()
@@ -38,11 +38,11 @@ android {
 
     signingConfigs {
         create(BuildTypes.RELEASE) {
-            // Remember to edit signing.properties to have the correct info for release build.
-            storeFile = file("../config/release.keystore")
-            storePassword = signingProperties.getProperty("KEYSTORE_PASSWORD") as String
-            keyPassword = signingProperties.getProperty("KEY_PASSWORD") as String
-            keyAlias = signingProperties.getProperty("KEY_ALIAS") as String
+            // Copy signing.properties.sample to signing.properties and fill it for release builds.
+            storeFile = releaseKeystoreFile
+            storePassword = signingProperties.getProperty("KEYSTORE_PASSWORD")
+            keyPassword = signingProperties.getProperty("KEY_PASSWORD")
+            keyAlias = signingProperties.getProperty("KEY_ALIAS")
         }
 
         getByName(BuildTypes.DEBUG) {
@@ -123,6 +123,8 @@ android {
         // animationsDisabled = true
     }
 }
+
+registerReleaseSigningCheck(signingPropertiesFile, releaseKeystoreFile)
 
 dependencies {
     implementation(projects.data)
