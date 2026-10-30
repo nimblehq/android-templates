@@ -1,5 +1,3 @@
-import java.util.Properties
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
@@ -11,11 +9,8 @@ plugins {
 }
 
 val signingPropertiesFile = file("$rootDir/signing.properties")
-val signingProperties = Properties().apply {
-    if (signingPropertiesFile.exists()) signingPropertiesFile.inputStream().use { load(it) }
-}
+val signingProperties = signingPropertiesFile.readProperties()
 val releaseKeystoreFile = file("$rootDir/config/release.keystore")
-val requiredSigningKeys = listOf("KEY_ALIAS", "KEYSTORE_PASSWORD", "KEY_PASSWORD")
 val getVersionCode: () -> Int = {
     if (project.hasProperty("versionCode")) {
         (project.property("versionCode") as String).toInt()
@@ -129,7 +124,7 @@ android {
     }
 }
 
-registerReleaseSigningCheck(signingPropertiesFile, releaseKeystoreFile, requiredSigningKeys)
+registerReleaseSigningCheck(signingPropertiesFile, releaseKeystoreFile)
 
 dependencies {
     implementation(projects.data)

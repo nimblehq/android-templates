@@ -3,6 +3,13 @@ import org.gradle.api.Project
 import java.io.File
 import java.util.Properties
 
+private val REQUIRED_SIGNING_KEYS = listOf("KEY_ALIAS", "KEYSTORE_PASSWORD", "KEY_PASSWORD")
+
+/** Reads a properties file. Returns empty properties when the file does not exist. */
+fun File.readProperties(): Properties = Properties().apply {
+    if (exists()) inputStream().use { load(it) }
+}
+
 /**
  * Fails a release build with one message when its signing inputs are missing.
  *
@@ -15,8 +22,7 @@ import java.util.Properties
  */
 fun Project.registerReleaseSigningCheck(
     propertiesFile: File,
-    keystoreFile: File,
-    requiredKeys: List<String>
+    keystoreFile: File
 ) {
     tasks.matching {
         val isSigningConfigTask = it.name.startsWith("write") && it.name.endsWith("SigningConfigVersions")
@@ -26,7 +32,7 @@ fun Project.registerReleaseSigningCheck(
         // An up-to-date task skips doFirst, so the check must always run.
         outputs.upToDateWhen { false }
         doFirst {
-            val problems = findSigningProblems(propertiesFile, keystoreFile, requiredKeys)
+            val problems = findSigningProblems(propertiesFile, keystoreFile)
             if (problems.isNotEmpty()) {
                 throw GradleException(
                     "Release signing is not set up:\n" + problems.joinToString("\n") { "- $it" }
@@ -36,10 +42,10 @@ fun Project.registerReleaseSigningCheck(
     }
 }
 
-private fun findSigningProblems(
+internal fun findSigningProblems(
     propertiesFile: File,
     keystoreFile: File,
-    requiredKeys: List<String>
+    requiredKeys: List<String> = REQUIRED_SIGNING_KEYS
 ) = buildList {
     if (!propertiesFile.exists()) {
         add(
@@ -47,7 +53,7 @@ private fun findSigningProblems(
                 "Copy signing.properties.sample to signing.properties and enter the release values."
         )
     } else {
-        val properties = Properties().apply { propertiesFile.inputStream().use { load(it) } }
+        val properties = propertiesFile.readProperties()
         requiredKeys
             .filter { properties.getProperty(it).isNullOrBlank() }
             .forEach { add("$it is missing or blank in signing.properties.") }

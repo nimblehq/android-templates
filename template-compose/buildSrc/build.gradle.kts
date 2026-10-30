@@ -7,3 +7,7 @@ plugins {
 repositories {
     mavenCentral()
 }
+
+dependencies {
+    testImplementation(libs.test.junit)
+}
