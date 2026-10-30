@@ -45,7 +45,11 @@ Report is located at: `app/build/reports/kover/`
 
 ## Build and deploy
 
-For `release` builds, we need to provide release keystore and signing properties:
+A `release` build needs a release keystore and signing properties:
 
-- Put the `release.keystore` file at root `config` folder.
-- Put keystore signing properties in `signing.properties`
+- Put the `release.keystore` file in the root `config` folder.
+- Copy `signing.properties.sample` to `signing.properties`. Fill in the real values.
+
+Git ignores both files. Do not commit them.
+A release build fails with one message when a file or a key is missing.
+CI must write `signing.properties` and `release.keystore` before a release build.

@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.konan.properties.loadProperties
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
@@ -10,7 +10,12 @@ plugins {
     alias(libs.plugins.kover)
 }
 
-val signingProperties = loadProperties("$rootDir/signing.properties")
+val signingPropertiesFile = file("$rootDir/signing.properties")
+val signingProperties = Properties().apply {
+    if (signingPropertiesFile.exists()) signingPropertiesFile.inputStream().use { load(it) }
+}
+val releaseKeystoreFile = file("$rootDir/config/release.keystore")
+val requiredSigningKeys = listOf("KEY_ALIAS", "KEYSTORE_PASSWORD", "KEY_PASSWORD")
 val getVersionCode: () -> Int = {
     if (project.hasProperty("versionCode")) {
         (project.property("versionCode") as String).toInt()
@@ -38,11 +43,11 @@ android {
 
     signingConfigs {
         create(BuildTypes.RELEASE) {
-            // Remember to edit signing.properties to have the correct info for release build.
-            storeFile = file("../config/release.keystore")
-            storePassword = signingProperties.getProperty("KEYSTORE_PASSWORD") as String
-            keyPassword = signingProperties.getProperty("KEY_PASSWORD") as String
-            keyAlias = signingProperties.getProperty("KEY_ALIAS") as String
+            // Copy signing.properties.sample to signing.properties and fill it for release builds.
+            storeFile = releaseKeystoreFile
+            storePassword = signingProperties.getProperty("KEYSTORE_PASSWORD")
+            keyPassword = signingProperties.getProperty("KEY_PASSWORD")
+            keyAlias = signingProperties.getProperty("KEY_ALIAS")
         }
 
         getByName(BuildTypes.DEBUG) {
@@ -121,6 +126,35 @@ android {
         }
         // Disable device's animation for instrument testing
         // animationsDisabled = true
+    }
+}
+
+// Fail early with one message when a release build lacks its signing inputs.
+// AGP creates no validateSigning task for a release keystore, so the check hooks the
+// signing-config task that runs before packaging.
+tasks.matching {
+    it.name.startsWith("write") && it.name.endsWith("SigningConfigVersions") && it.name.contains("Release")
+}.configureEach {
+    // An up-to-date task skips doFirst, so the check must always run.
+    outputs.upToDateWhen { false }
+    doFirst {
+        val problems = buildList {
+            if (!signingPropertiesFile.exists()) {
+                add("signing.properties is missing. Copy signing.properties.sample and fill it.")
+            } else {
+                requiredSigningKeys
+                    .filter { signingProperties.getProperty(it).isNullOrBlank() }
+                    .forEach { add("$it is missing or blank in signing.properties.") }
+            }
+            if (!releaseKeystoreFile.exists()) {
+                add("config/release.keystore is missing. Put the release keystore there.")
+            }
+        }
+        if (problems.isNotEmpty()) {
+            throw GradleException(
+                "Release signing is not set up:\n" + problems.joinToString("\n") { "- $it" }
+            )
+        }
     }
 }
 
